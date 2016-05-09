@@ -1,0 +1,12 @@
+{
+  "ambientDependencies": {
+    "async": "registry:dt/async#1.4.2+20160316155526",
+    "deep-extend": "registry:dt/deep-extend#0.4.1+20160212164839",
+    "jasmine": "registry:dt/jasmine#2.2.0+20160308082659",
+    "jsnlog": "registry:dt/jsnlog#11.0.0+20151114014156",
+    "node": "registry:dt/node#4.0.0+20160412142033"
+  },
+  "dependencies": {
+    "lodash": "registry:npm/lodash#4.0.0+20160305082308"
+  }
+}
