@@ -1,4 +1,4 @@
-import {DockerImage, Container, ContainerRemoveResults}  from './dockerode';
+import {Container, DockerImage, ContainerRemoveResults} from "./dockerode";
 export interface FirmamentDocker {
   createContainer(containerConfig:any, cb:(err:Error, container:Container)=>void);
   startOrStopContainers(ids:string[], start:boolean, cb:()=>void):void;
