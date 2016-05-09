@@ -1,6 +1,4 @@
-import DockerImage = dockerode.DockerImage;
-import Container = dockerode.Container;
-import ContainerRemoveResults = dockerode.ContainerRemoveResults;
+import { DockerImage, Container, ContainerRemoveResults } from './dockerode';
 export interface FirmamentDocker {
     createContainer(containerConfig: any, cb: (err: Error, container: Container) => void): any;
     startOrStopContainers(ids: string[], start: boolean, cb: () => void): void;

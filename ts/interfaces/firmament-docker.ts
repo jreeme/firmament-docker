@@ -1,6 +1,4 @@
-import DockerImage = dockerode.DockerImage;
-import Container = dockerode.Container;
-import ContainerRemoveResults = dockerode.ContainerRemoveResults;
+import {DockerImage, Container, ContainerRemoveResults}  from './dockerode';
 export interface FirmamentDocker {
   createContainer(containerConfig:any, cb:(err:Error, container:Container)=>void);
   startOrStopContainers(ids:string[], start:boolean, cb:()=>void):void;
@@ -11,9 +9,9 @@ export interface FirmamentDocker {
   getContainers(ids:string[], cb:(err:Error, containers:Container[])=>void):void;
   removeContainers(ids:string[], cb:(err:Error, containerRemoveResults:ContainerRemoveResults[])=>void):void;
   buildDockerFile(dockerFilePath:string, dockerImageName:string,
-                  progressCb:(taskId:string,status:string,current:number,total:number)=>void,
+                  progressCb:(taskId:string, status:string, current:number, total:number)=>void,
                   cb:(err:Error)=>void):void;
   pullImage(imageName:string,
-            progressCb:(taskId:string,status:string,current:number,total:number)=>void,
+            progressCb:(taskId:string, status:string, current:number, total:number)=>void,
             cb:(err:Error)=>void);
 }

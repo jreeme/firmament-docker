@@ -1,9 +1,7 @@
 import * as _ from 'lodash';
-import {FirmamentDocker} from "../interfaces/firmament-docker";
+import {FirmamentDocker} from '../interfaces/firmament-docker';
 import {CommandImpl} from 'firmament-yargs';
-import DockerImage = dockerode.DockerImage;
-import DockerOde = dockerode.DockerOde;
-import Container = dockerode.Container;
+import {DockerImage, DockerOde, Container, ContainerRemoveResults} from '../interfaces/dockerode';
 const async = require('async');
 const deepExtend = require('deep-extend');
 const positive = require('positive');
@@ -16,7 +14,7 @@ export class FirmamentDockerImpl extends CommandImpl implements FirmamentDocker 
     this.dockerode = new (require('dockerode'))({socketPath: '/var/run/docker.sock'});
   }
 
-  createContainer(containerConfig:any, cb:(err:Error, container:dockerode.Container)=>void) {
+  createContainer(containerConfig:any, cb:(err:Error, container:Container)=>void) {
     var fullContainerConfigCopy = {ExpressApps: []};
     deepExtend(fullContainerConfigCopy, containerConfig);
     this.dockerode.createContainer(fullContainerConfigCopy, (err:Error, container:any)=> {
@@ -24,7 +22,7 @@ export class FirmamentDockerImpl extends CommandImpl implements FirmamentDocker 
     });
   }
 
-  removeContainers(ids:string[], cb:(err:Error, containerRemoveResults:dockerode.ContainerRemoveResults[])=>void):void {
+  removeContainers(ids:string[], cb:(err:Error, containerRemoveResults:ContainerRemoveResults[])=>void):void {
     let self = this;
     if (!ids.length) {
       console.log('Specify containers to remove by FirmamentId, Docker ID or Name. Or "*" to remove all.');
@@ -168,7 +166,7 @@ export class FirmamentDockerImpl extends CommandImpl implements FirmamentDocker 
     });
   }
 
-  listImages(listAllImages:boolean, cb:(err:Error, images:dockerode.DockerImage[])=>void) {
+  listImages(listAllImages:boolean, cb:(err:Error, images:DockerImage[])=>void) {
     this.dockerode.listImages({all: listAllImages}, (err:Error, images:DockerImage[])=> {
       if (this.callbackIfError(cb, err)) {
         return;
