@@ -1,16 +1,30 @@
+export enum ImageOrContainer{
+  Image,
+  Container
+}
+export interface ImageRemoveResults {
+  msg:string
+}
 export interface ContainerRemoveResults {
   msg:string
 }
-export interface DockerImage {
-  RepoTags:string[],
-  firmamentId:string
-}
-export interface Container {
-  id:string,
+export interface DockerImageOrContainer {
   Id:string,
   name:string,
+  firmamentId:string
+}
+export interface DockerImage extends DockerImageOrContainer {
+  Created:number,
+  Labels:any,
+  ParentId:string,
+  RepoDigests:any,
+  RepoTags:string[],
+  Size:number,
+  VirtualSize:number,
+}
+export interface DockerContainer extends DockerImageOrContainer {
+  id:string,
   Status:string,
-  firmamentId:string,
   Names:string[]
 }
 export interface SpawnOptions {
@@ -33,10 +47,11 @@ export interface ExpressApp {
 }
 export interface DockerOde {
   listImages(options:any, cb:(err:Error, images:DockerImage[])=>void):void;
-  listContainers(options:any, cb:(err:Error, images:Container[])=>void):void;
-  getContainer(id:string):Container;
+  listContainers(options:any, cb:(err:Error, containers:DockerContainer[])=>void):void;
+  getContainer(id:string):DockerContainer;
+  getImage(id:string):DockerImage;
   buildImage(tarStream:any, options:any, cb:(err:Error, outputStream:any)=>void);
-  createContainer(containerConfig:any, cb:(err:Error, container:Container)=>void):void;
+  createContainer(containerConfig:any, cb:(err:Error, container:DockerContainer)=>void):void;
   pull(imageName:string, cb:(err:Error, outputStream:any)=>void);
 }
 export interface ContainerConfig {

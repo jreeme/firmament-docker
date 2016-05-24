@@ -5,6 +5,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var _ = require('lodash');
+var dockerode_1 = require('../interfaces/dockerode');
 var firmament_yargs_1 = require('firmament-yargs');
 var async = require('async');
 var deepExtend = require('deep-extend');
@@ -16,18 +17,48 @@ var FirmamentDockerImpl = (function (_super) {
         _super.call(this);
         this.dockerode = new (require('dockerode'))({ socketPath: '/var/run/docker.sock' });
     }
-    FirmamentDockerImpl.prototype.createContainer = function (containerConfig, cb) {
+    FirmamentDockerImpl.prototype.createContainer = function (dockerContainerConfig, cb) {
         var fullContainerConfigCopy = { ExpressApps: [] };
-        deepExtend(fullContainerConfigCopy, containerConfig);
-        this.dockerode.createContainer(fullContainerConfigCopy, function (err, container) {
-            cb(err, container);
+        deepExtend(fullContainerConfigCopy, dockerContainerConfig);
+        this.dockerode.createContainer(fullContainerConfigCopy, function (err, dockerContainer) {
+            cb(err, dockerContainer);
+        });
+    };
+    FirmamentDockerImpl.prototype.removeImages = function (ids, cb) {
+        var _this = this;
+        var self = this;
+        if (!ids.length) {
+            console.log('Specify images to remove by FirmamentId, Docker ID or Name. Or "all" to remove all.');
+            return;
+        }
+        if (_.indexOf(ids, 'all') !== -1) {
+            if (!positive("You're sure you want to remove all images? [y/N] ", false)) {
+                console.log('Operation canceled.');
+                cb(null, null);
+                return;
+            }
+            ids = null;
+        }
+        this.getImages(ids, function (err, images) {
+            _this.logError(err);
+            async.map(images, function (imageOrErrorMsg, cb) {
+                if (typeof imageOrErrorMsg === 'string') {
+                    _this.logAndCallback(imageOrErrorMsg, cb, null, { msg: imageOrErrorMsg });
+                }
+                else {
+                    imageOrErrorMsg.remove({ force: 1 }, function (err) {
+                        var msg = 'Removing image "' + imageOrErrorMsg.name + '"';
+                        self.logAndCallback(msg, cb, err, { msg: imageOrErrorMsg.name });
+                    });
+                }
+            }, cb);
         });
     };
     FirmamentDockerImpl.prototype.removeContainers = function (ids, cb) {
         var _this = this;
         var self = this;
         if (!ids.length) {
-            console.log('Specify containers to remove by FirmamentId, Docker ID or Name. Or "*" to remove all.');
+            console.log('Specify containers to remove by FirmamentId, Docker ID or Name. Or "all" to remove all.');
             return;
         }
         if (_.indexOf(ids, 'all') !== -1) {
@@ -38,9 +69,9 @@ var FirmamentDockerImpl = (function (_super) {
             }
             ids = null;
         }
-        this.getContainers(ids, function (err, containers) {
+        this.getContainers(ids, function (err, dockerContainer) {
             _this.logError(err);
-            async.map(containers, function (containerOrErrorMsg, cb) {
+            async.map(dockerContainer, function (containerOrErrorMsg, cb) {
                 if (typeof containerOrErrorMsg === 'string') {
                     _this.logAndCallback(containerOrErrorMsg, cb, null, { msg: containerOrErrorMsg });
                 }
@@ -55,9 +86,9 @@ var FirmamentDockerImpl = (function (_super) {
     };
     FirmamentDockerImpl.prototype.startOrStopContainers = function (ids, start, cb) {
         var _this = this;
-        this.getContainers(ids, function (err, containers) {
+        this.getContainers(ids, function (err, dockerContainer) {
             _this.logError(err);
-            async.mapSeries(containers, function (containerOrErrorMsg, cb) {
+            async.mapSeries(dockerContainer, function (containerOrErrorMsg, cb) {
                 if (typeof containerOrErrorMsg === 'string') {
                     _this.logAndCallback(containerOrErrorMsg, cb);
                 }
@@ -74,23 +105,29 @@ var FirmamentDockerImpl = (function (_super) {
             }, cb);
         });
     };
+    FirmamentDockerImpl.prototype.getImages = function (ids, cb) {
+        this.getImagesOrContainers(ids, dockerode_1.ImageOrContainer.Image, cb);
+    };
     FirmamentDockerImpl.prototype.getContainers = function (ids, cb) {
+        this.getImagesOrContainers(ids, dockerode_1.ImageOrContainer.Container, cb);
+    };
+    FirmamentDockerImpl.prototype.getImagesOrContainers = function (ids, IorC, cb) {
         var _this = this;
         if (!ids) {
-            this.listContainers(true, function (err, containers) {
+            this.listImagesOrContainers(true, IorC, function (err, imagesOrContainers) {
                 if (_this.callbackIfError(cb, err)) {
                     return;
                 }
                 ids = [];
-                containers.forEach(function (container) {
-                    ids.push(container.firmamentId);
+                imagesOrContainers.forEach(function (imageOrContainer) {
+                    ids.push(imageOrContainer.firmamentId);
                 });
-                _this.getContainers(ids, cb);
+                _this.getImagesOrContainers(ids, IorC, cb);
             });
             return;
         }
         var fnArray = ids.map(function (id) {
-            return async.apply(_this.getContainer.bind(_this), id.toString());
+            return async.apply(_this.getImageOrContainer.bind(_this), id.toString(), IorC);
         });
         async.series(fnArray, function (err, results) {
             if (!_this.callbackIfError(cb, err)) {
@@ -98,22 +135,37 @@ var FirmamentDockerImpl = (function (_super) {
             }
         });
     };
+    FirmamentDockerImpl.prototype.getImage = function (id, cb) {
+        this.getImageOrContainer(id, dockerode_1.ImageOrContainer.Image, cb);
+    };
     FirmamentDockerImpl.prototype.getContainer = function (id, cb) {
+        this.getImageOrContainer(id, dockerode_1.ImageOrContainer.Container, cb);
+    };
+    FirmamentDockerImpl.prototype.getImageOrContainer = function (id, IorC, cb) {
         var _this = this;
-        var self = this;
+        var me = this;
         async.waterfall([
             function (cb) {
-                self.listContainers(true, cb);
+                me.listImagesOrContainers(true, IorC, cb);
             },
-            function (containers, cb) {
-                var foundContainers = containers.filter(function (container) {
-                    if (container.firmamentId === id) {
+            function (imagesOrContainers, cb) {
+                var foundImagesOrContainers = imagesOrContainers.filter(function (imageOrContainer) {
+                    if (imageOrContainer.firmamentId === id) {
                         return true;
                     }
                     else {
-                        for (var i = 0; i < container.Names.length; ++i) {
-                            if (container.Names[i] === (id[0] === '/' ? id : '/' + id)) {
-                                return true;
+                        if (IorC === dockerode_1.ImageOrContainer.Container) {
+                            for (var i = 0; i < imageOrContainer.Names.length; ++i) {
+                                if (imageOrContainer.Names[i] === (id[0] === '/' ? id : '/' + id)) {
+                                    return true;
+                                }
+                            }
+                        }
+                        else if (IorC === dockerode_1.ImageOrContainer.Image) {
+                            for (var i = 0; i < imageOrContainer.RepoTags.length; ++i) {
+                                if (imageOrContainer.RepoTags[i] === id) {
+                                    return true;
+                                }
                             }
                         }
                         var lowerCaseId = id.toLowerCase();
@@ -121,69 +173,65 @@ var FirmamentDockerImpl = (function (_super) {
                         if (charCount < 3) {
                             return false;
                         }
-                        return container.Id.toLowerCase().substring(0, charCount) ===
+                        return imageOrContainer.Id.toLowerCase().substring(0, charCount) ===
                             lowerCaseId.substring(0, charCount);
                     }
                 });
-                if (foundContainers.length > 0) {
-                    var containerObject = _this.dockerode.getContainer(foundContainers[0].Id);
-                    containerObject.name = foundContainers[0].Names[0];
-                    cb(null, containerObject);
+                if (foundImagesOrContainers.length > 0) {
+                    if (IorC === dockerode_1.ImageOrContainer.Container) {
+                        var imageOrContainer = _this.dockerode.getContainer(foundImagesOrContainers[0].Id);
+                        imageOrContainer.name = foundImagesOrContainers[0].Names[0];
+                        cb(null, imageOrContainer);
+                    }
+                    else if (IorC === dockerode_1.ImageOrContainer.Image) {
+                        var imageOrContainer = _this.dockerode.getImage(foundImagesOrContainers[0].Id);
+                        imageOrContainer.name = foundImagesOrContainers[0].RepoTags[0];
+                        cb(null, imageOrContainer);
+                    }
                 }
                 else {
-                    cb(null, 'Unable to find container: "' + id + '"');
+                    cb(null, 'Unable to find: "' + id + '"');
                 }
             }
         ], cb);
     };
-    FirmamentDockerImpl.prototype.exec = function (id, command, cb) {
-        var _this = this;
-        this.getContainer(id, function (err, container) {
-            if (_this.callbackIfError(cb, err)) {
-                return;
-            }
-            childProcess.spawnSync('docker', ['exec', '-it', container.name.slice(1), command], {
-                stdio: 'inherit'
-            });
-            cb(null, 0);
-        });
-    };
     FirmamentDockerImpl.prototype.listContainers = function (listAllContainers, cb) {
-        var _this = this;
-        this.dockerode.listContainers({ all: true }, function (err, allContainers) {
-            if (_this.callbackIfError(cb, err)) {
-                return;
-            }
-            allContainers.sort(function (a, b) {
-                return a.Names[0].localeCompare(b.Names[0]);
-            });
-            var firmamentId = 0;
-            var containers = allContainers.map(function (container) {
-                container.firmamentId = (++firmamentId).toString();
-                return (listAllContainers || (container.Status.substring(0, 2) === 'Up')) ? container : null;
-            }).filter(function (container) {
-                return !!container;
-            });
-            cb(null, containers);
-        });
+        this.listImagesOrContainers(listAllContainers, dockerode_1.ImageOrContainer.Container, cb);
     };
     FirmamentDockerImpl.prototype.listImages = function (listAllImages, cb) {
+        this.listImagesOrContainers(listAllImages, dockerode_1.ImageOrContainer.Image, cb);
+    };
+    FirmamentDockerImpl.prototype.listImagesOrContainers = function (listAll, IorC, cb) {
         var _this = this;
-        this.dockerode.listImages({ all: listAllImages }, function (err, images) {
+        var listFn;
+        listFn = (IorC === dockerode_1.ImageOrContainer.Image)
+            ? this.dockerode.listImages
+            : this.dockerode.listContainers;
+        listFn.call(this.dockerode, { all: true }, function (err, imagesOrContainers) {
             if (_this.callbackIfError(cb, err)) {
                 return;
             }
-            images.sort(function (a, b) {
-                return a.RepoTags[0].localeCompare(b.RepoTags[0]);
+            imagesOrContainers.sort(function (a, b) {
+                if (IorC === dockerode_1.ImageOrContainer.Container) {
+                    return a.Names[0].localeCompare(b.Names[0]);
+                }
+                else if (IorC === dockerode_1.ImageOrContainer.Image) {
+                    return a.RepoTags[0].localeCompare(b.RepoTags[0]);
+                }
             });
             var firmamentId = 0;
-            images = images.map(function (image) {
-                image.firmamentId = (++firmamentId).toString();
-                return image;
-            }).filter(function (image) {
-                return image !== null;
+            imagesOrContainers = imagesOrContainers.map(function (imageOrContainer) {
+                imageOrContainer.firmamentId = (++firmamentId).toString();
+                if (IorC === dockerode_1.ImageOrContainer.Container) {
+                    return (listAll || (imageOrContainer.Status.substring(0, 2) === 'Up')) ? imageOrContainer : null;
+                }
+                else {
+                    return imageOrContainer;
+                }
+            }).filter(function (imageOrContainer) {
+                return imageOrContainer !== null;
             });
-            cb(null, images);
+            cb(null, imagesOrContainers);
         });
     };
     FirmamentDockerImpl.prototype.buildDockerFile = function (dockerFilePath, dockerImageName, progressCb, cb) {
@@ -269,6 +317,18 @@ var FirmamentDockerImpl = (function (_super) {
                 var msg = "Unable to pull image: '" + imageName + "'";
                 cb(new Error(msg));
             });
+        });
+    };
+    FirmamentDockerImpl.prototype.exec = function (id, command, cb) {
+        var _this = this;
+        this.getContainer(id, function (err, dockerContainer) {
+            if (_this.callbackIfError(cb, err)) {
+                return;
+            }
+            childProcess.spawnSync('docker', ['exec', '-it', dockerContainer.name.slice(1), command], {
+                stdio: 'inherit'
+            });
+            cb(null, 0);
         });
     };
     return FirmamentDockerImpl;
