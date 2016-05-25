@@ -50,16 +50,10 @@ export class DockerDescriptors {
           StrongLoopBranchName: 'deploy',
           StrongLoopServerUrl: 'http://localhost:8702',
           ServiceName: 'FirmamentTestApp',
-          'Scripts': [
-            {
-              "RelativeWorkingDir": ".",
-              "Command": "bower",
-              "Args": [
-                "install",
-                "--config.interactive=false"
-              ]
-            }
-          ]
+          DoBowerInstall: true,
+          ClusterSize: 1,
+          ServicePort: 8082,
+          'Scripts': []
         }
       ]
     }

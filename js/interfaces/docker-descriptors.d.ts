@@ -56,11 +56,10 @@ export declare class DockerDescriptors {
             StrongLoopBranchName: string;
             StrongLoopServerUrl: string;
             ServiceName: string;
-            'Scripts': {
-                "RelativeWorkingDir": string;
-                "Command": string;
-                "Args": string[];
-            }[];
+            DoBowerInstall: boolean;
+            ClusterSize: number;
+            ServicePort: number;
+            'Scripts': any[];
         }[];
     })[];
     static dockerContainerDefaultDescriptor: {
