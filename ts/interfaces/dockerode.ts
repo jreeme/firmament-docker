@@ -43,6 +43,9 @@ export interface ExpressApp {
   StrongLoopServerUrl:string,
   ServiceName:string,
   GitCloneFolder:string,
+  ClusterSize:number,
+  ServicePort:number,
+  DoBowerInstall:boolean,
   Scripts:Script[]
 }
 export interface DockerOde {
