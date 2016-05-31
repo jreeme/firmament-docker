@@ -46,7 +46,8 @@ export interface ExpressApp {
   ClusterSize:number,
   ServicePort:number,
   DoBowerInstall:boolean,
-  Scripts:Script[]
+  Scripts:Script[],
+  EnvironmentVariables:{}
 }
 export interface DockerOde {
   listImages(options:any, cb:(err:Error, images:DockerImage[])=>void):void;
