@@ -46,6 +46,7 @@ export interface ExpressApp {
   ClusterSize:number,
   ServicePort:number,
   DoBowerInstall:boolean,
+  DeployExisting:boolean,
   Scripts:Script[],
   EnvironmentVariables:{}
 }
