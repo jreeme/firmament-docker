@@ -45,8 +45,8 @@ export interface ExpressApp {
   GitCloneFolder:string,
   ClusterSize:number,
   ServicePort:number,
-  DoBowerInstall:boolean,
   DeployExisting:boolean,
+  DoBowerInstall:boolean,
   Scripts:Script[],
   EnvironmentVariables:{}
 }
