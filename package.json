@@ -1,6 +1,6 @@
 {
   "name": "firmament-docker",
-  "version": "0.1.14",
+  "version": "0.1.20",
   "description": "Typescript classes for performing Docker operations",
   "main": "js/index.js",
   "typings": "js/index",
@@ -29,7 +29,7 @@
     "async": "^2.0.0-rc.2",
     "deep-extend": "^0.4.1",
     "dockerode": "^2.2.10",
-    "firmament-yargs": "^0.1.10",
+    "firmament-yargs": "^0.1.20",
     "jsnlog": "^2.17.1",
     "lodash": "^4.8.2",
     "nested-yargs": "^1.0.7",
