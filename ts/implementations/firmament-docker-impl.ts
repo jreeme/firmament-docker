@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import {injectable, inject} from "inversify";
 import {FirmamentDocker} from '../interfaces/firmament-docker';
 import {ImageOrContainer, DockerImageOrContainer} from '../interfaces/dockerode';
 import {CommandImpl} from 'firmament-yargs';
@@ -9,15 +10,18 @@ import {
   ContainerRemoveResults,
   ImageRemoveResults
 } from '../interfaces/dockerode';
+import {DockerImageManagement} from "../interfaces/docker-image-management";
 const async = require('async');
 const deepExtend = require('deep-extend');
 const positive = require('positive');
 const childProcess = require('child_process');
 export class FirmamentDockerImpl extends CommandImpl implements FirmamentDocker {
   private dockerode:DockerOde;
+  private dockerImageManagement:DockerImageManagement;
 
-  constructor() {
+  constructor(@inject('DockerImageManagement') _dockerImageManagement:DockerImageManagement) {
     super();
+    this.dockerImageManagement = _dockerImageManagement;
     this.dockerode = new (require('dockerode'))({socketPath: '/var/run/docker.sock'});
   }
 
@@ -167,14 +171,14 @@ export class FirmamentDockerImpl extends CommandImpl implements FirmamentDocker 
             } else {
               if (IorC === ImageOrContainer.Container) {
                 for (let i = 0; i < imageOrContainer.Names.length; ++i) {
-                  if(imageOrContainer.Names[i] === (id[0] === '/' ? id : '/' + id)){
+                  if (imageOrContainer.Names[i] === (id[0] === '/' ? id : '/' + id)) {
                     return true;
                   }
                 }
               }
               else if (IorC === ImageOrContainer.Image) {
                 for (let i = 0; i < imageOrContainer.RepoTags.length; ++i) {
-                  if(imageOrContainer.RepoTags[i] === id){
+                  if (imageOrContainer.RepoTags[i] === id) {
                     return true;
                   }
                 }
@@ -212,7 +216,8 @@ export class FirmamentDockerImpl extends CommandImpl implements FirmamentDocker 
   }
 
   listImages(listAllImages:boolean, cb:(err:Error, images:DockerImage[])=>void) {
-    this.listImagesOrContainers(listAllImages, ImageOrContainer.Image, cb);
+    this.dockerImageManagement.listImages(listAllImages, cb);
+    //this.listImagesOrContainers(listAllImages, ImageOrContainer.Image, cb);
   }
 
   private listImagesOrContainers(listAll:boolean,

@@ -1,32 +1,39 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var _ = require('lodash');
-var dockerode_1 = require('../interfaces/dockerode');
-var firmament_yargs_1 = require('firmament-yargs');
-var async = require('async');
-var deepExtend = require('deep-extend');
-var positive = require('positive');
-var childProcess = require('child_process');
-var FirmamentDockerImpl = (function (_super) {
-    __extends(FirmamentDockerImpl, _super);
-    function FirmamentDockerImpl() {
-        _super.call(this);
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+const _ = require('lodash');
+const inversify_1 = require("inversify");
+const dockerode_1 = require('../interfaces/dockerode');
+const firmament_yargs_1 = require('firmament-yargs');
+const async = require('async');
+const deepExtend = require('deep-extend');
+const positive = require('positive');
+const childProcess = require('child_process');
+class FirmamentDockerImpl extends firmament_yargs_1.CommandImpl {
+    constructor(_dockerImageManagement) {
+        super();
+        this.dockerImageManagement = _dockerImageManagement;
         this.dockerode = new (require('dockerode'))({ socketPath: '/var/run/docker.sock' });
     }
-    FirmamentDockerImpl.prototype.createContainer = function (dockerContainerConfig, cb) {
+    createContainer(dockerContainerConfig, cb) {
         var fullContainerConfigCopy = { ExpressApps: [] };
         deepExtend(fullContainerConfigCopy, dockerContainerConfig);
-        this.dockerode.createContainer(fullContainerConfigCopy, function (err, dockerContainer) {
+        this.dockerode.createContainer(fullContainerConfigCopy, (err, dockerContainer) => {
             cb(err, dockerContainer);
         });
-    };
-    FirmamentDockerImpl.prototype.removeImages = function (ids, cb) {
-        var _this = this;
-        var self = this;
+    }
+    removeImages(ids, cb) {
+        let self = this;
         if (!ids.length) {
             console.log('Specify images to remove by FirmamentId, Docker ID or Name. Or "all" to remove all.');
             return;
@@ -39,24 +46,23 @@ var FirmamentDockerImpl = (function (_super) {
             }
             ids = null;
         }
-        this.getImages(ids, function (err, images) {
-            _this.logError(err);
-            async.map(images, function (imageOrErrorMsg, cb) {
+        this.getImages(ids, (err, images) => {
+            this.logError(err);
+            async.map(images, (imageOrErrorMsg, cb) => {
                 if (typeof imageOrErrorMsg === 'string') {
-                    _this.logAndCallback(imageOrErrorMsg, cb, null, { msg: imageOrErrorMsg });
+                    this.logAndCallback(imageOrErrorMsg, cb, null, { msg: imageOrErrorMsg });
                 }
                 else {
-                    imageOrErrorMsg.remove({ force: 1 }, function (err) {
+                    imageOrErrorMsg.remove({ force: 1 }, (err) => {
                         var msg = 'Removing image "' + imageOrErrorMsg.name + '"';
                         self.logAndCallback(msg, cb, err, { msg: imageOrErrorMsg.name });
                     });
                 }
             }, cb);
         });
-    };
-    FirmamentDockerImpl.prototype.removeContainers = function (ids, cb) {
-        var _this = this;
-        var self = this;
+    }
+    removeContainers(ids, cb) {
+        let self = this;
         if (!ids.length) {
             console.log('Specify containers to remove by FirmamentId, Docker ID or Name. Or "all" to remove all.');
             return;
@@ -69,107 +75,104 @@ var FirmamentDockerImpl = (function (_super) {
             }
             ids = null;
         }
-        this.getContainers(ids, function (err, dockerContainer) {
-            _this.logError(err);
-            async.map(dockerContainer, function (containerOrErrorMsg, cb) {
+        this.getContainers(ids, (err, dockerContainer) => {
+            this.logError(err);
+            async.map(dockerContainer, (containerOrErrorMsg, cb) => {
                 if (typeof containerOrErrorMsg === 'string') {
-                    _this.logAndCallback(containerOrErrorMsg, cb, null, { msg: containerOrErrorMsg });
+                    this.logAndCallback(containerOrErrorMsg, cb, null, { msg: containerOrErrorMsg });
                 }
                 else {
-                    containerOrErrorMsg.remove({ force: 1 }, function (err) {
+                    containerOrErrorMsg.remove({ force: 1 }, (err) => {
                         var msg = 'Removing container "' + containerOrErrorMsg.name + '"';
                         self.logAndCallback(msg, cb, err, { msg: containerOrErrorMsg.name });
                     });
                 }
             }, cb);
         });
-    };
-    FirmamentDockerImpl.prototype.startOrStopContainers = function (ids, start, cb) {
-        var _this = this;
-        this.getContainers(ids, function (err, dockerContainer) {
-            _this.logError(err);
-            async.mapSeries(dockerContainer, function (containerOrErrorMsg, cb) {
+    }
+    startOrStopContainers(ids, start, cb) {
+        this.getContainers(ids, (err, dockerContainer) => {
+            this.logError(err);
+            async.mapSeries(dockerContainer, (containerOrErrorMsg, cb) => {
                 if (typeof containerOrErrorMsg === 'string') {
-                    _this.logAndCallback(containerOrErrorMsg, cb);
+                    this.logAndCallback(containerOrErrorMsg, cb);
                 }
                 else {
-                    var resultMessage_1 = 'Container "' + containerOrErrorMsg.name + '" ';
-                    resultMessage_1 += start ? 'started.' : 'stopped.';
-                    var fnStartStop = start
+                    let resultMessage = 'Container "' + containerOrErrorMsg.name + '" ';
+                    resultMessage += start ? 'started.' : 'stopped.';
+                    let fnStartStop = start
                         ? containerOrErrorMsg.start.bind(containerOrErrorMsg)
                         : containerOrErrorMsg.stop.bind(containerOrErrorMsg);
-                    fnStartStop(function (err) {
-                        _this.logAndCallback(_this.returnErrorStringOrMessage(err, resultMessage_1), cb);
+                    fnStartStop((err) => {
+                        this.logAndCallback(this.returnErrorStringOrMessage(err, resultMessage), cb);
                     });
                 }
             }, cb);
         });
-    };
-    FirmamentDockerImpl.prototype.getImages = function (ids, cb) {
+    }
+    getImages(ids, cb) {
         this.getImagesOrContainers(ids, dockerode_1.ImageOrContainer.Image, cb);
-    };
-    FirmamentDockerImpl.prototype.getContainers = function (ids, cb) {
+    }
+    getContainers(ids, cb) {
         this.getImagesOrContainers(ids, dockerode_1.ImageOrContainer.Container, cb);
-    };
-    FirmamentDockerImpl.prototype.getImagesOrContainers = function (ids, IorC, cb) {
-        var _this = this;
+    }
+    getImagesOrContainers(ids, IorC, cb) {
         if (!ids) {
-            this.listImagesOrContainers(true, IorC, function (err, imagesOrContainers) {
-                if (_this.callbackIfError(cb, err)) {
+            this.listImagesOrContainers(true, IorC, (err, imagesOrContainers) => {
+                if (this.callbackIfError(cb, err)) {
                     return;
                 }
                 ids = [];
-                imagesOrContainers.forEach(function (imageOrContainer) {
+                imagesOrContainers.forEach(imageOrContainer => {
                     ids.push(imageOrContainer.firmamentId);
                 });
-                _this.getImagesOrContainers(ids, IorC, cb);
+                this.getImagesOrContainers(ids, IorC, cb);
             });
             return;
         }
-        var fnArray = ids.map(function (id) {
-            return async.apply(_this.getImageOrContainer.bind(_this), id.toString(), IorC);
+        let fnArray = ids.map(id => {
+            return async.apply(this.getImageOrContainer.bind(this), id.toString(), IorC);
         });
-        async.series(fnArray, function (err, results) {
-            if (!_this.callbackIfError(cb, err)) {
-                cb(err, results.filter(function (result) { return !!result; }));
+        async.series(fnArray, (err, results) => {
+            if (!this.callbackIfError(cb, err)) {
+                cb(err, results.filter(result => !!result));
             }
         });
-    };
-    FirmamentDockerImpl.prototype.getImage = function (id, cb) {
+    }
+    getImage(id, cb) {
         this.getImageOrContainer(id, dockerode_1.ImageOrContainer.Image, cb);
-    };
-    FirmamentDockerImpl.prototype.getContainer = function (id, cb) {
+    }
+    getContainer(id, cb) {
         this.getImageOrContainer(id, dockerode_1.ImageOrContainer.Container, cb);
-    };
-    FirmamentDockerImpl.prototype.getImageOrContainer = function (id, IorC, cb) {
-        var _this = this;
-        var me = this;
+    }
+    getImageOrContainer(id, IorC, cb) {
+        let me = this;
         async.waterfall([
-            function (cb) {
+                (cb) => {
                 me.listImagesOrContainers(true, IorC, cb);
             },
-            function (imagesOrContainers, cb) {
-                var foundImagesOrContainers = imagesOrContainers.filter(function (imageOrContainer) {
+                (imagesOrContainers, cb) => {
+                let foundImagesOrContainers = imagesOrContainers.filter(imageOrContainer => {
                     if (imageOrContainer.firmamentId === id) {
                         return true;
                     }
                     else {
                         if (IorC === dockerode_1.ImageOrContainer.Container) {
-                            for (var i = 0; i < imageOrContainer.Names.length; ++i) {
+                            for (let i = 0; i < imageOrContainer.Names.length; ++i) {
                                 if (imageOrContainer.Names[i] === (id[0] === '/' ? id : '/' + id)) {
                                     return true;
                                 }
                             }
                         }
                         else if (IorC === dockerode_1.ImageOrContainer.Image) {
-                            for (var i = 0; i < imageOrContainer.RepoTags.length; ++i) {
+                            for (let i = 0; i < imageOrContainer.RepoTags.length; ++i) {
                                 if (imageOrContainer.RepoTags[i] === id) {
                                     return true;
                                 }
                             }
                         }
-                        var lowerCaseId = id.toLowerCase();
-                        var charCount = lowerCaseId.length;
+                        let lowerCaseId = id.toLowerCase();
+                        let charCount = lowerCaseId.length;
                         if (charCount < 3) {
                             return false;
                         }
@@ -179,12 +182,12 @@ var FirmamentDockerImpl = (function (_super) {
                 });
                 if (foundImagesOrContainers.length > 0) {
                     if (IorC === dockerode_1.ImageOrContainer.Container) {
-                        var imageOrContainer = _this.dockerode.getContainer(foundImagesOrContainers[0].Id);
+                        let imageOrContainer = this.dockerode.getContainer(foundImagesOrContainers[0].Id);
                         imageOrContainer.name = foundImagesOrContainers[0].Names[0];
                         cb(null, imageOrContainer);
                     }
                     else if (IorC === dockerode_1.ImageOrContainer.Image) {
-                        var imageOrContainer = _this.dockerode.getImage(foundImagesOrContainers[0].Id);
+                        let imageOrContainer = this.dockerode.getImage(foundImagesOrContainers[0].Id);
                         imageOrContainer.name = foundImagesOrContainers[0].RepoTags[0];
                         cb(null, imageOrContainer);
                     }
@@ -194,21 +197,20 @@ var FirmamentDockerImpl = (function (_super) {
                 }
             }
         ], cb);
-    };
-    FirmamentDockerImpl.prototype.listContainers = function (listAllContainers, cb) {
+    }
+    listContainers(listAllContainers, cb) {
         this.listImagesOrContainers(listAllContainers, dockerode_1.ImageOrContainer.Container, cb);
-    };
-    FirmamentDockerImpl.prototype.listImages = function (listAllImages, cb) {
-        this.listImagesOrContainers(listAllImages, dockerode_1.ImageOrContainer.Image, cb);
-    };
-    FirmamentDockerImpl.prototype.listImagesOrContainers = function (listAll, IorC, cb) {
-        var _this = this;
-        var listFn;
+    }
+    listImages(listAllImages, cb) {
+        this.dockerImageManagement.listImages(listAllImages, cb);
+    }
+    listImagesOrContainers(listAll, IorC, cb) {
+        let listFn;
         listFn = (IorC === dockerode_1.ImageOrContainer.Image)
             ? this.dockerode.listImages
             : this.dockerode.listContainers;
-        listFn.call(this.dockerode, { all: true }, function (err, imagesOrContainers) {
-            if (_this.callbackIfError(cb, err)) {
+        listFn.call(this.dockerode, { all: true }, (err, imagesOrContainers) => {
+            if (this.callbackIfError(cb, err)) {
                 return;
             }
             imagesOrContainers.sort(function (a, b) {
@@ -219,8 +221,8 @@ var FirmamentDockerImpl = (function (_super) {
                     return a.RepoTags[0].localeCompare(b.RepoTags[0]);
                 }
             });
-            var firmamentId = 0;
-            imagesOrContainers = imagesOrContainers.map(function (imageOrContainer) {
+            let firmamentId = 0;
+            imagesOrContainers = imagesOrContainers.map(imageOrContainer => {
                 imageOrContainer.firmamentId = (++firmamentId).toString();
                 if (IorC === dockerode_1.ImageOrContainer.Container) {
                     return (listAll || (imageOrContainer.Status.substring(0, 2) === 'Up')) ? imageOrContainer : null;
@@ -228,13 +230,13 @@ var FirmamentDockerImpl = (function (_super) {
                 else {
                     return imageOrContainer;
                 }
-            }).filter(function (imageOrContainer) {
+            }).filter(imageOrContainer => {
                 return imageOrContainer !== null;
             });
             cb(null, imagesOrContainers);
         });
-    };
-    FirmamentDockerImpl.prototype.buildDockerFile = function (dockerFilePath, dockerImageName, progressCb, cb) {
+    }
+    buildDockerFile(dockerFilePath, dockerImageName, progressCb, cb) {
         try {
             require('fs').statSync(dockerFilePath);
         }
@@ -244,9 +246,9 @@ var FirmamentDockerImpl = (function (_super) {
             }
         }
         try {
-            var tar = require('tar-fs');
-            var tarStream = tar.pack(dockerFilePath);
-            tarStream.on('error', function (err) {
+            let tar = require('tar-fs');
+            let tarStream = tar.pack(dockerFilePath);
+            tarStream.on('error', (err) => {
                 cb(err);
             });
             this.dockerode.buildImage(tarStream, {
@@ -256,10 +258,10 @@ var FirmamentDockerImpl = (function (_super) {
                     cb(err);
                     return;
                 }
-                var error = null;
+                let error = null;
                 outputStream.on('data', function (chunk) {
                     try {
-                        var data = JSON.parse(chunk);
+                        let data = JSON.parse(chunk);
                         if (data.error) {
                             error = data.error;
                             return;
@@ -287,17 +289,17 @@ var FirmamentDockerImpl = (function (_super) {
         catch (err) {
             this.callbackIfError(cb, err);
         }
-    };
-    FirmamentDockerImpl.prototype.pullImage = function (imageName, progressCb, cb) {
-        this.dockerode.pull(imageName, function (err, outputStream) {
-            var error = null;
+    }
+    pullImage(imageName, progressCb, cb) {
+        this.dockerode.pull(imageName, (err, outputStream) => {
+            let error = null;
             if (err) {
                 cb(err);
                 return;
             }
-            outputStream.on('data', function (chunk) {
+            outputStream.on('data', (chunk) => {
                 try {
-                    var data = JSON.parse(chunk);
+                    let data = JSON.parse(chunk);
                     if (data.error) {
                         error = new Error(data.error);
                         return;
@@ -310,19 +312,18 @@ var FirmamentDockerImpl = (function (_super) {
                     error = err;
                 }
             });
-            outputStream.on('end', function () {
+            outputStream.on('end', () => {
                 cb(error);
             });
             outputStream.on('error', function () {
-                var msg = "Unable to pull image: '" + imageName + "'";
+                let msg = "Unable to pull image: '" + imageName + "'";
                 cb(new Error(msg));
             });
         });
-    };
-    FirmamentDockerImpl.prototype.exec = function (id, command, cb) {
-        var _this = this;
-        this.getContainer(id, function (err, dockerContainer) {
-            if (_this.callbackIfError(cb, err)) {
+    }
+    exec(id, command, cb) {
+        this.getContainer(id, (err, dockerContainer) => {
+            if (this.callbackIfError(cb, err)) {
                 return;
             }
             childProcess.spawnSync('docker', ['exec', '-it', dockerContainer.name.slice(1), command], {
@@ -330,8 +331,11 @@ var FirmamentDockerImpl = (function (_super) {
             });
             cb(null, 0);
         });
-    };
-    return FirmamentDockerImpl;
-}(firmament_yargs_1.CommandImpl));
+    }
+}
+FirmamentDockerImpl = __decorate([
+    __param(0, inversify_1.inject('DockerImageManagement')), 
+    __metadata('design:paramtypes', [Object])
+], FirmamentDockerImpl);
 exports.FirmamentDockerImpl = FirmamentDockerImpl;
 //# sourceMappingURL=firmament-docker-impl.js.map

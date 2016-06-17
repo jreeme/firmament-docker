@@ -5,7 +5,7 @@
   "main": "js/index.js",
   "typings": "js/index",
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha -W"
+    "test": "./node_modules/.bin/mocha --reporter spec js/test"
   },
   "repository": {
     "type": "git",
@@ -23,17 +23,21 @@
   },
   "homepage": "https://github.com/jreeme/firmament-docker#readme",
   "devDependencies": {
-    "mocha": "^2.4.5"
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3",
+    "jsonfile": "^2.3.1"
   },
   "dependencies": {
     "async": "^2.0.0-rc.2",
     "deep-extend": "^0.4.1",
     "dockerode": "^2.2.10",
     "firmament-yargs": "^0.1.21",
+    "inversify": "^2.0.0-beta.8",
     "jsnlog": "^2.17.1",
     "lodash": "^4.8.2",
     "nested-yargs": "^1.0.7",
     "positive": "^1.0.9",
+    "reflect-metadata": "^0.1.3",
     "tar-fs": "^1.12.0"
   }
 }

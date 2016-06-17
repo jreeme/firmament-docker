@@ -1,9 +1,11 @@
 import { FirmamentDocker } from '../interfaces/firmament-docker';
 import { CommandImpl } from 'firmament-yargs';
 import { DockerImage, DockerContainer, ContainerRemoveResults, ImageRemoveResults } from '../interfaces/dockerode';
+import { DockerImageManagement } from "../interfaces/docker-image-management";
 export declare class FirmamentDockerImpl extends CommandImpl implements FirmamentDocker {
     private dockerode;
-    constructor();
+    private dockerImageManagement;
+    constructor(_dockerImageManagement: DockerImageManagement);
     createContainer(dockerContainerConfig: any, cb: (err: Error, dockerContainer: DockerContainer) => void): void;
     removeImages(ids: string[], cb: (err: Error, imageRemoveResults: ImageRemoveResults[]) => void): void;
     removeContainers(ids: string[], cb: (err: Error, containerRemoveResults: ContainerRemoveResults[]) => void): void;

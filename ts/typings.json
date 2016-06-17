@@ -1,10 +1,13 @@
 {
   "globalDependencies": {
     "async": "registry:dt/async#1.4.2+20160501155344",
-    "jasmine": "registry:dt/jasmine#2.2.0+20160505161446",
+    "deep-extend": "registry:dt/deep-extend#0.4.1+20160212164839",
     "jsnlog": "registry:dt/jsnlog#2.11.0+20160317120654",
     "lodash": "registry:dt/lodash#3.10.0+20160330154726",
-    "node": "registry:dt/node#6.0.0+20160514165920",
-    "deep-extend": "registry:dt/deep-extend#0.4.1+20160212164839"
+    "mocha": "registry:dt/mocha#2.2.5+20160317120654",
+    "node": "registry:dt/node#6.0.0+20160514165920"
+  },
+  "dependencies": {
+    "chai": "registry:npm/chai#3.5.0+20160415060238"
   }
 }
