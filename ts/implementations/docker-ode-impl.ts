@@ -1,5 +1,3 @@
-/// <reference path="../../node_modules/inversify-dts/inversify/inversify.d.ts" />
-/// <reference path="../../node_modules/reflect-metadata/reflect-metadata.d.ts" />
 import "reflect-metadata";
 import {injectable, inject} from "inversify";
 import {
