@@ -1,7 +1,9 @@
-import {injectable, inject} from "inversify";
-import {DockerUtil} from "../interfaces/docker-util";
-import {ImageOrContainer, DockerOde} from "../interfaces/dockerode";
-import {CommandUtil} from "firmament-yargs";
+import {injectable, inject} from 'inversify';
+import {DockerUtil} from '../interfaces/docker-util';
+import {ImageOrContainer, DockerOde} from '../interfaces/dockerode';
+import {CommandUtil} from 'firmament-yargs';
+const deepExtend = require('deep-extend');
+const async = require('async');
 @injectable()
 export class DockerUtilImpl implements DockerUtil {
   private dockerode: DockerOde;
@@ -15,7 +17,8 @@ export class DockerUtilImpl implements DockerUtil {
 
   getImagesOrContainers(ids: string[],
                         IorC: ImageOrContainer,
-                        cb: (err: Error, imagesOrContainers: any[])=>void) {
+                        cb: (err: Error, imagesOrContainers: any[])=>void,
+                        options = {}) {
     let me = this;
     if (!ids) {
       me.listImagesOrContainers(true, IorC, (err: Error, imagesOrContainers: any[])=> {
@@ -27,7 +30,7 @@ export class DockerUtilImpl implements DockerUtil {
           ids.push(imageOrContainer.firmamentId);
         });
         me.getImagesOrContainers(ids, IorC, cb);
-      });
+      }, options);
       return;
     }
     let fnArray = ids.map(id=> {
@@ -41,44 +44,49 @@ export class DockerUtilImpl implements DockerUtil {
   }
 
   listImagesOrContainers(listAll: boolean,
-                                 IorC: ImageOrContainer,
-                                 cb: (err: Error, imagesOrContainers: any[])=>void) {
+                         IorC: ImageOrContainer,
+                         cb: (err: Error, imagesOrContainers: any[])=>void,
+                         options = {}) {
     let me = this;
     let listFn: (options: any, cb: (err: Error, imagesOrContainers: any[])=>void)=>void;
+    deepExtend(options, {all: true});
     listFn = (IorC === ImageOrContainer.Image)
       ? me.dockerode.listImages
       : me.dockerode.listContainers;
-    listFn.call(me.dockerode, {all: true}, (err: Error, imagesOrContainers: any[])=> {
-      if (me.commandUtil.callbackIfError(cb, err)) {
-        return;
-      }
-      //Sort by name so firmament id is consistent
-      imagesOrContainers.sort(function (a, b) {
-        if (IorC === ImageOrContainer.Container) {
-          return a.Names[0].localeCompare(b.Names[0]);
+    listFn.call(
+      me.dockerode,
+      options,
+      (err: Error, imagesOrContainers: any[])=> {
+        if (me.commandUtil.callbackIfError(cb, err)) {
+          return;
         }
-        else if (IorC === ImageOrContainer.Image) {
-          return a.RepoTags[0].localeCompare(b.RepoTags[0]);
-        }
+        //Sort by name so firmament id is consistent
+        imagesOrContainers.sort(function (a, b) {
+          if (IorC === ImageOrContainer.Container) {
+            return a.Names[0].localeCompare(b.Names[0]);
+          }
+          else if (IorC === ImageOrContainer.Image) {
+            return a.RepoTags[0].localeCompare(b.RepoTags[0]);
+          }
+        });
+        let firmamentId = 0;
+        imagesOrContainers = imagesOrContainers.map(imageOrContainer=> {
+          imageOrContainer.firmamentId = (++firmamentId).toString();
+          if (IorC === ImageOrContainer.Container) {
+            return (listAll || (imageOrContainer.Status.substring(0, 2) === 'Up')) ? imageOrContainer : null;
+          } else {
+            return (listAll || (imageOrContainer.RepoTags[0] !== '<none>:<none>')) ? imageOrContainer : null;
+          }
+        }).filter(imageOrContainer=> {
+          return imageOrContainer !== null;
+        });
+        cb(null, imagesOrContainers);
       });
-      let firmamentId = 0;
-      imagesOrContainers = imagesOrContainers.map(imageOrContainer=> {
-        imageOrContainer.firmamentId = (++firmamentId).toString();
-        if (IorC === ImageOrContainer.Container) {
-          return (listAll || (imageOrContainer.Status.substring(0, 2) === 'Up')) ? imageOrContainer : null;
-        } else {
-          return imageOrContainer;
-        }
-      }).filter(imageOrContainer=> {
-        return imageOrContainer !== null;
-      });
-      cb(null, imagesOrContainers);
-    });
   }
 
   getImageOrContainer(id: string,
-                              IorC: ImageOrContainer,
-                              cb: (err: Error, imageOrContainer: any)=>void) {
+                      IorC: ImageOrContainer,
+                      cb: (err: Error, imageOrContainer: any)=>void) {
     let me = this;
     async.waterfall([
         (cb: (err: Error)=>void)=> {
@@ -124,11 +132,10 @@ export class DockerUtilImpl implements DockerUtil {
               cb(null, imageOrContainer);
             }
           } else {
-            cb(null, 'Unable to find: "' + id + '"');
+            cb(null, `Unable to find: ${id}`);
           }
         }
       ],
       cb);
   }
-
 }

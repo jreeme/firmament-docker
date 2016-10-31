@@ -1,0 +1,107 @@
+[
+  {
+    "Id": "228bca3348bca12af16cbf16b18f45202f2174ff05b8d904070e6c7c2d45f601",
+    "Names": [
+      "/mongo"
+    ],
+    "Image": "mongo:2.6",
+    "ImageID": "sha256:c95a4e8f45fc9efb52aa8c1ba6e6537e01ac5ce664eb18cb26ceb1728461b9a3",
+    "Command": "/entrypoint.sh mongod",
+    "Created": 1456845887,
+    "Ports": [],
+    "Labels": {},
+    "Status": "Exited (0) 9 days ago",
+    "HostConfig": {
+      "NetworkMode": "default"
+    },
+    "NetworkSettings": {
+      "Networks": {
+        "bridge": {
+          "IPAMConfig": null,
+          "Links": null,
+          "Aliases": null,
+          "NetworkID": "",
+          "EndpointID": "",
+          "Gateway": "",
+          "IPAddress": "",
+          "IPPrefixLen": 0,
+          "IPv6Gateway": "",
+          "GlobalIPv6Address": "",
+          "GlobalIPv6PrefixLen": 0,
+          "MacAddress": ""
+        }
+      }
+    },
+    "firmamentId": "1"
+  },
+  {
+    "Id": "c66d96e9c6480751a53059881af5e660ac9c7884a5adfc322e48cbd0b8855f78",
+    "Names": [
+      "/mysql"
+    ],
+    "Image": "mysql:5.6",
+    "ImageID": "sha256:72bb9d97fb75c6ee7d8175ff90d20a1098bc3cfb6cbca4f1132af490e8f8107b",
+    "Command": "docker-entrypoint.sh mysqld",
+    "Created": 1473704881,
+    "Ports": [],
+    "Labels": {},
+    "Status": "Exited (0) 7 weeks ago",
+    "HostConfig": {
+      "NetworkMode": "default"
+    },
+    "NetworkSettings": {
+      "Networks": {
+        "bridge": {
+          "IPAMConfig": null,
+          "Links": null,
+          "Aliases": null,
+          "NetworkID": "",
+          "EndpointID": "",
+          "Gateway": "",
+          "IPAddress": "",
+          "IPPrefixLen": 0,
+          "IPv6Gateway": "",
+          "GlobalIPv6Address": "",
+          "GlobalIPv6PrefixLen": 0,
+          "MacAddress": ""
+        }
+      }
+    },
+    "firmamentId": "2"
+  },
+  {
+    "Id": "75b0421a5e8dc717366212fe9297ee052eed3dd61862be067355834f10eea60d",
+    "Names": [
+      "/ubuntu"
+    ],
+    "Image": "ubuntu:16.10",
+    "ImageID": "sha256:df4ba6fcd70ecf95a378c1caa59f4ff185f91398b8b7b06645dc5f70b036941a",
+    "Command": "/bin/bash",
+    "Created": 1477935148,
+    "Ports": [],
+    "Labels": {},
+    "Status": "Up About an hour",
+    "HostConfig": {
+      "NetworkMode": "default"
+    },
+    "NetworkSettings": {
+      "Networks": {
+        "bridge": {
+          "IPAMConfig": null,
+          "Links": null,
+          "Aliases": null,
+          "NetworkID": "",
+          "EndpointID": "1836d0a0cf8f6ffa4a9dbfb674e97139d33a05085c87fd7b7c57a209f2879bbf",
+          "Gateway": "172.17.0.1",
+          "IPAddress": "172.17.0.2",
+          "IPPrefixLen": 16,
+          "IPv6Gateway": "",
+          "GlobalIPv6Address": "",
+          "GlobalIPv6PrefixLen": 0,
+          "MacAddress": "02:42:ac:11:00:02"
+        }
+      }
+    },
+    "firmamentId": "3"
+  }
+]

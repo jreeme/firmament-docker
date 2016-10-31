@@ -12,6 +12,20 @@
     "outDir": "../js",
     "pretty": true,
     "sourceMap": true,
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "types": [
+      "async",
+      "chai",
+      "inversify",
+      "jsnlog",
+      "lodash",
+      "mocha",
+      "node",
+      "reflect-metadata"
+    ],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   }
