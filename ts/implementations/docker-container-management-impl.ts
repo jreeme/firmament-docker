@@ -3,6 +3,7 @@ import {DockerOde, DockerContainer, ImageOrContainer, ContainerRemoveResults} fr
 import {CommandUtil} from 'firmament-yargs';
 import {DockerContainerManagement} from "../interfaces/docker-container-management";
 import {DockerUtil} from "../interfaces/docker-util";
+import {DockerUtilOptionsImpl} from "./docker-util-options-impl";
 const deepExtend = require('deep-extend');
 const positive = require('positive');
 
@@ -37,29 +38,32 @@ export class DockerContainerManagementImpl implements DockerContainerManagement 
         }, cb);
     });
   }
-  private dockerode:DockerOde;
-  private dockerUtil:DockerUtil;
-  private commandUtil:CommandUtil;
 
-  constructor(
-      @inject('DockerOde') _dockerode:DockerOde,
-      @inject('DockerUtil') _dockerUtil:DockerUtil,
-      @inject('CommandUtil') _commandUtil:CommandUtil
-  ) {
+  private dockerode: DockerOde;
+  private dockerUtil: DockerUtil;
+  private commandUtil: CommandUtil;
+
+  constructor(@inject('DockerOde') _dockerode: DockerOde,
+              @inject('DockerUtil') _dockerUtil: DockerUtil,
+              @inject('CommandUtil') _commandUtil: CommandUtil) {
     this.dockerode = _dockerode;
     this.dockerUtil = _dockerUtil;
     this.commandUtil = _commandUtil;
   }
+
   getContainers(ids: string[], cb: (err: Error, dockerContainers: DockerContainer[])=>void) {
-    this.dockerUtil.getImagesOrContainers(ids, ImageOrContainer.Container, cb);
+    let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Container);
+    this.dockerUtil.getImagesOrContainers(ids, dockerUtilOptions, cb);
   }
 
   getContainer(id: string, cb: (err: Error, dockerContainer: DockerContainer)=>void) {
-    this.dockerUtil.getImageOrContainer(id, ImageOrContainer.Container, cb);
+    let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Container);
+    this.dockerUtil.getImageOrContainer(id, dockerUtilOptions, cb);
   }
 
   listContainers(listAllContainers: boolean, cb: (err: Error, dockerContainers?: DockerContainer[])=>void) {
-    this.dockerUtil.listImagesOrContainers(listAllContainers, ImageOrContainer.Container, cb);
+    let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Container, listAllContainers);
+    this.dockerUtil.listImagesOrContainers(dockerUtilOptions, cb);
   }
 
   createContainer(dockerContainerConfig: any, cb: (err: Error, dockerContainer: DockerContainer)=>void) {

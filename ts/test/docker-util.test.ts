@@ -4,103 +4,125 @@ import {expect} from 'chai';
 import {DockerOde, ImageOrContainer} from "../interfaces/dockerode";
 import {DockerOdeMockImpl} from "./docker-ode-mock-impl";
 import {DockerUtil} from "../interfaces/docker-util";
+import {DockerUtilOptionsImpl} from "../implementations/docker-util-options-impl";
 describe('DockerUtil', function () {
   let dockerUtil: DockerUtil;
   beforeEach(()=> {
-    kernel.unbind('DockerOde');
-    kernel.bind<DockerOde>('DockerOde').to(DockerOdeMockImpl);
+/*    kernel.unbind('DockerOde');
+    kernel.bind<DockerOde>('DockerOde').to(DockerOdeMockImpl);*/
     dockerUtil = kernel.get<DockerUtil>('DockerUtil');
   });
   //
   //****************************** DockerUtil.listImagesOrContainers
   //
-  describe('DockerUtil.listImagesOrContainers (force error)', function () {
+  describe('DockerUtil.listImagesOrContainers (force error, images)', function () {
     it('should return a list of all images', function (done) {
       expect(dockerUtil).to.not.equal(null);
       dockerUtil.listImagesOrContainers(
-        true,
-        ImageOrContainer.Image,
+        new DockerUtilOptionsImpl(ImageOrContainer.Image, true, true),
         (err, imagesOrContainers: any[])=> {
           expect(err).to.not.equal(null);
           done();
-        }, {forceError: true});
+        });
     });
   });
   describe('DockerUtil.listImagesOrContainers (all,  images)', function () {
     it('should return a list of all images', function (done) {
       expect(dockerUtil).to.not.equal(null);
-      dockerUtil.listImagesOrContainers(true, ImageOrContainer.Image, (err, imagesOrContainers: any[])=> {
-        expect(imagesOrContainers.length).to.equal(9);
-        done();
-      });
+      dockerUtil.listImagesOrContainers(
+        new DockerUtilOptionsImpl(ImageOrContainer.Image, true),
+        (err, imagesOrContainers: any[])=> {
+          expect(imagesOrContainers.length).to.equal(9);
+          //Check sorting
+          for(let i = 0;i < imagesOrContainers.length - 1;++i){
+            let refId = imagesOrContainers[i].RepoTags[0] + imagesOrContainers[i].Id;
+            let cmpId = imagesOrContainers[i + 1].RepoTags[0]+ imagesOrContainers[i + 1].Id;
+            let r = refId.localeCompare(cmpId);
+            expect(r).to.equal(-1);//This means the array is sorted in ascending order
+          }
+          done();
+        });
     });
   });
   describe('DockerUtil.listImagesOrContainers (not all, images)', function () {
     it('should return a list of all images', function (done) {
       expect(dockerUtil).to.not.equal(null);
-      dockerUtil.listImagesOrContainers(false, ImageOrContainer.Image, (err, imagesOrContainers: any[])=> {
-        expect(imagesOrContainers.length).to.equal(5);
-        done();
-      });
+      dockerUtil.listImagesOrContainers(
+        new DockerUtilOptionsImpl(ImageOrContainer.Image),
+        (err, imagesOrContainers: any[])=> {
+          expect(imagesOrContainers.length).to.equal(5);
+          done();
+        });
     });
   });
-  describe('DockerUtil.listImagesOrContainers (force error)', function () {
+  describe('DockerUtil.listImagesOrContainers (force error, containers)', function () {
     it('should return a list of all images', function (done) {
       expect(dockerUtil).to.not.equal(null);
       dockerUtil.listImagesOrContainers(
-        true,
-        ImageOrContainer.Container,
+        new DockerUtilOptionsImpl(ImageOrContainer.Container, true, true),
         (err, imagesOrContainers: any[])=> {
           expect(err).to.not.equal(null);
           done();
-        }, {forceError: true});
+        });
     });
   });
   describe('DockerUtil.listImagesOrContainers (all,  containers)', function () {
     it('should return a list of all images', function (done) {
       expect(dockerUtil).to.not.equal(null);
-      dockerUtil.listImagesOrContainers(true, ImageOrContainer.Container, (err, imagesOrContainers: any[])=> {
-        /*        var jsonFile = require('jsonfile');
-         jsonFile.spaces = 2;
-         jsonFile.writeFileSync('/home/jreeme/src/firmament-docker/test-data/docker-container-list.json', imagesOrContainers);*/
-        expect(imagesOrContainers.length).to.equal(3);
-        done();
-      });
+      dockerUtil.listImagesOrContainers(
+        new DockerUtilOptionsImpl(ImageOrContainer.Container, true),
+        (err, imagesOrContainers: any[])=> {
+          /*        var jsonFile = require('jsonfile');
+           jsonFile.spaces = 2;
+           jsonFile.writeFileSync('/home/jreeme/src/firmament-docker/test-data/docker-container-list.json', imagesOrContainers);*/
+          //Check sorting
+          for(let i = 0;i < imagesOrContainers.length - 1;++i){
+            let refId = imagesOrContainers[i].Names[0];
+            let cmpId = imagesOrContainers[i + 1].Names[0];
+            let r = refId.localeCompare(cmpId);
+            expect(r).to.equal(-1);//This means the array is sorted in ascending order
+            console.log(r);
+          }
+          expect(imagesOrContainers.length).to.equal(3);
+          done();
+        });
     });
   });
   describe('DockerUtil.listImagesOrContainers (not all, containers)', function () {
     it('should return a list of all images', function (done) {
       expect(dockerUtil).to.not.equal(null);
-      dockerUtil.listImagesOrContainers(false, ImageOrContainer.Container, (err, imagesOrContainers: any[])=> {
-        expect(imagesOrContainers.length).to.equal(1);
-        done();
-      });
+      dockerUtil.listImagesOrContainers(
+        new DockerUtilOptionsImpl(ImageOrContainer.Container),
+        (err, imagesOrContainers: any[])=> {
+          expect(imagesOrContainers.length).to.equal(1);
+          done();
+        });
     });
   });
   //
   //****************************** DockerUtil.getImagesOrContainers
   //
-  describe('DockerUtil.getImagesOrContainers (force error)', function () {
-    it('should return images by firmamentId', function (done) {
+  describe('DockerUtil.getImagesOrContainers (force error, images)', function () {
+    it('should return non-null Error instance in callback', function (done) {
       expect(dockerUtil).to.not.equal(null);
       dockerUtil.getImagesOrContainers(
-        ['1','3'],
-        ImageOrContainer.Image,
+        ['1', '3'],
+        new DockerUtilOptionsImpl(ImageOrContainer.Image, true, true),
         (err, imagesOrContainers: any[])=> {
           expect(err).to.not.equal(null);
           done();
-        }, {forceError: true});
+        });
     });
   });
-  describe('DockerUtil.getImagesOrContainers (by firmamentId)', function () {
+  describe('DockerUtil.getImagesOrContainers (by firmamentId, images)', function () {
     it('should return images by firmamentId', function (done) {
       expect(dockerUtil).to.not.equal(null);
       dockerUtil.getImagesOrContainers(
-        ['1','3'],
-        ImageOrContainer.Image,
+        ['1', '3', '5', '7'],
+        new DockerUtilOptionsImpl(ImageOrContainer.Image),
         (err, imagesOrContainers: any[])=> {
           done();
-        }, {forceError: true});
+        });
     });
   });
   /*    it('should return non-null error on failure', function (done) {

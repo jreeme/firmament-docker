@@ -3,33 +3,35 @@ import {DockerImageManagement} from "../interfaces/docker-image-management";
 import {DockerImage, ImageRemoveResults, DockerOde, ImageOrContainer} from "../interfaces/dockerode";
 import {CommandUtil} from 'firmament-yargs';
 import {DockerUtil} from "../interfaces/docker-util";
+import {DockerUtilOptionsImpl} from "./docker-util-options-impl";
 const positive = require('positive');
 @injectable()
 export class DockerImageManagementImpl implements DockerImageManagement {
-  private dockerode:DockerOde;
-  private commandUtil:CommandUtil;
-  private dockerUtil:DockerUtil;
+  private dockerode: DockerOde;
+  private commandUtil: CommandUtil;
+  private dockerUtil: DockerUtil;
 
-  constructor(
-      @inject('DockerOde') _dockerode:DockerOde,
-      @inject('DockerUtil') _dockerUtil:DockerUtil,
-      @inject('CommandUtil') _commandUtil:CommandUtil
-  ) {
+  constructor(@inject('DockerOde') _dockerode: DockerOde,
+              @inject('DockerUtil') _dockerUtil: DockerUtil,
+              @inject('CommandUtil') _commandUtil: CommandUtil) {
     this.dockerode = _dockerode;
     this.dockerUtil = _dockerUtil;
     this.commandUtil = _commandUtil;
   }
 
   getImage(id: string, cb: (err: Error, image: DockerImage)=>void) {
-    this.dockerUtil.getImageOrContainer(id, ImageOrContainer.Image, cb);
+    let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Image);
+    this.dockerUtil.getImageOrContainer(id, dockerUtilOptions, cb);
   }
 
   getImages(ids: string[], cb: (err: Error, images: DockerImage[])=>void) {
-    this.dockerUtil.getImagesOrContainers(ids, ImageOrContainer.Image, cb);
+    let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Image);
+    this.dockerUtil.getImagesOrContainers(ids, dockerUtilOptions, cb);
   }
 
-  listImages(listAllImages:boolean, cb:(err:Error, images:DockerImage[])=>void) {
-    this.dockerUtil.listImagesOrContainers(listAllImages, ImageOrContainer.Image, cb);
+  listImages(listAllImages: boolean, cb: (err: Error, images: DockerImage[])=>void) {
+    let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Image, listAllImages);
+    this.dockerUtil.listImagesOrContainers(dockerUtilOptions, cb);
   }
 
   pullImage(imageName: string, progressCb: (taskId: string, status: string, current: number, total: number)=>void, cb: (err: Error)=>void) {
@@ -127,7 +129,7 @@ export class DockerImageManagementImpl implements DockerImageManagement {
     }
   }
 
-  removeImages(ids:string[], cb:(err:Error, imageRemoveResults:ImageRemoveResults[])=>void):void {
+  removeImages(ids: string[], cb: (err: Error, imageRemoveResults: ImageRemoveResults[])=>void): void {
     let me = this;
     if (!ids.length) {
       console.log('Specify images to remove by FirmamentId, Docker ID or Name. Or "all" to remove all.');
