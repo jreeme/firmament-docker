@@ -4,9 +4,10 @@ import {DockerImage, ImageRemoveResults, DockerOde, ImageOrContainer} from "../i
 import {CommandUtil} from 'firmament-yargs';
 import {DockerUtil} from "../interfaces/docker-util";
 import {DockerUtilOptionsImpl} from "./docker-util-options-impl";
+import {ForceErrorImpl} from "./force-error-impl";
 const positive = require('positive');
 @injectable()
-export class DockerImageManagementImpl implements DockerImageManagement {
+export class DockerImageManagementImpl extends ForceErrorImpl implements DockerImageManagement {
   private dockerode: DockerOde;
   private commandUtil: CommandUtil;
   private dockerUtil: DockerUtil;
@@ -14,27 +15,32 @@ export class DockerImageManagementImpl implements DockerImageManagement {
   constructor(@inject('DockerOde') _dockerode: DockerOde,
               @inject('DockerUtil') _dockerUtil: DockerUtil,
               @inject('CommandUtil') _commandUtil: CommandUtil) {
+    super();
     this.dockerode = _dockerode;
     this.dockerUtil = _dockerUtil;
     this.commandUtil = _commandUtil;
   }
 
+  listImages(listAllImages: boolean, cb: (err: Error, images: DockerImage[])=>void) {
+    let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Image, listAllImages);
+    this.dockerUtil.forceError = this.forceError;
+    this.dockerUtil.listImagesOrContainers(dockerUtilOptions, cb);
+  }
+
   getImage(id: string, cb: (err: Error, image: DockerImage)=>void) {
     let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Image);
+    this.dockerUtil.forceError = this.forceError;
     this.dockerUtil.getImageOrContainer(id, dockerUtilOptions, cb);
   }
 
   getImages(ids: string[], cb: (err: Error, images: DockerImage[])=>void) {
     let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Image);
+    this.dockerUtil.forceError = this.forceError;
     this.dockerUtil.getImagesOrContainers(ids, dockerUtilOptions, cb);
   }
 
-  listImages(listAllImages: boolean, cb: (err: Error, images: DockerImage[])=>void) {
-    let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Image, listAllImages);
-    this.dockerUtil.listImagesOrContainers(dockerUtilOptions, cb);
-  }
-
   pullImage(imageName: string, progressCb: (taskId: string, status: string, current: number, total: number)=>void, cb: (err: Error)=>void) {
+    this.dockerode.forceError = this.forceError;
     let me = this;
     me.dockerode.pull(imageName,
       (err, outputStream)=> {
@@ -71,6 +77,7 @@ export class DockerImageManagementImpl implements DockerImageManagement {
   }
 
   buildDockerFile(dockerFilePath: string, dockerImageName: string, progressCb: (taskId: string, status: string, current: number, total: number)=>void, cb: (err: Error)=>void) {
+    this.dockerode.forceError = this.forceError;
     let me = this;
     try {
       //Check existence of dockerFilePath

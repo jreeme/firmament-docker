@@ -1,14 +1,16 @@
 import "reflect-metadata";
-import {injectable, inject} from "inversify";
+import {injectable} from "inversify";
 import {
   DockerOde, DockerImage, DockerContainer, ContainerObject, ImageObject
 } from "../interfaces/dockerode";
+import {ImageObjectImpl} from "./image-object-impl";
+import {ContainerObjectImpl} from "./container-object-impl";
+import {ForceErrorImpl} from "../implementations/force-error-impl";
 const jsonFile = require('jsonfile');
 @injectable()
-export class DockerOdeMockImpl implements DockerOde {
+export class DockerOdeMockImpl extends ForceErrorImpl implements DockerOde {
   listImages(options: any, cb: (err: Error, images: DockerImage[])=>void): void {
-    if (options.forceError) {
-      cb(new Error('error forced'), []);
+    if (this.checkForceError(cb)) {
       return;
     }
     let images = options.all
@@ -20,8 +22,7 @@ export class DockerOdeMockImpl implements DockerOde {
   }
 
   listContainers(options: any, cb: (err: Error, containers: DockerContainer[])=>void): void {
-    if (options.forceError) {
-      cb(new Error('error forced'), []);
+    if (this.checkForceError(cb)) {
       return;
     }
     let containers = options.all
@@ -32,18 +33,22 @@ export class DockerOdeMockImpl implements DockerOde {
     cb(null, containers);
   }
 
-  getContainer(id: string): ContainerObject {
+  getContainer(id: string, options: any = {}): ContainerObject {
     var containerArray = this.testContainerList.filter(container=> {
       return id === container.Id;
     });
-    return containerArray.length ? containerArray[0] : null;
+    return containerArray.length
+      ? new ContainerObjectImpl(null, containerArray[0].Id)
+      : null;
   }
 
-  getImage(id: string): ImageObject {
+  getImage(id: string, options: any = {}): ImageObject {
     var imageArray = this.testImageList.filter(image=> {
       return id === image.Id;
     });
-    return imageArray.length ? imageArray[0] : null;
+    return imageArray.length
+      ? new ImageObjectImpl(null, imageArray[0].Id)
+      : null;
   }
 
   buildImage(tarStream: any, options: any, cb: (err: Error, outputStream: any)=>void) {

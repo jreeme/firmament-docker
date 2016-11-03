@@ -1,5 +1,6 @@
 import {DockerUtilOptions} from "./docker-util-options";
-export interface DockerUtil {
+import {ForceError} from "./force-error";
+export interface DockerUtil extends ForceError {
   getImagesOrContainers(ids: string[],
                         options: DockerUtilOptions,
                         cb: (err: Error, imagesOrContainers: any[])=>void)

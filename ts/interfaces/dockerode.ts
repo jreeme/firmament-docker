@@ -1,3 +1,5 @@
+import {DockerUtilOptions} from "./docker-util-options";
+import {ForceError} from "./force-error";
 export enum ImageOrContainer{
   Image,
   Container
@@ -67,13 +69,13 @@ export interface ImageOrContainerObject {
   name: string,
   id: string,
   modem: Modem,
-  constructor: (model: Modem, name: string)=>void,
-  get: (callback: (err: Error, obj: any)=>void)=>void,
-  history:(callback: (err: Error, obj: any)=>void)=>void,
-  inspect:(callback: (err: Error, obj: any)=>void)=>void,
-  push: (opts:any, callback: (err: Error, obj: any)=>void, auth:any)=>void,
-  remove: (opts:any, callback: (err: Error, obj: any)=>void)=>void,
-  tag: (opts:any, callback: (err: Error, obj: any)=>void)=>void
+  //constructor(modem: Modem, name: string):void;
+  get(callback: (err: Error, obj: any)=>void): void;
+  history(callback: (err: Error, obj: any)=>void): void;
+  inspect(callback: (err: Error, obj: any)=>void): void;
+  push(opts: any, callback: (err: Error, obj: any)=>void, auth: any): void;
+  remove(opts: any, callback: (err: Error, obj: any)=>void): void;
+  tag(opts: any, callback: (err: Error, obj: any)=>void): void;
 }
 
 export interface ImageObject extends ImageOrContainerObject {
@@ -82,11 +84,11 @@ export interface ImageObject extends ImageOrContainerObject {
 export interface ContainerObject extends ImageOrContainerObject {
 }
 
-export interface DockerOde {
+export interface DockerOde extends ForceError {
   listImages(options: any, cb: (err: Error, images: DockerImage[])=>void): void;
   listContainers(options: any, cb: (err: Error, containers: DockerContainer[])=>void): void;
-  getContainer(id: string): ContainerObject;
-  getImage(id: string): ImageObject;
+  getContainer(id: string, options?: any): ContainerObject;
+  getImage(id: string, options?: any): ImageObject;
   buildImage(tarStream: any, options: any, cb: (err: Error, outputStream: any)=>void);
   createContainer(containerConfig: any, cb: (err: Error, container: DockerContainer)=>void): void;
   pull(imageName: string, cb: (err: Error, outputStream: any)=>void);

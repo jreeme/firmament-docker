@@ -3,15 +3,17 @@ import {DockerUtil} from '../interfaces/docker-util';
 import {ImageOrContainer, DockerOde} from '../interfaces/dockerode';
 import {CommandUtil} from 'firmament-yargs';
 import {DockerUtilOptions} from "../interfaces/docker-util-options";
+import {ForceErrorImpl} from "./force-error-impl";
 const deepExtend = require('deep-extend');
 const async = require('async');
 @injectable()
-export class DockerUtilImpl implements DockerUtil {
+export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
   private dockerode: DockerOde;
   private commandUtil: CommandUtil;
 
   constructor(@inject('DockerOde') _dockerode: DockerOde,
               @inject('CommandUtil') _commandUtil: CommandUtil) {
+    super();
     this.dockerode = _dockerode;
     this.commandUtil = _commandUtil;
   }
@@ -19,6 +21,7 @@ export class DockerUtilImpl implements DockerUtil {
   listImagesOrContainers(options: DockerUtilOptions,
                          cb: (err: Error, imagesOrContainers: any[])=>void) {
     let me = this;
+    me.dockerode.forceError = this.forceError;
     let listFn: (options: any, cb: (err: Error, imagesOrContainers: any[])=>void)=>void;
     deepExtend(options, {all: true});
     listFn = (options.IorC === ImageOrContainer.Image)
@@ -27,8 +30,7 @@ export class DockerUtilImpl implements DockerUtil {
     listFn.call(
       me.dockerode,
       {
-        all: true,
-        forceError: options.forceError
+        all: true
       },
       (err: Error, imagesOrContainers: any[])=> {
         if (me.commandUtil.callbackIfError(cb, err)) {
@@ -131,11 +133,11 @@ export class DockerUtilImpl implements DockerUtil {
           if (foundImagesOrContainers.length > 0) {
             let imageOrContainer:any;
             if (options.IorC === ImageOrContainer.Container) {
-              imageOrContainer = me.dockerode.getContainer(foundImagesOrContainers[0].Id);
+              imageOrContainer = me.dockerode.getContainer(foundImagesOrContainers[0].Id, options);
               imageOrContainer.name = foundImagesOrContainers[0].Names[0];
             }
             else if (options.IorC === ImageOrContainer.Image) {
-              imageOrContainer = me.dockerode.getImage(foundImagesOrContainers[0].Id);
+              imageOrContainer = me.dockerode.getImage(foundImagesOrContainers[0].Id, options);
               imageOrContainer.name = foundImagesOrContainers[0].RepoTags[0];
             }
             cb(null, imageOrContainer);
