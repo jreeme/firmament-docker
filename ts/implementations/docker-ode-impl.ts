@@ -39,18 +39,23 @@ export class DockerOdeImpl extends ForceErrorImpl implements DockerOde {
     if (this.checkForceError(cb)) {
       return;
     }
+    this.dockerode.buildImage(tarStream, options, cb);
   }
 
-  createContainer(containerConfig: any, cb: (err: Error, container: DockerContainer)=>void): void {
+  createContainer(containerConfig: any, cb: (err: Error, container: ContainerObject)=>void): void {
     if (this.checkForceError(cb)) {
       return;
     }
+    this.dockerode.createContainer(containerConfig, (err: Error, container: any)=> {
+      cb(err, container);
+    });
   }
 
   pull(imageName: string, cb: (err: Error, outputStream: any)=>void) {
     if (this.checkForceError(cb)) {
       return;
     }
+    this.dockerode.pull(imageName, cb);
   }
 }
 

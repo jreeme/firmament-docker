@@ -9,21 +9,11 @@ export class ContainerObjectImpl implements ContainerObject {
     this.id = _id;
   }
 
-  get(callback: (err: Error, obj: any)=>void): void {
+  start(opts: any, callback: (err: Error, obj: any)=>void): void {
+    callback(null,{});
   }
 
-  history(callback: (err: Error, obj: any)=>void): void {
-  }
-
-  inspect(callback: (err: Error, obj: any)=>void): void {
-  }
-
-  push(opts: any, callback: (err: Error, obj: any)=>void, auth: any): void {
-  }
-
-  remove(opts: any, callback: (err: Error, obj: any)=>void): void {
-  }
-
-  tag(opts: any, callback: (err: Error, obj: any)=>void): void {
+  stop(opts: any, callback: (err: Error, obj: any)=>void): void {
+    callback(null,{});
   }
 }

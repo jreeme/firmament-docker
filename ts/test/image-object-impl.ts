@@ -22,6 +22,7 @@ export class ImageObjectImpl implements ImageObject {
   }
 
   remove(opts: any, callback: (err: Error, obj: any)=>void): void {
+    callback(null, this);
   }
 
   tag(opts: any, callback: (err: Error, obj: any)=>void): void {

@@ -1,14 +1,17 @@
-import "reflect-metadata";
+import 'reflect-metadata';
 import kernel from '../inversify.config';
 import {expect} from 'chai';
-import {DockerOde, DockerContainer} from "../interfaces/dockerode";
-import {DockerOdeMockImpl} from "./docker-ode-mock-impl";
-import {DockerContainerManagement} from "../interfaces/docker-container-management";
-import {ForceError} from "../interfaces/force-error";
+import {DockerOde, DockerContainer, ContainerObject} from '../interfaces/dockerode';
+import {DockerOdeMockImpl} from './docker-ode-mock-impl';
+import {DockerContainerManagement} from '../interfaces/docker-container-management';
+import {ForceError} from '../interfaces/force-error';
+import {DockerDescriptors} from '../interfaces/docker-descriptors';
+import {DockerOdeImpl} from "../implementations/docker-ode-impl";
 describe('DockerContainerManagement', function () {
   let dockerContainerManagement: DockerContainerManagement;
   beforeEach(()=> {
     kernel.unbind('DockerOde');
+    //kernel.bind<DockerOde>('DockerOde').to(DockerOdeImpl);
     kernel.bind<DockerOde>('DockerOde').to(DockerOdeMockImpl);
     dockerContainerManagement = kernel.get<DockerContainerManagement>('DockerContainerManagement');
   });
@@ -58,7 +61,7 @@ describe('DockerContainerManagement', function () {
       (<ForceError>dockerContainerManagement).forceError = true;
       dockerContainerManagement.getContainer(
         '2',
-        (err: Error, container: DockerContainer)=> {
+        (err: Error, container: ContainerObject)=> {
           expect(err).to.not.equal(null);
           expect(container).to.equal(null);
           done();
@@ -70,7 +73,7 @@ describe('DockerContainerManagement', function () {
       expect(dockerContainerManagement).to.not.equal(null);
       dockerContainerManagement.getContainer(
         '2',
-        (err: Error, container: DockerContainer)=> {
+        (err: Error, container: ContainerObject)=> {
           expect(err).to.equal(null);
           expect(container.constructor.name).to.equal('ContainerObjectImpl');
           expect(container.name).to.equal('/mysql');
@@ -84,7 +87,7 @@ describe('DockerContainerManagement', function () {
       (<ForceError>dockerContainerManagement).forceError = true;
       dockerContainerManagement.getContainers(
         ['2', '3'],
-        (err: Error, containers: DockerContainer[])=> {
+        (err: Error, containers: ContainerObject[])=> {
           expect(err).to.not.equal(null);
           expect(containers).to.equal(null);
           done();
@@ -97,13 +100,38 @@ describe('DockerContainerManagement', function () {
       expect(dockerContainerManagement).to.not.equal(null);
       dockerContainerManagement.getContainers(
         ['2', '3'],
-        (err: Error, containers: DockerContainer[])=> {
+        (err: Error, containers: ContainerObject[])=> {
           expect(err).to.equal(null);
           expect(containers).to.have.lengthOf(2)
           for(let i = 0;i < containers.length;++i){
             expect(containers[i].constructor.name).to.equal('ContainerObjectImpl');
             expect(containers[i].name).to.equal(containerNames[i]);
           }
+          done();
+        });
+    });
+  });
+  describe('DockerContainerManagement.createContainer (force error)', function () {
+    it('should return non-null Error instance in callback', function (done) {
+      expect(dockerContainerManagement).to.not.equal(null);
+      (<ForceError>dockerContainerManagement).forceError = true;
+      dockerContainerManagement.createContainer(
+        DockerDescriptors.dockerContainerConfigTemplate[0],
+        (err: Error, container: ContainerObject)=> {
+          expect(err).to.not.equal(null);
+          expect(container).to.equal(null);
+          done();
+        });
+    });
+  });
+  describe('DockerContainerManagement.createContainer', function () {
+    it('should return DockerContainer description in callback', function (done) {
+      expect(dockerContainerManagement).to.not.equal(null);
+      dockerContainerManagement.createContainer(
+        DockerDescriptors.dockerContainerConfigTemplate[0],
+        (err: Error, container: ContainerObject)=> {
+          expect(err).to.equal(null);
+          expect(container).to.not.equal(null);
           done();
         });
     });

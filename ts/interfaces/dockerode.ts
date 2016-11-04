@@ -69,6 +69,9 @@ export interface ImageOrContainerObject {
   name: string,
   id: string,
   modem: Modem,
+}
+
+export interface ImageObject extends ImageOrContainerObject {
   //constructor(modem: Modem, name: string):void;
   get(callback: (err: Error, obj: any)=>void): void;
   history(callback: (err: Error, obj: any)=>void): void;
@@ -78,10 +81,10 @@ export interface ImageOrContainerObject {
   tag(opts: any, callback: (err: Error, obj: any)=>void): void;
 }
 
-export interface ImageObject extends ImageOrContainerObject {
-}
-
 export interface ContainerObject extends ImageOrContainerObject {
+  //constructor(modem: Modem, name: string):void;
+  start(opts: any, callback: (err: Error, obj: any)=>void): void;
+  stop(opts: any, callback: (err: Error, obj: any)=>void): void;
 }
 
 export interface DockerOde extends ForceError {
@@ -90,9 +93,10 @@ export interface DockerOde extends ForceError {
   getContainer(id: string, options?: any): ContainerObject;
   getImage(id: string, options?: any): ImageObject;
   buildImage(tarStream: any, options: any, cb: (err: Error, outputStream: any)=>void);
-  createContainer(containerConfig: any, cb: (err: Error, container: DockerContainer)=>void): void;
+  createContainer(containerConfig: any, cb: (err: Error, container: ContainerObject)=>void): void;
   pull(imageName: string, cb: (err: Error, outputStream: any)=>void);
 }
+
 export interface ContainerConfig {
   name: string,
   Image: string,

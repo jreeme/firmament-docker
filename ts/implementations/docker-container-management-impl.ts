@@ -1,5 +1,8 @@
 import {injectable, inject} from "inversify";
-import {DockerOde, DockerContainer, ImageOrContainer, ContainerRemoveResults} from "../interfaces/dockerode";
+import {
+  DockerOde, DockerContainer, ImageOrContainer, ContainerRemoveResults,
+  ContainerObject
+} from "../interfaces/dockerode";
 import {CommandUtil} from 'firmament-yargs';
 import {DockerContainerManagement} from "../interfaces/docker-container-management";
 import {DockerUtil} from "../interfaces/docker-util";
@@ -29,23 +32,23 @@ export class DockerContainerManagementImpl extends ForceErrorImpl implements Doc
     this.dockerUtil.listImagesOrContainers(dockerUtilOptions, cb);
   }
 
-  getContainers(ids: string[], cb: (err: Error, dockerContainers: DockerContainer[])=>void) {
+  getContainers(ids: string[], cb: (err: Error, dockerContainers: ContainerObject[])=>void) {
     let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Container);
     this.dockerUtil.forceError = this.forceError;
     this.dockerUtil.getImagesOrContainers(ids, dockerUtilOptions, cb);
   }
 
-  getContainer(id: string, cb: (err: Error, dockerContainer: DockerContainer)=>void) {
+  getContainer(id: string, cb: (err: Error, dockerContainer: ContainerObject)=>void) {
     let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Container);
     this.dockerUtil.forceError = this.forceError;
     this.dockerUtil.getImageOrContainer(id, dockerUtilOptions, cb);
   }
 
-  createContainer(dockerContainerConfig: any, cb: (err: Error, dockerContainer: DockerContainer)=>void) {
+  createContainer(dockerContainerConfig: any, cb: (err: Error, dockerContainer: ContainerObject)=>void) {
+    this.dockerode.forceError = this.forceError;
     var fullContainerConfigCopy = {ExpressApps: []};
     deepExtend(fullContainerConfigCopy, dockerContainerConfig);
-    this.dockerode.forceError = this.forceError;
-    this.dockerode.createContainer(fullContainerConfigCopy, (err: Error, dockerContainer: DockerContainer)=> {
+    this.dockerode.createContainer(fullContainerConfigCopy, (err: Error, dockerContainer: ContainerObject)=> {
       cb(err, dockerContainer);
     });
   }

@@ -1,14 +1,17 @@
 import "reflect-metadata";
 import kernel from '../inversify.config';
 import {expect} from 'chai';
-import {DockerOde, DockerImage} from "../interfaces/dockerode";
+import {DockerOde, DockerImage, ImageRemoveResults} from "../interfaces/dockerode";
 import {DockerOdeMockImpl} from "./docker-ode-mock-impl";
 import {DockerImageManagement} from "../interfaces/docker-image-management";
 import {ForceError} from "../interfaces/force-error";
+import {DockerOdeImpl} from "../implementations/docker-ode-impl";
+const path = require('path');
 describe('DockerImageManagement', function () {
   let dockerImageManagement: DockerImageManagement;
   beforeEach(()=> {
     kernel.unbind('DockerOde');
+    //kernel.bind<DockerOde>('DockerOde').to(DockerOdeImpl);
     kernel.bind<DockerOde>('DockerOde').to(DockerOdeMockImpl);
     dockerImageManagement = kernel.get<DockerImageManagement>('DockerImageManagement');
   });
@@ -104,6 +107,103 @@ describe('DockerImageManagement', function () {
             expect(images[i].constructor.name).to.equal('ImageObjectImpl');
             expect(images[i].name).to.equal(imageNames[i]);
           }
+          done();
+        });
+    });
+  });
+  describe('DockerImageManagement.pullImage (force error)', function () {
+    it('should return non-null Error instance in callback', function (done) {
+      expect(dockerImageManagement).to.not.equal(null);
+      (<ForceError>dockerImageManagement).forceError = true;
+      dockerImageManagement.pullImage(
+        'mysql:5.6',
+        (taskId:string,status:string,current:number,total:number)=>{
+        },
+        (err: Error)=> {
+          expect(err).to.not.equal(null);
+          done();
+        });
+    });
+  });
+  describe('DockerImageManagement.pullImage (force error)', function () {
+    it(`should pull an image from hub.docker.com`, function (done) {
+      let progressCallbackCalledWithErrorCount = 0;
+      let progressCallbackCalledWithDownloadingCount = 0;
+      expect(dockerImageManagement).to.not.equal(null);
+      dockerImageManagement.pullImage(
+        'mysql:5.6',
+        (taskId:string,status:string,current:number,total:number)=>{
+          if(status === 'Downloading'){
+            ++progressCallbackCalledWithDownloadingCount;
+          }
+          if(taskId === '**error**'){
+            ++progressCallbackCalledWithErrorCount;
+          }
+        },
+        (err: Error)=> {
+          expect(err).to.equal(null);
+          expect(progressCallbackCalledWithErrorCount).to.equal(4);
+          expect(progressCallbackCalledWithDownloadingCount).to.equal(6);
+          done();
+        });
+    });
+  });
+  describe('DockerImageManagement.buildDockerFile (force error)', function () {
+    it('should return non-null Error instance in callback', function (done) {
+      expect(dockerImageManagement).to.not.equal(null);
+      (<ForceError>dockerImageManagement).forceError = true;
+      let pathToDockerFile = path.resolve(__dirname, '../../test-data');
+      dockerImageManagement.buildDockerFile(
+        pathToDockerFile,
+        'mysql:5.5',
+        (taskId:string,status:string,current:number,total:number)=>{
+        },
+        (err: Error)=> {
+          expect(err).to.not.equal(null);
+          done();
+        });
+    });
+  });
+  describe('DockerImageManagement.buildDockerFile', function () {
+    it('report that image was built from Dockerfile', function (done) {
+      let pathToDockerFile = path.resolve(__dirname, '../../test-data');
+      let progressCallbackCalledWithDownloadingCount = 0;
+      expect(dockerImageManagement).to.not.equal(null);
+      dockerImageManagement.buildDockerFile(
+        pathToDockerFile,
+        'mysql:5.5',
+        (taskId:string,status:string,current:number,total:number)=>{
+          if(status === 'Downloading'){
+            ++progressCallbackCalledWithDownloadingCount;
+          }
+        },
+        (err: Error)=> {
+          expect(err).to.equal(null);
+          expect(progressCallbackCalledWithDownloadingCount).to.equal(6);
+          done();
+        });
+    });
+  });
+  describe('DockerImageManagement.removeImages (force error)', function () {
+    it('should return non-null Error instance in callback', function (done) {
+      expect(dockerImageManagement).to.not.equal(null);
+      (<ForceError>dockerImageManagement).forceError = true;
+      dockerImageManagement.removeImages(
+        ['2','3', '113'],
+        (err: Error, imageRemoveResult:ImageRemoveResults[])=> {
+          expect(err).to.not.equal(null);
+          done();
+        });
+    });
+  });
+  describe('DockerImageManagement.removeImages (by firmamentId)', function () {
+    it('should return non-null Error instance in callback', function (done) {
+      expect(dockerImageManagement).to.not.equal(null);
+      dockerImageManagement.removeImages(
+        //['all'],
+        ['2','3', '113'],
+        (err: Error, imageRemoveResult:ImageRemoveResults[])=> {
+          expect(err).to.equal(null);
           done();
         });
     });

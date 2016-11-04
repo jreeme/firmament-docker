@@ -1,49 +1,33 @@
 import {injectable, inject} from "inversify";
 import {FirmamentDocker} from '../interfaces/firmament-docker';
-import {Command, CommandUtil} from 'firmament-yargs';
+import {CommandUtil} from 'firmament-yargs';
 import {
   DockerImage,
-  DockerOde,
   DockerContainer,
   ContainerRemoveResults,
-  ImageRemoveResults
+  ImageRemoveResults, ContainerObject
 } from '../interfaces/dockerode';
 import {DockerImageManagement} from "../interfaces/docker-image-management";
 import {DockerContainerManagement} from "../interfaces/docker-container-management";
+import {ForceErrorImpl} from "./force-error-impl";
 const positive = require('positive');
 const childProcess = require('child_process');
 @injectable()
-export class FirmamentDockerImpl implements Command, FirmamentDocker {
-  aliases: string[];
-  command: string;
-  commandDesc: string;
-  handler: (argv: any)=>void;
-  options: any;
-  subCommands: Command[];
-  private dockerode: DockerOde;
+export class FirmamentDockerImpl extends ForceErrorImpl implements FirmamentDocker {
   private dockerContainerManagement: DockerContainerManagement;
   private dockerImageManagement: DockerImageManagement;
   private commandUtil: CommandUtil;
 
   constructor(@inject('DockerContainerManagement') _dockerContainerManagement: DockerContainerManagement,
               @inject('DockerImageManagement') _dockerImageManagement: DockerImageManagement,
-              @inject('DockerOde') _dockerode: DockerOde,
               @inject('CommandUtil') _commandUtil: CommandUtil) {
+    super();
     this.dockerContainerManagement = _dockerContainerManagement;
     this.dockerImageManagement = _dockerImageManagement;
-    this.dockerode = _dockerode;
     this.commandUtil = _commandUtil;
-    this.aliases = [];
-    this.command = '';
-    this.commandDesc = '';
-    //noinspection JSUnusedLocalSymbols
-    this.handler = (argv: any)=> {
-    };
-    this.options = {};
-    this.subCommands = [];
   }
 
-  createContainer(dockerContainerConfig: any, cb: (err: Error, dockerContainer: DockerContainer)=>void) {
+  createContainer(dockerContainerConfig: any, cb: (err: Error, dockerContainer: ContainerObject)=>void) {
     this.dockerContainerManagement.createContainer(dockerContainerConfig, cb);
   }
 
@@ -71,11 +55,11 @@ export class FirmamentDockerImpl implements Command, FirmamentDocker {
     this.dockerImageManagement.getImage(id, cb);
   }
 
-  getContainers(ids: string[], cb: (err: Error, dockerContainers: DockerContainer[])=>void): void {
+  getContainers(ids: string[], cb: (err: Error, dockerContainers: ContainerObject[])=>void): void {
     this.dockerContainerManagement.getContainers(ids, cb);
   }
 
-  getContainer(id: string, cb: (err: Error, dockerContainer: DockerContainer)=>void) {
+  getContainer(id: string, cb: (err: Error, dockerContainer: ContainerObject)=>void) {
     this.dockerContainerManagement.getContainer(id, cb);
   }
 
@@ -97,7 +81,7 @@ export class FirmamentDockerImpl implements Command, FirmamentDocker {
 
   exec(id: string, command: string, cb: (err: Error, result: any)=>void): void {
     let me = this;
-    me.getContainer(id, (err: Error, dockerContainer: DockerContainer)=> {
+    me.getContainer(id, (err: Error, dockerContainer: ContainerObject)=> {
       if (me.commandUtil.callbackIfError(cb, err)) {
         return;
       }
