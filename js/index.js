@@ -4,6 +4,6 @@ function __export(m) {
 }
 __export(require('./interfaces/dockerode'));
 __export(require('./interfaces/docker-descriptors'));
-__export(require('./implementations/firmament-docker-impl'));
-(function () { })();
+const inversify_config_1 = require("./inversify.config");
+exports.kernel = inversify_config_1.default;
 //# sourceMappingURL=index.js.map
