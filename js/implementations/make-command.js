@@ -15,6 +15,7 @@ const inversify_1 = require("inversify");
 const inversify_config_1 = require('../inversify.config');
 const docker_descriptors_1 = require("../interfaces/docker-descriptors");
 const async = require('async');
+const _ = require('lodash');
 const request = require('request');
 const positive = require('positive');
 const fs = require('fs');

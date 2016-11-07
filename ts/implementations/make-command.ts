@@ -8,6 +8,7 @@ import {
   ContainerObject
 } from "../interfaces/dockerode";
 import * as async from 'async';
+import * as _ from 'lodash';
 
 const request = require('request');
 const positive = require('positive');
