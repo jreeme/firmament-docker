@@ -1,13 +1,15 @@
-import {injectable, inject} from "inversify";
+import {injectable, inject} from 'inversify';
 import {
   DockerOde, DockerContainer, ImageOrContainer, ContainerRemoveResults,
   ContainerObject
-} from "../interfaces/dockerode";
+} from '../interfaces/dockerode';
 import {CommandUtil} from 'firmament-yargs';
-import {DockerContainerManagement} from "../interfaces/docker-container-management";
-import {DockerUtil} from "../interfaces/docker-util";
-import {DockerUtilOptionsImpl} from "./docker-util-options-impl";
-import {ForceErrorImpl} from "./force-error-impl";
+import {DockerContainerManagement} from '../interfaces/docker-container-management';
+import {DockerUtil} from '../interfaces/docker-util';
+import {DockerUtilOptionsImpl} from './docker-util-options-impl';
+import {ForceErrorImpl} from './force-error-impl';
+import * as _ from 'lodash';
+import * as async from 'async';
 const deepExtend = require('deep-extend');
 const positive = require('positive');
 

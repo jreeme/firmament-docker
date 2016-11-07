@@ -1,9 +1,9 @@
 /// <reference types="node" />
-import { DockerOde, DockerContainer, ContainerRemoveResults, ContainerObject } from "../interfaces/dockerode";
+import { DockerOde, DockerContainer, ContainerRemoveResults, ContainerObject } from '../interfaces/dockerode';
 import { CommandUtil } from 'firmament-yargs';
-import { DockerContainerManagement } from "../interfaces/docker-container-management";
-import { DockerUtil } from "../interfaces/docker-util";
-import { ForceErrorImpl } from "./force-error-impl";
+import { DockerContainerManagement } from '../interfaces/docker-container-management';
+import { DockerUtil } from '../interfaces/docker-util';
+import { ForceErrorImpl } from './force-error-impl';
 export declare class DockerContainerManagementImpl extends ForceErrorImpl implements DockerContainerManagement {
     private dockerode;
     private dockerUtil;

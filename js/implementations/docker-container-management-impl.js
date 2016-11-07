@@ -11,10 +11,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-const inversify_1 = require("inversify");
-const dockerode_1 = require("../interfaces/dockerode");
-const docker_util_options_impl_1 = require("./docker-util-options-impl");
-const force_error_impl_1 = require("./force-error-impl");
+const inversify_1 = require('inversify');
+const dockerode_1 = require('../interfaces/dockerode');
+const docker_util_options_impl_1 = require('./docker-util-options-impl');
+const force_error_impl_1 = require('./force-error-impl');
+const _ = require('lodash');
+const async = require('async');
 const deepExtend = require('deep-extend');
 const positive = require('positive');
 let DockerContainerManagementImpl = class DockerContainerManagementImpl extends force_error_impl_1.ForceErrorImpl {
