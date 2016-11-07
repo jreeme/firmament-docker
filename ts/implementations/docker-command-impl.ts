@@ -50,7 +50,7 @@ export class DockerCommandImpl implements Command {
     cleanVolumesCommand.commandDesc = 'Clean orphaned Docker resources';
     //noinspection JSUnusedLocalSymbols
     cleanVolumesCommand.handler = (argv)=> {
-      var script = require('path').join(__dirname, '../../legacy/_docker-cleanup-volumes.sh');
+      var script = require('path').resolve(__dirname, '../../bash/_docker-cleanup-volumes.sh');
       me.spawn.sudoSpawn(['/bin/bash', '-c', script], (err: Error)=> {
         me.commandUtil.processExitWithError(err);
       });
