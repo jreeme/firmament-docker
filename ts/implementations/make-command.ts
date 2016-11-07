@@ -7,6 +7,8 @@ import {
   ContainerConfig, ContainerRemoveResults, DockerContainer, ExpressApp,
   ContainerObject
 } from "../interfaces/dockerode";
+import * as async from 'async';
+
 const request = require('request');
 const positive = require('positive');
 const fs = require('fs');
