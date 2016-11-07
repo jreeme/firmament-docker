@@ -1,0 +1,27 @@
+"use strict";
+const inversify_1 = require('inversify');
+const docker_image_management_impl_1 = require('./implementations/docker-image-management-impl');
+const docker_ode_impl_1 = require("./implementations/docker-ode-impl");
+const docker_util_impl_1 = require("./implementations/docker-util-impl");
+const docker_container_management_impl_1 = require("./implementations/docker-container-management-impl");
+const firmament_yargs_1 = require('firmament-yargs');
+const firmament_docker_impl_1 = require("./implementations/firmament-docker-impl");
+const docker_command_impl_1 = require("./implementations/docker-command-impl");
+var commandUtil = firmament_yargs_1.kernel.get('CommandUtil');
+var commandLine = firmament_yargs_1.kernel.get('CommandLine');
+var command = firmament_yargs_1.kernel.get('Command');
+var spawn = firmament_yargs_1.kernel.get('Spawn');
+var kernel = new inversify_1.Kernel();
+kernel.bind('CommandUtil').to(commandUtil.constructor);
+kernel.bind('CommandLine').to(commandLine.constructor);
+kernel.bind('Command').to(command.constructor);
+kernel.bind('Spawn').to(spawn.constructor);
+kernel.bind('DockerImageManagement').to(docker_image_management_impl_1.DockerImageManagementImpl);
+kernel.bind('DockerContainerManagement').to(docker_container_management_impl_1.DockerContainerManagementImpl);
+kernel.bind('DockerOde').to(docker_ode_impl_1.DockerOdeImpl);
+kernel.bind('DockerUtil').to(docker_util_impl_1.DockerUtilImpl);
+kernel.bind('FirmamentDocker').to(firmament_docker_impl_1.FirmamentDockerImpl);
+kernel.bind('DockerCommand').to(docker_command_impl_1.DockerCommandImpl);
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = kernel;
+//# sourceMappingURL=inversify.config.js.map

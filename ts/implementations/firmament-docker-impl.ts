@@ -27,6 +27,11 @@ export class FirmamentDockerImpl extends ForceErrorImpl implements FirmamentDock
     this.commandUtil = _commandUtil;
   }
 
+  listContainers(listAllContainers: boolean, cb: (err: Error, dockerContainers?: DockerContainer[])=>void) {
+    this.dockerContainerManagement.forceError = this.forceError;
+    this.dockerContainerManagement.listContainers(listAllContainers, cb);
+  }
+
   createContainer(dockerContainerConfig: any, cb: (err: Error, dockerContainer: ContainerObject)=>void) {
     this.dockerContainerManagement.createContainer(dockerContainerConfig, cb);
   }
@@ -61,10 +66,6 @@ export class FirmamentDockerImpl extends ForceErrorImpl implements FirmamentDock
 
   getContainer(id: string, cb: (err: Error, dockerContainer: ContainerObject)=>void) {
     this.dockerContainerManagement.getContainer(id, cb);
-  }
-
-  listContainers(listAllContainers: boolean, cb: (err: Error, dockerContainers?: DockerContainer[])=>void) {
-    this.dockerContainerManagement.listContainers(listAllContainers, cb);
   }
 
   buildDockerFile(dockerFilePath: string, dockerImageName: string,

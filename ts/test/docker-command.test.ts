@@ -5,6 +5,7 @@ import {DockerOde, DockerContainer} from '../interfaces/dockerode';
 import {DockerOdeMockImpl} from './docker-ode-mock-impl';
 import {DockerContainerManagement} from '../interfaces/docker-container-management';
 import {FirmamentDocker} from "../interfaces/firmament-docker";
+import {ForceError} from "../interfaces/force-error";
 describe('DockerCommand', function () {
   let firmamentDocker: FirmamentDocker;
   beforeEach(()=> {
@@ -19,6 +20,7 @@ describe('DockerCommand', function () {
   describe('DockerContainerManagement.listContainers (force error)', function () {
     it('should return non-null Error instance in callback', function (done) {
       expect(firmamentDocker).to.not.equal(null);
+      (<ForceError>firmamentDocker).forceError = true;
       firmamentDocker.listContainers(
         true,
         (err: Error, containers: DockerContainer[])=> {
