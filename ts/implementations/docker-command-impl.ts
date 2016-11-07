@@ -5,13 +5,14 @@ import {FirmamentDocker} from "../interfaces/firmament-docker";
 import {DockerImage} from "../interfaces/dockerode";
 @injectable()
 export class DockerCommandImpl implements Command {
-  aliases: string[];
-  command: string;
-  commandDesc: string;
+  aliases: string[] = [];
+  command: string = '';
+  commandDesc: string = '';
   //noinspection JSUnusedGlobalSymbols
-  handler: (argv: any)=>void;
-  options: any;
-  subCommands: Command[];
+  //noinspection JSUnusedLocalSymbols
+  handler: (argv: any)=>void = (argv:any)=>{};
+  options: any = {};
+  subCommands: Command[] = [];
   private firmamentDocker: FirmamentDocker;
   private commandUtil: CommandUtil;
   private commandLine: CommandLine;
@@ -32,8 +33,7 @@ export class DockerCommandImpl implements Command {
     this.aliases = ['docker', 'd'];
     this.command = '<subCommand>';
     this.commandDesc = 'Support for working with Docker containers';
-    (()=>{this.pushCleanVolumesCommand();})();
-    //this.pushCleanVolumesCommand();
+    this.pushCleanVolumesCommand();
     this.pushImagesCommand();
     this.pushPsCommand();
     this.pushStartCommand();

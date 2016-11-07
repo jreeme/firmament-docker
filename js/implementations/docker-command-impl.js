@@ -15,6 +15,12 @@ const inversify_1 = require("inversify");
 const inversify_config_1 = require('../inversify.config');
 let DockerCommandImpl = class DockerCommandImpl {
     constructor(_commandUtil, _spawn, _commandLine, _firmamentDocker) {
+        this.aliases = [];
+        this.command = '';
+        this.commandDesc = '';
+        this.handler = (argv) => { };
+        this.options = {};
+        this.subCommands = [];
         this.buildCommandTree();
         this.commandUtil = _commandUtil;
         this.commandLine = _commandLine;
@@ -25,7 +31,7 @@ let DockerCommandImpl = class DockerCommandImpl {
         this.aliases = ['docker', 'd'];
         this.command = '<subCommand>';
         this.commandDesc = 'Support for working with Docker containers';
-        (() => { this.pushCleanVolumesCommand(); })();
+        this.pushCleanVolumesCommand();
         this.pushImagesCommand();
         this.pushPsCommand();
         this.pushStartCommand();
