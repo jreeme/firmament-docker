@@ -2,9 +2,12 @@
   <dictionary name="jreeme">
     <words>
       <w>caffedata</w>
+      <w>deps</w>
+      <w>dockerfile</w>
       <w>jreeme</w>
       <w>jsonfile</w>
       <w>jstnldrs</w>
+      <w>strongloop</w>
     </words>
   </dictionary>
 </component>

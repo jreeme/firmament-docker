@@ -7,6 +7,7 @@ const docker_container_management_impl_1 = require("./implementations/docker-con
 const firmament_yargs_1 = require('firmament-yargs');
 const firmament_docker_impl_1 = require("./implementations/firmament-docker-impl");
 const docker_command_impl_1 = require("./implementations/docker-command-impl");
+const make_command_1 = require("./implementations/make-command");
 var commandUtil = firmament_yargs_1.kernel.get('CommandUtil');
 var nestedYargs = firmament_yargs_1.kernel.get('NestedYargs');
 var progressBar = firmament_yargs_1.kernel.get('ProgressBar');
@@ -26,6 +27,7 @@ kernel.bind('DockerOde').to(docker_ode_impl_1.DockerOdeImpl);
 kernel.bind('DockerUtil').to(docker_util_impl_1.DockerUtilImpl);
 kernel.bind('FirmamentDocker').to(firmament_docker_impl_1.FirmamentDockerImpl);
 kernel.bind('DockerCommand').to(docker_command_impl_1.DockerCommandImpl);
+kernel.bind('MakeCommand').to(make_command_1.MakeCommandImpl);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = kernel;
 //# sourceMappingURL=inversify.config.js.map
