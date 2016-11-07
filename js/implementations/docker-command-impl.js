@@ -47,7 +47,7 @@ let DockerCommandImpl = class DockerCommandImpl {
         cleanVolumesCommand.commandDesc = 'Clean orphaned Docker resources';
         cleanVolumesCommand.handler = (argv) => {
             var script = require('path').resolve(__dirname, '../../bash/_docker-cleanup-volumes.sh');
-            me.spawn.sudoSpawn(['/bin/bash', '-c', script], (err) => {
+            me.spawn.sudoSpawn(['/bin/bash', script], (err) => {
                 me.commandUtil.processExitWithError(err);
             });
         };

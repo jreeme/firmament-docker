@@ -51,7 +51,7 @@ export class DockerCommandImpl implements Command {
     //noinspection JSUnusedLocalSymbols
     cleanVolumesCommand.handler = (argv)=> {
       var script = require('path').resolve(__dirname, '../../bash/_docker-cleanup-volumes.sh');
-      me.spawn.sudoSpawn(['/bin/bash', '-c', script], (err: Error)=> {
+      me.spawn.sudoSpawn(['/bin/bash', script], (err: Error)=> {
         me.commandUtil.processExitWithError(err);
       });
     };
