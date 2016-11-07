@@ -25,7 +25,7 @@ let DockerCommandImpl = class DockerCommandImpl {
         this.aliases = ['docker', 'd'];
         this.command = '<subCommand>';
         this.commandDesc = 'Support for working with Docker containers';
-        this.pushCleanVolumesCommand();
+        (() => { this.pushCleanVolumesCommand(); })();
         this.pushImagesCommand();
         this.pushPsCommand();
         this.pushStartCommand();
