@@ -58,8 +58,8 @@ describe('DockerImageManagement', function () {
             chai_1.expect(dockerImageManagement).to.not.equal(null);
             dockerImageManagement.getImage('7', (err, image) => {
                 chai_1.expect(err).to.equal(null);
-                chai_1.expect(image.constructor.name).to.equal('ImageObjectImpl');
-                chai_1.expect(image.name).to.equal('jstnldrs/caffedata:1.0');
+                chai_1.expect(image.constructor.name).to.equal('DockerImageImpl');
+                chai_1.expect(image.Name).to.equal('jstnldrs/caffedata:1.0');
                 done();
             });
         });
@@ -83,8 +83,8 @@ describe('DockerImageManagement', function () {
                 chai_1.expect(err).to.equal(null);
                 chai_1.expect(images).to.have.lengthOf(2);
                 for (let i = 0; i < images.length; ++i) {
-                    chai_1.expect(images[i].constructor.name).to.equal('ImageObjectImpl');
-                    chai_1.expect(images[i].name).to.equal(imageNames[i]);
+                    chai_1.expect(images[i].constructor.name).to.equal('DockerImageImpl');
+                    chai_1.expect(images[i].Name).to.equal(imageNames[i]);
                 }
                 done();
             });

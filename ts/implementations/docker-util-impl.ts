@@ -1,6 +1,6 @@
 import {injectable, inject} from 'inversify';
 import {DockerUtil} from '../interfaces/docker-util';
-import {ImageOrContainer, DockerOde} from '../interfaces/dockerode';
+import {DockerOde, ImageOrContainer, DockerImageOrContainer} from '../interfaces/dockerode';
 import {CommandUtil} from 'firmament-yargs';
 import {DockerUtilOptions} from "../interfaces/docker-util-options";
 import {ForceErrorImpl} from "./force-error-impl";
@@ -123,32 +123,24 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
                   }
                 }
               }
-              let lowerCaseId = id.toLowerCase();
-              let charCount = lowerCaseId.length;
+              let charCount = id.length;
               if (charCount < 3) {
                 return false;
               }
-              //If id starts with 'sha256:' then compare past it
-              const testPrefix = 'sha256:';
-              let imageOrContainerId = imageOrContainer.Id.toLowerCase();
-              let startIdx = (testPrefix === imageOrContainerId.substr(0, testPrefix.length))
-                ? testPrefix.length
-                : 0;
-              let str0 = imageOrContainerId.substring(startIdx, startIdx + charCount);
-              let str1 = lowerCaseId.substring(0, charCount);
-              return str0 === str1;
+              return DockerUtilImpl.compareIds(id, imageOrContainer.Id);
             }
           });
           if (foundImagesOrContainers.length > 0) {
-            let imageOrContainer: any;
+            let imageOrContainer: DockerImageOrContainer;
             if (options.IorC === ImageOrContainer.Container) {
               imageOrContainer = me.dockerode.getContainer(foundImagesOrContainers[0].Id, options);
-              imageOrContainer.name = foundImagesOrContainers[0].Names[0];
+              imageOrContainer.Name = foundImagesOrContainers[0].Names[0];
             }
             else if (options.IorC === ImageOrContainer.Image) {
               imageOrContainer = me.dockerode.getImage(foundImagesOrContainers[0].Id, options);
-              imageOrContainer.name = foundImagesOrContainers[0].RepoTags[0];
+              imageOrContainer.Name = foundImagesOrContainers[0].RepoTags[0];
             }
+            imageOrContainer.Id = DockerUtilImpl.stripSha256(foundImagesOrContainers[0].Id);
             cb(null, imageOrContainer);
           } else {
             cb(null, `Unable to find: ${id}`);
@@ -156,5 +148,25 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
         }
       ],
       cb);
+  }
+
+  private static compareIds(id0: string, id1: string): boolean {
+    let str0 = DockerUtilImpl.stripSha256(id0).toLowerCase();
+    let str1 = DockerUtilImpl.stripSha256(id1).toLowerCase();
+    let len = str0.length < str1.length
+      ? str0.length
+      : str1.length;
+    str0 = str0.substr(0, len);
+    str1 = str1.substr(0, len);
+    let retVal = str0 === str1;
+    return retVal;
+  }
+
+  private static stripSha256(id: string): string {
+    const testPrefix = 'sha256:';
+    let startIdx = (testPrefix === id.substr(0, testPrefix.length))
+      ? testPrefix.length
+      : 0;
+    return id.substr(startIdx);
   }
 }

@@ -1,10 +1,10 @@
 import "reflect-metadata";
 import {injectable} from "inversify";
 import {
-  DockerOde, DockerImage, DockerContainer, ContainerObject, ImageObject
+  DockerOde, DockerImage, DockerContainer
 } from "../interfaces/dockerode";
-import {ImageObjectImpl} from "./image-object-impl";
-import {ContainerObjectImpl} from "./container-object-impl";
+import {DockerImageImpl} from "./image-object-impl";
+import {DockerContainerImpl} from "./container-object-impl";
 import {ForceErrorImpl} from "../implementations/force-error-impl";
 const jsonFile = require('jsonfile');
 @injectable()
@@ -33,21 +33,21 @@ export class DockerOdeMockImpl extends ForceErrorImpl implements DockerOde {
     cb(null, containers);
   }
 
-  getContainer(id: string, options: any = {}): ContainerObject {
+  getContainer(id: string, options: any = {}): DockerContainer {
     var containerArray = this.testContainerList.filter(container=> {
       return id === container.Id;
     });
     return containerArray.length
-      ? new ContainerObjectImpl(null, containerArray[0].Id)
+      ? new DockerContainerImpl(null, containerArray[0].Id)
       : null;
   }
 
-  getImage(id: string, options: any = {}): ImageObject {
+  getImage(id: string, options: any = {}): DockerImage {
     var imageArray = this.testImageList.filter(image=> {
       return id === image.Id;
     });
     return imageArray.length
-      ? new ImageObjectImpl(null, imageArray[0].Id)
+      ? new DockerImageImpl(null, imageArray[0].Id)
       : null;
   }
 
@@ -55,7 +55,7 @@ export class DockerOdeMockImpl extends ForceErrorImpl implements DockerOde {
     this.pull('', cb);
   }
 
-  createContainer(containerConfig: any, cb: (err: Error, container: ContainerObject)=>void): void {
+  createContainer(containerConfig: any, cb: (err: Error, container: DockerContainer)=>void): void {
     if (this.checkForceError(cb)) {
       return;
     }
@@ -64,7 +64,7 @@ export class DockerOdeMockImpl extends ForceErrorImpl implements DockerOde {
       return container.Image = 'mongo:2.6';
     })[0];
 
-    cb(null, new ContainerObjectImpl(null, testContainer.Id));
+    cb(null, new DockerContainerImpl(null, testContainer.Id));
   }
 
   pull(imageName: string, cb: (err: Error, outputStream: any)=>void) {

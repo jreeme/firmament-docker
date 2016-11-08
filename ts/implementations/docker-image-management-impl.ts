@@ -1,6 +1,6 @@
 import {injectable, inject} from 'inversify';
 import {DockerImageManagement} from '../interfaces/docker-image-management';
-import {DockerImage, ImageRemoveResults, DockerOde, ImageOrContainer, ImageObject} from '../interfaces/dockerode';
+import {DockerImage, ImageRemoveResults, DockerOde, ImageOrContainer} from '../interfaces/dockerode';
 import {CommandUtil} from 'firmament-yargs';
 import {DockerUtil} from '../interfaces/docker-util';
 import {DockerUtilOptionsImpl} from './docker-util-options-impl';
@@ -168,10 +168,10 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
           if (typeof imageOrErrorMsg === 'string') {
             me.commandUtil.logAndCallback(imageOrErrorMsg, cb, null, {msg: imageOrErrorMsg});
           } else {
-            imageOrErrorMsg.remove({force: 1}, (err: Error, image: ImageObject)=> {
-              //Trim 'sha256' off of id string
-              let id = image.id.substr(7, 9);
-              let msg = `Removing image '${imageOrErrorMsg.name}' with id: '${id}'`;
+            let image: DockerImage = <DockerImage>imageOrErrorMsg;
+            image.remove({force: 1}, (err: Error, _image: DockerImage)=> {
+              let id = _image.Id;
+              let msg = `Removing image '${_image.Name}' with id: '${id}'`;
               me.commandUtil.logAndCallback(msg, cb, err, {msg});
             });
           }

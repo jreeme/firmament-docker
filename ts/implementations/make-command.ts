@@ -4,8 +4,7 @@ import {Command, CommandLine, CommandUtil, Spawn, ProgressBar} from 'firmament-y
 import {FirmamentDocker} from "../interfaces/firmament-docker";
 import {DockerDescriptors} from "../interfaces/docker-descriptors";
 import {
-  ContainerConfig, ContainerRemoveResults, DockerContainer, ExpressApp,
-  ContainerObject
+  ContainerConfig, ContainerRemoveResults, DockerContainer, ExpressApp
 } from "../interfaces/dockerode";
 import * as async from 'async';
 import * as _ from 'lodash';
@@ -268,7 +267,7 @@ export class MakeCommandImpl implements Command {
           //noinspection JSUnusedLocalSymbols
           async.mapSeries(sortedContainerConfigs,
             (containerConfig, cb: (err: Error, result: any)=>void)=> {
-              this.firmamentDocker.createContainer(containerConfig, (err: Error, container: ContainerObject)=> {
+              this.firmamentDocker.createContainer(containerConfig, (err: Error, container: DockerContainer)=> {
                 self.commandUtil.logAndCallback('Container "' + containerConfig.name + '" created.', cb, err, container);
               });
             },

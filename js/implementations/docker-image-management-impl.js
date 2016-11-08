@@ -158,9 +158,10 @@ let DockerImageManagementImpl = class DockerImageManagementImpl extends force_er
                     me.commandUtil.logAndCallback(imageOrErrorMsg, cb, null, { msg: imageOrErrorMsg });
                 }
                 else {
-                    imageOrErrorMsg.remove({ force: 1 }, (err, image) => {
-                        let id = image.id.substr(7, 9);
-                        let msg = `Removing image '${imageOrErrorMsg.name}' with id: '${id}'`;
+                    let image = imageOrErrorMsg;
+                    image.remove({ force: 1 }, (err, _image) => {
+                        let id = _image.Id;
+                        let msg = `Removing image '${_image.Name}' with id: '${id}'`;
                         me.commandUtil.logAndCallback(msg, cb, err, { msg });
                     });
                 }

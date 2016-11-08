@@ -99,7 +99,7 @@ let DockerContainerManagementImpl = class DockerContainerManagementImpl extends 
                 }
                 else {
                     containerOrErrorMsg.remove({ force: 1 }, (err) => {
-                        var msg = `Removing container '${containerOrErrorMsg.name}'`;
+                        var msg = `Removing container '${containerOrErrorMsg.Name}'`;
                         me.commandUtil.logAndCallback(msg, cb, err, { msg });
                     });
                 }

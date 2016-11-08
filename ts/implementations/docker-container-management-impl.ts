@@ -1,7 +1,6 @@
 import {injectable, inject} from 'inversify';
 import {
-  DockerOde, DockerContainer, ImageOrContainer, ContainerRemoveResults,
-  ContainerObject
+  DockerOde, DockerContainer, ImageOrContainer, ContainerRemoveResults
 } from '../interfaces/dockerode';
 import {CommandUtil} from 'firmament-yargs';
 import {DockerContainerManagement} from '../interfaces/docker-container-management';
@@ -34,23 +33,23 @@ export class DockerContainerManagementImpl extends ForceErrorImpl implements Doc
     this.dockerUtil.listImagesOrContainers(dockerUtilOptions, cb);
   }
 
-  getContainers(ids: string[], cb: (err: Error, dockerContainers: ContainerObject[])=>void) {
+  getContainers(ids: string[], cb: (err: Error, dockerContainers: DockerContainer[])=>void) {
     let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Container);
     this.dockerUtil.forceError = this.forceError;
     this.dockerUtil.getImagesOrContainers(ids, dockerUtilOptions, cb);
   }
 
-  getContainer(id: string, cb: (err: Error, dockerContainer: ContainerObject)=>void) {
+  getContainer(id: string, cb: (err: Error, dockerContainer: DockerContainer)=>void) {
     let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Container);
     this.dockerUtil.forceError = this.forceError;
     this.dockerUtil.getImageOrContainer(id, dockerUtilOptions, cb);
   }
 
-  createContainer(dockerContainerConfig: any, cb: (err: Error, dockerContainer: ContainerObject)=>void) {
+  createContainer(dockerContainerConfig: any, cb: (err: Error, dockerContainer: DockerContainer)=>void) {
     this.dockerode.forceError = this.forceError;
     var fullContainerConfigCopy = {ExpressApps: []};
     deepExtend(fullContainerConfigCopy, dockerContainerConfig);
-    this.dockerode.createContainer(fullContainerConfigCopy, (err: Error, dockerContainer: ContainerObject)=> {
+    this.dockerode.createContainer(fullContainerConfigCopy, (err: Error, dockerContainer: DockerContainer)=> {
       cb(err, dockerContainer);
     });
   }
@@ -95,7 +94,7 @@ export class DockerContainerManagementImpl extends ForceErrorImpl implements Doc
       }
       ids = null;
     }
-    me.getContainers(ids, (err: Error, containerObjects: ContainerObject[])=> {
+    me.getContainers(ids, (err: Error, containerObjects: DockerContainer[])=> {
       if (me.commandUtil.callbackIfError(cb, err)) {
         return;
       }
@@ -105,7 +104,7 @@ export class DockerContainerManagementImpl extends ForceErrorImpl implements Doc
             me.commandUtil.logAndCallback(containerOrErrorMsg, cb, null, {msg: containerOrErrorMsg});
           } else {
             containerOrErrorMsg.remove({force: 1}, (err: Error)=> {
-              var msg = `Removing container '${containerOrErrorMsg.name}'`;
+              var msg = `Removing container '${containerOrErrorMsg.Name}'`;
               me.commandUtil.logAndCallback(msg, cb, err, {msg});
             });
           }

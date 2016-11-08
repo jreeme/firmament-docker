@@ -1,8 +1,11 @@
 /// <reference types="node" />
-import { ContainerObject, Modem } from "../interfaces/dockerode";
-export declare class ContainerObjectImpl implements ContainerObject {
-    name: string;
-    id: string;
+import { Modem, DockerContainer } from "../interfaces/dockerode";
+export declare class DockerContainerImpl implements DockerContainer {
+    Status: string;
+    Names: string[];
+    firmamentId: string;
+    Name: string;
+    Id: string;
     modem: Modem;
     constructor(_modem: Modem, _id: string);
     start(opts: any, callback: (err: Error, obj: any) => void): void;

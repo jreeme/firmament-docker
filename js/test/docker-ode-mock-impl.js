@@ -42,7 +42,7 @@ let DockerOdeMockImpl = class DockerOdeMockImpl extends force_error_impl_1.Force
             return id === container.Id;
         });
         return containerArray.length
-            ? new container_object_impl_1.ContainerObjectImpl(null, containerArray[0].Id)
+            ? new container_object_impl_1.DockerContainerImpl(null, containerArray[0].Id)
             : null;
     }
     getImage(id, options = {}) {
@@ -50,7 +50,7 @@ let DockerOdeMockImpl = class DockerOdeMockImpl extends force_error_impl_1.Force
             return id === image.Id;
         });
         return imageArray.length
-            ? new image_object_impl_1.ImageObjectImpl(null, imageArray[0].Id)
+            ? new image_object_impl_1.DockerImageImpl(null, imageArray[0].Id)
             : null;
     }
     buildImage(tarStream, options, cb) {
@@ -63,7 +63,7 @@ let DockerOdeMockImpl = class DockerOdeMockImpl extends force_error_impl_1.Force
         let testContainer = this.testContainerList.filter(container => {
             return container.Image = 'mongo:2.6';
         })[0];
-        cb(null, new container_object_impl_1.ContainerObjectImpl(null, testContainer.Id));
+        cb(null, new container_object_impl_1.DockerContainerImpl(null, testContainer.Id));
     }
     pull(imageName, cb) {
         let me = this;

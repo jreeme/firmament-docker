@@ -110,7 +110,7 @@ describe('DockerUtil', function () {
             chai_1.expect(dockerUtil).to.not.equal(null);
             dockerUtil.getImageOrContainer('5', new docker_util_options_impl_1.DockerUtilOptionsImpl(dockerode_1.ImageOrContainer.Image), (err, image) => {
                 chai_1.expect(err).to.equal(null);
-                chai_1.expect(image.constructor.name).to.equal('ImageObjectImpl');
+                chai_1.expect(image.constructor.name).to.equal('DockerImageImpl');
                 done();
             });
         });
@@ -138,7 +138,7 @@ describe('DockerUtil', function () {
                         chai_1.expect(image).to.equal('Unable to find: ' + unknownFirmamentId);
                     }
                     else {
-                        chai_1.expect(image.constructor.name).to.equal('ImageObjectImpl');
+                        chai_1.expect(image.constructor.name).to.equal('DockerImageImpl');
                     }
                 });
                 done();
@@ -173,7 +173,7 @@ describe('DockerUtil', function () {
             chai_1.expect(dockerUtil).to.not.equal(null);
             dockerUtil.getImageOrContainer('2', new docker_util_options_impl_1.DockerUtilOptionsImpl(dockerode_1.ImageOrContainer.Container), (err, image) => {
                 chai_1.expect(err).to.equal(null);
-                chai_1.expect(image.constructor.name).to.equal('ContainerObjectImpl');
+                chai_1.expect(image.constructor.name).to.equal('DockerContainerImpl');
                 done();
             });
         });
@@ -201,7 +201,7 @@ describe('DockerUtil', function () {
                         chai_1.expect(container).to.equal('Unable to find: ' + unknownFirmamentId);
                     }
                     else {
-                        chai_1.expect(container.constructor.name).to.equal('ContainerObjectImpl');
+                        chai_1.expect(container.constructor.name).to.equal('DockerContainerImpl');
                     }
                 });
                 done();

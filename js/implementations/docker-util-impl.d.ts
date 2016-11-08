@@ -11,4 +11,6 @@ export declare class DockerUtilImpl extends ForceErrorImpl implements DockerUtil
     listImagesOrContainers(options: DockerUtilOptions, cb: (err: Error, imagesOrContainers: any[]) => void): void;
     getImagesOrContainers(ids: string[], options: DockerUtilOptions, cb: (err: Error, imagesOrContainers: any[]) => void): void;
     getImageOrContainer(id: string, options: DockerUtilOptions, cb: (err: Error, imageOrContainer: any) => void): void;
+    private static compareIds(id0, id1);
+    private static stripSha256(id);
 }

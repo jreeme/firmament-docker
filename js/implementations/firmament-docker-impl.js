@@ -65,7 +65,7 @@ let FirmamentDockerImpl = class FirmamentDockerImpl extends force_error_impl_1.F
             if (me.commandUtil.callbackIfError(cb, err)) {
                 return;
             }
-            childProcess.spawnSync('docker', ['exec', '-it', dockerContainer.name.slice(1), command], {
+            childProcess.spawnSync('docker', ['exec', '-it', dockerContainer.Name.slice(1), command], {
                 stdio: 'inherit'
             });
             cb(null, 0);

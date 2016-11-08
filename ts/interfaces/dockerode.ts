@@ -12,7 +12,9 @@ export interface ContainerRemoveResults {
 }
 export interface DockerImageOrContainer {
   Id: string,
-  name: string,
+  Name: string,
+  modem: Modem,
+  remove(opts: any, callback: (err: Error, obj: any)=>void): void;
   firmamentId: string
 }
 export interface DockerImage extends DockerImageOrContainer {
@@ -23,16 +25,19 @@ export interface DockerImage extends DockerImageOrContainer {
   RepoTags: string[],
   Size: number,
   VirtualSize: number,
+  get(callback: (err: Error, obj: any)=>void): void;
+  history(callback: (err: Error, obj: any)=>void): void;
+  inspect(callback: (err: Error, obj: any)=>void): void;
+  push(opts: any, callback: (err: Error, obj: any)=>void, auth: any): void;
+  tag(opts: any, callback: (err: Error, obj: any)=>void): void;
 }
 export interface DockerContainer extends DockerImageOrContainer {
-  id: string,
   Status: string,
-  Names: string[]
+  Names: string[],
+  start(opts: any, callback: (err: Error, obj: any)=>void): void;
+  stop(opts: any, callback: (err: Error, obj: any)=>void): void;
 }
-/*export interface SpawnOptions {
- cwd:string,
- stdio:string
- }*/
+
 export interface Script {
   RelativeWorkingDir: string,
   Command: string,
@@ -65,35 +70,13 @@ export interface Modem {
   version: any
 }
 
-export interface ImageOrContainerObject {
-  name: string,
-  id: string,
-  modem: Modem,
-  remove(opts: any, callback: (err: Error, obj: any)=>void): void;
-}
-
-export interface ImageObject extends ImageOrContainerObject {
-  //constructor(modem: Modem, name: string):void;
-  get(callback: (err: Error, obj: any)=>void): void;
-  history(callback: (err: Error, obj: any)=>void): void;
-  inspect(callback: (err: Error, obj: any)=>void): void;
-  push(opts: any, callback: (err: Error, obj: any)=>void, auth: any): void;
-  tag(opts: any, callback: (err: Error, obj: any)=>void): void;
-}
-
-export interface ContainerObject extends ImageOrContainerObject {
-  //constructor(modem: Modem, name: string):void;
-  start(opts: any, callback: (err: Error, obj: any)=>void): void;
-  stop(opts: any, callback: (err: Error, obj: any)=>void): void;
-}
-
 export interface DockerOde extends ForceError {
   listImages(options: any, cb: (err: Error, images: DockerImage[])=>void): void;
   listContainers(options: any, cb: (err: Error, containers: DockerContainer[])=>void): void;
-  getContainer(id: string, options?: any): ContainerObject;
-  getImage(id: string, options?: any): ImageObject;
+  getContainer(id: string, options?: any): DockerContainer;
+  getImage(id: string, options?: any): DockerImage;
   buildImage(tarStream: any, options: any, cb: (err: Error, outputStream: any)=>void);
-  createContainer(containerConfig: any, cb: (err: Error, container: ContainerObject)=>void): void;
+  createContainer(containerConfig: any, cb: (err: Error, container: DockerContainer)=>void): void;
   pull(imageName: string, cb: (err: Error, outputStream: any)=>void);
 }
 

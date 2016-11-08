@@ -5,7 +5,7 @@ import {
   DockerImage,
   DockerContainer,
   ContainerRemoveResults,
-  ImageRemoveResults, ContainerObject
+  ImageRemoveResults
 } from '../interfaces/dockerode';
 import {DockerImageManagement} from "../interfaces/docker-image-management";
 import {DockerContainerManagement} from "../interfaces/docker-container-management";
@@ -32,7 +32,7 @@ export class FirmamentDockerImpl extends ForceErrorImpl implements FirmamentDock
     this.dockerContainerManagement.listContainers(listAllContainers, cb);
   }
 
-  createContainer(dockerContainerConfig: any, cb: (err: Error, dockerContainer: ContainerObject)=>void) {
+  createContainer(dockerContainerConfig: any, cb: (err: Error, dockerContainer: DockerContainer)=>void) {
     this.dockerContainerManagement.createContainer(dockerContainerConfig, cb);
   }
 
@@ -60,11 +60,11 @@ export class FirmamentDockerImpl extends ForceErrorImpl implements FirmamentDock
     this.dockerImageManagement.getImage(id, cb);
   }
 
-  getContainers(ids: string[], cb: (err: Error, dockerContainers: ContainerObject[])=>void): void {
+  getContainers(ids: string[], cb: (err: Error, dockerContainers: DockerContainer[])=>void): void {
     this.dockerContainerManagement.getContainers(ids, cb);
   }
 
-  getContainer(id: string, cb: (err: Error, dockerContainer: ContainerObject)=>void) {
+  getContainer(id: string, cb: (err: Error, dockerContainer: DockerContainer)=>void) {
     this.dockerContainerManagement.getContainer(id, cb);
   }
 
@@ -82,11 +82,11 @@ export class FirmamentDockerImpl extends ForceErrorImpl implements FirmamentDock
 
   exec(id: string, command: string, cb: (err: Error, result: any)=>void): void {
     let me = this;
-    me.getContainer(id, (err: Error, dockerContainer: ContainerObject)=> {
+    me.getContainer(id, (err: Error, dockerContainer: DockerContainer)=> {
       if (me.commandUtil.callbackIfError(cb, err)) {
         return;
       }
-      childProcess.spawnSync('docker', ['exec', '-it', dockerContainer.name.slice(1), command], {
+      childProcess.spawnSync('docker', ['exec', '-it', dockerContainer.Name.slice(1), command], {
         stdio: 'inherit'
       });
       cb(null, 0);

@@ -54,12 +54,12 @@ describe('DockerContainerManagement', function () {
         });
     });
     describe('DockerContainerManagement.getContainer (by firmamentId)', function () {
-        it(`should return ContainerObject with name: 'jstnldrs/caffedata:1.0'`, function (done) {
+        it(`should return DockerContainer with name: 'jstnldrs/caffedata:1.0'`, function (done) {
             chai_1.expect(dockerContainerManagement).to.not.equal(null);
             dockerContainerManagement.getContainer('2', (err, container) => {
                 chai_1.expect(err).to.equal(null);
-                chai_1.expect(container.constructor.name).to.equal('ContainerObjectImpl');
-                chai_1.expect(container.name).to.equal('/mysql');
+                chai_1.expect(container.constructor.name).to.equal('DockerContainerImpl');
+                chai_1.expect(container.Name).to.equal('/mysql');
                 done();
             });
         });
@@ -77,14 +77,14 @@ describe('DockerContainerManagement', function () {
     });
     describe('DockerContainerManagement.getContainers (by firmamentId)', function () {
         let containerNames = ['/mysql', '/ubuntu'];
-        it(`should return array of ContainerObjects (length 2)`, function (done) {
+        it(`should return array of DockerContainers (length 2)`, function (done) {
             chai_1.expect(dockerContainerManagement).to.not.equal(null);
             dockerContainerManagement.getContainers(['2', '3'], (err, containers) => {
                 chai_1.expect(err).to.equal(null);
                 chai_1.expect(containers).to.have.lengthOf(2);
                 for (let i = 0; i < containers.length; ++i) {
-                    chai_1.expect(containers[i].constructor.name).to.equal('ContainerObjectImpl');
-                    chai_1.expect(containers[i].name).to.equal(containerNames[i]);
+                    chai_1.expect(containers[i].constructor.name).to.equal('DockerContainerImpl');
+                    chai_1.expect(containers[i].Name).to.equal(containerNames[i]);
                 }
                 done();
             });

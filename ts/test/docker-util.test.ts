@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import kernel from '../inversify.config';
 import {expect} from 'chai';
-import {DockerOde, ImageOrContainer, ImageObject, ContainerObject} from "../interfaces/dockerode";
+import {DockerOde, ImageOrContainer, DockerImage, DockerContainer} from "../interfaces/dockerode";
 import {DockerOdeMockImpl} from "./docker-ode-mock-impl";
 import {DockerUtil} from "../interfaces/docker-util";
 import {DockerUtilOptionsImpl} from "../implementations/docker-util-options-impl";
@@ -116,7 +116,7 @@ describe('DockerUtil', function () {
       dockerUtil.getImageOrContainer(
         '5',
         new DockerUtilOptionsImpl(ImageOrContainer.Image, true),
-        (err, image: ImageObject)=> {
+        (err, image: DockerImage)=> {
           expect(err).to.not.equal(null);
           expect(image).to.equal(null);
           done();
@@ -130,7 +130,7 @@ describe('DockerUtil', function () {
       dockerUtil.getImageOrContainer(
         unknownFirmamentId,
         new DockerUtilOptionsImpl(ImageOrContainer.Image),
-        (err, image: ImageObject)=> {
+        (err, image: DockerImage)=> {
           expect(err).to.equal(null);
           expect(typeof image).to.equal('string');
           expect(image).to.equal('Unable to find: ' + unknownFirmamentId);
@@ -144,9 +144,9 @@ describe('DockerUtil', function () {
       dockerUtil.getImageOrContainer(
         '5',
         new DockerUtilOptionsImpl(ImageOrContainer.Image),
-        (err, image: ImageObject)=> {
+        (err, image: DockerImage)=> {
           expect(err).to.equal(null);
-          expect(image.constructor.name).to.equal('ImageObjectImpl');
+          expect(image.constructor.name).to.equal('DockerImageImpl');
           done();
         });
     });
@@ -179,7 +179,7 @@ describe('DockerUtil', function () {
             if (typeof image === 'string') {
               expect(image).to.equal('Unable to find: ' + unknownFirmamentId);
             } else {
-              expect(image.constructor.name).to.equal('ImageObjectImpl');
+              expect(image.constructor.name).to.equal('DockerImageImpl');
             }
           });
           done();
@@ -194,7 +194,7 @@ describe('DockerUtil', function () {
       dockerUtil.getImageOrContainer(
         '5',
         new DockerUtilOptionsImpl(ImageOrContainer.Container, true),
-        (err, container: ContainerObject)=> {
+        (err, container: DockerContainer)=> {
           expect(err).to.not.equal(null);
           expect(container).to.equal(null);
           done();
@@ -208,7 +208,7 @@ describe('DockerUtil', function () {
       dockerUtil.getImageOrContainer(
         unknownFirmamentId,
         new DockerUtilOptionsImpl(ImageOrContainer.Container),
-        (err, container: ContainerObject)=> {
+        (err, container: DockerContainer)=> {
           expect(err).to.equal(null);
           expect(typeof container).to.equal('string');
           expect(container).to.equal('Unable to find: ' + unknownFirmamentId);
@@ -222,9 +222,9 @@ describe('DockerUtil', function () {
       dockerUtil.getImageOrContainer(
         '2',
         new DockerUtilOptionsImpl(ImageOrContainer.Container),
-        (err, image: ImageObject)=> {
+        (err, image: DockerImage)=> {
           expect(err).to.equal(null);
-          expect(image.constructor.name).to.equal('ContainerObjectImpl');
+          expect(image.constructor.name).to.equal('DockerContainerImpl');
           done();
         });
     });
@@ -257,7 +257,7 @@ describe('DockerUtil', function () {
             if (typeof container === 'string') {
               expect(container).to.equal('Unable to find: ' + unknownFirmamentId);
             } else {
-              expect(container.constructor.name).to.equal('ContainerObjectImpl');
+              expect(container.constructor.name).to.equal('DockerContainerImpl');
             }
           });
           done();

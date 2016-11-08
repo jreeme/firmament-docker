@@ -75,8 +75,8 @@ describe('DockerImageManagement', function () {
         '7',
         (err: Error, image: DockerImage)=> {
           expect(err).to.equal(null);
-          expect(image.constructor.name).to.equal('ImageObjectImpl');
-          expect(image.name).to.equal('jstnldrs/caffedata:1.0');
+          expect(image.constructor.name).to.equal('DockerImageImpl');
+          expect(image.Name).to.equal('jstnldrs/caffedata:1.0');
           done();
         });
     });
@@ -104,8 +104,8 @@ describe('DockerImageManagement', function () {
           expect(err).to.equal(null);
           expect(images).to.have.lengthOf(2);
           for(let i = 0;i < images.length;++i){
-            expect(images[i].constructor.name).to.equal('ImageObjectImpl');
-            expect(images[i].name).to.equal(imageNames[i]);
+            expect(images[i].constructor.name).to.equal('DockerImageImpl');
+            expect(images[i].Name).to.equal(imageNames[i]);
           }
           done();
         });

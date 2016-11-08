@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import {injectable, inject} from "inversify";
 import {
-  DockerOde, DockerImage, DockerContainer, ImageObject, ContainerObject
+  DockerOde, DockerImage, DockerContainer
 } from "../interfaces/dockerode";
 import {ForceErrorImpl} from "./force-error-impl";
 @injectable()
@@ -27,11 +27,11 @@ export class DockerOdeImpl extends ForceErrorImpl implements DockerOde {
     this.dockerode.listContainers(options, cb);
   }
 
-  getContainer(id: string): ContainerObject {
+  getContainer(id: string): DockerContainer {
     return this.dockerode.getContainer(id);
   }
 
-  getImage(id: string): ImageObject {
+  getImage(id: string): DockerImage {
     return this.dockerode.getImage(id);
   }
 
@@ -42,7 +42,7 @@ export class DockerOdeImpl extends ForceErrorImpl implements DockerOde {
     this.dockerode.buildImage(tarStream, options, cb);
   }
 
-  createContainer(containerConfig: any, cb: (err: Error, container: ContainerObject)=>void): void {
+  createContainer(containerConfig: any, cb: (err: Error, container: DockerContainer)=>void): void {
     if (this.checkForceError(cb)) {
       return;
     }

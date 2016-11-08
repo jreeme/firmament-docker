@@ -1,8 +1,8 @@
 "use strict";
-class ImageObjectImpl {
+class DockerImageImpl {
     constructor(_modem, _id) {
         this.modem = _modem;
-        this.id = _id;
+        this.Id = _id;
     }
     get(callback) {
     }
@@ -18,5 +18,5 @@ class ImageObjectImpl {
     tag(opts, callback) {
     }
 }
-exports.ImageObjectImpl = ImageObjectImpl;
+exports.DockerImageImpl = DockerImageImpl;
 //# sourceMappingURL=image-object-impl.js.map

@@ -1,8 +1,8 @@
 "use strict";
-class ContainerObjectImpl {
+class DockerContainerImpl {
     constructor(_modem, _id) {
         this.modem = _modem;
-        this.id = _id;
+        this.Id = _id;
     }
     start(opts, callback) {
         callback(null, {});
@@ -14,5 +14,5 @@ class ContainerObjectImpl {
         callback(null, {});
     }
 }
-exports.ContainerObjectImpl = ContainerObjectImpl;
+exports.DockerContainerImpl = DockerContainerImpl;
 //# sourceMappingURL=container-object-impl.js.map
