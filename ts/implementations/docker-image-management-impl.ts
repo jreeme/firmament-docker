@@ -1,10 +1,10 @@
-import {injectable, inject} from "inversify";
-import {DockerImageManagement} from "../interfaces/docker-image-management";
-import {DockerImage, ImageRemoveResults, DockerOde, ImageOrContainer, ImageObject} from "../interfaces/dockerode";
+import {injectable, inject} from 'inversify';
+import {DockerImageManagement} from '../interfaces/docker-image-management';
+import {DockerImage, ImageRemoveResults, DockerOde, ImageOrContainer, ImageObject} from '../interfaces/dockerode';
 import {CommandUtil} from 'firmament-yargs';
-import {DockerUtil} from "../interfaces/docker-util";
-import {DockerUtilOptionsImpl} from "./docker-util-options-impl";
-import {ForceErrorImpl} from "./force-error-impl";
+import {DockerUtil} from '../interfaces/docker-util';
+import {DockerUtilOptionsImpl} from './docker-util-options-impl';
+import {ForceErrorImpl} from './force-error-impl';
 import * as _ from 'lodash';
 import * as async from 'async';
 const positive = require('positive');
@@ -53,6 +53,7 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
           try {
             let data = JSON.parse(chunk);
             if (data.error) {
+              //noinspection ExceptionCaughtLocallyJS
               throw new Error(data.error);
             }
             if (data.status === 'Downloading' || data.status === 'Extracting') {
@@ -145,12 +146,12 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
     }
     let me = this;
     if (!ids.length) {
-      console.log('Specify images to remove by FirmamentId, Docker ID or Name. Or "all" to remove all.');
+      console.log(`Specify images to remove by FirmamentId, Docker ID or Name. Or 'all' to remove all.`);
       return;
     }
     if (_.indexOf(ids, 'all') !== -1) {
       try {
-        if (!positive("You're sure you want to remove all images? [y/N] ", false)) {
+        if (!positive(`You're sure you want to remove all images? [y/N] `, false)) {
           console.log('Operation canceled.');
           cb(null, null);
           return;

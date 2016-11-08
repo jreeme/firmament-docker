@@ -6,7 +6,7 @@ import {DockerOdeMockImpl} from './docker-ode-mock-impl';
 import {DockerContainerManagement} from '../interfaces/docker-container-management';
 import {ForceError} from '../interfaces/force-error';
 import {DockerDescriptors} from '../interfaces/docker-descriptors';
-import {DockerOdeImpl} from "../implementations/docker-ode-impl";
+//import {DockerOdeImpl} from "../implementations/docker-ode-impl";
 describe('DockerContainerManagement', function () {
   let dockerContainerManagement: DockerContainerManagement;
   beforeEach(()=> {
@@ -102,7 +102,7 @@ describe('DockerContainerManagement', function () {
         ['2', '3'],
         (err: Error, containers: ContainerObject[])=> {
           expect(err).to.equal(null);
-          expect(containers).to.have.lengthOf(2)
+          expect(containers).to.have.lengthOf(2);
           for (let i = 0; i < containers.length; ++i) {
             expect(containers[i].constructor.name).to.equal('ContainerObjectImpl');
             expect(containers[i].name).to.equal(containerNames[i]);
@@ -140,24 +140,61 @@ describe('DockerContainerManagement', function () {
     it('should return non-null Error instance in callback', function (done) {
       expect(dockerContainerManagement).to.not.equal(null);
       (<ForceError>dockerContainerManagement).forceError = true;
+      //noinspection JSUnusedLocalSymbols
       dockerContainerManagement.removeContainers(
-        ['1', '2'],
-        (err: Error, containerRemoveResults: ContainerRemoveResults[])=> {
+        ['2','3', '113'],
+        (err: Error, containerRemoveResult:ContainerRemoveResults[])=> {
           expect(err).to.not.equal(null);
-          expect(containerRemoveResults).to.equal(null);
           done();
         });
     });
   });
-  describe('DockerContainerManagement.removeContainers', function () {
-    it('should return ContainerRemoveResult array in callback', function (done) {
+  describe('DockerContainerManagement.removeContainers (by firmamentId)', function () {
+    it('should return non-null Error instance in callback', function (done) {
       expect(dockerContainerManagement).to.not.equal(null);
       dockerContainerManagement.removeContainers(
-        ['1', '2'],
-        (err: Error, containerRemoveResults: ContainerRemoveResults[])=> {
+        ['2','3','113'],
+        (err: Error, containerRemoveResults:ContainerRemoveResults[])=> {
           expect(err).to.equal(null);
           expect(containerRemoveResults).to.be.instanceOf(Array);
           expect(containerRemoveResults).to.have.lengthOf(3);
+          for(let i = 0;i < containerRemoveResults.length - 1;++i){
+            expect(containerRemoveResults[i].msg.substring(0, 8)).to.equal('Removing');
+          }
+          expect(containerRemoveResults[containerRemoveResults.length - 1].msg.substring(0, 6)).to.equal('Unable');
+          done();
+        });
+    });
+  });
+  describe('DockerContainerManagement.removeContainers (by Docker Id)', function () {
+    it('should return non-null Error instance in callback', function (done) {
+      expect(dockerContainerManagement).to.not.equal(null);
+      dockerContainerManagement.removeContainers(
+        ['228','75b','xxx'],
+        (err: Error, containerRemoveResults:ContainerRemoveResults[])=> {
+          expect(err).to.equal(null);
+          expect(containerRemoveResults).to.be.instanceOf(Array);
+          expect(containerRemoveResults).to.have.lengthOf(3);
+          for(let i = 0;i < containerRemoveResults.length - 1;++i){
+            expect(containerRemoveResults[i].msg.substring(0, 8)).to.equal('Removing');
+          }
+          expect(containerRemoveResults[containerRemoveResults.length - 1].msg.substring(0, 6)).to.equal('Unable');
+          done();
+        });
+    });
+  });
+  describe('DockerContainerManagement.removeContainers (all)', function () {
+    it('should return non-null Error instance in callback', function (done) {
+      expect(dockerContainerManagement).to.not.equal(null);
+      dockerContainerManagement.removeContainers(
+        ['???','all','xxx'],
+        (err: Error, containerRemoveResults:ContainerRemoveResults[])=> {
+          expect(err).to.equal(null);
+          expect(containerRemoveResults).to.be.instanceOf(Array);
+          expect(containerRemoveResults).to.have.lengthOf(3);
+          for(let i = 0;i < containerRemoveResults.length;++i){
+            expect(containerRemoveResults[i].msg.substring(0, 8)).to.equal('Removing');
+          }
           done();
         });
     });

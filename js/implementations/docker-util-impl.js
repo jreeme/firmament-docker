@@ -121,8 +121,14 @@ let DockerUtilImpl = class DockerUtilImpl extends force_error_impl_1.ForceErrorI
                         if (charCount < 3) {
                             return false;
                         }
-                        return imageOrContainer.Id.toLowerCase().substring(0, charCount) ===
-                            lowerCaseId.substring(0, charCount);
+                        const testPrefix = 'sha256:';
+                        let imageOrContainerId = imageOrContainer.Id.toLowerCase();
+                        let startIdx = (testPrefix === imageOrContainerId.substr(0, testPrefix.length))
+                            ? testPrefix.length
+                            : 0;
+                        let str0 = imageOrContainerId.substring(startIdx, startIdx + charCount);
+                        let str1 = lowerCaseId.substring(0, charCount);
+                        return str0 === str1;
                     }
                 });
                 if (foundImagesOrContainers.length > 0) {

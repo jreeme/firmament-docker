@@ -11,10 +11,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-const inversify_1 = require("inversify");
-const dockerode_1 = require("../interfaces/dockerode");
-const docker_util_options_impl_1 = require("./docker-util-options-impl");
-const force_error_impl_1 = require("./force-error-impl");
+const inversify_1 = require('inversify');
+const dockerode_1 = require('../interfaces/dockerode');
+const docker_util_options_impl_1 = require('./docker-util-options-impl');
+const force_error_impl_1 = require('./force-error-impl');
 const _ = require('lodash');
 const async = require('async');
 const positive = require('positive');
@@ -135,12 +135,12 @@ let DockerImageManagementImpl = class DockerImageManagementImpl extends force_er
         }
         let me = this;
         if (!ids.length) {
-            console.log('Specify images to remove by FirmamentId, Docker ID or Name. Or "all" to remove all.');
+            console.log(`Specify images to remove by FirmamentId, Docker ID or Name. Or 'all' to remove all.`);
             return;
         }
         if (_.indexOf(ids, 'all') !== -1) {
             try {
-                if (!positive("You're sure you want to remove all images? [y/N] ", false)) {
+                if (!positive(`You're sure you want to remove all images? [y/N] `, false)) {
                     console.log('Operation canceled.');
                     cb(null, null);
                     return;

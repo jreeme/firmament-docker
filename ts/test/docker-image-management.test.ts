@@ -5,7 +5,7 @@ import {DockerOde, DockerImage, ImageRemoveResults} from "../interfaces/dockerod
 import {DockerOdeMockImpl} from "./docker-ode-mock-impl";
 import {DockerImageManagement} from "../interfaces/docker-image-management";
 import {ForceError} from "../interfaces/force-error";
-import {DockerOdeImpl} from "../implementations/docker-ode-impl";
+//import {DockerOdeImpl} from "../implementations/docker-ode-impl";
 const path = require('path');
 describe('DockerImageManagement', function () {
   let dockerImageManagement: DockerImageManagement;
@@ -102,7 +102,7 @@ describe('DockerImageManagement', function () {
         ['7', '8'],
         (err: Error, images: DockerImage[])=> {
           expect(err).to.equal(null);
-          expect(images).to.have.lengthOf(2)
+          expect(images).to.have.lengthOf(2);
           for(let i = 0;i < images.length;++i){
             expect(images[i].constructor.name).to.equal('ImageObjectImpl');
             expect(images[i].name).to.equal(imageNames[i]);
@@ -115,6 +115,7 @@ describe('DockerImageManagement', function () {
     it('should return non-null Error instance in callback', function (done) {
       expect(dockerImageManagement).to.not.equal(null);
       (<ForceError>dockerImageManagement).forceError = true;
+      //noinspection JSUnusedLocalSymbols,JSUnusedLocalSymbols,JSUnusedLocalSymbols,JSUnusedLocalSymbols
       dockerImageManagement.pullImage(
         'mysql:5.6',
         (taskId:string,status:string,current:number,total:number)=>{
@@ -130,6 +131,7 @@ describe('DockerImageManagement', function () {
       let progressCallbackCalledWithErrorCount = 0;
       let progressCallbackCalledWithDownloadingCount = 0;
       expect(dockerImageManagement).to.not.equal(null);
+      //noinspection JSUnusedLocalSymbols,JSUnusedLocalSymbols
       dockerImageManagement.pullImage(
         'mysql:5.6',
         (taskId:string,status:string,current:number,total:number)=>{
@@ -153,6 +155,7 @@ describe('DockerImageManagement', function () {
       expect(dockerImageManagement).to.not.equal(null);
       (<ForceError>dockerImageManagement).forceError = true;
       let pathToDockerFile = path.resolve(__dirname, '../../test-data');
+      //noinspection JSUnusedLocalSymbols,JSUnusedLocalSymbols,JSUnusedLocalSymbols,JSUnusedLocalSymbols
       dockerImageManagement.buildDockerFile(
         pathToDockerFile,
         'mysql:5.5',
@@ -169,6 +172,7 @@ describe('DockerImageManagement', function () {
       let pathToDockerFile = path.resolve(__dirname, '../../test-data');
       let progressCallbackCalledWithDownloadingCount = 0;
       expect(dockerImageManagement).to.not.equal(null);
+      //noinspection JSUnusedLocalSymbols,JSUnusedLocalSymbols
       dockerImageManagement.buildDockerFile(
         pathToDockerFile,
         'mysql:5.5',
@@ -188,6 +192,7 @@ describe('DockerImageManagement', function () {
     it('should return non-null Error instance in callback', function (done) {
       expect(dockerImageManagement).to.not.equal(null);
       (<ForceError>dockerImageManagement).forceError = true;
+      //noinspection JSUnusedLocalSymbols
       dockerImageManagement.removeImages(
         ['2','3', '113'],
         (err: Error, imageRemoveResult:ImageRemoveResults[])=> {
@@ -200,10 +205,48 @@ describe('DockerImageManagement', function () {
     it('should return non-null Error instance in callback', function (done) {
       expect(dockerImageManagement).to.not.equal(null);
       dockerImageManagement.removeImages(
-        //['all'],
-        ['2','3', '113'],
-        (err: Error, imageRemoveResult:ImageRemoveResults[])=> {
+        ['2','3','5','113'],
+        (err: Error, imageRemoveResults:ImageRemoveResults[])=> {
           expect(err).to.equal(null);
+          expect(imageRemoveResults).to.be.instanceOf(Array);
+          expect(imageRemoveResults).to.have.lengthOf(4);
+          for(let i = 0;i < imageRemoveResults.length - 1;++i){
+            expect(imageRemoveResults[i].msg.substring(0, 8)).to.equal('Removing');
+          }
+          expect(imageRemoveResults[imageRemoveResults.length - 1].msg.substring(0, 6)).to.equal('Unable');
+          done();
+        });
+    });
+  });
+  describe('DockerImageManagement.removeImages (by Docker Id)', function () {
+    it('should return non-null Error instance in callback', function (done) {
+      expect(dockerImageManagement).to.not.equal(null);
+      dockerImageManagement.removeImages(
+        ['f55','817','248','xxx'],
+        (err: Error, imageRemoveResults:ImageRemoveResults[])=> {
+          expect(err).to.equal(null);
+          expect(imageRemoveResults).to.be.instanceOf(Array);
+          expect(imageRemoveResults).to.have.lengthOf(4);
+          for(let i = 0;i < imageRemoveResults.length - 1;++i){
+            expect(imageRemoveResults[i].msg.substring(0, 8)).to.equal('Removing');
+          }
+          expect(imageRemoveResults[imageRemoveResults.length - 1].msg.substring(0, 6)).to.equal('Unable');
+          done();
+        });
+    });
+  });
+  describe('DockerImageManagement.removeImages (all)', function () {
+    it('should return non-null Error instance in callback', function (done) {
+      expect(dockerImageManagement).to.not.equal(null);
+      dockerImageManagement.removeImages(
+        ['???','all','xxx'],
+        (err: Error, imageRemoveResults:ImageRemoveResults[])=> {
+          expect(err).to.equal(null);
+          expect(imageRemoveResults).to.be.instanceOf(Array);
+          expect(imageRemoveResults).to.have.lengthOf(9);
+          for(let i = 0;i < imageRemoveResults.length;++i){
+            expect(imageRemoveResults[i].msg.substring(0, 8)).to.equal('Removing');
+          }
           done();
         });
     });

@@ -162,8 +162,43 @@ describe('DockerImageManagement', function () {
     describe('DockerImageManagement.removeImages (by firmamentId)', function () {
         it('should return non-null Error instance in callback', function (done) {
             chai_1.expect(dockerImageManagement).to.not.equal(null);
-            dockerImageManagement.removeImages(['2', '3', '113'], (err, imageRemoveResult) => {
+            dockerImageManagement.removeImages(['2', '3', '5', '113'], (err, imageRemoveResults) => {
                 chai_1.expect(err).to.equal(null);
+                chai_1.expect(imageRemoveResults).to.be.instanceOf(Array);
+                chai_1.expect(imageRemoveResults).to.have.lengthOf(4);
+                for (let i = 0; i < imageRemoveResults.length - 1; ++i) {
+                    chai_1.expect(imageRemoveResults[i].msg.substring(0, 8)).to.equal('Removing');
+                }
+                chai_1.expect(imageRemoveResults[imageRemoveResults.length - 1].msg.substring(0, 6)).to.equal('Unable');
+                done();
+            });
+        });
+    });
+    describe('DockerImageManagement.removeImages (by Docker Id)', function () {
+        it('should return non-null Error instance in callback', function (done) {
+            chai_1.expect(dockerImageManagement).to.not.equal(null);
+            dockerImageManagement.removeImages(['f55', '817', '248', 'xxx'], (err, imageRemoveResults) => {
+                chai_1.expect(err).to.equal(null);
+                chai_1.expect(imageRemoveResults).to.be.instanceOf(Array);
+                chai_1.expect(imageRemoveResults).to.have.lengthOf(4);
+                for (let i = 0; i < imageRemoveResults.length - 1; ++i) {
+                    chai_1.expect(imageRemoveResults[i].msg.substring(0, 8)).to.equal('Removing');
+                }
+                chai_1.expect(imageRemoveResults[imageRemoveResults.length - 1].msg.substring(0, 6)).to.equal('Unable');
+                done();
+            });
+        });
+    });
+    describe('DockerImageManagement.removeImages (all)', function () {
+        it('should return non-null Error instance in callback', function (done) {
+            chai_1.expect(dockerImageManagement).to.not.equal(null);
+            dockerImageManagement.removeImages(['???', 'all', 'xxx'], (err, imageRemoveResults) => {
+                chai_1.expect(err).to.equal(null);
+                chai_1.expect(imageRemoveResults).to.be.instanceOf(Array);
+                chai_1.expect(imageRemoveResults).to.have.lengthOf(9);
+                for (let i = 0; i < imageRemoveResults.length; ++i) {
+                    chai_1.expect(imageRemoveResults[i].msg.substring(0, 8)).to.equal('Removing');
+                }
                 done();
             });
         });

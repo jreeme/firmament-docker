@@ -58,7 +58,7 @@ let DockerContainerManagementImpl = class DockerContainerManagementImpl extends 
                     me.commandUtil.logAndCallback(containerOrErrorMsg, cb);
                 }
                 else {
-                    let resultMessage = 'Container "' + containerOrErrorMsg.name + '" ';
+                    let resultMessage = `Container '${containerOrErrorMsg.name}' `;
                     resultMessage += start ? 'started.' : 'stopped.';
                     let fnStartStop = start
                         ? containerOrErrorMsg.start.bind(containerOrErrorMsg)
@@ -73,18 +73,22 @@ let DockerContainerManagementImpl = class DockerContainerManagementImpl extends 
     removeContainers(ids, cb) {
         let me = this;
         if (!ids.length) {
-            console.log('Specify containers to remove by FirmamentId, Docker ID or Name. Or "all" to remove all.');
+            console.log(`Specify containers to remove by FirmamentId, Docker ID or Name. Or 'all' to remove all.`);
             return;
         }
         if (_.indexOf(ids, 'all') !== -1) {
-            if (!positive("You're sure you want to remove all containers? [y/N] ", false)) {
-                console.log('Operation canceled.');
-                cb(null, null);
-                return;
+            try {
+                if (!positive(`You're sure you want to remove all containers? [y/N] `, false)) {
+                    console.log('Operation canceled.');
+                    cb(null, null);
+                    return;
+                }
+            }
+            catch (err) {
+                console.log(err.message);
             }
             ids = null;
         }
-        ids = null;
         me.getContainers(ids, (err, containerObjects) => {
             if (me.commandUtil.callbackIfError(cb, err)) {
                 return;
@@ -96,7 +100,7 @@ let DockerContainerManagementImpl = class DockerContainerManagementImpl extends 
                 else {
                     containerOrErrorMsg.remove({ force: 1 }, (err) => {
                         var msg = `Removing container '${containerOrErrorMsg.name}'`;
-                        me.commandUtil.logAndCallback(msg, cb, err, { msg: containerOrErrorMsg.name });
+                        me.commandUtil.logAndCallback(msg, cb, err, { msg });
                     });
                 }
             }, cb);

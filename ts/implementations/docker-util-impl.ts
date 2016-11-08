@@ -115,7 +115,7 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
               else if (options.IorC === ImageOrContainer.Image) {
                 for (let i = 0; i < imageOrContainer.RepoTags.length; ++i) {
                   //Don't match <none>:<none> (intermediate layers) since many images can have that as a RepoTag
-                  if(imageOrContainer.RepoTags[i] === '<none>:<none>'){
+                  if (imageOrContainer.RepoTags[i] === '<none>:<none>') {
                     continue;
                   }
                   if (imageOrContainer.RepoTags[i] === id) {
@@ -128,12 +128,19 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
               if (charCount < 3) {
                 return false;
               }
-              return imageOrContainer.Id.toLowerCase().substring(0, charCount) ===
-                lowerCaseId.substring(0, charCount);
+              //If id starts with 'sha256:' then compare past it
+              const testPrefix = 'sha256:';
+              let imageOrContainerId = imageOrContainer.Id.toLowerCase();
+              let startIdx = (testPrefix === imageOrContainerId.substr(0, testPrefix.length))
+                ? testPrefix.length
+                : 0;
+              let str0 = imageOrContainerId.substring(startIdx, startIdx + charCount);
+              let str1 = lowerCaseId.substring(0, charCount);
+              return str0 === str1;
             }
           });
           if (foundImagesOrContainers.length > 0) {
-            let imageOrContainer:any;
+            let imageOrContainer: any;
             if (options.IorC === ImageOrContainer.Container) {
               imageOrContainer = me.dockerode.getContainer(foundImagesOrContainers[0].Id, options);
               imageOrContainer.name = foundImagesOrContainers[0].Names[0];

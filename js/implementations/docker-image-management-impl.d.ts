@@ -1,9 +1,9 @@
 /// <reference types="node" />
-import { DockerImageManagement } from "../interfaces/docker-image-management";
-import { DockerImage, ImageRemoveResults, DockerOde } from "../interfaces/dockerode";
+import { DockerImageManagement } from '../interfaces/docker-image-management';
+import { DockerImage, ImageRemoveResults, DockerOde } from '../interfaces/dockerode';
 import { CommandUtil } from 'firmament-yargs';
-import { DockerUtil } from "../interfaces/docker-util";
-import { ForceErrorImpl } from "./force-error-impl";
+import { DockerUtil } from '../interfaces/docker-util';
+import { ForceErrorImpl } from './force-error-impl';
 export declare class DockerImageManagementImpl extends ForceErrorImpl implements DockerImageManagement {
     private dockerode;
     private commandUtil;
