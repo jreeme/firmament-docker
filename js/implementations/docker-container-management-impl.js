@@ -51,18 +51,19 @@ let DockerContainerManagementImpl = class DockerContainerManagementImpl extends 
     }
     startOrStopContainers(ids, start, cb) {
         let me = this;
-        me.getContainers(ids, (err, dockerContainer) => {
+        me.getContainers(ids, (err, dockerContainersOrMessages) => {
             me.commandUtil.logError(err);
-            async.mapSeries(dockerContainer, (containerOrErrorMsg, cb) => {
-                if (typeof containerOrErrorMsg === 'string') {
-                    me.commandUtil.logAndCallback(containerOrErrorMsg, cb);
+            async.mapSeries(dockerContainersOrMessages, (dockerContainerOrMessage, cb) => {
+                if (typeof dockerContainerOrMessage === 'string') {
+                    me.commandUtil.logAndCallback(dockerContainerOrMessage, cb);
                 }
                 else {
-                    let resultMessage = `Container '${containerOrErrorMsg.name}' `;
+                    let dockerContainer = dockerContainerOrMessage;
+                    let resultMessage = `Container '${dockerContainer.Name}' `;
                     resultMessage += start ? 'started.' : 'stopped.';
                     let fnStartStop = start
-                        ? containerOrErrorMsg.start.bind(containerOrErrorMsg)
-                        : containerOrErrorMsg.stop.bind(containerOrErrorMsg);
+                        ? dockerContainer.start.bind(dockerContainer)
+                        : dockerContainer.stop.bind(dockerContainer);
                     fnStartStop((err) => {
                         me.commandUtil.logAndCallback(me.commandUtil.returnErrorStringOrMessage(err, resultMessage), cb);
                     });

@@ -56,18 +56,19 @@ export class DockerContainerManagementImpl extends ForceErrorImpl implements Doc
 
   startOrStopContainers(ids: string[], start: boolean, cb: ()=>void) {
     let me = this;
-    me.getContainers(ids, (err: Error, dockerContainer: any[])=> {
+    me.getContainers(ids, (err: Error, dockerContainersOrMessages: any[])=> {
       me.commandUtil.logError(err);
-      async.mapSeries(dockerContainer,
-        (containerOrErrorMsg, cb)=> {
-          if (typeof containerOrErrorMsg === 'string') {
-            me.commandUtil.logAndCallback(containerOrErrorMsg, cb);
+      async.mapSeries(dockerContainersOrMessages,
+        (dockerContainerOrMessage, cb)=> {
+          if (typeof dockerContainerOrMessage === 'string') {
+            me.commandUtil.logAndCallback(dockerContainerOrMessage, cb);
           } else {
-            let resultMessage = `Container '${containerOrErrorMsg.name}' `;
+            let dockerContainer: DockerContainer = <DockerContainer>dockerContainerOrMessage;
+            let resultMessage = `Container '${dockerContainer.Name}' `;
             resultMessage += start ? 'started.' : 'stopped.';
             let fnStartStop = start
-              ? containerOrErrorMsg.start.bind(containerOrErrorMsg)
-              : containerOrErrorMsg.stop.bind(containerOrErrorMsg);
+              ? dockerContainer.start.bind(dockerContainer)
+              : dockerContainer.stop.bind(dockerContainer);
             fnStartStop((err: Error)=> {
               me.commandUtil.logAndCallback(me.commandUtil.returnErrorStringOrMessage(err, resultMessage), cb);
             });
