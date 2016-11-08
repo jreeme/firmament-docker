@@ -169,9 +169,9 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
             me.commandUtil.logAndCallback(imageOrErrorMsg, cb, null, {msg: imageOrErrorMsg});
           } else {
             let image: DockerImage = <DockerImage>imageOrErrorMsg;
+            //noinspection JSUnusedLocalSymbols
             image.remove({force: 1}, (err: Error, _image: DockerImage)=> {
-              let id = _image.Id;
-              let msg = `Removing image '${_image.Name}' with id: '${id}'`;
+              let msg = `Removing image '${image.Name}' with id: '${image.Id}'`;
               me.commandUtil.logAndCallback(msg, cb, err, {msg});
             });
           }
