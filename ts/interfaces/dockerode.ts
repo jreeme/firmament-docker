@@ -69,6 +69,7 @@ export interface ImageOrContainerObject {
   name: string,
   id: string,
   modem: Modem,
+  remove(opts: any, callback: (err: Error, obj: any)=>void): void;
 }
 
 export interface ImageObject extends ImageOrContainerObject {
@@ -77,7 +78,6 @@ export interface ImageObject extends ImageOrContainerObject {
   history(callback: (err: Error, obj: any)=>void): void;
   inspect(callback: (err: Error, obj: any)=>void): void;
   push(opts: any, callback: (err: Error, obj: any)=>void, auth: any): void;
-  remove(opts: any, callback: (err: Error, obj: any)=>void): void;
   tag(opts: any, callback: (err: Error, obj: any)=>void): void;
 }
 

@@ -7,4 +7,5 @@ export declare class ContainerObjectImpl implements ContainerObject {
     constructor(_modem: Modem, _id: string);
     start(opts: any, callback: (err: Error, obj: any) => void): void;
     stop(opts: any, callback: (err: Error, obj: any) => void): void;
+    remove(opts: any, callback: (err: Error, obj: any) => void): void;
 }

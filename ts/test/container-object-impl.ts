@@ -16,4 +16,8 @@ export class ContainerObjectImpl implements ContainerObject {
   stop(opts: any, callback: (err: Error, obj: any)=>void): void {
     callback(null,{});
   }
+
+  remove(opts: any, callback: (err: Error, obj: any)=>void): void {
+    callback(null,{});
+  }
 }

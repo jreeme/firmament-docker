@@ -64,6 +64,7 @@ let DockerUtilImpl = class DockerUtilImpl extends force_error_impl_1.ForceErrorI
     getImagesOrContainers(ids, options, cb) {
         let me = this;
         if (!ids) {
+            options.listAll = true;
             me.listImagesOrContainers(options, (err, imagesOrContainers) => {
                 if (me.commandUtil.callbackIfError(cb, err)) {
                     return;

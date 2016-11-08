@@ -67,6 +67,8 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
                         cb: (err: Error, imagesOrContainers: any[])=>void) {
     let me = this;
     if (!ids) {
+      //if 'ids' is 'falsy' then return all containers or images
+      options.listAll = true;
       me.listImagesOrContainers(options, (err: Error, imagesOrContainers: any[])=> {
         if (me.commandUtil.callbackIfError(cb, err)) {
           return;

@@ -84,15 +84,18 @@ let DockerContainerManagementImpl = class DockerContainerManagementImpl extends 
             }
             ids = null;
         }
-        me.getContainers(ids, (err, dockerContainer) => {
-            me.commandUtil.logError(err);
-            async.map(dockerContainer, (containerOrErrorMsg, cb) => {
+        ids = null;
+        me.getContainers(ids, (err, containerObjects) => {
+            if (me.commandUtil.callbackIfError(cb, err)) {
+                return;
+            }
+            async.map(containerObjects, (containerOrErrorMsg, cb) => {
                 if (typeof containerOrErrorMsg === 'string') {
                     me.commandUtil.logAndCallback(containerOrErrorMsg, cb, null, { msg: containerOrErrorMsg });
                 }
                 else {
                     containerOrErrorMsg.remove({ force: 1 }, (err) => {
-                        var msg = 'Removing container "' + containerOrErrorMsg.name + '"';
+                        var msg = `Removing container '${containerOrErrorMsg.name}'`;
                         me.commandUtil.logAndCallback(msg, cb, err, { msg: containerOrErrorMsg.name });
                     });
                 }

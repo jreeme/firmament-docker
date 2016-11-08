@@ -111,5 +111,27 @@ describe('DockerContainerManagement', function () {
             });
         });
     });
+    describe('DockerContainerManagement.removeContainers (force error)', function () {
+        it('should return non-null Error instance in callback', function (done) {
+            chai_1.expect(dockerContainerManagement).to.not.equal(null);
+            dockerContainerManagement.forceError = true;
+            dockerContainerManagement.removeContainers(['1', '2'], (err, containerRemoveResults) => {
+                chai_1.expect(err).to.not.equal(null);
+                chai_1.expect(containerRemoveResults).to.equal(null);
+                done();
+            });
+        });
+    });
+    describe('DockerContainerManagement.removeContainers', function () {
+        it('should return ContainerRemoveResult array in callback', function (done) {
+            chai_1.expect(dockerContainerManagement).to.not.equal(null);
+            dockerContainerManagement.removeContainers(['1', '2'], (err, containerRemoveResults) => {
+                chai_1.expect(err).to.equal(null);
+                chai_1.expect(containerRemoveResults).to.be.instanceOf(Array);
+                chai_1.expect(containerRemoveResults).to.have.lengthOf(3);
+                done();
+            });
+        });
+    });
 });
 //# sourceMappingURL=docker-container-management.test.js.map

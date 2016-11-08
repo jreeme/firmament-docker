@@ -10,6 +10,9 @@ class ContainerObjectImpl {
     stop(opts, callback) {
         callback(null, {});
     }
+    remove(opts, callback) {
+        callback(null, {});
+    }
 }
 exports.ContainerObjectImpl = ContainerObjectImpl;
 //# sourceMappingURL=container-object-impl.js.map

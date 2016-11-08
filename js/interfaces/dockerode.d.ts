@@ -64,13 +64,13 @@ export interface ImageOrContainerObject {
     name: string;
     id: string;
     modem: Modem;
+    remove(opts: any, callback: (err: Error, obj: any) => void): void;
 }
 export interface ImageObject extends ImageOrContainerObject {
     get(callback: (err: Error, obj: any) => void): void;
     history(callback: (err: Error, obj: any) => void): void;
     inspect(callback: (err: Error, obj: any) => void): void;
     push(opts: any, callback: (err: Error, obj: any) => void, auth: any): void;
-    remove(opts: any, callback: (err: Error, obj: any) => void): void;
     tag(opts: any, callback: (err: Error, obj: any) => void): void;
 }
 export interface ContainerObject extends ImageOrContainerObject {

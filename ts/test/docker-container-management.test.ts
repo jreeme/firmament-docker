@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import kernel from '../inversify.config';
 import {expect} from 'chai';
-import {DockerOde, DockerContainer, ContainerObject} from '../interfaces/dockerode';
+import {DockerOde, DockerContainer, ContainerObject, ContainerRemoveResults} from '../interfaces/dockerode';
 import {DockerOdeMockImpl} from './docker-ode-mock-impl';
 import {DockerContainerManagement} from '../interfaces/docker-container-management';
 import {ForceError} from '../interfaces/force-error';
@@ -95,7 +95,7 @@ describe('DockerContainerManagement', function () {
     });
   });
   describe('DockerContainerManagement.getContainers (by firmamentId)', function () {
-    let containerNames = ['/mysql','/ubuntu'];
+    let containerNames = ['/mysql', '/ubuntu'];
     it(`should return array of ContainerObjects (length 2)`, function (done) {
       expect(dockerContainerManagement).to.not.equal(null);
       dockerContainerManagement.getContainers(
@@ -103,7 +103,7 @@ describe('DockerContainerManagement', function () {
         (err: Error, containers: ContainerObject[])=> {
           expect(err).to.equal(null);
           expect(containers).to.have.lengthOf(2)
-          for(let i = 0;i < containers.length;++i){
+          for (let i = 0; i < containers.length; ++i) {
             expect(containers[i].constructor.name).to.equal('ContainerObjectImpl');
             expect(containers[i].name).to.equal(containerNames[i]);
           }
@@ -132,6 +132,32 @@ describe('DockerContainerManagement', function () {
         (err: Error, container: ContainerObject)=> {
           expect(err).to.equal(null);
           expect(container).to.not.equal(null);
+          done();
+        });
+    });
+  });
+  describe('DockerContainerManagement.removeContainers (force error)', function () {
+    it('should return non-null Error instance in callback', function (done) {
+      expect(dockerContainerManagement).to.not.equal(null);
+      (<ForceError>dockerContainerManagement).forceError = true;
+      dockerContainerManagement.removeContainers(
+        ['1', '2'],
+        (err: Error, containerRemoveResults: ContainerRemoveResults[])=> {
+          expect(err).to.not.equal(null);
+          expect(containerRemoveResults).to.equal(null);
+          done();
+        });
+    });
+  });
+  describe('DockerContainerManagement.removeContainers', function () {
+    it('should return ContainerRemoveResult array in callback', function (done) {
+      expect(dockerContainerManagement).to.not.equal(null);
+      dockerContainerManagement.removeContainers(
+        ['1', '2'],
+        (err: Error, containerRemoveResults: ContainerRemoveResults[])=> {
+          expect(err).to.equal(null);
+          expect(containerRemoveResults).to.be.instanceOf(Array);
+          expect(containerRemoveResults).to.have.lengthOf(3);
           done();
         });
     });

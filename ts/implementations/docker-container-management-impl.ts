@@ -91,15 +91,18 @@ export class DockerContainerManagementImpl extends ForceErrorImpl implements Doc
       }
       ids = null;
     }
-    me.getContainers(ids, (err: Error, dockerContainer: any[])=> {
-      me.commandUtil.logError(err);
-      async.map(dockerContainer,
+    ids = null;
+    me.getContainers(ids, (err: Error, containerObjects: ContainerObject[])=> {
+      if(me.commandUtil.callbackIfError(cb,err)){
+        return;
+      }
+      async.map(containerObjects,
         (containerOrErrorMsg, cb)=> {
           if (typeof containerOrErrorMsg === 'string') {
             me.commandUtil.logAndCallback(containerOrErrorMsg, cb, null, {msg: containerOrErrorMsg});
           } else {
             containerOrErrorMsg.remove({force: 1}, (err: Error)=> {
-              var msg = 'Removing container "' + containerOrErrorMsg.name + '"';
+              var msg = `Removing container '${containerOrErrorMsg.name}'`;
               me.commandUtil.logAndCallback(msg, cb, err, {msg: containerOrErrorMsg.name});
             });
           }
