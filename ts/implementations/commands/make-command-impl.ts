@@ -1,13 +1,14 @@
 import {injectable, inject} from "inversify";
-import kernel from '../inversify.config';
+import kernel from '../../inversify.config';
 import {Command, CommandLine, CommandUtil, Spawn, ProgressBar} from 'firmament-yargs';
-import {FirmamentDocker} from "../interfaces/firmament-docker";
-import {DockerDescriptors} from "../interfaces/docker-descriptors";
+import {DockerDescriptors} from "../../interfaces/docker-descriptors";
 import {
-  ContainerConfig, ContainerRemoveResults, DockerContainer, ExpressApp
-} from "../interfaces/dockerode";
+  ContainerConfig, DockerContainer, ExpressApp, ImageOrContainerRemoveResults
+} from "../../interfaces/dockerode";
 import * as async from 'async';
 import * as _ from 'lodash';
+import {DockerImageManagement} from "../../interfaces/docker-image-management";
+import {DockerContainerManagement} from "../../interfaces/docker-container-management";
 
 const request = require('request');
 const positive = require('positive');
@@ -28,22 +29,25 @@ export class MakeCommandImpl implements Command {
   static defaultConfigFilename = 'firmament.json';
   static jsonFileExtension = '.json';
   private progressBar: ProgressBar;
-  private firmamentDocker: FirmamentDocker;
   private commandUtil: CommandUtil;
+  private dockerImageManagement: DockerImageManagement;
+  private dockerContainerManagement: DockerContainerManagement;
   private commandLine: CommandLine;
   private spawn: Spawn;
 
   constructor(@inject('CommandUtil') _commandUtil: CommandUtil,
               @inject('Spawn') _spawn: Spawn,
+              @inject('DockerImageManagement') _dockerImageManagement: DockerImageManagement,
+              @inject('DockerContainerManagement') _dockerContainerManagement: DockerContainerManagement,
               @inject('CommandLine') _commandLine: CommandLine,
-              @inject('ProgressBar') _progressBar: ProgressBar,
-              @inject('FirmamentDocker') _firmamentDocker: FirmamentDocker) {
+              @inject('ProgressBar') _progressBar: ProgressBar) {
     this.buildCommandTree();
     this.commandUtil = _commandUtil;
+    this.spawn = _spawn;
+    this.dockerImageManagement = _dockerImageManagement;
+    this.dockerContainerManagement = _dockerContainerManagement;
     this.commandLine = _commandLine;
     this.progressBar = _progressBar;
-    this.spawn = _spawn;
-    this.firmamentDocker = _firmamentDocker;
   }
 
   private buildCommandTree() {
@@ -191,11 +195,11 @@ export class MakeCommandImpl implements Command {
     //noinspection JSUnusedGlobalSymbols,JSUnusedLocalSymbols
     async.waterfall([
       //Remove all containers mentioned in config file
-      (cb: (err: Error, containerRemoveResults: ContainerRemoveResults[])=>void)=> {
-        this.firmamentDocker.removeContainers(containerConfigs.map(containerConfig=>containerConfig.name), cb);
+      (cb: (err: Error, containerRemoveResults: ImageOrContainerRemoveResults[])=>void)=> {
+        this.dockerContainerManagement.removeContainers(containerConfigs.map(containerConfig=>containerConfig.name), cb);
       },
-      (containerRemoveResults: ContainerRemoveResults[], cb: (err: Error, missingImageNames: string[])=>void)=> {
-        this.firmamentDocker.listImages(false, (err, images)=> {
+      (containerRemoveResults: ImageOrContainerRemoveResults[], cb: (err: Error, missingImageNames: string[])=>void)=> {
+        this.dockerImageManagement.listImages(false, (err, images)=> {
           if (self.commandUtil.callbackIfError(cb, err)) {
             return;
           }
@@ -219,7 +223,7 @@ export class MakeCommandImpl implements Command {
         async.mapSeries(missingImageNames,
           (missingImageName, cb: (err: Error, missingImageName: string)=>void)=> {
             //Try to pull image
-            this.firmamentDocker.pullImage(missingImageName,
+            this.dockerImageManagement.pullImage(missingImageName,
               function (taskId, status, current, total) {
                 self.progressBar.showProgressForTask(taskId, status, current, total);
               },
@@ -243,7 +247,7 @@ export class MakeCommandImpl implements Command {
             let cwd = process.cwd();
             let dockerFilePath = path.join(cwd, containerConfig.DockerFilePath);
             let dockerImageName = containerConfig.Image;
-            this.firmamentDocker.buildDockerFile(dockerFilePath, dockerImageName,
+            this.dockerImageManagement.buildDockerFile(dockerFilePath, dockerImageName,
               function (taskId, status, current, total) {
                 self.progressBar.showProgressForTask(taskId, status, current, total);
               },
@@ -267,7 +271,7 @@ export class MakeCommandImpl implements Command {
           //noinspection JSUnusedLocalSymbols
           async.mapSeries(sortedContainerConfigs,
             (containerConfig, cb: (err: Error, result: any)=>void)=> {
-              this.firmamentDocker.createContainer(containerConfig, (err: Error, container: DockerContainer)=> {
+              this.dockerContainerManagement.createContainer(containerConfig, (err: Error, container: DockerContainer)=> {
                 self.commandUtil.logAndCallback('Container "' + containerConfig.name + '" created.', cb, err, container);
               });
             },
@@ -276,7 +280,7 @@ export class MakeCommandImpl implements Command {
                 return;
               }
               let sortedContainerNames = sortedContainerConfigs.map(containerConfig=>containerConfig.name);
-              this.firmamentDocker.startOrStopContainers(sortedContainerNames, true, ()=> {
+              this.dockerContainerManagement.startOrStopContainers(sortedContainerNames, true, ()=> {
                 cb(null, null);
               });
             }

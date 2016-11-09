@@ -1,7 +1,7 @@
 /// <reference types="node" />
 import "reflect-metadata";
 import { DockerOde, DockerImage, DockerContainer } from "../interfaces/dockerode";
-import { ForceErrorImpl } from "../implementations/force-error-impl";
+import { ForceErrorImpl } from "../implementations/util/force-error-impl";
 export declare class DockerOdeMockImpl extends ForceErrorImpl implements DockerOde {
     listImages(options: any, cb: (err: Error, images: DockerImage[]) => void): void;
     listContainers(options: any, cb: (err: Error, containers: DockerContainer[]) => void): void;

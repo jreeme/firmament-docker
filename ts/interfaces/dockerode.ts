@@ -4,10 +4,7 @@ export enum ImageOrContainer{
   Image,
   Container
 }
-export interface ImageRemoveResults {
-  msg: string
-}
-export interface ContainerRemoveResults {
+export interface ImageOrContainerRemoveResults {
   msg: string
 }
 export interface DockerImageOrContainer {

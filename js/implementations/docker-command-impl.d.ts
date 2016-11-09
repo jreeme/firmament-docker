@@ -1,5 +1,6 @@
 import { Command, CommandLine, CommandUtil, Spawn } from 'firmament-yargs';
-import { FirmamentDocker } from "../interfaces/firmament-docker";
+import { DockerImageManagement } from "../interfaces/docker-image-management";
+import { DockerContainerManagement } from "../interfaces/docker-container-management";
 export declare class DockerCommandImpl implements Command {
     aliases: string[];
     command: string;
@@ -7,11 +8,12 @@ export declare class DockerCommandImpl implements Command {
     handler: (argv: any) => void;
     options: any;
     subCommands: Command[];
-    private firmamentDocker;
     private commandUtil;
+    private dockerImageManagement;
+    private dockerContainerManagement;
     private commandLine;
     private spawn;
-    constructor(_commandUtil: CommandUtil, _spawn: Spawn, _commandLine: CommandLine, _firmamentDocker: FirmamentDocker);
+    constructor(_commandUtil: CommandUtil, _spawn: Spawn, _dockerImageManagement: DockerImageManagement, _dockerContainerManagement: DockerContainerManagement, _commandLine: CommandLine);
     private buildCommandTree();
     private pushCleanVolumesCommand();
     private pushRemoveImagesCommand();

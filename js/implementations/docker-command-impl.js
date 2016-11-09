@@ -14,18 +14,20 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 const inversify_1 = require("inversify");
 const inversify_config_1 = require('../inversify.config');
 let DockerCommandImpl = class DockerCommandImpl {
-    constructor(_commandUtil, _spawn, _commandLine, _firmamentDocker) {
+    constructor(_commandUtil, _spawn, _dockerImageManagement, _dockerContainerManagement, _commandLine) {
         this.aliases = [];
         this.command = '';
         this.commandDesc = '';
-        this.handler = (argv) => { };
+        this.handler = (argv) => {
+        };
         this.options = {};
         this.subCommands = [];
         this.buildCommandTree();
         this.commandUtil = _commandUtil;
-        this.commandLine = _commandLine;
         this.spawn = _spawn;
-        this.firmamentDocker = _firmamentDocker;
+        this.dockerContainerManagement = _dockerContainerManagement;
+        this.dockerImageManagement = _dockerImageManagement;
+        this.commandLine = _commandLine;
     }
     buildCommandTree() {
         this.aliases = ['docker', 'd'];
@@ -59,7 +61,7 @@ let DockerCommandImpl = class DockerCommandImpl {
         removeCommand.aliases = ['rmi'];
         removeCommand.commandDesc = 'Remove Docker images';
         removeCommand.handler = (argv) => {
-            me.firmamentDocker.removeImages(argv._.slice(2), (err) => {
+            me.dockerImageManagement.removeImages(argv._.slice(2), (err) => {
                 me.commandUtil.processExitWithError(err);
             });
         };
@@ -71,7 +73,7 @@ let DockerCommandImpl = class DockerCommandImpl {
         removeCommand.aliases = ['rm'];
         removeCommand.commandDesc = 'Remove Docker containers';
         removeCommand.handler = (argv) => {
-            me.firmamentDocker.removeContainers(argv._.slice(2), (err) => {
+            me.dockerContainerManagement.removeContainers(argv._.slice(2), (err) => {
                 me.commandUtil.processExitWithError(err);
             });
         };
@@ -95,7 +97,7 @@ let DockerCommandImpl = class DockerCommandImpl {
         startCommand.aliases = ['start'];
         startCommand.commandDesc = 'Start Docker containers';
         startCommand.handler = (argv) => {
-            me.firmamentDocker.startOrStopContainers(argv._.slice(2), true, () => me.commandUtil.processExit());
+            me.dockerContainerManagement.startOrStopContainers(argv._.slice(2), true, () => me.commandUtil.processExit());
         };
         me.subCommands.push(startCommand);
     }
@@ -105,7 +107,7 @@ let DockerCommandImpl = class DockerCommandImpl {
         stopCommand.aliases = ['stop'];
         stopCommand.commandDesc = 'Stop Docker containers';
         stopCommand.handler = argv => {
-            me.firmamentDocker.startOrStopContainers(argv._.slice(2), false, () => me.commandUtil.processExit());
+            me.dockerContainerManagement.startOrStopContainers(argv._.slice(2), false, () => me.commandUtil.processExit());
         };
         me.subCommands.push(stopCommand);
     }
@@ -142,12 +144,12 @@ let DockerCommandImpl = class DockerCommandImpl {
         this.subCommands.push(psCommand);
     }
     printImagesList(argv, cb) {
-        this.firmamentDocker.listImages(argv.a, (err, images) => {
+        this.dockerImageManagement.listImages(argv.a, (err, images) => {
             this.prettyPrintDockerImagesList(err, images, cb);
         });
     }
     printContainerList(argv, cb) {
-        this.firmamentDocker.listContainers(argv.a, (err, containers) => {
+        this.dockerContainerManagement.listContainers(argv.a, (err, containers) => {
             this.prettyPrintDockerContainerList(err, containers, argv.a, cb);
         });
     }
@@ -158,7 +160,7 @@ let DockerCommandImpl = class DockerCommandImpl {
             cb(new Error(msg));
             return;
         }
-        this.firmamentDocker.exec(ids[0].toString(), '/bin/bash', cb);
+        this.dockerContainerManagement.exec(ids[0].toString(), '/bin/bash', cb);
     }
     prettyPrintDockerImagesList(err, images, cb) {
         let me = this;
@@ -213,9 +215,10 @@ DockerCommandImpl = __decorate([
     inversify_1.injectable(),
     __param(0, inversify_1.inject('CommandUtil')),
     __param(1, inversify_1.inject('Spawn')),
-    __param(2, inversify_1.inject('CommandLine')),
-    __param(3, inversify_1.inject('FirmamentDocker')), 
-    __metadata('design:paramtypes', [Object, Object, Object, Object])
+    __param(2, inversify_1.inject('DockerImageManagement')),
+    __param(3, inversify_1.inject('DockerContainerManagement')),
+    __param(4, inversify_1.inject('CommandLine')), 
+    __metadata('design:paramtypes', [Object, Object, Object, Object, Object])
 ], DockerCommandImpl);
 exports.DockerCommandImpl = DockerCommandImpl;
 //# sourceMappingURL=docker-command-impl.js.map

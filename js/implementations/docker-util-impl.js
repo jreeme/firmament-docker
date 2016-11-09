@@ -12,10 +12,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 const inversify_1 = require('inversify');
+const _ = require('lodash');
 const dockerode_1 = require('../interfaces/dockerode');
 const force_error_impl_1 = require("./force-error-impl");
 const deepExtend = require('deep-extend');
 const async = require('async');
+const positive = require('positive');
 let DockerUtilImpl_1 = class DockerUtilImpl extends force_error_impl_1.ForceErrorImpl {
     constructor(_dockerode, _commandUtil) {
         super();
@@ -23,8 +25,10 @@ let DockerUtilImpl_1 = class DockerUtilImpl extends force_error_impl_1.ForceErro
         this.commandUtil = _commandUtil;
     }
     listImagesOrContainers(options, cb) {
+        if (this.checkForceError(cb)) {
+            return;
+        }
         let me = this;
-        me.dockerode.forceError = this.forceError;
         let listFn;
         deepExtend(options, { all: true });
         listFn = (options.IorC === dockerode_1.ImageOrContainer.Image)
@@ -62,6 +66,9 @@ let DockerUtilImpl_1 = class DockerUtilImpl extends force_error_impl_1.ForceErro
         });
     }
     getImagesOrContainers(ids, options, cb) {
+        if (this.checkForceError(cb)) {
+            return;
+        }
         let me = this;
         if (!ids) {
             options.listAll = true;
@@ -87,6 +94,9 @@ let DockerUtilImpl_1 = class DockerUtilImpl extends force_error_impl_1.ForceErro
         });
     }
     getImageOrContainer(id, options, cb) {
+        if (this.checkForceError(cb)) {
+            return;
+        }
         let me = this;
         async.waterfall([
                 (cb) => {
@@ -141,6 +151,48 @@ let DockerUtilImpl_1 = class DockerUtilImpl extends force_error_impl_1.ForceErro
                 }
             }
         ], cb);
+    }
+    removeImagesOrContainers(ids, options, cb) {
+        if (this.checkForceError(cb)) {
+            return;
+        }
+        let me = this;
+        let thingToRemove = options.IorC === dockerode_1.ImageOrContainer.Container
+            ? 'containers'
+            : 'images';
+        if (!ids.length) {
+            console.log(`Specify ${thingToRemove} to remove by FirmamentId, Docker ID or Name. Or 'all' to remove all.`);
+            return;
+        }
+        if (_.indexOf(ids, 'all') !== -1) {
+            try {
+                if (!positive(`You're sure you want to remove all ${thingToRemove}? [y/N] `, false)) {
+                    console.log('Operation canceled.');
+                    cb(null, null);
+                    return;
+                }
+            }
+            catch (err) {
+                console.log(err.message);
+            }
+            ids = null;
+        }
+        me.getImagesOrContainers(ids, options, (err, dockerImagesOrContainers) => {
+            if (me.commandUtil.callbackIfError(cb, err)) {
+                return;
+            }
+            async.map(dockerImagesOrContainers, (imageOrContainer, cb) => {
+                if (typeof imageOrContainer === 'string') {
+                    me.commandUtil.logAndCallback(imageOrContainer, cb, null, { msg: imageOrContainer });
+                }
+                else {
+                    imageOrContainer.remove({ force: 1 }, (err) => {
+                        let msg = `Removing image '${imageOrContainer.Name}' with id: '${imageOrContainer.Id}'`;
+                        me.commandUtil.logAndCallback(msg, cb, err, { msg });
+                    });
+                }
+            }, cb);
+        });
     }
     static compareIds(id0, id1) {
         let str0 = DockerUtilImpl_1.stripSha256(id0).toLowerCase();

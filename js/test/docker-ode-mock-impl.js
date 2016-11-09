@@ -12,11 +12,11 @@ require("reflect-metadata");
 const inversify_1 = require("inversify");
 const image_object_impl_1 = require("./image-object-impl");
 const container_object_impl_1 = require("./container-object-impl");
-const force_error_impl_1 = require("../implementations/force-error-impl");
+const force_error_impl_1 = require("../implementations/util/force-error-impl");
 const jsonFile = require('jsonfile');
 let DockerOdeMockImpl = class DockerOdeMockImpl extends force_error_impl_1.ForceErrorImpl {
     listImages(options, cb) {
-        if (this.checkForceError(cb)) {
+        if (this.checkForceError('listImages', cb)) {
             return;
         }
         let images = options.all
@@ -27,7 +27,7 @@ let DockerOdeMockImpl = class DockerOdeMockImpl extends force_error_impl_1.Force
         cb(null, images);
     }
     listContainers(options, cb) {
-        if (this.checkForceError(cb)) {
+        if (this.checkForceError('listContainers', cb)) {
             return;
         }
         let containers = options.all
@@ -38,6 +38,9 @@ let DockerOdeMockImpl = class DockerOdeMockImpl extends force_error_impl_1.Force
         cb(null, containers);
     }
     getContainer(id, options = {}) {
+        if (this.checkForceError('getContainer')) {
+            return;
+        }
         var containerArray = this.testContainerList.filter(container => {
             return id === container.Id;
         });
@@ -46,6 +49,9 @@ let DockerOdeMockImpl = class DockerOdeMockImpl extends force_error_impl_1.Force
             : null;
     }
     getImage(id, options = {}) {
+        if (this.checkForceError('getImage')) {
+            return;
+        }
         var imageArray = this.testImageList.filter(image => {
             return id === image.Id;
         });
@@ -57,7 +63,7 @@ let DockerOdeMockImpl = class DockerOdeMockImpl extends force_error_impl_1.Force
         this.pull('', cb);
     }
     createContainer(containerConfig, cb) {
-        if (this.checkForceError(cb)) {
+        if (this.checkForceError('createContainer', cb)) {
             return;
         }
         let testContainer = this.testContainerList.filter(container => {
@@ -66,11 +72,14 @@ let DockerOdeMockImpl = class DockerOdeMockImpl extends force_error_impl_1.Force
         cb(null, new container_object_impl_1.DockerContainerImpl(null, testContainer.Id));
     }
     pull(imageName, cb) {
+        if (this.checkForceError('pull', cb)) {
+            return;
+        }
         let me = this;
         let streamMock = new (require('events').EventEmitter)();
         let eventCount = 10;
         let interval = setInterval(() => {
-            if (me.forceError) {
+            if (!(eventCount % 4)) {
                 streamMock.emit('error', JSON.stringify({
                     error: 'Big Error! Sorry.'
                 }));

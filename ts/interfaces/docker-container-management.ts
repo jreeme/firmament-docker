@@ -1,4 +1,4 @@
-import {DockerContainer, ContainerRemoveResults} from "./dockerode";
+import {DockerContainer, ImageOrContainerRemoveResults} from "./dockerode";
 import {ForceError} from "./force-error";
 export interface DockerContainerManagement extends ForceError {
   getContainers(ids: string[],
@@ -10,9 +10,10 @@ export interface DockerContainerManagement extends ForceError {
   createContainer(dockerContainerConfig: any,
                   cb: (err: Error, dockerContainer: DockerContainer)=>void);
   removeContainers(ids: string[],
-                   cb: (err: Error, containerRemoveResults: ContainerRemoveResults[])=>void);
+                   cb: (err: Error, containerRemoveResults: ImageOrContainerRemoveResults[])=>void);
   startOrStopContainers(ids: string[],
                         start: boolean,
                         cb: ()=>void);
+  exec(id:string, command:string, cb:(err:Error, result:any)=>void):void;
 }
 

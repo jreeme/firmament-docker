@@ -2,17 +2,17 @@ import {Kernel} from 'inversify';
 import {DockerImageManagement} from './interfaces/docker-image-management';
 import {DockerImageManagementImpl} from './implementations/docker-image-management-impl';
 import {DockerOde} from "./interfaces/dockerode";
-import {DockerOdeImpl} from "./implementations/docker-ode-impl";
+import {DockerOdeImpl} from "./implementations/util/docker-ode-impl";
 import {DockerUtil} from "./interfaces/docker-util";
-import {DockerUtilImpl} from "./implementations/docker-util-impl";
+import {DockerUtilImpl} from "./implementations/util/docker-util-impl";
 import {DockerContainerManagement} from "./interfaces/docker-container-management";
 import {DockerContainerManagementImpl} from "./implementations/docker-container-management-impl";
 import {kernel as yargsKernel, CommandUtil, Command, Spawn, CommandLine, ProgressBar} from 'firmament-yargs';
-import {FirmamentDocker} from "./interfaces/firmament-docker";
-import {FirmamentDockerImpl} from "./implementations/firmament-docker-impl";
-import {DockerCommandImpl} from "./implementations/docker-command-impl";
+import {DockerCommandImpl} from "./implementations/commands/docker-command-impl";
 import {NestedYargs} from "firmament-yargs/js/interfaces/nested-yargs-wrapper";
-import {MakeCommandImpl} from "./implementations/make-command";
+import {MakeCommandImpl} from "./implementations/commands/make-command-impl";
+import {DockerManagement} from "./interfaces/docker-management";
+import {DockerManagementImpl} from "./implementations/docker-management-impl";
 var commandUtil = yargsKernel.get<CommandUtil>('CommandUtil');
 var nestedYargs = yargsKernel.get<NestedYargs>('NestedYargs');
 var progressBar = yargsKernel.get<ProgressBar>('ProgressBar');
@@ -31,11 +31,11 @@ kernel.bind<Command>('Command').to(<new (args:any)=>Command>command.constructor)
 kernel.bind<Spawn>('Spawn').to(<new (args:any)=>Spawn>spawn.constructor);
 //TODO: <- End Super HACK
 
+kernel.bind<DockerManagement>('DockerManagement').to(DockerManagementImpl);
 kernel.bind<DockerImageManagement>('DockerImageManagement').to(DockerImageManagementImpl);
 kernel.bind<DockerContainerManagement>('DockerContainerManagement').to(DockerContainerManagementImpl);
 kernel.bind<DockerOde>('DockerOde').to(DockerOdeImpl);
 kernel.bind<DockerUtil>('DockerUtil').to(DockerUtilImpl);
-kernel.bind<FirmamentDocker>('FirmamentDocker').to(FirmamentDockerImpl);
 kernel.bind<Command>('DockerCommand').to(DockerCommandImpl);
 kernel.bind<Command>('MakeCommand').to(MakeCommandImpl);
 export default kernel;

@@ -21,7 +21,7 @@ const positive = require('positive');
 const fs = require('fs');
 const templateCatalogUrl = 'https://raw.githubusercontent.com/Sotera/firmament/typescript/docker/templateCatalog.json';
 let MakeCommandImpl_1 = class MakeCommandImpl {
-    constructor(_commandUtil, _spawn, _commandLine, _progressBar, _firmamentDocker) {
+    constructor(_commandUtil, _spawn, _dockerImageManagement, _dockerContainerManagement, _commandLine, _progressBar) {
         this.aliases = [];
         this.command = '';
         this.commandDesc = '';
@@ -31,10 +31,11 @@ let MakeCommandImpl_1 = class MakeCommandImpl {
         this.subCommands = [];
         this.buildCommandTree();
         this.commandUtil = _commandUtil;
+        this.spawn = _spawn;
+        this.dockerImageManagement = _dockerImageManagement;
+        this.dockerContainerManagement = _dockerContainerManagement;
         this.commandLine = _commandLine;
         this.progressBar = _progressBar;
-        this.spawn = _spawn;
-        this.firmamentDocker = _firmamentDocker;
     }
     buildCommandTree() {
         this.aliases = ['make', 'm'];
@@ -176,10 +177,10 @@ let MakeCommandImpl_1 = class MakeCommandImpl {
         });
         async.waterfall([
                 (cb) => {
-                this.firmamentDocker.removeContainers(containerConfigs.map(containerConfig => containerConfig.name), cb);
+                this.dockerContainerManagement.removeContainers(containerConfigs.map(containerConfig => containerConfig.name), cb);
             },
                 (containerRemoveResults, cb) => {
-                this.firmamentDocker.listImages(false, (err, images) => {
+                this.dockerImageManagement.listImages(false, (err, images) => {
                     if (self.commandUtil.callbackIfError(cb, err)) {
                         return;
                     }
@@ -201,7 +202,7 @@ let MakeCommandImpl_1 = class MakeCommandImpl {
             },
                 (missingImageNames, cb) => {
                 async.mapSeries(missingImageNames, (missingImageName, cb) => {
-                    this.firmamentDocker.pullImage(missingImageName, function (taskId, status, current, total) {
+                    this.dockerImageManagement.pullImage(missingImageName, function (taskId, status, current, total) {
                         self.progressBar.showProgressForTask(taskId, status, current, total);
                     }, (err) => {
                         cb(null, err ? missingImageName : null);
@@ -220,7 +221,7 @@ let MakeCommandImpl_1 = class MakeCommandImpl {
                     let cwd = process.cwd();
                     let dockerFilePath = path.join(cwd, containerConfig.DockerFilePath);
                     let dockerImageName = containerConfig.Image;
-                    this.firmamentDocker.buildDockerFile(dockerFilePath, dockerImageName, function (taskId, status, current, total) {
+                    this.dockerImageManagement.buildDockerFile(dockerFilePath, dockerImageName, function (taskId, status, current, total) {
                         self.progressBar.showProgressForTask(taskId, status, current, total);
                     }, (err) => {
                         cb(null, err
@@ -239,7 +240,7 @@ let MakeCommandImpl_1 = class MakeCommandImpl {
                 try {
                     let sortedContainerConfigs = self.containerDependencySort(containerConfigs);
                     async.mapSeries(sortedContainerConfigs, (containerConfig, cb) => {
-                        this.firmamentDocker.createContainer(containerConfig, (err, container) => {
+                        this.dockerContainerManagement.createContainer(containerConfig, (err, container) => {
                             self.commandUtil.logAndCallback('Container "' + containerConfig.name + '" created.', cb, err, container);
                         });
                     }, (err, containers) => {
@@ -247,7 +248,7 @@ let MakeCommandImpl_1 = class MakeCommandImpl {
                             return;
                         }
                         let sortedContainerNames = sortedContainerConfigs.map(containerConfig => containerConfig.name);
-                        this.firmamentDocker.startOrStopContainers(sortedContainerNames, true, () => {
+                        this.dockerContainerManagement.startOrStopContainers(sortedContainerNames, true, () => {
                             cb(null, null);
                         });
                     });
@@ -466,10 +467,11 @@ MakeCommandImpl = MakeCommandImpl_1 = __decorate([
     inversify_1.injectable(),
     __param(0, inversify_1.inject('CommandUtil')),
     __param(1, inversify_1.inject('Spawn')),
-    __param(2, inversify_1.inject('CommandLine')),
-    __param(3, inversify_1.inject('ProgressBar')),
-    __param(4, inversify_1.inject('FirmamentDocker')), 
-    __metadata('design:paramtypes', [Object, Object, Object, Object, Object])
+    __param(2, inversify_1.inject('DockerImageManagement')),
+    __param(3, inversify_1.inject('DockerContainerManagement')),
+    __param(4, inversify_1.inject('CommandLine')),
+    __param(5, inversify_1.inject('ProgressBar')), 
+    __metadata('design:paramtypes', [Object, Object, Object, Object, Object, Object])
 ], MakeCommandImpl);
 exports.MakeCommandImpl = MakeCommandImpl;
 //# sourceMappingURL=make-command.js.map

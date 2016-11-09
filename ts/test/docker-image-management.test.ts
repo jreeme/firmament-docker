@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import kernel from '../inversify.config';
 import {expect} from 'chai';
-import {DockerOde, DockerImage, ImageRemoveResults} from "../interfaces/dockerode";
+import {DockerOde, DockerImage, ImageOrContainerRemoveResults} from "../interfaces/dockerode";
 import {DockerOdeMockImpl} from "./docker-ode-mock-impl";
 import {DockerImageManagement} from "../interfaces/docker-image-management";
 import {ForceError} from "../interfaces/force-error";
@@ -195,7 +195,7 @@ describe('DockerImageManagement', function () {
       //noinspection JSUnusedLocalSymbols
       dockerImageManagement.removeImages(
         ['2','3', '113'],
-        (err: Error, imageRemoveResult:ImageRemoveResults[])=> {
+        (err: Error, imageRemoveResult:ImageOrContainerRemoveResults[])=> {
           expect(err).to.not.equal(null);
           done();
         });
@@ -206,7 +206,7 @@ describe('DockerImageManagement', function () {
       expect(dockerImageManagement).to.not.equal(null);
       dockerImageManagement.removeImages(
         ['2','3','5','113'],
-        (err: Error, imageRemoveResults:ImageRemoveResults[])=> {
+        (err: Error, imageRemoveResults:ImageOrContainerRemoveResults[])=> {
           expect(err).to.equal(null);
           expect(imageRemoveResults).to.be.instanceOf(Array);
           expect(imageRemoveResults).to.have.lengthOf(4);
@@ -223,7 +223,7 @@ describe('DockerImageManagement', function () {
       expect(dockerImageManagement).to.not.equal(null);
       dockerImageManagement.removeImages(
         ['f55','817','248','xxx'],
-        (err: Error, imageRemoveResults:ImageRemoveResults[])=> {
+        (err: Error, imageRemoveResults:ImageOrContainerRemoveResults[])=> {
           expect(err).to.equal(null);
           expect(imageRemoveResults).to.be.instanceOf(Array);
           expect(imageRemoveResults).to.have.lengthOf(4);
@@ -240,7 +240,7 @@ describe('DockerImageManagement', function () {
       expect(dockerImageManagement).to.not.equal(null);
       dockerImageManagement.removeImages(
         ['???','all','xxx'],
-        (err: Error, imageRemoveResults:ImageRemoveResults[])=> {
+        (err: Error, imageRemoveResults:ImageOrContainerRemoveResults[])=> {
           expect(err).to.equal(null);
           expect(imageRemoveResults).to.be.instanceOf(Array);
           expect(imageRemoveResults).to.have.lengthOf(9);

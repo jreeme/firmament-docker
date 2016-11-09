@@ -5,12 +5,12 @@ import {
 } from "../interfaces/dockerode";
 import {DockerImageImpl} from "./image-object-impl";
 import {DockerContainerImpl} from "./container-object-impl";
-import {ForceErrorImpl} from "../implementations/force-error-impl";
+import {ForceErrorImpl} from "../implementations/util/force-error-impl";
 const jsonFile = require('jsonfile');
 @injectable()
 export class DockerOdeMockImpl extends ForceErrorImpl implements DockerOde {
   listImages(options: any, cb: (err: Error, images: DockerImage[])=>void): void {
-    if (this.checkForceError(cb)) {
+    if (this.checkForceError('listImages', cb)) {
       return;
     }
     let images = options.all
@@ -22,7 +22,7 @@ export class DockerOdeMockImpl extends ForceErrorImpl implements DockerOde {
   }
 
   listContainers(options: any, cb: (err: Error, containers: DockerContainer[])=>void): void {
-    if (this.checkForceError(cb)) {
+    if (this.checkForceError('listContainers', cb)) {
       return;
     }
     let containers = options.all
@@ -34,6 +34,9 @@ export class DockerOdeMockImpl extends ForceErrorImpl implements DockerOde {
   }
 
   getContainer(id: string, options: any = {}): DockerContainer {
+    if (this.checkForceError('getContainer')) {
+      return;
+    }
     var containerArray = this.testContainerList.filter(container=> {
       return id === container.Id;
     });
@@ -43,6 +46,9 @@ export class DockerOdeMockImpl extends ForceErrorImpl implements DockerOde {
   }
 
   getImage(id: string, options: any = {}): DockerImage {
+    if (this.checkForceError('getImage')) {
+      return;
+    }
     var imageArray = this.testImageList.filter(image=> {
       return id === image.Id;
     });
@@ -56,10 +62,9 @@ export class DockerOdeMockImpl extends ForceErrorImpl implements DockerOde {
   }
 
   createContainer(containerConfig: any, cb: (err: Error, container: DockerContainer)=>void): void {
-    if (this.checkForceError(cb)) {
+    if (this.checkForceError('createContainer', cb)) {
       return;
     }
-
     let testContainer = this.testContainerList.filter(container=> {
       return container.Image = 'mongo:2.6';
     })[0];
@@ -68,15 +73,14 @@ export class DockerOdeMockImpl extends ForceErrorImpl implements DockerOde {
   }
 
   pull(imageName: string, cb: (err: Error, outputStream: any)=>void) {
-    /*  Force error from the stream callback instead of here
-     if (this.checkForceError(cb)) {
-     return;
-     }*/
+    if (this.checkForceError('pull', cb)) {
+      return;
+    }
     let me = this;
     let streamMock = new (require('events').EventEmitter)();
     let eventCount = 10;
     let interval = setInterval(()=> {
-      if (me.forceError) {
+      if (!(eventCount % 4)) {
         streamMock.emit('error', JSON.stringify({
           error: 'Big Error! Sorry.'
         }));

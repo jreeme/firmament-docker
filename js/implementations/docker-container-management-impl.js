@@ -13,49 +13,50 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 const inversify_1 = require('inversify');
 const dockerode_1 = require('../interfaces/dockerode');
-const docker_util_options_impl_1 = require('./docker-util-options-impl');
-const force_error_impl_1 = require('./force-error-impl');
-const _ = require('lodash');
+const docker_util_options_impl_1 = require('./util/docker-util-options-impl');
+const force_error_impl_1 = require('./util/force-error-impl');
 const async = require('async');
+const childProcess = require('child_process');
 const deepExtend = require('deep-extend');
 const positive = require('positive');
 let DockerContainerManagementImpl = class DockerContainerManagementImpl extends force_error_impl_1.ForceErrorImpl {
-    constructor(_dockerode, _dockerUtil, _commandUtil) {
+    constructor(_dockerManagement) {
         super();
-        this.dockerode = _dockerode;
-        this.dockerUtil = _dockerUtil;
-        this.commandUtil = _commandUtil;
+        this.DM = _dockerManagement;
     }
     listContainers(listAllContainers, cb) {
         let dockerUtilOptions = new docker_util_options_impl_1.DockerUtilOptionsImpl(dockerode_1.ImageOrContainer.Container, listAllContainers);
-        this.dockerUtil.forceError = this.forceError;
-        this.dockerUtil.listImagesOrContainers(dockerUtilOptions, cb);
+        this.DM.dockerUtil.forceError = this.forceError;
+        this.DM.dockerUtil.listImagesOrContainers(dockerUtilOptions, cb);
     }
     getContainers(ids, cb) {
         let dockerUtilOptions = new docker_util_options_impl_1.DockerUtilOptionsImpl(dockerode_1.ImageOrContainer.Container);
-        this.dockerUtil.forceError = this.forceError;
-        this.dockerUtil.getImagesOrContainers(ids, dockerUtilOptions, cb);
+        this.DM.dockerUtil.forceError = this.forceError;
+        this.DM.dockerUtil.getImagesOrContainers(ids, dockerUtilOptions, cb);
     }
     getContainer(id, cb) {
         let dockerUtilOptions = new docker_util_options_impl_1.DockerUtilOptionsImpl(dockerode_1.ImageOrContainer.Container);
-        this.dockerUtil.forceError = this.forceError;
-        this.dockerUtil.getImageOrContainer(id, dockerUtilOptions, cb);
+        this.DM.dockerUtil.forceError = this.forceError;
+        this.DM.dockerUtil.getImageOrContainer(id, dockerUtilOptions, cb);
+    }
+    removeContainers(ids, cb) {
+        let dockerUtilOptions = new docker_util_options_impl_1.DockerUtilOptionsImpl(dockerode_1.ImageOrContainer.Container);
+        this.DM.dockerUtil.forceError = this.forceError;
+        this.DM.dockerUtil.removeImagesOrContainers(ids, dockerUtilOptions, cb);
     }
     createContainer(dockerContainerConfig, cb) {
-        this.dockerode.forceError = this.forceError;
+        this.DM.dockerode.forceError = this.forceError;
         var fullContainerConfigCopy = { ExpressApps: [] };
         deepExtend(fullContainerConfigCopy, dockerContainerConfig);
-        this.dockerode.createContainer(fullContainerConfigCopy, (err, dockerContainer) => {
-            cb(err, dockerContainer);
-        });
+        this.DM.dockerode.createContainer(fullContainerConfigCopy, cb);
     }
     startOrStopContainers(ids, start, cb) {
         let me = this;
         me.getContainers(ids, (err, dockerContainersOrMessages) => {
-            me.commandUtil.logError(err);
+            me.DM.commandUtil.logError(err);
             async.mapSeries(dockerContainersOrMessages, (dockerContainerOrMessage, cb) => {
                 if (typeof dockerContainerOrMessage === 'string') {
-                    me.commandUtil.logAndCallback(dockerContainerOrMessage, cb);
+                    me.DM.commandUtil.logAndCallback(dockerContainerOrMessage, cb);
                 }
                 else {
                     let dockerContainer = dockerContainerOrMessage;
@@ -65,55 +66,29 @@ let DockerContainerManagementImpl = class DockerContainerManagementImpl extends 
                         ? dockerContainer.start.bind(dockerContainer)
                         : dockerContainer.stop.bind(dockerContainer);
                     fnStartStop((err) => {
-                        me.commandUtil.logAndCallback(me.commandUtil.returnErrorStringOrMessage(err, resultMessage), cb);
+                        me.DM.commandUtil.logAndCallback(me.DM.commandUtil.returnErrorStringOrMessage(err, resultMessage), cb);
                     });
                 }
             }, cb);
         });
     }
-    removeContainers(ids, cb) {
+    exec(id, command, cb) {
         let me = this;
-        if (!ids.length) {
-            console.log(`Specify containers to remove by FirmamentId, Docker ID or Name. Or 'all' to remove all.`);
-            return;
-        }
-        if (_.indexOf(ids, 'all') !== -1) {
-            try {
-                if (!positive(`You're sure you want to remove all containers? [y/N] `, false)) {
-                    console.log('Operation canceled.');
-                    cb(null, null);
-                    return;
-                }
-            }
-            catch (err) {
-                console.log(err.message);
-            }
-            ids = null;
-        }
-        me.getContainers(ids, (err, containerObjects) => {
-            if (me.commandUtil.callbackIfError(cb, err)) {
+        me.getContainer(id, (err, dockerContainer) => {
+            if (me.DM.commandUtil.callbackIfError(cb, err)) {
                 return;
             }
-            async.map(containerObjects, (containerOrErrorMsg, cb) => {
-                if (typeof containerOrErrorMsg === 'string') {
-                    me.commandUtil.logAndCallback(containerOrErrorMsg, cb, null, { msg: containerOrErrorMsg });
-                }
-                else {
-                    containerOrErrorMsg.remove({ force: 1 }, (err) => {
-                        var msg = `Removing container '${containerOrErrorMsg.Name}'`;
-                        me.commandUtil.logAndCallback(msg, cb, err, { msg });
-                    });
-                }
-            }, cb);
+            childProcess.spawnSync('docker', ['exec', '-it', dockerContainer.Name.slice(1), command], {
+                stdio: 'inherit'
+            });
+            cb(null, 0);
         });
     }
 };
 DockerContainerManagementImpl = __decorate([
     inversify_1.injectable(),
-    __param(0, inversify_1.inject('DockerOde')),
-    __param(1, inversify_1.inject('DockerUtil')),
-    __param(2, inversify_1.inject('CommandUtil')), 
-    __metadata('design:paramtypes', [Object, Object, Object])
+    __param(0, inversify_1.inject('DockerManagement')), 
+    __metadata('design:paramtypes', [Object])
 ], DockerContainerManagementImpl);
 exports.DockerContainerManagementImpl = DockerContainerManagementImpl;
 //# sourceMappingURL=docker-container-management-impl.js.map

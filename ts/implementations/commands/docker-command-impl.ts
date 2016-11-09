@@ -1,8 +1,10 @@
 import {injectable, inject} from "inversify";
-import kernel from '../inversify.config';
+import kernel from '../../inversify.config';
 import {Command, CommandLine, CommandUtil, Spawn} from 'firmament-yargs';
-import {FirmamentDocker} from "../interfaces/firmament-docker";
-import {DockerImage} from "../interfaces/dockerode";
+import {DockerImage} from "../../interfaces/dockerode";
+import {DockerImageManagement} from "../../interfaces/docker-image-management";
+import {DockerContainerManagement} from "../../interfaces/docker-container-management";
+
 @injectable()
 export class DockerCommandImpl implements Command {
   aliases: string[] = [];
@@ -10,23 +12,27 @@ export class DockerCommandImpl implements Command {
   commandDesc: string = '';
   //noinspection JSUnusedGlobalSymbols
   //noinspection JSUnusedLocalSymbols
-  handler: (argv: any)=>void = (argv:any)=>{};
+  handler: (argv: any)=>void = (argv: any)=> {
+  };
   options: any = {};
   subCommands: Command[] = [];
-  private firmamentDocker: FirmamentDocker;
   private commandUtil: CommandUtil;
+  private dockerImageManagement: DockerImageManagement;
+  private dockerContainerManagement: DockerContainerManagement;
   private commandLine: CommandLine;
   private spawn: Spawn;
 
   constructor(@inject('CommandUtil') _commandUtil: CommandUtil,
               @inject('Spawn') _spawn: Spawn,
-              @inject('CommandLine') _commandLine: CommandLine,
-              @inject('FirmamentDocker') _firmamentDocker: FirmamentDocker) {
+              @inject('DockerImageManagement') _dockerImageManagement: DockerImageManagement,
+              @inject('DockerContainerManagement') _dockerContainerManagement: DockerContainerManagement,
+              @inject('CommandLine') _commandLine: CommandLine) {
     this.buildCommandTree();
     this.commandUtil = _commandUtil;
-    this.commandLine = _commandLine;
     this.spawn = _spawn;
-    this.firmamentDocker = _firmamentDocker;
+    this.dockerContainerManagement = _dockerContainerManagement;
+    this.dockerImageManagement = _dockerImageManagement;
+    this.commandLine = _commandLine;
   }
 
   private buildCommandTree() {
@@ -64,7 +70,7 @@ export class DockerCommandImpl implements Command {
     removeCommand.aliases = ['rmi'];
     removeCommand.commandDesc = 'Remove Docker images';
     removeCommand.handler = (argv)=> {
-      me.firmamentDocker.removeImages(argv._.slice(2), (err: Error)=> {
+      me.dockerImageManagement.removeImages(argv._.slice(2), (err: Error)=> {
         me.commandUtil.processExitWithError(err);
       });
     };
@@ -77,7 +83,7 @@ export class DockerCommandImpl implements Command {
     removeCommand.aliases = ['rm'];
     removeCommand.commandDesc = 'Remove Docker containers';
     removeCommand.handler = (argv)=> {
-      me.firmamentDocker.removeContainers(argv._.slice(2),
+      me.dockerContainerManagement.removeContainers(argv._.slice(2),
         (err: Error)=> {
           me.commandUtil.processExitWithError(err);
         });
@@ -104,7 +110,7 @@ export class DockerCommandImpl implements Command {
     startCommand.aliases = ['start'];
     startCommand.commandDesc = 'Start Docker containers';
     startCommand.handler = (argv)=> {
-      me.firmamentDocker.startOrStopContainers(argv._.slice(2), true, ()=>me.commandUtil.processExit());
+      me.dockerContainerManagement.startOrStopContainers(argv._.slice(2), true, ()=>me.commandUtil.processExit());
     };
     me.subCommands.push(startCommand);
   }
@@ -115,7 +121,7 @@ export class DockerCommandImpl implements Command {
     stopCommand.aliases = ['stop'];
     stopCommand.commandDesc = 'Stop Docker containers';
     stopCommand.handler = argv=> {
-      me.firmamentDocker.startOrStopContainers(argv._.slice(2), false, ()=>me.commandUtil.processExit());
+      me.dockerContainerManagement.startOrStopContainers(argv._.slice(2), false, ()=>me.commandUtil.processExit());
     };
     me.subCommands.push(stopCommand);
   }
@@ -157,13 +163,13 @@ export class DockerCommandImpl implements Command {
   }
 
   private printImagesList(argv: any, cb: ()=>void) {
-    this.firmamentDocker.listImages(argv.a, (err, images)=> {
+    this.dockerImageManagement.listImages(argv.a, (err, images)=> {
       this.prettyPrintDockerImagesList(err, images, cb);
     });
   }
 
   private printContainerList(argv: any, cb: ()=>void) {
-    this.firmamentDocker.listContainers(argv.a, (err, containers)=> {
+    this.dockerContainerManagement.listContainers(argv.a, (err, containers)=> {
       this.prettyPrintDockerContainerList(err, containers, argv.a, cb);
     });
   }
@@ -175,7 +181,7 @@ export class DockerCommandImpl implements Command {
       cb(new Error(msg));
       return;
     }
-    this.firmamentDocker.exec(ids[0].toString(), '/bin/bash', cb);
+    this.dockerContainerManagement.exec(ids[0].toString(), '/bin/bash', cb);
   }
 
   private prettyPrintDockerImagesList(err: Error, images: DockerImage[], cb: ()=>void) {

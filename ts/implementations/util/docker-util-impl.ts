@@ -1,11 +1,16 @@
 import {injectable, inject} from 'inversify';
-import {DockerUtil} from '../interfaces/docker-util';
-import {DockerOde, ImageOrContainer, DockerImageOrContainer} from '../interfaces/dockerode';
+import {DockerUtil} from '../../interfaces/docker-util';
+import * as _ from 'lodash';
+import {
+  DockerOde, ImageOrContainer, DockerImageOrContainer,
+  ImageOrContainerRemoveResults
+} from '../../interfaces/dockerode';
 import {CommandUtil} from 'firmament-yargs';
-import {DockerUtilOptions} from "../interfaces/docker-util-options";
+import {DockerUtilOptions} from "../../interfaces/docker-util-options";
 import {ForceErrorImpl} from "./force-error-impl";
 const deepExtend = require('deep-extend');
 const async = require('async');
+const positive = require('positive');
 @injectable()
 export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
   private dockerode: DockerOde;
@@ -20,8 +25,8 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
 
   listImagesOrContainers(options: DockerUtilOptions,
                          cb: (err: Error, imagesOrContainers: any[])=>void) {
+    this.dockerode.forceError = this.forceError;
     let me = this;
-    me.dockerode.forceError = this.forceError;
     let listFn: (options: any, cb: (err: Error, imagesOrContainers: any[])=>void)=>void;
     deepExtend(options, {all: true});
     listFn = (options.IorC === ImageOrContainer.Image)
@@ -64,7 +69,8 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
 
   getImagesOrContainers(ids: string[],
                         options: DockerUtilOptions,
-                        cb: (err: Error, imagesOrContainers: any[])=>void) {
+                        cb: (err: Error, imagesOrContainers: DockerImageOrContainer[])=>void) {
+    this.dockerode.forceError = this.forceError;
     let me = this;
     if (!ids) {
       //if 'ids' is 'falsy' then return all containers or images
@@ -94,6 +100,7 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
   getImageOrContainer(id: string,
                       options: DockerUtilOptions,
                       cb: (err: Error, imageOrContainer: any)=>void) {
+    this.dockerode.forceError = this.forceError;
     let me = this;
     async.waterfall([
         (cb: (err: Error)=>void)=> {
@@ -148,6 +155,51 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
         }
       ],
       cb);
+  }
+
+  removeImagesOrContainers(ids: string[],
+                           options: DockerUtilOptions,
+                           cb: (err: Error, imageOrContainerRemoveResults: ImageOrContainerRemoveResults[])=>void) {
+    this.dockerode.forceError = this.forceError;
+    let me = this;
+    ids = ids || [];
+    let thingToRemove = options.IorC === ImageOrContainer.Container
+      ? 'containers'
+      : 'images';
+    if (!ids.length) {
+      throw new Error(`Specify ${thingToRemove} to remove by FirmamentId, Docker ID or Name. Or 'all' to remove all.`);
+    }
+    if (_.indexOf(ids, 'all') !== -1) {
+      try {
+        if (!positive(`You're sure you want to remove all ${thingToRemove}? [y/N] `, false)) {
+          console.log('Operation canceled.');
+          cb(null, null);
+          return;
+        }
+      } catch (err) {
+        console.log(err.message);
+      }
+      ids = null;
+    }
+    me.getImagesOrContainers(ids, options, (err: Error, dockerImagesOrContainers: DockerImageOrContainer[])=> {
+      if (me.commandUtil.callbackIfError(cb, err)) {
+        return;
+      }
+      async.map(dockerImagesOrContainers,
+        (imageOrContainer: DockerImageOrContainer, cb)=> {
+          if (typeof imageOrContainer === 'string') {
+            me.commandUtil.logAndCallback(imageOrContainer,
+              cb,
+              null,
+              {msg: imageOrContainer});
+          } else {
+            imageOrContainer.remove({force: 1}, (err: Error)=> {
+              let msg = `Removing image '${imageOrContainer.Name}' with id: '${imageOrContainer.Id}'`;
+              me.commandUtil.logAndCallback(msg, cb, err, {msg});
+            });
+          }
+        }, cb);
+    });
   }
 
   private static compareIds(id0: string, id1: string): boolean {

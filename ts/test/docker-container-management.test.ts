@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import kernel from '../inversify.config';
 import {expect} from 'chai';
-import {DockerOde, DockerContainer, ContainerRemoveResults} from '../interfaces/dockerode';
+import {DockerOde, DockerContainer, ImageOrContainerRemoveResults} from '../interfaces/dockerode';
 import {DockerOdeMockImpl} from './docker-ode-mock-impl';
 import {DockerContainerManagement} from '../interfaces/docker-container-management';
 import {ForceError} from '../interfaces/force-error';
@@ -143,7 +143,7 @@ describe('DockerContainerManagement', function () {
       //noinspection JSUnusedLocalSymbols
       dockerContainerManagement.removeContainers(
         ['2','3', '113'],
-        (err: Error, containerRemoveResult:ContainerRemoveResults[])=> {
+        (err: Error, containerRemoveResult:ImageOrContainerRemoveResults[])=> {
           expect(err).to.not.equal(null);
           done();
         });
@@ -154,7 +154,7 @@ describe('DockerContainerManagement', function () {
       expect(dockerContainerManagement).to.not.equal(null);
       dockerContainerManagement.removeContainers(
         ['2','3','113'],
-        (err: Error, containerRemoveResults:ContainerRemoveResults[])=> {
+        (err: Error, containerRemoveResults:ImageOrContainerRemoveResults[])=> {
           expect(err).to.equal(null);
           expect(containerRemoveResults).to.be.instanceOf(Array);
           expect(containerRemoveResults).to.have.lengthOf(3);
@@ -171,7 +171,7 @@ describe('DockerContainerManagement', function () {
       expect(dockerContainerManagement).to.not.equal(null);
       dockerContainerManagement.removeContainers(
         ['228','75b','xxx'],
-        (err: Error, containerRemoveResults:ContainerRemoveResults[])=> {
+        (err: Error, containerRemoveResults:ImageOrContainerRemoveResults[])=> {
           expect(err).to.equal(null);
           expect(containerRemoveResults).to.be.instanceOf(Array);
           expect(containerRemoveResults).to.have.lengthOf(3);
@@ -188,7 +188,7 @@ describe('DockerContainerManagement', function () {
       expect(dockerContainerManagement).to.not.equal(null);
       dockerContainerManagement.removeContainers(
         ['???','all','xxx'],
-        (err: Error, containerRemoveResults:ContainerRemoveResults[])=> {
+        (err: Error, containerRemoveResults:ImageOrContainerRemoveResults[])=> {
           expect(err).to.equal(null);
           expect(containerRemoveResults).to.be.instanceOf(Array);
           expect(containerRemoveResults).to.have.lengthOf(3);

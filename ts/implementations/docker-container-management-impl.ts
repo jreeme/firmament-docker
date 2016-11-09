@@ -1,67 +1,65 @@
 import {injectable, inject} from 'inversify';
 import {
-  DockerOde, DockerContainer, ImageOrContainer, ContainerRemoveResults
+  DockerContainer, ImageOrContainer, ImageOrContainerRemoveResults
 } from '../interfaces/dockerode';
-import {CommandUtil} from 'firmament-yargs';
-import {DockerContainerManagement} from '../interfaces/docker-container-management';
-import {DockerUtil} from '../interfaces/docker-util';
-import {DockerUtilOptionsImpl} from './docker-util-options-impl';
-import {ForceErrorImpl} from './force-error-impl';
-import * as _ from 'lodash';
+import {DockerUtilOptionsImpl} from './util/docker-util-options-impl';
+import {ForceErrorImpl} from './util/force-error-impl';
 import * as async from 'async';
+import {DockerManagement} from "../interfaces/docker-management";
+import {DockerContainerManagement} from "../interfaces/docker-container-management";
+const childProcess = require('child_process');
 const deepExtend = require('deep-extend');
 const positive = require('positive');
 
 @injectable()
 export class DockerContainerManagementImpl extends ForceErrorImpl implements DockerContainerManagement {
-  private dockerode: DockerOde;
-  private dockerUtil: DockerUtil;
-  private commandUtil: CommandUtil;
+  private DM: DockerManagement;
 
-  constructor(@inject('DockerOde') _dockerode: DockerOde,
-              @inject('DockerUtil') _dockerUtil: DockerUtil,
-              @inject('CommandUtil') _commandUtil: CommandUtil) {
+  constructor(@inject('DockerManagement')_dockerManagement: DockerManagement
+  ) {
     super();
-    this.dockerode = _dockerode;
-    this.dockerUtil = _dockerUtil;
-    this.commandUtil = _commandUtil;
+    this.DM = _dockerManagement;
   }
 
   listContainers(listAllContainers: boolean, cb: (err: Error, dockerContainers?: DockerContainer[])=>void) {
     let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Container, listAllContainers);
-    this.dockerUtil.forceError = this.forceError;
-    this.dockerUtil.listImagesOrContainers(dockerUtilOptions, cb);
+    this.DM.dockerUtil.forceError = this.forceError;
+    this.DM.dockerUtil.listImagesOrContainers(dockerUtilOptions, cb);
   }
 
   getContainers(ids: string[], cb: (err: Error, dockerContainers: DockerContainer[])=>void) {
     let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Container);
-    this.dockerUtil.forceError = this.forceError;
-    this.dockerUtil.getImagesOrContainers(ids, dockerUtilOptions, cb);
+    this.DM.dockerUtil.forceError = this.forceError;
+    this.DM.dockerUtil.getImagesOrContainers(ids, dockerUtilOptions, cb);
   }
 
   getContainer(id: string, cb: (err: Error, dockerContainer: DockerContainer)=>void) {
     let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Container);
-    this.dockerUtil.forceError = this.forceError;
-    this.dockerUtil.getImageOrContainer(id, dockerUtilOptions, cb);
+    this.DM.dockerUtil.forceError = this.forceError;
+    this.DM.dockerUtil.getImageOrContainer(id, dockerUtilOptions, cb);
+  }
+
+  removeContainers(ids: string[], cb: (err: Error, containerRemoveResults: ImageOrContainerRemoveResults[])=>void) {
+    let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Container);
+    this.DM.dockerUtil.forceError = this.forceError;
+    this.DM.dockerUtil.removeImagesOrContainers(ids, dockerUtilOptions, cb);
   }
 
   createContainer(dockerContainerConfig: any, cb: (err: Error, dockerContainer: DockerContainer)=>void) {
-    this.dockerode.forceError = this.forceError;
+    this.DM.dockerode.forceError = this.forceError;
     var fullContainerConfigCopy = {ExpressApps: []};
     deepExtend(fullContainerConfigCopy, dockerContainerConfig);
-    this.dockerode.createContainer(fullContainerConfigCopy, (err: Error, dockerContainer: DockerContainer)=> {
-      cb(err, dockerContainer);
-    });
+    this.DM.dockerode.createContainer(fullContainerConfigCopy, cb);
   }
 
   startOrStopContainers(ids: string[], start: boolean, cb: ()=>void) {
     let me = this;
     me.getContainers(ids, (err: Error, dockerContainersOrMessages: any[])=> {
-      me.commandUtil.logError(err);
+      me.DM.commandUtil.logError(err);
       async.mapSeries(dockerContainersOrMessages,
         (dockerContainerOrMessage, cb)=> {
           if (typeof dockerContainerOrMessage === 'string') {
-            me.commandUtil.logAndCallback(dockerContainerOrMessage, cb);
+            me.DM.commandUtil.logAndCallback(dockerContainerOrMessage, cb);
           } else {
             let dockerContainer: DockerContainer = <DockerContainer>dockerContainerOrMessage;
             let resultMessage = `Container '${dockerContainer.Name}' `;
@@ -70,47 +68,23 @@ export class DockerContainerManagementImpl extends ForceErrorImpl implements Doc
               ? dockerContainer.start.bind(dockerContainer)
               : dockerContainer.stop.bind(dockerContainer);
             fnStartStop((err: Error)=> {
-              me.commandUtil.logAndCallback(me.commandUtil.returnErrorStringOrMessage(err, resultMessage), cb);
+              me.DM.commandUtil.logAndCallback(me.DM.commandUtil.returnErrorStringOrMessage(err, resultMessage), cb);
             });
           }
         }, cb);
     });
   }
 
-  removeContainers(ids: string[], cb: (err: Error, containerRemoveResults: ContainerRemoveResults[])=>void) {
+  exec(id: string, command: string, cb: (err: Error, result: any)=>void): void {
     let me = this;
-    if (!ids.length) {
-      console.log(`Specify containers to remove by FirmamentId, Docker ID or Name. Or 'all' to remove all.`);
-      return;
-    }
-    if (_.indexOf(ids, 'all') !== -1) {
-      try {
-        if (!positive(`You're sure you want to remove all containers? [y/N] `, false)) {
-          console.log('Operation canceled.');
-          cb(null, null);
-          return;
-        }
-      } catch (err) {
-        console.log(err.message);
-      }
-      ids = null;
-    }
-    me.getContainers(ids, (err: Error, containerObjects: DockerContainer[])=> {
-      if (me.commandUtil.callbackIfError(cb, err)) {
+    me.getContainer(id, (err: Error, dockerContainer: DockerContainer)=> {
+      if (me.DM.commandUtil.callbackIfError(cb, err)) {
         return;
       }
-      async.map(containerObjects,
-        (containerOrErrorMsg, cb)=> {
-          if (typeof containerOrErrorMsg === 'string') {
-            me.commandUtil.logAndCallback(containerOrErrorMsg, cb, null, {msg: containerOrErrorMsg});
-          } else {
-            containerOrErrorMsg.remove({force: 1}, (err: Error)=> {
-              var msg = `Removing container '${containerOrErrorMsg.Name}'`;
-              me.commandUtil.logAndCallback(msg, cb, err, {msg});
-            });
-          }
-        }, cb);
+      childProcess.spawnSync('docker', ['exec', '-it', dockerContainer.Name.slice(1), command], {
+        stdio: 'inherit'
+      });
+      cb(null, 0);
     });
   }
-
 }

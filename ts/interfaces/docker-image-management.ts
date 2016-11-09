@@ -1,4 +1,4 @@
-import {ImageRemoveResults, DockerImage} from "./dockerode";
+import {DockerImage, ImageOrContainerRemoveResults} from "./dockerode";
 import {ForceError} from "./force-error";
 export interface DockerImageManagement extends ForceError {
   listImages(listAllImages: boolean,
@@ -8,7 +8,7 @@ export interface DockerImageManagement extends ForceError {
   getImage(id: string,
            cb: (err: Error, image: DockerImage)=>void);
   removeImages(ids: string[],
-               cb: (err: Error, imageRemoveResults: ImageRemoveResults[])=>void): void;
+               cb: (err: Error, imageRemoveResults: ImageOrContainerRemoveResults[])=>void): void;
   pullImage(imageName: string,
             progressCb: (taskId: string, status: string, current: number, total: number)=>void,
             cb: (err: Error)=>void);

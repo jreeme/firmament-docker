@@ -1,8 +1,8 @@
 import "reflect-metadata";
-import {injectable, inject} from "inversify";
+import {injectable} from "inversify";
 import {
   DockerOde, DockerImage, DockerContainer
-} from "../interfaces/dockerode";
+} from "../../interfaces/dockerode";
 import {ForceErrorImpl} from "./force-error-impl";
 @injectable()
 export class DockerOdeImpl extends ForceErrorImpl implements DockerOde {
@@ -14,36 +14,42 @@ export class DockerOdeImpl extends ForceErrorImpl implements DockerOde {
   }
 
   listImages(options: any, cb: (err: Error, images: DockerImage[])=>void): void {
-    if (this.checkForceError(cb)) {
+    if (this.checkForceError('listImages', cb)) {
       return;
     }
     this.dockerode.listImages(options, cb);
   }
 
   listContainers(options: any, cb: (err: Error, containers: DockerContainer[])=>void): void {
-    if (this.checkForceError(cb)) {
+    if (this.checkForceError('listContainers', cb)) {
       return;
     }
     this.dockerode.listContainers(options, cb);
   }
 
   getContainer(id: string): DockerContainer {
+    if (this.checkForceError('getContainer')) {
+      return;
+    }
     return this.dockerode.getContainer(id);
   }
 
   getImage(id: string): DockerImage {
+    if (this.checkForceError('getImage')) {
+      return;
+    }
     return this.dockerode.getImage(id);
   }
 
   buildImage(tarStream: any, options: any, cb: (err: Error, outputStream: any)=>void) {
-    if (this.checkForceError(cb)) {
+    if (this.checkForceError('buildImage', cb)) {
       return;
     }
     this.dockerode.buildImage(tarStream, options, cb);
   }
 
   createContainer(containerConfig: any, cb: (err: Error, container: DockerContainer)=>void): void {
-    if (this.checkForceError(cb)) {
+    if (this.checkForceError('createContainer', cb)) {
       return;
     }
     this.dockerode.createContainer(containerConfig, (err: Error, container: any)=> {
@@ -52,7 +58,7 @@ export class DockerOdeImpl extends ForceErrorImpl implements DockerOde {
   }
 
   pull(imageName: string, cb: (err: Error, outputStream: any)=>void) {
-    if (this.checkForceError(cb)) {
+    if (this.checkForceError('pull', cb)) {
       return;
     }
     this.dockerode.pull(imageName, cb);

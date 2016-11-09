@@ -13,38 +13,39 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 const inversify_1 = require('inversify');
 const dockerode_1 = require('../interfaces/dockerode');
-const docker_util_options_impl_1 = require('./docker-util-options-impl');
-const force_error_impl_1 = require('./force-error-impl');
-const _ = require('lodash');
-const async = require('async');
+const docker_util_options_impl_1 = require('./util/docker-util-options-impl');
+const force_error_impl_1 = require('./util/force-error-impl');
 const positive = require('positive');
 let DockerImageManagementImpl = class DockerImageManagementImpl extends force_error_impl_1.ForceErrorImpl {
-    constructor(_dockerode, _dockerUtil, _commandUtil) {
+    constructor(_dockerManagement) {
         super();
-        this.dockerode = _dockerode;
-        this.dockerUtil = _dockerUtil;
-        this.commandUtil = _commandUtil;
+        this.DM = _dockerManagement;
     }
     listImages(listAllImages, cb) {
         let dockerUtilOptions = new docker_util_options_impl_1.DockerUtilOptionsImpl(dockerode_1.ImageOrContainer.Image, listAllImages);
-        this.dockerUtil.forceError = this.forceError;
-        this.dockerUtil.listImagesOrContainers(dockerUtilOptions, cb);
-    }
-    getImage(id, cb) {
-        let dockerUtilOptions = new docker_util_options_impl_1.DockerUtilOptionsImpl(dockerode_1.ImageOrContainer.Image);
-        this.dockerUtil.forceError = this.forceError;
-        this.dockerUtil.getImageOrContainer(id, dockerUtilOptions, cb);
+        this.DM.dockerUtil.forceError = this.forceError;
+        this.DM.dockerUtil.listImagesOrContainers(dockerUtilOptions, cb);
     }
     getImages(ids, cb) {
         let dockerUtilOptions = new docker_util_options_impl_1.DockerUtilOptionsImpl(dockerode_1.ImageOrContainer.Image);
-        this.dockerUtil.forceError = this.forceError;
-        this.dockerUtil.getImagesOrContainers(ids, dockerUtilOptions, cb);
+        this.DM.dockerUtil.forceError = this.forceError;
+        this.DM.dockerUtil.getImagesOrContainers(ids, dockerUtilOptions, cb);
+    }
+    getImage(id, cb) {
+        let dockerUtilOptions = new docker_util_options_impl_1.DockerUtilOptionsImpl(dockerode_1.ImageOrContainer.Image);
+        this.DM.dockerUtil.forceError = this.forceError;
+        this.DM.dockerUtil.getImageOrContainer(id, dockerUtilOptions, cb);
+    }
+    removeImages(ids, cb) {
+        let dockerUtilOptions = new docker_util_options_impl_1.DockerUtilOptionsImpl(dockerode_1.ImageOrContainer.Image);
+        this.DM.dockerUtil.forceError = this.forceError;
+        this.DM.dockerUtil.removeImagesOrContainers(ids, dockerUtilOptions, cb);
     }
     pullImage(imageName, progressCb, cb) {
-        this.dockerode.forceError = this.forceError;
+        this.DM.dockerode.forceError = this.forceError;
         let me = this;
-        me.dockerode.pull(imageName, (err, outputStream) => {
-            if (me.commandUtil.callbackIfError(cb, err)) {
+        me.DM.dockerode.pull(imageName, (err, outputStream) => {
+            if (me.DM.commandUtil.callbackIfError(cb, err)) {
                 return;
             }
             outputStream.on('data', (chunk) => {
@@ -65,18 +66,18 @@ let DockerImageManagementImpl = class DockerImageManagementImpl extends force_er
                 cb(null);
             });
             outputStream.on('error', function () {
-                me.commandUtil.callbackIfError(cb, new Error(`Unable to pull image: '${imageName}'`));
+                me.DM.commandUtil.callbackIfError(cb, new Error(`Unable to pull image: '${imageName}'`));
             });
         });
     }
     buildDockerFile(dockerFilePath, dockerImageName, progressCb, cb) {
-        this.dockerode.forceError = this.forceError;
+        this.DM.dockerode.forceError = this.forceError;
         let me = this;
         try {
             require('fs').statSync(dockerFilePath);
         }
         catch (err) {
-            if (me.commandUtil.callbackIfError(cb, err)) {
+            if (me.DM.commandUtil.callbackIfError(cb, err)) {
                 return;
             }
         }
@@ -86,10 +87,10 @@ let DockerImageManagementImpl = class DockerImageManagementImpl extends force_er
             tarStream.on('error', (err) => {
                 cb(err);
             });
-            me.dockerode.buildImage(tarStream, {
+            me.DM.dockerode.buildImage(tarStream, {
                 t: dockerImageName
             }, function (err, outputStream) {
-                if (me.commandUtil.callbackIfError(cb, err)) {
+                if (me.DM.commandUtil.callbackIfError(cb, err)) {
                     return;
                 }
                 let error = null;
@@ -121,59 +122,19 @@ let DockerImageManagementImpl = class DockerImageManagementImpl extends force_er
                         : null);
                 });
                 outputStream.on('error', function () {
-                    me.commandUtil.callbackIfError(cb, new Error(`Error creating image: '${dockerImageName}'`));
+                    me.DM.commandUtil.callbackIfError(cb, new Error(`Error creating image: '${dockerImageName}'`));
                 });
             });
         }
         catch (err) {
-            me.commandUtil.callbackIfError(cb, err);
+            me.DM.commandUtil.callbackIfError(cb, err);
         }
-    }
-    removeImages(ids, cb) {
-        if (this.checkForceError(cb)) {
-            return;
-        }
-        let me = this;
-        if (!ids.length) {
-            console.log(`Specify images to remove by FirmamentId, Docker ID or Name. Or 'all' to remove all.`);
-            return;
-        }
-        if (_.indexOf(ids, 'all') !== -1) {
-            try {
-                if (!positive(`You're sure you want to remove all images? [y/N] `, false)) {
-                    console.log('Operation canceled.');
-                    cb(null, null);
-                    return;
-                }
-            }
-            catch (err) {
-                console.log(err.message);
-            }
-            ids = null;
-        }
-        me.getImages(ids, (err, images) => {
-            me.commandUtil.logError(err);
-            async.map(images, (imageOrErrorMsg, cb) => {
-                if (typeof imageOrErrorMsg === 'string') {
-                    me.commandUtil.logAndCallback(imageOrErrorMsg, cb, null, { msg: imageOrErrorMsg });
-                }
-                else {
-                    let image = imageOrErrorMsg;
-                    image.remove({ force: 1 }, (err, _image) => {
-                        let msg = `Removing image '${image.Name}' with id: '${image.Id}'`;
-                        me.commandUtil.logAndCallback(msg, cb, err, { msg });
-                    });
-                }
-            }, cb);
-        });
     }
 };
 DockerImageManagementImpl = __decorate([
     inversify_1.injectable(),
-    __param(0, inversify_1.inject('DockerOde')),
-    __param(1, inversify_1.inject('DockerUtil')),
-    __param(2, inversify_1.inject('CommandUtil')), 
-    __metadata('design:paramtypes', [Object, Object, Object])
+    __param(0, inversify_1.inject('DockerManagement')), 
+    __metadata('design:paramtypes', [Object])
 ], DockerImageManagementImpl);
 exports.DockerImageManagementImpl = DockerImageManagementImpl;
 //# sourceMappingURL=docker-image-management-impl.js.map
