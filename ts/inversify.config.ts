@@ -7,7 +7,7 @@ import {DockerUtil} from "./interfaces/docker-util";
 import {DockerUtilImpl} from "./implementations/util/docker-util-impl";
 import {DockerContainerManagement} from "./interfaces/docker-container-management";
 import {DockerContainerManagementImpl} from "./implementations/docker-container-management-impl";
-import {kernel as yargsKernel, CommandUtil, Command, Spawn, CommandLine, ProgressBar} from 'firmament-yargs';
+import {kernel as yargsKernel, CommandUtil, Command, Positive, Spawn, CommandLine, ProgressBar} from 'firmament-yargs';
 import {DockerCommandImpl} from "./implementations/commands/docker-command-impl";
 import {NestedYargs} from "firmament-yargs/js/interfaces/nested-yargs-wrapper";
 import {MakeCommandImpl} from "./implementations/commands/make-command-impl";
@@ -19,6 +19,7 @@ var progressBar = yargsKernel.get<ProgressBar>('ProgressBar');
 var commandLine = yargsKernel.get<CommandLine>('CommandLine');
 var command = yargsKernel.get<Command>('Command');
 var spawn = yargsKernel.get<Spawn>('Spawn');
+var positive = yargsKernel.get<Positive>('Positive');
 
 var kernel = new Kernel();
 //TODO: Begin Super HACK -> v.3 of inversify will provide kernel merging but for 2.x we need
@@ -28,6 +29,7 @@ kernel.bind<NestedYargs>('NestedYargs').to(<new (args:any)=>NestedYargs>nestedYa
 kernel.bind<ProgressBar>('ProgressBar').to(<new (args:any)=>ProgressBar>progressBar.constructor);
 kernel.bind<CommandLine>('CommandLine').to(<new (args:any)=>CommandLine>commandLine.constructor);
 kernel.bind<Command>('Command').to(<new (args:any)=>Command>command.constructor);
+kernel.bind<Positive>('Positive').to(<new (args:any)=>Positive>positive.constructor);
 kernel.bind<Spawn>('Spawn').to(<new (args:any)=>Spawn>spawn.constructor);
 //TODO: <- End Super HACK
 

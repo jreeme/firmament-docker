@@ -18,7 +18,6 @@ const force_error_impl_1 = require('./util/force-error-impl');
 const async = require('async');
 const childProcess = require('child_process');
 const deepExtend = require('deep-extend');
-const positive = require('positive');
 let DockerContainerManagementImpl = class DockerContainerManagementImpl extends force_error_impl_1.ForceErrorImpl {
     constructor(_dockerManagement) {
         super();

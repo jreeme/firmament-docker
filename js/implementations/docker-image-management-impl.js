@@ -15,7 +15,6 @@ const inversify_1 = require('inversify');
 const dockerode_1 = require('../interfaces/dockerode');
 const docker_util_options_impl_1 = require('./util/docker-util-options-impl');
 const force_error_impl_1 = require('./util/force-error-impl');
-const positive = require('positive');
 let DockerImageManagementImpl = class DockerImageManagementImpl extends force_error_impl_1.ForceErrorImpl {
     constructor(_dockerManagement) {
         super();

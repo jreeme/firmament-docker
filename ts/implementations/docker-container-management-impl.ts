@@ -9,7 +9,6 @@ import {DockerManagement} from "../interfaces/docker-management";
 import {DockerContainerManagement} from "../interfaces/docker-container-management";
 const childProcess = require('child_process');
 const deepExtend = require('deep-extend');
-const positive = require('positive');
 
 @injectable()
 export class DockerContainerManagementImpl extends ForceErrorImpl implements DockerContainerManagement {

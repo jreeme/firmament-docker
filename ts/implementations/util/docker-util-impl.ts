@@ -5,21 +5,23 @@ import {
   DockerOde, ImageOrContainer, DockerImageOrContainer,
   ImageOrContainerRemoveResults
 } from '../../interfaces/dockerode';
-import {CommandUtil} from 'firmament-yargs';
+import {CommandUtil, Positive} from 'firmament-yargs';
 import {DockerUtilOptions} from "../../interfaces/docker-util-options";
 import {ForceErrorImpl} from "./force-error-impl";
 const deepExtend = require('deep-extend');
 const async = require('async');
-const positive = require('positive');
 @injectable()
 export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
   private dockerode: DockerOde;
   private commandUtil: CommandUtil;
+  private positive: Positive;
 
   constructor(@inject('DockerOde') _dockerode: DockerOde,
+              @inject('Positive') _positive: Positive,
               @inject('CommandUtil') _commandUtil: CommandUtil) {
     super();
     this.dockerode = _dockerode;
+    this.positive = _positive;
     this.commandUtil = _commandUtil;
   }
 
@@ -171,8 +173,7 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
     }
     if (_.indexOf(ids, 'all') !== -1) {
       try {
-        if (!positive(`You're sure you want to remove all ${thingToRemove}? [y/N] `, false)) {
-          console.log('Operation canceled.');
+        if (!this.positive.areYouSure(`You're sure you want to remove all ${thingToRemove}? [y/N] `,`Operation canceled.`, false)) {
           cb(null, null);
           return;
         }
@@ -210,8 +211,7 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
       : str1.length;
     str0 = str0.substr(0, len);
     str1 = str1.substr(0, len);
-    let retVal = str0 === str1;
-    return retVal;
+    return str0 === str1;
   }
 
   private static stripSha256(id: string): string {

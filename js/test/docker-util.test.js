@@ -227,7 +227,7 @@ describe('DockerUtil', function () {
     describe('DockerUtil.removeImagesOrContainers (all,  images)', function () {
         it('should remove all images', function (done) {
             chai_1.expect(dockerUtil).to.not.equal(null);
-            dockerUtil.removeImagesOrContainers(null, new docker_util_options_impl_1.DockerUtilOptionsImpl(dockerode_1.ImageOrContainer.Image), (err, imageOrContainerRemoveResults) => {
+            dockerUtil.removeImagesOrContainers(['xxx', 'all', 'ooo'], new docker_util_options_impl_1.DockerUtilOptionsImpl(dockerode_1.ImageOrContainer.Image), (err, imageOrContainerRemoveResults) => {
                 chai_1.expect(err).to.not.equal(null);
                 chai_1.expect(err.message).to.equal('force error: listImages2');
                 chai_1.expect(imageOrContainerRemoveResults).to.equal(null);

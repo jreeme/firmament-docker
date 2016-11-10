@@ -6,7 +6,6 @@ import {ForceErrorImpl} from './util/force-error-impl';
 import * as _ from 'lodash';
 import * as async from 'async';
 import {DockerManagement} from "../interfaces/docker-management";
-const positive = require('positive');
 
 @injectable()
 export class DockerImageManagementImpl extends ForceErrorImpl implements DockerImageManagement {

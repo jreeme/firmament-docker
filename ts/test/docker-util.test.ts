@@ -299,7 +299,7 @@ describe('DockerUtil', function () {
     it('should remove all images', function (done) {
       expect(dockerUtil).to.not.equal(null);
       dockerUtil.removeImagesOrContainers(
-        null,
+        ['xxx','all','ooo'],
         new DockerUtilOptionsImpl(ImageOrContainer.Image),
         (err, imageOrContainerRemoveResults: ImageOrContainerRemoveResults[])=> {
           expect(err).to.not.equal(null);

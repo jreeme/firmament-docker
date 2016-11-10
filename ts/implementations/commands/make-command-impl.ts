@@ -1,6 +1,6 @@
 import {injectable, inject} from "inversify";
 import kernel from '../../inversify.config';
-import {Command, CommandLine, CommandUtil, Spawn, ProgressBar} from 'firmament-yargs';
+import {Command, CommandLine, CommandUtil, Positive, Spawn, ProgressBar} from 'firmament-yargs';
 import {DockerDescriptors} from "../../interfaces/docker-descriptors";
 import {
   ContainerConfig, DockerContainer, ExpressApp, ImageOrContainerRemoveResults
@@ -11,7 +11,6 @@ import {DockerImageManagement} from "../../interfaces/docker-image-management";
 import {DockerContainerManagement} from "../../interfaces/docker-container-management";
 
 const request = require('request');
-const positive = require('positive');
 const fs = require('fs');
 const templateCatalogUrl = 'https://raw.githubusercontent.com/Sotera/firmament/typescript/docker/templateCatalog.json';
 
@@ -34,9 +33,11 @@ export class MakeCommandImpl implements Command {
   private dockerContainerManagement: DockerContainerManagement;
   private commandLine: CommandLine;
   private spawn: Spawn;
+  private positive: Positive;
 
   constructor(@inject('CommandUtil') _commandUtil: CommandUtil,
               @inject('Spawn') _spawn: Spawn,
+              @inject('Positive') _positive: Positive,
               @inject('DockerImageManagement') _dockerImageManagement: DockerImageManagement,
               @inject('DockerContainerManagement') _dockerContainerManagement: DockerContainerManagement,
               @inject('CommandLine') _commandLine: CommandLine,
@@ -44,6 +45,7 @@ export class MakeCommandImpl implements Command {
     this.buildCommandTree();
     this.commandUtil = _commandUtil;
     this.spawn = _spawn;
+    this.positive = _positive;
     this.dockerImageManagement = _dockerImageManagement;
     this.dockerContainerManagement = _dockerContainerManagement;
     this.commandLine = _commandLine;
@@ -161,7 +163,7 @@ export class MakeCommandImpl implements Command {
           if (containerTemplatesToWrite) {
             var fs = require('fs');
             if (fs.existsSync(fullOutputPath)
-              && !positive("Config file '" + fullOutputPath + "' already exists. Overwrite? [Y/n] ", true)) {
+              && !this.positive.areYouSure(`Config file '${fullOutputPath}' already exists. Overwrite? [Y/n] `, '', true)) {
               cb(null, 'Canceling JSON template creation!');
             } else {
               MakeCommandImpl.writeJsonTemplateFile(containerTemplatesToWrite, fullOutputPath);
