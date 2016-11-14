@@ -20,8 +20,8 @@ describe('DockerImageManagement', function () {
   //
   describe('DockerImageManagement.listImages (force error)', function () {
     it('should return non-null Error instance in callback', function (done) {
-      expect(dockerImageManagement).to.not.equal(null);
       (<ForceError>dockerImageManagement).forceError = true;
+      expect(dockerImageManagement).to.not.equal(null);
       dockerImageManagement.listImages(
         true,
         (err: Error, images: DockerImage[])=> {
@@ -57,8 +57,8 @@ describe('DockerImageManagement', function () {
   });
   describe('DockerImageManagement.getImage (force error)', function () {
     it('should return non-null Error instance in callback', function (done) {
-      expect(dockerImageManagement).to.not.equal(null);
       (<ForceError>dockerImageManagement).forceError = true;
+      expect(dockerImageManagement).to.not.equal(null);
       dockerImageManagement.getImage(
         '3',
         (err: Error, image: DockerImage)=> {
@@ -83,8 +83,8 @@ describe('DockerImageManagement', function () {
   });
   describe('DockerImageManagement.getImages (force error)', function () {
     it('should return non-null Error instance in callback', function (done) {
-      expect(dockerImageManagement).to.not.equal(null);
       (<ForceError>dockerImageManagement).forceError = true;
+      expect(dockerImageManagement).to.not.equal(null);
       dockerImageManagement.getImages(
         ['7', '8'],
         (err: Error, images: DockerImage[])=> {
@@ -113,8 +113,8 @@ describe('DockerImageManagement', function () {
   });
   describe('DockerImageManagement.pullImage (force error)', function () {
     it('should return non-null Error instance in callback', function (done) {
-      expect(dockerImageManagement).to.not.equal(null);
       (<ForceError>dockerImageManagement).forceError = true;
+      expect(dockerImageManagement).to.not.equal(null);
       //noinspection JSUnusedLocalSymbols,JSUnusedLocalSymbols,JSUnusedLocalSymbols,JSUnusedLocalSymbols
       dockerImageManagement.pullImage(
         'mysql:5.6',
@@ -122,11 +122,12 @@ describe('DockerImageManagement', function () {
         },
         (err: Error)=> {
           expect(err).to.not.equal(null);
+          expect(err.message).to.equal('force error: pull');
           done();
         });
     });
   });
-  describe('DockerImageManagement.pullImage (force error)', function () {
+  describe('DockerImageManagement.pullImage (recoverable errors)', function () {
     it(`should pull an image from hub.docker.com`, function (done) {
       let progressCallbackCalledWithErrorCount = 0;
       let progressCallbackCalledWithDownloadingCount = 0;
@@ -152,8 +153,8 @@ describe('DockerImageManagement', function () {
   });
   describe('DockerImageManagement.buildDockerFile (force error)', function () {
     it('should return non-null Error instance in callback', function (done) {
-      expect(dockerImageManagement).to.not.equal(null);
       (<ForceError>dockerImageManagement).forceError = true;
+      expect(dockerImageManagement).to.not.equal(null);
       let pathToDockerFile = path.resolve(__dirname, '../../test-data');
       //noinspection JSUnusedLocalSymbols,JSUnusedLocalSymbols,JSUnusedLocalSymbols,JSUnusedLocalSymbols
       dockerImageManagement.buildDockerFile(
@@ -163,6 +164,7 @@ describe('DockerImageManagement', function () {
         },
         (err: Error)=> {
           expect(err).to.not.equal(null);
+          expect(err.message).to.equal('force error: buildImage');
           done();
         });
     });
@@ -190,8 +192,8 @@ describe('DockerImageManagement', function () {
   });
   describe('DockerImageManagement.removeImages (force error)', function () {
     it('should return non-null Error instance in callback', function (done) {
-      expect(dockerImageManagement).to.not.equal(null);
       (<ForceError>dockerImageManagement).forceError = true;
+      expect(dockerImageManagement).to.not.equal(null);
       //noinspection JSUnusedLocalSymbols
       dockerImageManagement.removeImages(
         ['2','3', '113'],

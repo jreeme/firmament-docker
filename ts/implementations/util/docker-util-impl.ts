@@ -165,14 +165,17 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
     this.dockerode.forceError = this.forceError;
     let me = this;
     ids = ids || [];
-    let thingToRemove = options.IorC === ImageOrContainer.Container
+    let thingsToRemove = options.IorC === ImageOrContainer.Container
       ? 'containers'
       : 'images';
+    let thingToRemove = options.IorC === ImageOrContainer.Container
+      ? 'container'
+      : 'image';
     if (!ids.length) {
-      throw new Error(`Specify ${thingToRemove} to remove by FirmamentId, Docker ID or Name. Or 'all' to remove all.`);
+      throw new Error(`Specify ${thingsToRemove} to remove by FirmamentId, Docker ID or Name. Or 'all' to remove all.`);
     }
     if (_.indexOf(ids, 'all') !== -1) {
-      if (!this.positive.areYouSure(`You're sure you want to remove all ${thingToRemove}? [y/N] `,
+      if (!this.positive.areYouSure(`You're sure you want to remove all ${thingsToRemove}? [y/N] `,
           `Operation canceled.`,
           false,
           FailureRetVal.TRUE)) {
@@ -194,7 +197,7 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
               {msg: imageOrContainer});
           } else {
             imageOrContainer.remove({force: 1}, (err: Error)=> {
-              let msg = `Removing image '${imageOrContainer.Name}' with id: '${imageOrContainer.Id}'`;
+              let msg = `Removing ${thingToRemove} '${imageOrContainer.Name}' with id: '${imageOrContainer.Id.substr(0,8)}'`;
               me.commandUtil.logAndCallback(msg, cb, err, {msg});
             });
           }

@@ -64,8 +64,9 @@ let DockerImageManagementImpl = class DockerImageManagementImpl extends force_er
             outputStream.on('end', () => {
                 cb(null);
             });
-            outputStream.on('error', function () {
-                me.DM.commandUtil.callbackIfError(cb, new Error(`Unable to pull image: '${imageName}'`));
+            outputStream.on('error', function (err) {
+                let msg = `Encountered error '${err.message}' while pulling image: '${imageName}'`;
+                me.DM.commandUtil.logError(new Error(msg), true);
             });
         });
     }
@@ -120,8 +121,9 @@ let DockerImageManagementImpl = class DockerImageManagementImpl extends force_er
                         ? error
                         : null);
                 });
-                outputStream.on('error', function () {
-                    me.DM.commandUtil.callbackIfError(cb, new Error(`Error creating image: '${dockerImageName}'`));
+                outputStream.on('error', function (err) {
+                    let msg = `Encountered error '${err.message}' while building: '${dockerImageName}'`;
+                    me.DM.commandUtil.logError(new Error(msg), true);
                 });
             });
         }

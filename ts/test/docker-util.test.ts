@@ -302,70 +302,94 @@ describe('DockerUtil', function () {
         ['xxx','all','ooo'],
         new DockerUtilOptionsImpl(ImageOrContainer.Image),
         (err, imageOrContainerRemoveResults: ImageOrContainerRemoveResults[])=> {
+          expect(err).to.equal(null);
+          expect(imageOrContainerRemoveResults).to.be.instanceOf(Array);
+          expect(imageOrContainerRemoveResults).to.have.lengthOf(9);
+          done();
+        });
+    });
+  });
+  describe('DockerUtil.removeImagesOrContainers (not all, images)', function () {
+    it('should specified images', function (done) {
+      expect(dockerUtil).to.not.equal(null);
+      dockerUtil.removeImagesOrContainers(
+        ['3','5', 'xxx'],
+        new DockerUtilOptionsImpl(ImageOrContainer.Image),
+        (err, imageOrContainerRemoveResults: ImageOrContainerRemoveResults[])=> {
+          expect(err).to.equal(null);
+          expect(imageOrContainerRemoveResults).to.be.instanceOf(Array);
+          expect(imageOrContainerRemoveResults).to.have.lengthOf(3);
+          let removeCount = 0;
+          let noFindCount = 0;
+          imageOrContainerRemoveResults.forEach(res=>{
+            if(/^Removing/.test(res.msg)){
+              ++removeCount;
+            }
+            if(/^Unable/.test(res.msg)){
+              ++noFindCount;
+            }
+          });
+          expect(removeCount).to.equal(2);
+          expect(noFindCount).to.equal(1);
+          done();
+        });
+    });
+  });
+  //***************************** Containers *******************************
+  describe('DockerUtil.removeImagesOrContainers (force error, containers)', function () {
+    it('should return non-null Error instance in callback', function (done) {
+      expect(dockerUtil).to.not.equal(null);
+      (<ForceError>dockerUtil).forceError = true;
+      dockerUtil.removeImagesOrContainers(
+        ['3','1'],
+        new DockerUtilOptionsImpl(ImageOrContainer.Container),
+        (err, imageOrContainerRemoveResults: ImageOrContainerRemoveResults[])=> {
           expect(err).to.not.equal(null);
-          expect(err.message).to.equal('force error: listImages2');
+          expect(err.message).to.equal('force error: listContainers');
           expect(imageOrContainerRemoveResults).to.equal(null);
           done();
         });
     });
   });
-/*  describe('DockerUtil.listImagesOrContainers (not all, images)', function () {
-    it('should return a list of non-intermediate images', function (done) {
+  describe('DockerUtil.removeImagesOrContainers (all,  containers)', function () {
+    it('should remove all containers', function (done) {
       expect(dockerUtil).to.not.equal(null);
-      dockerUtil.listImagesOrContainers(
-        new DockerUtilOptionsImpl(ImageOrContainer.Image),
-        (err, images: any[])=> {
-          expect(images.length).to.equal(5);
-          done();
-        });
-    });
-  });
-  //!***************************** Containers *******************************
-  describe('DockerUtil.listImagesOrContainers (force error, containers)', function () {
-    it('should return non-null Error instance in callback', function (done) {
-      expect(dockerUtil).to.not.equal(null);
-      (<ForceError>dockerUtil).forceError = true;
-      dockerUtil.listImagesOrContainers(
-        new DockerUtilOptionsImpl(ImageOrContainer.Container, true),
-        (err, containers: any[])=> {
-          expect(err).to.not.equal(null);
-          expect(err.message).to.equal('force error: listContainers');
-          expect(containers).to.equal(null);
-          done();
-        });
-    });
-  });
-  describe('DockerUtil.listImagesOrContainers (all,  containers)', function () {
-    it('should return a list of all images', function (done) {
-      expect(dockerUtil).to.not.equal(null);
-      dockerUtil.listImagesOrContainers(
-        new DockerUtilOptionsImpl(ImageOrContainer.Container, true),
-        (err, containers: any[])=> {
-          /!*        var jsonFile = require('jsonfile');
-           jsonFile.spaces = 2;
-           jsonFile.writeFileSync('/home/jreeme/src/firmament-docker/test-data/docker-container-list.json', imagesOrContainers);*!/
-          //Check sorting
-          for (let i = 0; i < containers.length - 1; ++i) {
-            let refId = containers[i].Names[0];
-            let cmpId = containers[i + 1].Names[0];
-            let r = refId.localeCompare(cmpId);
-            expect(r).to.equal(-1);//This means the array is sorted in ascending order
-          }
-          expect(containers.length).to.equal(3);
-          done();
-        });
-    });
-  });
-  describe('DockerUtil.listImagesOrContainers (not all, containers)', function () {
-    it('should return a list of all images', function (done) {
-      expect(dockerUtil).to.not.equal(null);
-      dockerUtil.listImagesOrContainers(
+      dockerUtil.removeImagesOrContainers(
+        ['xxx','all','ooo'],
         new DockerUtilOptionsImpl(ImageOrContainer.Container),
-        (err, containers: any[])=> {
-          expect(containers.length).to.equal(1);
+        (err, imageOrContainerRemoveResults: ImageOrContainerRemoveResults[])=> {
+          expect(err).to.equal(null);
+          expect(imageOrContainerRemoveResults).to.be.instanceOf(Array);
+          expect(imageOrContainerRemoveResults).to.have.lengthOf(3);
           done();
         });
     });
-  });*/
+  });
+  describe('DockerUtil.removeImagesOrContainers (not all, containers)', function () {
+    it('should remove specified containers', function (done) {
+      expect(dockerUtil).to.not.equal(null);
+      dockerUtil.removeImagesOrContainers(
+        ['1','3', 'xxx'],
+        new DockerUtilOptionsImpl(ImageOrContainer.Container),
+        (err, imageOrContainerRemoveResults: ImageOrContainerRemoveResults[])=> {
+          expect(err).to.equal(null);
+          expect(imageOrContainerRemoveResults).to.be.instanceOf(Array);
+          expect(imageOrContainerRemoveResults).to.have.lengthOf(3);
+          let removeCount = 0;
+          let noFindCount = 0;
+          imageOrContainerRemoveResults.forEach(res=>{
+            if(/^Removing/.test(res.msg)){
+              ++removeCount;
+            }
+            if(/^Unable/.test(res.msg)){
+              ++noFindCount;
+            }
+          });
+          expect(removeCount).to.equal(2);
+          expect(noFindCount).to.equal(1);
+          done();
+        });
+    });
+  });
 });
 

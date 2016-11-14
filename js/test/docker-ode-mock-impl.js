@@ -60,7 +60,31 @@ let DockerOdeMockImpl = class DockerOdeMockImpl extends force_error_impl_1.Force
             : null;
     }
     buildImage(tarStream, options, cb) {
-        this.pull('', cb);
+        if (this.checkForceError('buildImage', cb)) {
+            return;
+        }
+        let streamMock = new (require('events').EventEmitter)();
+        let eventCount = 10;
+        let interval = setInterval(() => {
+            if (!(eventCount % 4)) {
+                streamMock.emit('error', new Error('Test Error'));
+            }
+            if (!(eventCount % 2)) {
+                streamMock.emit('data', JSON.stringify({
+                    id: 'baadf00d',
+                    status: 'Downloading',
+                    progressDetail: {
+                        current: eventCount,
+                        total: 10
+                    }
+                }));
+            }
+            if (--eventCount < 0) {
+                streamMock.emit('end', new Error('not found in repository'));
+                clearInterval(interval);
+            }
+        }, 200);
+        cb(null, streamMock);
     }
     createContainer(containerConfig, cb) {
         if (this.checkForceError('createContainer', cb)) {
@@ -75,15 +99,11 @@ let DockerOdeMockImpl = class DockerOdeMockImpl extends force_error_impl_1.Force
         if (this.checkForceError('pull', cb)) {
             return;
         }
-        let me = this;
         let streamMock = new (require('events').EventEmitter)();
         let eventCount = 10;
         let interval = setInterval(() => {
             if (!(eventCount % 4)) {
-                streamMock.emit('error', JSON.stringify({
-                    error: 'Big Error! Sorry.'
-                }));
-                clearInterval(interval);
+                streamMock.emit('error', new Error('Test Error'));
             }
             if (!(eventCount % 2)) {
                 streamMock.emit('data', JSON.stringify({

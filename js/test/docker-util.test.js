@@ -228,9 +228,78 @@ describe('DockerUtil', function () {
         it('should remove all images', function (done) {
             chai_1.expect(dockerUtil).to.not.equal(null);
             dockerUtil.removeImagesOrContainers(['xxx', 'all', 'ooo'], new docker_util_options_impl_1.DockerUtilOptionsImpl(dockerode_1.ImageOrContainer.Image), (err, imageOrContainerRemoveResults) => {
+                chai_1.expect(err).to.equal(null);
+                chai_1.expect(imageOrContainerRemoveResults).to.be.instanceOf(Array);
+                chai_1.expect(imageOrContainerRemoveResults).to.have.lengthOf(9);
+                done();
+            });
+        });
+    });
+    describe('DockerUtil.removeImagesOrContainers (not all, images)', function () {
+        it('should specified images', function (done) {
+            chai_1.expect(dockerUtil).to.not.equal(null);
+            dockerUtil.removeImagesOrContainers(['3', '5', 'xxx'], new docker_util_options_impl_1.DockerUtilOptionsImpl(dockerode_1.ImageOrContainer.Image), (err, imageOrContainerRemoveResults) => {
+                chai_1.expect(err).to.equal(null);
+                chai_1.expect(imageOrContainerRemoveResults).to.be.instanceOf(Array);
+                chai_1.expect(imageOrContainerRemoveResults).to.have.lengthOf(3);
+                let removeCount = 0;
+                let noFindCount = 0;
+                imageOrContainerRemoveResults.forEach(res => {
+                    if (/^Removing/.test(res.msg)) {
+                        ++removeCount;
+                    }
+                    if (/^Unable/.test(res.msg)) {
+                        ++noFindCount;
+                    }
+                });
+                chai_1.expect(removeCount).to.equal(2);
+                chai_1.expect(noFindCount).to.equal(1);
+                done();
+            });
+        });
+    });
+    describe('DockerUtil.removeImagesOrContainers (force error, containers)', function () {
+        it('should return non-null Error instance in callback', function (done) {
+            chai_1.expect(dockerUtil).to.not.equal(null);
+            dockerUtil.forceError = true;
+            dockerUtil.removeImagesOrContainers(['3', '1'], new docker_util_options_impl_1.DockerUtilOptionsImpl(dockerode_1.ImageOrContainer.Container), (err, imageOrContainerRemoveResults) => {
                 chai_1.expect(err).to.not.equal(null);
-                chai_1.expect(err.message).to.equal('force error: listImages2');
+                chai_1.expect(err.message).to.equal('force error: listContainers');
                 chai_1.expect(imageOrContainerRemoveResults).to.equal(null);
+                done();
+            });
+        });
+    });
+    describe('DockerUtil.removeImagesOrContainers (all,  containers)', function () {
+        it('should remove all containers', function (done) {
+            chai_1.expect(dockerUtil).to.not.equal(null);
+            dockerUtil.removeImagesOrContainers(['xxx', 'all', 'ooo'], new docker_util_options_impl_1.DockerUtilOptionsImpl(dockerode_1.ImageOrContainer.Container), (err, imageOrContainerRemoveResults) => {
+                chai_1.expect(err).to.equal(null);
+                chai_1.expect(imageOrContainerRemoveResults).to.be.instanceOf(Array);
+                chai_1.expect(imageOrContainerRemoveResults).to.have.lengthOf(3);
+                done();
+            });
+        });
+    });
+    describe('DockerUtil.removeImagesOrContainers (not all, containers)', function () {
+        it('should remove specified containers', function (done) {
+            chai_1.expect(dockerUtil).to.not.equal(null);
+            dockerUtil.removeImagesOrContainers(['1', '3', 'xxx'], new docker_util_options_impl_1.DockerUtilOptionsImpl(dockerode_1.ImageOrContainer.Container), (err, imageOrContainerRemoveResults) => {
+                chai_1.expect(err).to.equal(null);
+                chai_1.expect(imageOrContainerRemoveResults).to.be.instanceOf(Array);
+                chai_1.expect(imageOrContainerRemoveResults).to.have.lengthOf(3);
+                let removeCount = 0;
+                let noFindCount = 0;
+                imageOrContainerRemoveResults.forEach(res => {
+                    if (/^Removing/.test(res.msg)) {
+                        ++removeCount;
+                    }
+                    if (/^Unable/.test(res.msg)) {
+                        ++noFindCount;
+                    }
+                });
+                chai_1.expect(removeCount).to.equal(2);
+                chai_1.expect(noFindCount).to.equal(1);
                 done();
             });
         });

@@ -40,7 +40,9 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
     this.DM.dockerUtil.removeImagesOrContainers(ids, dockerUtilOptions, cb);
   }
 
-  pullImage(imageName: string, progressCb: (taskId: string, status: string, current: number, total: number)=>void, cb: (err: Error)=>void) {
+  pullImage(imageName: string,
+            progressCb: (taskId: string, status: string, current: number, total: number)=>void,
+            cb: (err: Error)=>void) {
     this.DM.dockerode.forceError = this.forceError;
     let me = this;
     me.DM.dockerode.pull(imageName,
@@ -70,8 +72,9 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
           //emitted if something went wrong
           cb(null);
         });
-        outputStream.on('error', function () {
-          me.DM.commandUtil.callbackIfError(cb, new Error(`Unable to pull image: '${imageName}'`));
+        outputStream.on('error', function (err:Error) {
+          let msg = `Encountered error '${err.message}' while pulling image: '${imageName}'`;
+          me.DM.commandUtil.logError(new Error(msg), true);
         });
       });
   }
@@ -130,8 +133,9 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
             ? error
             : null);
         });
-        outputStream.on('error', function () {
-          me.DM.commandUtil.callbackIfError(cb, new Error(`Error creating image: '${dockerImageName}'`));
+        outputStream.on('error', function (err:Error) {
+          let msg = `Encountered error '${err.message}' while building: '${dockerImageName}'`;
+          me.DM.commandUtil.logError(new Error(msg), true);
         });
       });
     } catch (err) {

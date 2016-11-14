@@ -13,8 +13,8 @@ describe('DockerImageManagement', function () {
     });
     describe('DockerImageManagement.listImages (force error)', function () {
         it('should return non-null Error instance in callback', function (done) {
-            chai_1.expect(dockerImageManagement).to.not.equal(null);
             dockerImageManagement.forceError = true;
+            chai_1.expect(dockerImageManagement).to.not.equal(null);
             dockerImageManagement.listImages(true, (err, images) => {
                 chai_1.expect(err).to.not.equal(null);
                 chai_1.expect(images).to.equal(null);
@@ -44,8 +44,8 @@ describe('DockerImageManagement', function () {
     });
     describe('DockerImageManagement.getImage (force error)', function () {
         it('should return non-null Error instance in callback', function (done) {
-            chai_1.expect(dockerImageManagement).to.not.equal(null);
             dockerImageManagement.forceError = true;
+            chai_1.expect(dockerImageManagement).to.not.equal(null);
             dockerImageManagement.getImage('3', (err, image) => {
                 chai_1.expect(err).to.not.equal(null);
                 chai_1.expect(image).to.equal(null);
@@ -66,8 +66,8 @@ describe('DockerImageManagement', function () {
     });
     describe('DockerImageManagement.getImages (force error)', function () {
         it('should return non-null Error instance in callback', function (done) {
-            chai_1.expect(dockerImageManagement).to.not.equal(null);
             dockerImageManagement.forceError = true;
+            chai_1.expect(dockerImageManagement).to.not.equal(null);
             dockerImageManagement.getImages(['7', '8'], (err, images) => {
                 chai_1.expect(err).to.not.equal(null);
                 chai_1.expect(images).to.equal(null);
@@ -92,16 +92,17 @@ describe('DockerImageManagement', function () {
     });
     describe('DockerImageManagement.pullImage (force error)', function () {
         it('should return non-null Error instance in callback', function (done) {
-            chai_1.expect(dockerImageManagement).to.not.equal(null);
             dockerImageManagement.forceError = true;
+            chai_1.expect(dockerImageManagement).to.not.equal(null);
             dockerImageManagement.pullImage('mysql:5.6', (taskId, status, current, total) => {
             }, (err) => {
                 chai_1.expect(err).to.not.equal(null);
+                chai_1.expect(err.message).to.equal('force error: pull');
                 done();
             });
         });
     });
-    describe('DockerImageManagement.pullImage (force error)', function () {
+    describe('DockerImageManagement.pullImage (recoverable errors)', function () {
         it(`should pull an image from hub.docker.com`, function (done) {
             let progressCallbackCalledWithErrorCount = 0;
             let progressCallbackCalledWithDownloadingCount = 0;
@@ -123,12 +124,13 @@ describe('DockerImageManagement', function () {
     });
     describe('DockerImageManagement.buildDockerFile (force error)', function () {
         it('should return non-null Error instance in callback', function (done) {
-            chai_1.expect(dockerImageManagement).to.not.equal(null);
             dockerImageManagement.forceError = true;
+            chai_1.expect(dockerImageManagement).to.not.equal(null);
             let pathToDockerFile = path.resolve(__dirname, '../../test-data');
             dockerImageManagement.buildDockerFile(pathToDockerFile, 'mysql:5.5', (taskId, status, current, total) => {
             }, (err) => {
                 chai_1.expect(err).to.not.equal(null);
+                chai_1.expect(err.message).to.equal('force error: buildImage');
                 done();
             });
         });
@@ -151,8 +153,8 @@ describe('DockerImageManagement', function () {
     });
     describe('DockerImageManagement.removeImages (force error)', function () {
         it('should return non-null Error instance in callback', function (done) {
-            chai_1.expect(dockerImageManagement).to.not.equal(null);
             dockerImageManagement.forceError = true;
+            chai_1.expect(dockerImageManagement).to.not.equal(null);
             dockerImageManagement.removeImages(['2', '3', '113'], (err, imageRemoveResult) => {
                 chai_1.expect(err).to.not.equal(null);
                 done();
