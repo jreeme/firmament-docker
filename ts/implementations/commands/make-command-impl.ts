@@ -1,6 +1,6 @@
 import {injectable, inject} from "inversify";
 import kernel from '../../inversify.config';
-import {Command, CommandLine, CommandUtil, Positive, Spawn, ProgressBar} from 'firmament-yargs';
+import {Command, CommandLine, CommandUtil, Positive, Spawn, ProgressBar, FailureRetVal} from 'firmament-yargs';
 import {DockerDescriptors} from "../../interfaces/docker-descriptors";
 import {
   ContainerConfig, DockerContainer, ExpressApp, ImageOrContainerRemoveResults
@@ -163,8 +163,13 @@ export class MakeCommandImpl implements Command {
           if (containerTemplatesToWrite) {
             var fs = require('fs');
             if (fs.existsSync(fullOutputPath)
-              && !this.positive.areYouSure(`Config file '${fullOutputPath}' already exists. Overwrite? [Y/n] `, '', true)) {
+              && !this.positive.areYouSure(
+                `Config file '${fullOutputPath}' already exists. Overwrite? [Y/n] `,
+                'Operation canceled.',
+                true,
+                FailureRetVal.TRUE)) {
               cb(null, 'Canceling JSON template creation!');
+              return;
             } else {
               MakeCommandImpl.writeJsonTemplateFile(containerTemplatesToWrite, fullOutputPath);
             }

@@ -5,7 +5,7 @@ import {
   DockerOde, ImageOrContainer, DockerImageOrContainer,
   ImageOrContainerRemoveResults
 } from '../../interfaces/dockerode';
-import {CommandUtil, Positive} from 'firmament-yargs';
+import {CommandUtil, Positive, FailureRetVal} from 'firmament-yargs';
 import {DockerUtilOptions} from "../../interfaces/docker-util-options";
 import {ForceErrorImpl} from "./force-error-impl";
 const deepExtend = require('deep-extend');
@@ -172,13 +172,12 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
       throw new Error(`Specify ${thingToRemove} to remove by FirmamentId, Docker ID or Name. Or 'all' to remove all.`);
     }
     if (_.indexOf(ids, 'all') !== -1) {
-      try {
-        if (!this.positive.areYouSure(`You're sure you want to remove all ${thingToRemove}? [y/N] `,`Operation canceled.`, false)) {
-          cb(null, null);
-          return;
-        }
-      } catch (err) {
-        console.log(err.message);
+      if (!this.positive.areYouSure(`You're sure you want to remove all ${thingToRemove}? [y/N] `,
+          `Operation canceled.`,
+          false,
+          FailureRetVal.TRUE)) {
+        cb(null, null);
+        return;
       }
       ids = null;
     }
