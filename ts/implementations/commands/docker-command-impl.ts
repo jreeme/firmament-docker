@@ -51,7 +51,7 @@ export class DockerCommandImpl implements Command {
 
   private pushCleanVolumesCommand() {
     let me = this;
-    let cleanVolumesCommand = kernel.get<Command>('Command');
+    let cleanVolumesCommand = kernel.get<Command>('CommandImpl');
     cleanVolumesCommand.aliases = ['clean-volumes', 'cv'];
     cleanVolumesCommand.commandDesc = 'Clean orphaned Docker resources';
     //noinspection JSUnusedLocalSymbols
@@ -66,7 +66,7 @@ export class DockerCommandImpl implements Command {
 
   private pushRemoveImagesCommand() {
     let me = this;
-    let removeCommand = kernel.get<Command>('Command');
+    let removeCommand = kernel.get<Command>('CommandImpl');
     removeCommand.aliases = ['rmi'];
     removeCommand.commandDesc = 'Remove Docker images';
     removeCommand.handler = (argv)=> {
@@ -79,7 +79,7 @@ export class DockerCommandImpl implements Command {
 
   private pushRemoveContainersCommand() {
     let me = this;
-    let removeCommand = kernel.get<Command>('Command');
+    let removeCommand = kernel.get<Command>('CommandImpl');
     removeCommand.aliases = ['rm'];
     removeCommand.commandDesc = 'Remove Docker containers';
     removeCommand.handler = (argv)=> {
@@ -93,7 +93,7 @@ export class DockerCommandImpl implements Command {
 
   private pushShellCommand() {
     let me = this;
-    let shellCommand = kernel.get<Command>('Command');
+    let shellCommand = kernel.get<Command>('CommandImpl');
     shellCommand.aliases = ['sh'];
     shellCommand.commandDesc = 'Run bash shell in Docker container';
     shellCommand.handler = (argv)=> {
@@ -106,7 +106,7 @@ export class DockerCommandImpl implements Command {
 
   private pushStartCommand() {
     let me = this;
-    let startCommand = kernel.get<Command>('Command');
+    let startCommand = kernel.get<Command>('CommandImpl');
     startCommand.aliases = ['start'];
     startCommand.commandDesc = 'Start Docker containers';
     startCommand.handler = (argv)=> {
@@ -117,7 +117,7 @@ export class DockerCommandImpl implements Command {
 
   private pushStopCommand() {
     let me = this;
-    let stopCommand = kernel.get<Command>('Command');
+    let stopCommand = kernel.get<Command>('CommandImpl');
     stopCommand.aliases = ['stop'];
     stopCommand.commandDesc = 'Stop Docker containers';
     stopCommand.handler = argv=> {
@@ -128,7 +128,7 @@ export class DockerCommandImpl implements Command {
 
   private pushImagesCommand() {
     let me = this;
-    let imagesCommand = kernel.get<Command>('Command');
+    let imagesCommand = kernel.get<Command>('CommandImpl');
     imagesCommand.aliases = ['images'];
     imagesCommand.commandDesc = 'List Docker images';
     //noinspection ReservedWordAsName
@@ -146,7 +146,7 @@ export class DockerCommandImpl implements Command {
 
   private pushPsCommand() {
     let me = this;
-    let psCommand = kernel.get<Command>('Command');
+    let psCommand = kernel.get<Command>('CommandImpl');
     psCommand.aliases = ['ps'];
     psCommand.commandDesc = 'List Docker containers';
     //noinspection ReservedWordAsName

@@ -61,7 +61,7 @@ export class MakeCommandImpl implements Command {
   };
 
   private pushTemplateCommand() {
-    let templateCommand = kernel.get<Command>('Command');
+    let templateCommand = kernel.get<Command>('CommandImpl');
     templateCommand.aliases = ['template', 't'];
     templateCommand.commandDesc = 'Create a template JSON spec for a container cluster';
     //noinspection ReservedWordAsName
@@ -89,7 +89,7 @@ export class MakeCommandImpl implements Command {
   };
 
   private pushBuildCommand() {
-    let buildCommand = kernel.get<Command>('Command');
+    let buildCommand = kernel.get<Command>('CommandImpl');
     buildCommand.aliases = ['build', 'b'];
     buildCommand.commandDesc = 'Build Docker containers based on JSON spec';
     //noinspection ReservedWordAsName
