@@ -1,6 +1,6 @@
 {
   "name": "firmament-docker",
-  "version": "0.2.23",
+  "version": "0.2.24",
   "description": "Typescript classes for performing Docker operations",
   "main": "js/index.js",
   "typings": "js/index",
@@ -25,7 +25,6 @@
   "devDependencies": {
     "@types/async": "^2.0.32",
     "@types/chai": "^3.4.34",
-    "@types/inversify": "^2.0.31",
     "@types/jsnlog": "^2.17.31",
     "@types/lodash": "^4.14.37",
     "@types/mocha": "^2.2.32",
@@ -43,8 +42,8 @@
     "deep-extend": "^0.4.1",
     "dockerode": "^2.2.10",
     "filesize": "^3.3.0",
-    "firmament-yargs": "0.2.12",
-    "inversify": "^2.0.0-beta.8",
+    "firmament-yargs": "0.2.13",
+    "inversify": "^3.0.0-beta.1",
     "jsnlog": "^2.17.1",
     "jsonfile": "^2.3.1",
     "lodash": "^4.8.2",

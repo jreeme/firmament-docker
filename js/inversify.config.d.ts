@@ -1,3 +1,3 @@
-import { Kernel } from 'inversify';
-declare var kernel: Kernel;
+import { interfaces } from 'inversify';
+declare let kernel: interfaces.Container;
 export default kernel;
