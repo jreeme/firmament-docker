@@ -1,3 +1,2 @@
-import { interfaces } from 'inversify';
-declare let kernel: interfaces.Container;
+import { kernel } from 'firmament-yargs';
 export default kernel;

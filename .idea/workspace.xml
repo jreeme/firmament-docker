@@ -2,59 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/implementations/docker-container-management-impl.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/implementations/docker-container-management-impl.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/implementations/docker-container-management-impl.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/implementations/docker-image-management-impl.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/implementations/docker-image-management-impl.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/implementations/docker-image-management-impl.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/index.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/index.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/index.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-container-management.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-container-management.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-container-management.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-descriptors.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-descriptors.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-descriptors.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-image-management.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-image-management.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-image-management.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-util-options.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-util-options.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-util-options.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-util.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-util.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-util.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/dockerode.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/dockerode.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/dockerode.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/force-error.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/force-error.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/force-error.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/inversify.config.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/inversify.config.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/inversify.config.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/container-object-impl.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/container-object-impl.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/container-object-impl.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-container-management.test.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-container-management.test.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-container-management.test.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-image-management.test.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-image-management.test.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-image-management.test.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-ode-mock-impl.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-ode-mock-impl.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-ode-mock-impl.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-util.test.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-util.test.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-util.test.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/image-object-impl.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/image-object-impl.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/image-object-impl.js.map" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/typescript-compiler.xml" afterPath="$PROJECT_DIR$/.idea/typescript-compiler.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/inversify.config.d.ts" afterPath="$PROJECT_DIR$/js/inversify.config.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/inversify.config.js" afterPath="$PROJECT_DIR$/js/inversify.config.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/inversify.config.js.map" afterPath="$PROJECT_DIR$/js/inversify.config.js.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ts/inversify.config.ts" afterPath="$PROJECT_DIR$/ts/inversify.config.ts" />
     </list>
@@ -82,8 +33,8 @@
       <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="36">
+              <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -92,11 +43,10 @@
       <file leaf-file-name="inversify.config.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ts/inversify.config.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
-              <caret line="40" column="22" lean-forward="false" selection-start-line="40" selection-start-column="22" selection-end-line="40" selection-end-column="22" />
+            <state relative-caret-position="252">
+              <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
               <folding>
-                <element signature="e#0#48#0" expanded="true" />
-                <element signature="e#926#1003#0" expanded="true" />
+                <element signature="e#0#75#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -156,8 +106,8 @@
         <option value="$PROJECT_DIR$/ts/test/docker-image-management.test.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/docker-image-management-impl.ts" />
         <option value="$PROJECT_DIR$/ts/test/docker-ode-mock-impl.ts" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/ts/inversify.config.ts" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -397,7 +347,7 @@
       <workItem from="1478540563501" duration="36284000" />
       <workItem from="1478710192448" duration="12669000" />
       <workItem from="1478796569615" duration="12525000" />
-      <workItem from="1479224991140" duration="3159000" />
+      <workItem from="1479224991140" duration="5177000" />
     </task>
     <task id="LOCAL-00001" summary="Big refactor. Don't know if it works.&#10;">
       <created>1477687251725</created>
@@ -609,7 +559,14 @@
       <option name="project" value="LOCAL" />
       <updated>1479225555211</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="-&gt; v.0.2.24">
+      <created>1479239305955</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1479239305955</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -625,17 +582,17 @@
     <history-entry file="Unit_Tests - 2016.11.15 at 13h 45m 43s.xml">
       <configuration name="Unit Tests" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="js_test_docker-image-management_test_js - 2016.11.14 at 09h 50m 18s.xml">
-      <configuration name="js/test/docker-image-management.test.js" configurationId="mocha-javascript-test-runner" />
+    <history-entry file="Unit_Tests - 2016.11.15 at 14h 54m 00s.xml">
+      <configuration name="Unit Tests" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="js_test_docker-image-management_test_js - 2016.11.14 at 09h 51m 18s.xml">
-      <configuration name="js/test/docker-image-management.test.js" configurationId="mocha-javascript-test-runner" />
+    <history-entry file="Unit_Tests - 2016.11.15 at 14h 54m 10s.xml">
+      <configuration name="Unit Tests" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="js_test_docker-image-management_test_js - 2016.11.14 at 09h 51m 37s.xml">
-      <configuration name="js/test/docker-image-management.test.js" configurationId="mocha-javascript-test-runner" />
+    <history-entry file="Unit_Tests - 2016.11.15 at 14h 56m 07s.xml">
+      <configuration name="Unit Tests" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="js_test_docker-image-management_test_js - 2016.11.14 at 09h 52m 13s.xml">
-      <configuration name="js/test/docker-image-management.test.js" configurationId="mocha-javascript-test-runner" />
+    <history-entry file="Unit_Tests - 2016.11.15 at 14h 57m 49s.xml">
+      <configuration name="Unit Tests" configurationId="mocha-javascript-test-runner" />
     </history-entry>
     <history-entry file="js_test_docker-image-management_test_js - 2016.11.14 at 10h 02m 29s.xml">
       <configuration name="js/test/docker-image-management.test.js" configurationId="mocha-javascript-test-runner" />
@@ -645,7 +602,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="148171000" />
+    <option name="totallyTimeSpent" value="150189000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1919" y="0" width="1922" height="1055" extended-state="6" />
@@ -660,9 +617,9 @@
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2368703" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2368703" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27224007" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28617364" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -698,7 +655,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Continuing DockerUtil unit tests&#10;" />
     <MESSAGE value="Unit tests pass. Design export of Command for firmament integration." />
     <MESSAGE value="-&gt; v.0.2.2" />
     <MESSAGE value="-&gt; v.0.2.2 (add .npmignore to stop publishing .idea directory)" />
@@ -723,14 +679,15 @@
     <MESSAGE value="-&gt; v.0.2.21 (refactoring a bit, improving low level tests)" />
     <MESSAGE value="-&gt; v.0.2.22" />
     <MESSAGE value="-&gt; v.0.2.23" />
-    <option name="LAST_COMMIT_MESSAGE" value="-&gt; v.0.2.23" />
+    <MESSAGE value="-&gt; v.0.2.24" />
+    <option name="LAST_COMMIT_MESSAGE" value="-&gt; v.0.2.24" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="244" />
+      <option name="time" value="245" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1024,7 +981,7 @@
         <state relative-caret-position="702">
           <caret line="186" column="10" lean-forward="false" selection-start-line="186" selection-start-column="10" selection-end-line="186" selection-end-column="10" />
           <folding>
-            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#0#26#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1070,19 +1027,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ts/inversify.config.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="40" column="22" lean-forward="false" selection-start-line="40" selection-start-column="22" selection-end-line="40" selection-end-column="22" />
+        <state relative-caret-position="252">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding>
-            <element signature="e#0#48#0" expanded="true" />
-            <element signature="e#926#1003#0" expanded="true" />
+            <element signature="e#0#75#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="36">
+          <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
           <folding />
         </state>
       </provider>
