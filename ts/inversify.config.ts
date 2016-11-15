@@ -28,7 +28,7 @@ kernel.bind<CommandUtil>('CommandUtil').to(<new (args:any)=>CommandUtil>commandU
 kernel.bind<NestedYargs>('NestedYargs').to(<new (args:any)=>NestedYargs>nestedYargs.constructor);
 kernel.bind<ProgressBar>('ProgressBar').to(<new (args:any)=>ProgressBar>progressBar.constructor);
 kernel.bind<CommandLine>('CommandLine').to(<new (args:any)=>CommandLine>commandLine.constructor);
-kernel.bind<Command>('Command').to(<new (args:any)=>Command>command.constructor);
+//kernel.bind<Command>('Command').to(<new (args:any)=>Command>command.constructor);
 kernel.bind<Positive>('Positive').to(<new (args:any)=>Positive>positive.constructor);
 kernel.bind<Spawn>('Spawn').to(<new (args:any)=>Spawn>spawn.constructor);
 //TODO: <- End Super HACK
@@ -38,6 +38,9 @@ kernel.bind<DockerImageManagement>('DockerImageManagement').to(DockerImageManage
 kernel.bind<DockerContainerManagement>('DockerContainerManagement').to(DockerContainerManagementImpl);
 kernel.bind<DockerOde>('DockerOde').to(DockerOdeImpl);
 kernel.bind<DockerUtil>('DockerUtil').to(DockerUtilImpl);
-kernel.bind<Command>('DockerCommand').to(DockerCommandImpl);
-kernel.bind<Command>('MakeCommand').to(MakeCommandImpl);
+//Export commands. Tag them so firmament shell can get tagged
+/*kernel.bind<Command>('DockerCommand').to(DockerCommandImpl);
+kernel.bind<Command>('MakeCommand').to(MakeCommandImpl);*/
+kernel.bind<Command>('Command').to(DockerCommandImpl);
+kernel.bind<Command>('Command').to(MakeCommandImpl);
 export default kernel;

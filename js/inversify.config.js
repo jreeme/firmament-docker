@@ -20,7 +20,6 @@ kernel.bind('CommandUtil').to(commandUtil.constructor);
 kernel.bind('NestedYargs').to(nestedYargs.constructor);
 kernel.bind('ProgressBar').to(progressBar.constructor);
 kernel.bind('CommandLine').to(commandLine.constructor);
-kernel.bind('Command').to(command.constructor);
 kernel.bind('Positive').to(positive.constructor);
 kernel.bind('Spawn').to(spawn.constructor);
 kernel.bind('DockerManagement').to(docker_management_impl_1.DockerManagementImpl);
@@ -28,8 +27,8 @@ kernel.bind('DockerImageManagement').to(docker_image_management_impl_1.DockerIma
 kernel.bind('DockerContainerManagement').to(docker_container_management_impl_1.DockerContainerManagementImpl);
 kernel.bind('DockerOde').to(docker_ode_impl_1.DockerOdeImpl);
 kernel.bind('DockerUtil').to(docker_util_impl_1.DockerUtilImpl);
-kernel.bind('DockerCommand').to(docker_command_impl_1.DockerCommandImpl);
-kernel.bind('MakeCommand').to(make_command_impl_1.MakeCommandImpl);
+kernel.bind('Command').to(docker_command_impl_1.DockerCommandImpl);
+kernel.bind('Command').to(make_command_impl_1.MakeCommandImpl);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = kernel;
 //# sourceMappingURL=inversify.config.js.map
