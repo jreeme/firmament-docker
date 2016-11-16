@@ -16,9 +16,4 @@ firmament_yargs_1.kernel.bind('Command').to(docker_command_impl_1.DockerCommandI
 firmament_yargs_1.kernel.bind('Command').to(make_command_impl_1.MakeCommandImpl);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = firmament_yargs_1.kernel;
-try {
-}
-catch (err) {
-    var e = err;
-}
 //# sourceMappingURL=inversify.config.js.map
