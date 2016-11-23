@@ -108,8 +108,8 @@ export class MakeCommandImpl implements Command {
   private buildTemplate(argv: any) {
     let fullInputPath = MakeCommandImpl.getJsonConfigFilePath(argv.input);
     console.log("Constructing Docker containers described in: '" + fullInputPath + "'");
-    var jsonFile = require('jsonfile');
-    var containerDescriptors = jsonFile.readFileSync(fullInputPath);
+    const jsonFile = require('jsonfile');
+    const containerDescriptors = jsonFile.readFileSync(fullInputPath);
     this.processContainerConfigs(containerDescriptors);
   }
 
@@ -161,7 +161,7 @@ export class MakeCommandImpl implements Command {
         },
         (containerTemplatesToWrite: any, cb: (err: Error, msg?: any)=>void) => {
           if (containerTemplatesToWrite) {
-            var fs = require('fs');
+            const fs = require('fs');
             if (fs.existsSync(fullOutputPath)
               && !this.positive.areYouSure(
                 `Config file '${fullOutputPath}' already exists. Overwrite? [Y/n] `,
@@ -248,7 +248,7 @@ export class MakeCommandImpl implements Command {
       (missingImageNames: string[], cb: (err: Error, containerBuildErrors: Error[])=>void) => {
         async.mapSeries(missingImageNames,
           (missingImageName, cb: (err: Error, containerBuildError: Error)=>void) => {
-            var containerConfig = containerConfigsByImageName[missingImageName];
+            const containerConfig = containerConfigsByImageName[missingImageName];
             //Try to build from Dockerfile
             let path = require('path');
             let cwd = process.cwd();
@@ -386,7 +386,7 @@ export class MakeCommandImpl implements Command {
                         + '='
                         + expressApp.EnvironmentVariables[environmentVariable]);
                     }
-                    self.remoteSlcCtlCommand('Setting environment variables', expressApp, cmd, cb);
+                    self.remoteSlcCtlCommand('Setting environment constiables', expressApp, cmd, cb);
                   },
                   (cb: (err: Error, result?: any)=>void) => {//Perform Bower install if required
                     if (!expressApp.DoBowerInstall) {
@@ -437,7 +437,7 @@ export class MakeCommandImpl implements Command {
 
   private static writeJsonTemplateFile(objectToWrite: any, fullOutputPath: string) {
     console.log("Writing JSON template file '" + fullOutputPath + "' ...");
-    var jsonFile = require('jsonfile');
+    const jsonFile = require('jsonfile');
     jsonFile.spaces = 2;
     jsonFile.writeFileSync(fullOutputPath, objectToWrite);
   }
@@ -447,7 +447,7 @@ export class MakeCommandImpl implements Command {
     let serviceName = expressApp.ServiceName;
     let serverUrl = expressApp.StrongLoopServerUrl;
     console.log(msg + ' "' + serviceName + '" @ "' + cwd + '" via "' + serverUrl + '"');
-    var baseCmd = ['slc', 'ctl', '-C', serverUrl];
+    const baseCmd = ['slc', 'ctl', '-C', serverUrl];
     Array.prototype.push.apply(baseCmd, cmd);
     this.spawn.spawnShellCommandAsync(baseCmd, {cwd, stdio: 'pipe'}, (err, result) => {
       console.log(result);
@@ -456,25 +456,25 @@ export class MakeCommandImpl implements Command {
   }
 
   private containerDependencySort(containerConfigs) {
-    var sortedContainerConfigs = [];
+    const sortedContainerConfigs = [];
     //Sort on linked container dependencies
-    var objectToSort = {};
-    var containerConfigByNameMap = {};
+    const objectToSort = {};
+    const containerConfigByNameMap = {};
     containerConfigs.forEach(function (containerConfig) {
       if (containerConfigByNameMap[containerConfig.name]) {
         console.error('Same name is used by more than one container.');
       }
       containerConfigByNameMap[containerConfig.name] = containerConfig;
-      var dependencies = [];
+      const dependencies = [];
       if (containerConfig.HostConfig && containerConfig.HostConfig.Links) {
         containerConfig.HostConfig.Links.forEach(function (link) {
-          var linkName = link.split(':')[0];
+          const linkName = link.split(':')[0];
           dependencies.push(linkName);
         });
       }
       objectToSort[containerConfig.name] = dependencies;
     });
-    var sortedContainerNames = this.topologicalDependencySort(objectToSort);
+    const sortedContainerNames = this.topologicalDependencySort(objectToSort);
     sortedContainerNames.forEach(function (sortedContainerName) {
       sortedContainerConfigs.push(containerConfigByNameMap[sortedContainerName]);
     });
@@ -482,7 +482,7 @@ export class MakeCommandImpl implements Command {
   }
 
   private topologicalDependencySort(graph) {
-    var sorted = [], // sorted list of IDs ( returned value )
+    const sorted = [], // sorted list of IDs ( returned value )
       visited = {}; // hash: id of already visited node => true
     // 2. topological sort
     try {
@@ -496,7 +496,7 @@ export class MakeCommandImpl implements Command {
         }
         ancestors.push(name);
         visited[name] = true;
-        var deps = graph[name];
+        const deps = graph[name];
         deps.forEach(function (dep) {
           if (ancestors.indexOf(dep) >= 0) {
             console.error('Circular dependency "' + dep + '" is required by "' + name + '": ' + ancestors.join(' -> '));
