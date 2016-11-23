@@ -3,10 +3,10 @@ import {
   DockerContainer, ImageOrContainer, ImageOrContainerRemoveResults
 } from '../interfaces/dockerode';
 import {DockerUtilOptionsImpl} from './util/docker-util-options-impl';
-import {ForceErrorImpl} from './util/force-error-impl';
 import * as async from 'async';
-import {DockerManagement} from "../interfaces/docker-management";
-import {DockerContainerManagement} from "../interfaces/docker-container-management";
+import {DockerManagement} from '../interfaces/docker-management';
+import {DockerContainerManagement} from '../interfaces/docker-container-management';
+import {ForceErrorImpl} from 'firmament-yargs';
 const childProcess = require('child_process');
 const deepExtend = require('deep-extend');
 

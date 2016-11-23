@@ -2,9 +2,7 @@ import {injectable, inject} from 'inversify';
 import {DockerImageManagement} from '../interfaces/docker-image-management';
 import {DockerImage, ImageOrContainerRemoveResults, ImageOrContainer} from '../interfaces/dockerode';
 import {DockerUtilOptionsImpl} from './util/docker-util-options-impl';
-import {ForceErrorImpl} from './util/force-error-impl';
-import * as _ from 'lodash';
-import * as async from 'async';
+import {ForceErrorImpl} from 'firmament-yargs';
 import {DockerManagement} from "../interfaces/docker-management";
 
 @injectable()

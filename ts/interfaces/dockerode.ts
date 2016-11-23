@@ -1,5 +1,5 @@
-import {DockerUtilOptions} from "./docker-util-options";
-import {ForceError} from "./force-error";
+import {DockerUtilOptions} from './docker-util-options';
+import {ForceError} from 'firmament-yargs';
 export enum ImageOrContainer{
   Image,
   Container

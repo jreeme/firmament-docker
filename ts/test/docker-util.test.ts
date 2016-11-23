@@ -1,14 +1,14 @@
-import "reflect-metadata";
+import 'reflect-metadata';
 import kernel from '../inversify.config';
 import {expect} from 'chai';
 import {
   DockerOde, ImageOrContainer, DockerImage, DockerContainer,
   ImageOrContainerRemoveResults
-} from "../interfaces/dockerode";
-import {DockerOdeMockImpl} from "./docker-ode-mock-impl";
-import {DockerUtil} from "../interfaces/docker-util";
-import {DockerUtilOptionsImpl} from "../implementations/util/docker-util-options-impl";
-import {ForceError} from "../interfaces/force-error";
+} from '../interfaces/dockerode';
+import {DockerOdeMockImpl} from './docker-ode-mock-impl';
+import {DockerUtil} from '../interfaces/docker-util';
+import {DockerUtilOptionsImpl} from '../implementations/util/docker-util-options-impl';
+import {ForceError} from 'firmament-yargs';
 describe('DockerUtil', function () {
   let dockerUtil: DockerUtil;
   beforeEach(()=> {

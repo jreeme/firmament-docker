@@ -1,9 +1,9 @@
-import "reflect-metadata";
-import {injectable} from "inversify";
+import 'reflect-metadata';
+import {injectable} from 'inversify';
 import {
   DockerOde, DockerImage, DockerContainer
-} from "../../interfaces/dockerode";
-import {ForceErrorImpl} from "./force-error-impl";
+} from '../../interfaces/dockerode';
+import {ForceErrorImpl} from 'firmament-yargs';
 @injectable()
 export class DockerOdeImpl extends ForceErrorImpl implements DockerOde {
   private dockerode: DockerOde;

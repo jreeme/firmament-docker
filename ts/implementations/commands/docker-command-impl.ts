@@ -12,7 +12,7 @@ export class DockerCommandImpl implements Command {
   commandDesc: string = '';
   //noinspection JSUnusedGlobalSymbols
   //noinspection JSUnusedLocalSymbols
-  handler: (argv: any)=>void = (argv: any)=> {
+  handler: (argv: any)=>void = (argv: any) => {
   };
   options: any = {};
   subCommands: Command[] = [];
@@ -55,9 +55,9 @@ export class DockerCommandImpl implements Command {
     cleanVolumesCommand.aliases = ['clean-volumes', 'cv'];
     cleanVolumesCommand.commandDesc = 'Clean orphaned Docker resources';
     //noinspection JSUnusedLocalSymbols
-    cleanVolumesCommand.handler = (argv)=> {
+    cleanVolumesCommand.handler = (argv) => {
       var script = require('path').resolve(__dirname, '../../bash/_docker-cleanup-volumes.sh');
-      me.spawn.sudoSpawn(['/bin/bash', script], (err: Error)=> {
+      me.spawn.sudoSpawnAsync(['/bin/bash', script], {}, (err: Error) => {
         me.commandUtil.processExitWithError(err);
       });
     };
@@ -69,8 +69,8 @@ export class DockerCommandImpl implements Command {
     let removeCommand = kernel.get<Command>('CommandImpl');
     removeCommand.aliases = ['rmi'];
     removeCommand.commandDesc = 'Remove Docker images';
-    removeCommand.handler = (argv)=> {
-      me.dockerImageManagement.removeImages(argv._.slice(2), (err: Error)=> {
+    removeCommand.handler = (argv) => {
+      me.dockerImageManagement.removeImages(argv._.slice(2), (err: Error) => {
         me.commandUtil.processExitWithError(err);
       });
     };
@@ -82,9 +82,9 @@ export class DockerCommandImpl implements Command {
     let removeCommand = kernel.get<Command>('CommandImpl');
     removeCommand.aliases = ['rm'];
     removeCommand.commandDesc = 'Remove Docker containers';
-    removeCommand.handler = (argv)=> {
+    removeCommand.handler = (argv) => {
       me.dockerContainerManagement.removeContainers(argv._.slice(2),
-        (err: Error)=> {
+        (err: Error) => {
           me.commandUtil.processExitWithError(err);
         });
     };
@@ -96,8 +96,8 @@ export class DockerCommandImpl implements Command {
     let shellCommand = kernel.get<Command>('CommandImpl');
     shellCommand.aliases = ['sh'];
     shellCommand.commandDesc = 'Run bash shell in Docker container';
-    shellCommand.handler = (argv)=> {
-      me.bashInToContainer(argv._.slice(2), (err: Error)=> {
+    shellCommand.handler = (argv) => {
+      me.bashInToContainer(argv._.slice(2), (err: Error) => {
         me.commandUtil.processExitWithError(err);
       });
     };
@@ -109,8 +109,8 @@ export class DockerCommandImpl implements Command {
     let startCommand = kernel.get<Command>('CommandImpl');
     startCommand.aliases = ['start'];
     startCommand.commandDesc = 'Start Docker containers';
-    startCommand.handler = (argv)=> {
-      me.dockerContainerManagement.startOrStopContainers(argv._.slice(2), true, ()=>me.commandUtil.processExit());
+    startCommand.handler = (argv) => {
+      me.dockerContainerManagement.startOrStopContainers(argv._.slice(2), true, () => me.commandUtil.processExit());
     };
     me.subCommands.push(startCommand);
   }
@@ -120,8 +120,8 @@ export class DockerCommandImpl implements Command {
     let stopCommand = kernel.get<Command>('CommandImpl');
     stopCommand.aliases = ['stop'];
     stopCommand.commandDesc = 'Stop Docker containers';
-    stopCommand.handler = argv=> {
-      me.dockerContainerManagement.startOrStopContainers(argv._.slice(2), false, ()=>me.commandUtil.processExit());
+    stopCommand.handler = argv => {
+      me.dockerContainerManagement.startOrStopContainers(argv._.slice(2), false, () => me.commandUtil.processExit());
     };
     me.subCommands.push(stopCommand);
   }
@@ -140,7 +140,7 @@ export class DockerCommandImpl implements Command {
         desc: 'Show intermediate images also'
       }
     };
-    imagesCommand.handler = argv=> me.printImagesList(argv, ()=>me.commandUtil.processExit());
+    imagesCommand.handler = argv => me.printImagesList(argv, () => me.commandUtil.processExit());
     this.subCommands.push(imagesCommand);
   }
 
@@ -158,18 +158,18 @@ export class DockerCommandImpl implements Command {
         desc: 'Show non-running containers also'
       }
     };
-    psCommand.handler = argv=> me.printContainerList(argv, ()=>me.commandUtil.processExit());
+    psCommand.handler = argv => me.printContainerList(argv, () => me.commandUtil.processExit());
     this.subCommands.push(psCommand);
   }
 
   private printImagesList(argv: any, cb: ()=>void) {
-    this.dockerImageManagement.listImages(argv.a, (err, images)=> {
+    this.dockerImageManagement.listImages(argv.a, (err, images) => {
       this.prettyPrintDockerImagesList(err, images, cb);
     });
   }
 
   private printContainerList(argv: any, cb: ()=>void) {
-    this.dockerContainerManagement.listContainers(argv.a, (err, containers)=> {
+    this.dockerContainerManagement.listContainers(argv.a, (err, containers) => {
       this.prettyPrintDockerContainerList(err, containers, argv.a, cb);
     });
   }
@@ -192,7 +192,7 @@ export class DockerCommandImpl implements Command {
     } else {
       var timeAgo = require('time-ago')();
       var fileSize = require('filesize');
-      me.commandLine.printTable(images.map(image=> {
+      me.commandLine.printTable(images.map(image => {
         try {
           var ID = image.firmamentId;
           var repoTags = image.RepoTags[0].split(':');
@@ -218,7 +218,7 @@ export class DockerCommandImpl implements Command {
       let msg = me.commandUtil.returnErrorStringOrMessage(err, '\nNo ' + (all ? '' : 'Running ') + 'Containers\n');
       console.log(msg);
     } else {
-      me.commandLine.printTable(containers.map(container=> {
+      me.commandLine.printTable(containers.map(container => {
         return {
           ID: container.firmamentId,
           Name: container.Names[0],

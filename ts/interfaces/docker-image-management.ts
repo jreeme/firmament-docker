@@ -1,5 +1,5 @@
-import {DockerImage, ImageOrContainerRemoveResults} from "./dockerode";
-import {ForceError} from "./force-error";
+import {DockerImage, ImageOrContainerRemoveResults} from './dockerode';
+import {ForceError} from 'firmament-yargs';
 export interface DockerImageManagement extends ForceError {
   listImages(listAllImages: boolean,
              cb: (err: Error, images: DockerImage[])=>void);

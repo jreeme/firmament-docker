@@ -1,11 +1,11 @@
-import "reflect-metadata";
-import {injectable} from "inversify";
+import 'reflect-metadata';
+import {injectable} from 'inversify';
 import {
   DockerOde, DockerImage, DockerContainer
-} from "../interfaces/dockerode";
-import {DockerImageImpl} from "./image-object-impl";
-import {DockerContainerImpl} from "./container-object-impl";
-import {ForceErrorImpl} from "../implementations/util/force-error-impl";
+} from '../interfaces/dockerode';
+import {DockerImageImpl} from './image-object-impl';
+import {DockerContainerImpl} from './container-object-impl';
+import {ForceErrorImpl} from 'firmament-yargs';
 const jsonFile = require('jsonfile');
 @injectable()
 export class DockerOdeMockImpl extends ForceErrorImpl implements DockerOde {

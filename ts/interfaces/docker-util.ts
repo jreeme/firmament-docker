@@ -1,6 +1,6 @@
-import {DockerUtilOptions} from "./docker-util-options";
-import {ForceError} from "./force-error";
-import {ImageOrContainerRemoveResults} from "./dockerode";
+import {DockerUtilOptions} from './docker-util-options';
+import {ForceError} from 'firmament-yargs';
+import {ImageOrContainerRemoveResults} from './dockerode';
 export interface DockerUtil extends ForceError {
   getImagesOrContainers(ids: string[],
                         options: DockerUtilOptions,

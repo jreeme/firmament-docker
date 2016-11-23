@@ -21,7 +21,7 @@ export class MakeCommandImpl implements Command {
   commandDesc: string = '';
   //noinspection JSUnusedGlobalSymbols
   //noinspection JSUnusedLocalSymbols
-  handler: (argv: any)=>void = (argv: any)=> {
+  handler: (argv: any)=>void = (argv: any) => {
   };
   options: any = {};
   subCommands: Command[] = [];
@@ -84,7 +84,7 @@ export class MakeCommandImpl implements Command {
         desc: 'Create a full JSON template with all Docker options set to reasonable defaults'
       }
     };
-    templateCommand.handler = (argv: any)=> this.makeTemplate(argv);
+    templateCommand.handler = (argv: any) => this.makeTemplate(argv);
     this.subCommands.push(templateCommand);
   };
 
@@ -101,7 +101,7 @@ export class MakeCommandImpl implements Command {
         desc: 'Name the config JSON file'
       }
     };
-    buildCommand.handler = (argv: any)=> this.buildTemplate(argv);
+    buildCommand.handler = (argv: any) => this.buildTemplate(argv);
     this.subCommands.push(buildCommand);
   };
 
@@ -117,7 +117,7 @@ export class MakeCommandImpl implements Command {
     let fullOutputPath = MakeCommandImpl.getJsonConfigFilePath(argv.output);
     async.waterfall([
         //Remove all containers mentioned in config file
-        (cb: (err: Error, containerTemplatesToWrite?: any)=>void)=> {
+        (cb: (err: Error, containerTemplatesToWrite?: any)=>void) => {
           if (argv.get === undefined) {
             cb(null, argv.full
               ? DockerDescriptors.dockerContainerDefaultTemplate
@@ -125,11 +125,11 @@ export class MakeCommandImpl implements Command {
           }
           else {
             request(templateCatalogUrl,
-              (err, res, body)=> {
+              (err, res, body) => {
                 try {
                   let templateCatalog: any[] = JSON.parse(body);
                   let templateMap = {};
-                  templateCatalog.forEach(template=> {
+                  templateCatalog.forEach(template => {
                     templateMap[template.name] = template;
                   });
                   if (!argv.get.length) {
@@ -144,7 +144,7 @@ export class MakeCommandImpl implements Command {
                       cb(new Error("Could not find template '" + argv.get + "'"));
                     } else {
                       request(templateMap[argv.get].url,
-                        (err, res, body)=> {
+                        (err, res, body) => {
                           try {
                             cb(null, JSON.parse(body));
                           } catch (e) {
@@ -159,7 +159,7 @@ export class MakeCommandImpl implements Command {
               });
           }
         },
-        (containerTemplatesToWrite: any, cb: (err: Error, msg?: any)=>void)=> {
+        (containerTemplatesToWrite: any, cb: (err: Error, msg?: any)=>void) => {
           if (containerTemplatesToWrite) {
             var fs = require('fs');
             if (fs.existsSync(fullOutputPath)
@@ -176,7 +176,7 @@ export class MakeCommandImpl implements Command {
           }
           cb(null);
         }],
-      (err: Error, msg: any = null)=> {
+      (err: Error, msg: any = null) => {
         this.commandUtil.processExitWithError(err, msg);
       });
   }
@@ -196,26 +196,26 @@ export class MakeCommandImpl implements Command {
   private processContainerConfigs(containerConfigs: ContainerConfig[]) {
     let self = this;
     let containerConfigsByImageName = {};
-    containerConfigs.forEach(containerConfig=> {
+    containerConfigs.forEach(containerConfig => {
       containerConfigsByImageName[containerConfig.Image] = containerConfig;
     });
     //noinspection JSUnusedGlobalSymbols,JSUnusedLocalSymbols
     async.waterfall([
       //Remove all containers mentioned in config file
-      (cb: (err: Error, containerRemoveResults: ImageOrContainerRemoveResults[])=>void)=> {
-        this.dockerContainerManagement.removeContainers(containerConfigs.map(containerConfig=>containerConfig.name), cb);
+      (cb: (err: Error, containerRemoveResults: ImageOrContainerRemoveResults[])=>void) => {
+        this.dockerContainerManagement.removeContainers(containerConfigs.map(containerConfig => containerConfig.name), cb);
       },
-      (containerRemoveResults: ImageOrContainerRemoveResults[], cb: (err: Error, missingImageNames: string[])=>void)=> {
-        this.dockerImageManagement.listImages(false, (err, images)=> {
+      (containerRemoveResults: ImageOrContainerRemoveResults[], cb: (err: Error, missingImageNames: string[])=>void) => {
+        this.dockerImageManagement.listImages(false, (err, images) => {
           if (self.commandUtil.callbackIfError(cb, err)) {
             return;
           }
           let repoTags = {};
-          images.forEach(dockerImage=> {
+          images.forEach(dockerImage => {
             repoTags[dockerImage.RepoTags[0]] = true;
           });
           let missingImageNames: string[] = [];
-          containerConfigs.forEach(containerConfig=> {
+          containerConfigs.forEach(containerConfig => {
             let imageName = (containerConfig.Image.indexOf(':') == -1)
               ? containerConfig.Image + ':latest'
               : containerConfig.Image;
@@ -226,28 +226,28 @@ export class MakeCommandImpl implements Command {
           cb(null, _.uniq(missingImageNames));
         });
       },
-      (missingImageNames: string[], cb: (err: Error, missingImageNames: string[])=>void)=> {
+      (missingImageNames: string[], cb: (err: Error, missingImageNames: string[])=>void) => {
         async.mapSeries(missingImageNames,
-          (missingImageName, cb: (err: Error, missingImageName: string)=>void)=> {
+          (missingImageName, cb: (err: Error, missingImageName: string)=>void) => {
             //Try to pull image
             this.dockerImageManagement.pullImage(missingImageName,
               function (taskId, status, current, total) {
                 self.progressBar.showProgressForTask(taskId, status, current, total);
               },
-              (err: Error)=> {
+              (err: Error) => {
                 cb(null, err ? missingImageName : null);
               });
           },
-          (err: Error, missingImageNames: string[])=> {
+          (err: Error, missingImageNames: string[]) => {
             if (self.commandUtil.callbackIfError(cb, err)) {
               return;
             }
-            cb(null, missingImageNames.filter(missingImageName=>!!missingImageName));
+            cb(null, missingImageNames.filter(missingImageName => !!missingImageName));
           });
       },
-      (missingImageNames: string[], cb: (err: Error, containerBuildErrors: Error[])=>void)=> {
+      (missingImageNames: string[], cb: (err: Error, containerBuildErrors: Error[])=>void) => {
         async.mapSeries(missingImageNames,
-          (missingImageName, cb: (err: Error, containerBuildError: Error)=>void)=> {
+          (missingImageName, cb: (err: Error, containerBuildError: Error)=>void) => {
             var containerConfig = containerConfigsByImageName[missingImageName];
             //Try to build from Dockerfile
             let path = require('path');
@@ -258,36 +258,36 @@ export class MakeCommandImpl implements Command {
               function (taskId, status, current, total) {
                 self.progressBar.showProgressForTask(taskId, status, current, total);
               },
-              (err: Error)=> {
+              (err: Error) => {
                 cb(null, err
                   ? new Error('Unable to build Dockerfile at "' + dockerFilePath + '" because: ' + err.message)
                   : null);
               });
           },
-          (err: Error, errors: Error[])=> {
+          (err: Error, errors: Error[]) => {
             if (self.commandUtil.callbackIfError(cb, err)) {
               return;
             }
-            errors = errors.filter(error=>!!error);
+            errors = errors.filter(error => !!error);
             cb(self.commandUtil.logErrors(errors).length ? new Error() : null, errors);
           });
       },
-      (errs: Error[], cb: (err: Error, results: any)=>void)=> {
+      (errs: Error[], cb: (err: Error, results: any)=>void) => {
         try {
           let sortedContainerConfigs = self.containerDependencySort(containerConfigs);
           //noinspection JSUnusedLocalSymbols
           async.mapSeries(sortedContainerConfigs,
-            (containerConfig, cb: (err: Error, result: any)=>void)=> {
-              this.dockerContainerManagement.createContainer(containerConfig, (err: Error, container: DockerContainer)=> {
+            (containerConfig, cb: (err: Error, result: any)=>void) => {
+              this.dockerContainerManagement.createContainer(containerConfig, (err: Error, container: DockerContainer) => {
                 self.commandUtil.logAndCallback('Container "' + containerConfig.name + '" created.', cb, err, container);
               });
             },
-            (err: Error, containers: DockerContainer[])=> {
+            (err: Error, containers: DockerContainer[]) => {
               if (self.commandUtil.callbackIfError(cb, err)) {
                 return;
               }
-              let sortedContainerNames = sortedContainerConfigs.map(containerConfig=>containerConfig.name);
-              this.dockerContainerManagement.startOrStopContainers(sortedContainerNames, true, ()=> {
+              let sortedContainerNames = sortedContainerConfigs.map(containerConfig => containerConfig.name);
+              this.dockerContainerManagement.startOrStopContainers(sortedContainerNames, true, () => {
                 cb(null, null);
               });
             }
@@ -299,17 +299,17 @@ export class MakeCommandImpl implements Command {
       function deployExpressApps(errs: Error[], cb: (err: Error, results: any)=>void) {
         //noinspection JSUnusedLocalSymbols
         async.mapSeries(containerConfigs,
-          (containerConfig: ContainerConfig, cb: (err: Error, result: any)=>void)=> {
+          (containerConfig: ContainerConfig, cb: (err: Error, result: any)=>void) => {
             //noinspection JSUnusedLocalSymbols
             async.mapSeries(containerConfig.ExpressApps || [],
-              (expressApp: ExpressApp, cb: (err: Error, result: any)=>void)=> {
+              (expressApp: ExpressApp, cb: (err: Error, result: any)=>void) => {
                 //noinspection JSUnusedLocalSymbols
                 async.series([
-                  (cb: (err: Error, result?: any)=>void)=> {//Figure out git clone folder name and check 'DeployExisting'
+                  (cb: (err: Error, result?: any)=>void) => {//Figure out git clone folder name and check 'DeployExisting'
                     let cwd = process.cwd();
                     let serviceName = expressApp.ServiceName;
                     if (expressApp.DeployExisting) {
-                      let serviceSourceFolders = fs.readdirSync(cwd).filter((fileName)=> {
+                      let serviceSourceFolders = fs.readdirSync(cwd).filter((fileName) => {
                         return fileName.substring(0, serviceName.length) === serviceName;
                       });
                       if (serviceSourceFolders.length > 1) {
@@ -326,15 +326,15 @@ export class MakeCommandImpl implements Command {
                     expressApp.GitCloneFolder = cwd + '/' + expressApp.ServiceName + (new Date()).getTime();
                     cb(null);
                   },
-                  (cb: (err: Error, result?: any)=>void)=> {//Clone Express app Git Repo
+                  (cb: (err: Error, result?: any)=>void) => {//Clone Express app Git Repo
                     //Check for existence of GitCloneFolder ...
                     //noinspection JSUnusedLocalSymbols
-                    fs.stat(expressApp.GitCloneFolder, (err, stats)=> {
+                    fs.stat(expressApp.GitCloneFolder, (err, stats) => {
                       if (err) {
                         //Directory does not exist, clone it
                         self.gitClone(expressApp.GitUrl,
                           expressApp.GitSrcBranchName,
-                          expressApp.GitCloneFolder, (err: Error)=> {
+                          expressApp.GitCloneFolder, (err: Error) => {
                             cb(err);
                           });
                       } else {
@@ -342,11 +342,11 @@ export class MakeCommandImpl implements Command {
                       }
                     });
                   },
-                  (cb: (err: Error, result: any)=>void)=> {//Make sure there's a Strongloop PM listening
+                  (cb: (err: Error, result: any)=>void) => {//Make sure there's a Strongloop PM listening
                     let retries: number = 3;
                     (function checkForStrongloop() {
                       self.remoteSlcCtlCommand('Looking for SLC PM ...', expressApp, ['info'],
-                        (err: Error, result: string)=> {
+                        (err: Error, result: string) => {
                           --retries;
                           const errorMsg = 'Strongloop not available';
                           const readyResult = /Driver Status:\s+running/;
@@ -363,12 +363,12 @@ export class MakeCommandImpl implements Command {
                         });
                     })();
                   },
-                  (cb: (err: Error, result: any)=>void)=> {//Create Strongloop app
+                  (cb: (err: Error, result: any)=>void) => {//Create Strongloop app
                     let serviceName = expressApp.ServiceName;
                     let msg = 'Creating ' + serviceName;
                     self.remoteSlcCtlCommand(msg, expressApp, ['create', serviceName], cb);
                   },
-                  (cb: (err: Error, result?: any)=>void)=> {//Set ClusterSize
+                  (cb: (err: Error, result?: any)=>void) => {//Set ClusterSize
                     if (!expressApp.ClusterSize) {
                       cb(null);
                       return;
@@ -377,7 +377,7 @@ export class MakeCommandImpl implements Command {
                     self.remoteSlcCtlCommand('Setting cluster size to: ' + clusterSize,
                       expressApp, ['set-size', expressApp.ServiceName, clusterSize], cb);
                   },
-                  (cb: (err: Error, result?: any)=>void)=> {//Set ExpressApp environment
+                  (cb: (err: Error, result?: any)=>void) => {//Set ExpressApp environment
                     expressApp.EnvironmentVariables = expressApp.EnvironmentVariables || {};
                     let cmd = ['env-set', expressApp.ServiceName];
                     for (let environmentVariable in expressApp.EnvironmentVariables) {
@@ -388,53 +388,49 @@ export class MakeCommandImpl implements Command {
                     }
                     self.remoteSlcCtlCommand('Setting environment variables', expressApp, cmd, cb);
                   },
-                  (cb: (err: Error, result?: any)=>void)=> {//Perform Bower install if required
+                  (cb: (err: Error, result?: any)=>void) => {//Perform Bower install if required
                     if (!expressApp.DoBowerInstall) {
                       cb(null);
                       return;
                     }
                     let cwd = expressApp.GitCloneFolder;
-                    self.spawn.spawnShellCommand(['bower', 'install', '--config.interactive=false'], {
-                      cwd,
-                      stdio: null
+                    self.spawn.spawnShellCommandSync(['bower', 'install', '--config.interactive=false'], {
+                      cwd
                     }, cb);
                   },
-                  (cb: (err: Error, result: any)=>void)=> {
+                  (cb: (err: Error, result: any)=>void) => {
                     //Perform NPM install --ignore-scripts in case any scripts require node_modules
                     let cwd = expressApp.GitCloneFolder;
-                    self.spawn.spawnShellCommand(['npm', 'install', '--ignore-scripts'], {cwd, stdio: null}, cb);
+                    self.spawn.spawnShellCommandSync(['npm', 'install', '--ignore-scripts'], {cwd}, cb);
                   },
-                  (cb: (err: Error, result: any)=>void)=> {//Execute local scripts
+                  (cb: (err: Error, result: any)=>void) => {//Execute local scripts
                     //noinspection JSUnusedLocalSymbols
                     async.mapSeries(expressApp.Scripts || [],
-                      (script, cb: (err: Error, result: any)=>void)=> {
+                      (script, cb: (err: Error, result: any)=>void) => {
                         let cwd = expressApp.GitCloneFolder + '/' + script.RelativeWorkingDir;
                         let cmd = [script.Command];
                         cmd = cmd.concat(script.Args);
-                        self.spawn.spawnShellCommand(cmd, {cwd, stdio: null}, cb);
+                        self.spawn.spawnShellCommandSync(cmd, {cwd}, cb);
                       },
-                      (err: Error, results: any)=> {
+                      (err: Error, results: any) => {
                         cb(err, null);
                       });
                   },
-                  (cb: (err: Error, result: any)=>void)=> {//Perform Strongloop build ...
+                  (cb: (err: Error, result: any)=>void) => {//Perform Strongloop build ...
                     let cwd = expressApp.GitCloneFolder;
-                    self.spawn.spawnShellCommand(['slc', 'build', '--scripts'], {cwd, stdio: null}, cb);
+                    self.spawn.spawnShellCommandSync(['slc', 'build', '--scripts'], {cwd}, cb);
                   },
-                  (cb: (err: Error, result: any)=>void)=> {//... and Strongloop deploy
+                  (cb: (err: Error, result: any)=>void) => {//... and Strongloop deploy
                     let cwd = expressApp.GitCloneFolder;
                     console.log('StrongLoop Deploying @ ' + cwd);
-                    self.spawn.spawnShellCommand(['slc', 'deploy', '--service=' + expressApp.ServiceName,
-                      expressApp.StrongLoopServerUrl], {
-                      cwd,
-                      stdio: null
-                    }, cb);
+                    self.spawn.spawnShellCommandSync(['slc', 'deploy', '--service=' + expressApp.ServiceName,
+                      expressApp.StrongLoopServerUrl], {cwd}, cb);
                   }
                 ], cb);
               }, cb);
           }, cb);
       }
-    ], (err: Error, results: string)=> {
+    ], (err: Error, results: string) => {
       self.commandUtil.processExitWithError(err);
     });
   }
@@ -453,7 +449,7 @@ export class MakeCommandImpl implements Command {
     console.log(msg + ' "' + serviceName + '" @ "' + cwd + '" via "' + serverUrl + '"');
     var baseCmd = ['slc', 'ctl', '-C', serverUrl];
     Array.prototype.push.apply(baseCmd, cmd);
-    this.spawn.spawnShellCommandAsync(baseCmd, {cwd, stdio: 'pipe'}, (err, result)=> {
+    this.spawn.spawnShellCommandAsync(baseCmd, {cwd, stdio: 'pipe'}, (err, result) => {
       console.log(result);
       cb(err, result);
     });
@@ -516,7 +512,7 @@ export class MakeCommandImpl implements Command {
   }
 
   private gitClone(gitUrl: string, gitBranch: string, localFolder: string, cb: (err: Error, child: any)=>void) {
-    this.spawn.spawnShellCommand(['git', 'clone', '-b', gitBranch, '--single-branch', gitUrl, localFolder],
+    this.spawn.spawnShellCommandSync(['git', 'clone', '-b', gitBranch, '--single-branch', gitUrl, localFolder],
       {cwd: process.cwd(), stdio: 'pipe'}, cb);
   }
 }

@@ -6,8 +6,8 @@ import {
   ImageOrContainerRemoveResults
 } from '../../interfaces/dockerode';
 import {CommandUtil, Positive, FailureRetVal} from 'firmament-yargs';
-import {DockerUtilOptions} from "../../interfaces/docker-util-options";
-import {ForceErrorImpl} from "./force-error-impl";
+import {DockerUtilOptions} from '../../interfaces/docker-util-options';
+import {ForceErrorImpl} from 'firmament-yargs';
 const deepExtend = require('deep-extend');
 const async = require('async');
 @injectable()

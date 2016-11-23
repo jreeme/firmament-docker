@@ -4,9 +4,9 @@ import {expect} from 'chai';
 import {DockerOde, DockerContainer, ImageOrContainerRemoveResults} from '../interfaces/dockerode';
 import {DockerOdeMockImpl} from './docker-ode-mock-impl';
 import {DockerContainerManagement} from '../interfaces/docker-container-management';
-import {ForceError} from '../interfaces/force-error';
+import {ForceError} from 'firmament-yargs';
 import {DockerDescriptors} from '../interfaces/docker-descriptors';
-//import {DockerOdeImpl} from "../implementations/docker-ode-impl";
+//import {DockerOdeImpl} from '../implementations/docker-ode-impl';
 describe('DockerContainerManagement', function () {
   let dockerContainerManagement: DockerContainerManagement;
   beforeEach(()=> {

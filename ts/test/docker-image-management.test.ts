@@ -1,11 +1,11 @@
-import "reflect-metadata";
+import 'reflect-metadata';
 import kernel from '../inversify.config';
 import {expect} from 'chai';
-import {DockerOde, DockerImage, ImageOrContainerRemoveResults} from "../interfaces/dockerode";
-import {DockerOdeMockImpl} from "./docker-ode-mock-impl";
-import {DockerImageManagement} from "../interfaces/docker-image-management";
-import {ForceError} from "../interfaces/force-error";
-//import {DockerOdeImpl} from "../implementations/docker-ode-impl";
+import {DockerOde, DockerImage, ImageOrContainerRemoveResults} from '../interfaces/dockerode';
+import {DockerOdeMockImpl} from './docker-ode-mock-impl';
+import {DockerImageManagement} from '../interfaces/docker-image-management';
+import {ForceError} from 'firmament-yargs';
+//import {DockerOdeImpl} from '../implementations/docker-ode-impl';
 const path = require('path');
 describe('DockerImageManagement', function () {
   let dockerImageManagement: DockerImageManagement;
