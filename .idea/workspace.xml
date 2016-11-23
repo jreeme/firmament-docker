@@ -2,77 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/implementations/docker-container-management-impl.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/implementations/docker-container-management-impl.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/implementations/docker-container-management-impl.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/implementations/docker-image-management-impl.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/implementations/docker-image-management-impl.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/implementations/docker-image-management-impl.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/index.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/index.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/index.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-container-management.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-container-management.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-container-management.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-descriptors.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-descriptors.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-descriptors.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-image-management.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-image-management.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-image-management.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-util-options.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-util-options.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-util-options.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-util.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-util.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/docker-util.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/dockerode.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/dockerode.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/dockerode.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/force-error.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/force-error.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/interfaces/force-error.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/inversify.config.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/inversify.config.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/inversify.config.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/container-object-impl.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/container-object-impl.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/container-object-impl.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-container-management.test.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-container-management.test.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-container-management.test.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-image-management.test.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-image-management.test.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-image-management.test.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-ode-mock-impl.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-ode-mock-impl.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-ode-mock-impl.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-util.test.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-util.test.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/docker-util.test.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/image-object-impl.d.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/image-object-impl.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/js/test/image-object-impl.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ts/implementations/util/force-error-impl.ts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ts/interfaces/force-error.ts" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/typescript-compiler.xml" afterPath="$PROJECT_DIR$/.idea/typescript-compiler.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ts/implementations/commands/docker-command-impl.ts" afterPath="$PROJECT_DIR$/ts/implementations/commands/docker-command-impl.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ts/implementations/commands/make-command-impl.ts" afterPath="$PROJECT_DIR$/ts/implementations/commands/make-command-impl.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ts/implementations/docker-container-management-impl.ts" afterPath="$PROJECT_DIR$/ts/implementations/docker-container-management-impl.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ts/implementations/docker-image-management-impl.ts" afterPath="$PROJECT_DIR$/ts/implementations/docker-image-management-impl.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ts/implementations/util/docker-ode-impl.ts" afterPath="$PROJECT_DIR$/ts/implementations/util/docker-ode-impl.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts" afterPath="$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ts/interfaces/docker-container-management.ts" afterPath="$PROJECT_DIR$/ts/interfaces/docker-container-management.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ts/interfaces/docker-image-management.ts" afterPath="$PROJECT_DIR$/ts/interfaces/docker-image-management.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ts/interfaces/docker-util.ts" afterPath="$PROJECT_DIR$/ts/interfaces/docker-util.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ts/interfaces/dockerode.ts" afterPath="$PROJECT_DIR$/ts/interfaces/dockerode.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ts/test/docker-container-management.test.ts" afterPath="$PROJECT_DIR$/ts/test/docker-container-management.test.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ts/test/docker-image-management.test.ts" afterPath="$PROJECT_DIR$/ts/test/docker-image-management.test.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ts/test/docker-ode-mock-impl.ts" afterPath="$PROJECT_DIR$/ts/test/docker-ode-mock-impl.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ts/test/docker-util.test.ts" afterPath="$PROJECT_DIR$/ts/test/docker-util.test.ts" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -181,6 +112,9 @@
   </component>
   <component name="NamedScopeManager">
     <scope name="ts-folder" pattern="file[firmament-docker]:ts//*" />
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="1919" />
@@ -469,7 +403,7 @@
       <workItem from="1479399265831" duration="1292000" />
       <workItem from="1479757751961" duration="31000" />
       <workItem from="1479908401307" duration="1194000" />
-      <workItem from="1479909611058" duration="1341000" />
+      <workItem from="1479909611058" duration="1507000" />
     </task>
     <task id="LOCAL-00001" summary="Big refactor. Don't know if it works.&#10;">
       <created>1477687251725</created>
@@ -709,13 +643,17 @@
       <option name="project" value="LOCAL" />
       <updated>1479319647275</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="-&gt; v.0.2.28 (Start using ForceError/Impl from firmament-yargs, get 'js' out of git repo)">
+      <created>1479911014274</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1479911014274</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unit_Tests - 2016.11.15 at 15h 27m 54s.xml">
-      <configuration name="Unit Tests" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
     <history-entry file="Unit_Tests - 2016.11.15 at 15h 28m 38s.xml">
       <configuration name="Unit Tests" configurationId="mocha-javascript-test-runner" />
     </history-entry>
@@ -743,33 +681,36 @@
     <history-entry file="Unit_Tests - 2016.11.16 at 12h 06m 33s.xml">
       <configuration name="Unit Tests" configurationId="mocha-javascript-test-runner" />
     </history-entry>
+    <history-entry file="Unit_Tests - 2016.11.23 at 08h 25m 04s.xml">
+      <configuration name="Unit Tests" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="161410000" />
+    <option name="totallyTimeSpent" value="161576000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1919" y="0" width="1922" height="1055" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18713759" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32368702" sideWeight="0.4939378" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18713759" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5050079" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3687031" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31939977" sideWeight="0.4949921" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31939977" sideWeight="0.4949921" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2368703" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28617364" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32368702" sideWeight="0.4939378" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28617364" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -798,7 +739,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="-&gt; v.0.2.3" />
     <MESSAGE value="-&gt; v.0.2.4" />
     <MESSAGE value="-&gt; v.0.2.5" />
     <MESSAGE value="-&gt; v.0.2.6" />
@@ -823,7 +763,8 @@
     <MESSAGE value="-&gt; v.0.2.25" />
     <MESSAGE value="-&gt; v.0.2.26" />
     <MESSAGE value="-&gt; v.0.2.27" />
-    <option name="LAST_COMMIT_MESSAGE" value="-&gt; v.0.2.27" />
+    <MESSAGE value="-&gt; v.0.2.28 (Start using ForceError/Impl from firmament-yargs, get 'js' out of git repo)" />
+    <option name="LAST_COMMIT_MESSAGE" value="-&gt; v.0.2.28 (Start using ForceError/Impl from firmament-yargs, get 'js' out of git repo)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
