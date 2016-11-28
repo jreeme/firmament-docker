@@ -29,8 +29,8 @@
       <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+            <state relative-caret-position="792">
+              <caret line="44" column="29" lean-forward="false" selection-start-line="44" selection-start-column="29" selection-end-line="44" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -39,7 +39,7 @@
       <file leaf-file-name="make-command-impl.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ts/implementations/commands/make-command-impl.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="443">
+            <state relative-caret-position="8712">
               <caret line="494" column="8" lean-forward="false" selection-start-line="494" selection-start-column="8" selection-end-line="494" selection-end-column="8" />
               <folding />
             </state>
@@ -147,6 +147,7 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -161,7 +162,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -346,6 +346,7 @@
       <workItem from="1480080877568" duration="599000" />
       <workItem from="1480251031503" duration="19000" />
       <workItem from="1480284561836" duration="54000" />
+      <workItem from="1480354180552" duration="60000" />
     </task>
     <task id="LOCAL-00001" summary="Big refactor. Don't know if it works.&#10;">
       <created>1477687251725</created>
@@ -635,14 +636,14 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="162993000" />
+    <option name="totallyTimeSpent" value="163053000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1919" y="0" width="1922" height="1055" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="TypeScript" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32368702" sideWeight="0.4939378" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18713759" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32368702" sideWeight="0.4939378" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18713759" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5050079" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32655245" sideWeight="0.4949921" order="7" side_tool="false" content_ui="tabs" />
@@ -664,27 +665,6 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="processedProjectFiles" value="true" />
-    <option name="exactExcludedFiles">
-      <list>
-        <option value="$PROJECT_DIR$/../firmament-yargs/ts/interfaces/command-util.js" />
-        <option value="$PROJECT_DIR$/../firmament-yargs/ts/interfaces/nested-yargs-wrapper.js" />
-        <option value="$PROJECT_DIR$/../firmament-yargs/ts/interfaces/command-line.js" />
-        <option value="$PROJECT_DIR$/../firmament-yargs/ts/interfaces/progress-bar.js" />
-        <option value="$PROJECT_DIR$/../firmament-yargs/ts/interfaces/command.js" />
-        <option value="$PROJECT_DIR$/../firmament-yargs/ts/interfaces/positive.js" />
-        <option value="$PROJECT_DIR$/../firmament-yargs/ts/interfaces/spawn.js" />
-        <option value="$PROJECT_DIR$/../firmament-yargs/ts/interfaces/force-error.js" />
-        <option value="$PROJECT_DIR$/../firmament-yargs/ts/inversify.config.js" />
-        <option value="$PROJECT_DIR$/../firmament-yargs/ts/implementations/spawn-impl.js" />
-        <option value="$PROJECT_DIR$/../firmament-yargs/ts/implementations/positive-impl.js" />
-        <option value="$PROJECT_DIR$/../firmament-yargs/ts/implementations/progress-bar-impl.js" />
-        <option value="$PROJECT_DIR$/../firmament-yargs/ts/implementations/force-error-impl.js" />
-        <option value="$PROJECT_DIR$/../firmament-yargs/ts/implementations/nested-yargs-wrapper-impl.js" />
-        <option value="$PROJECT_DIR$/../firmament-yargs/ts/implementations/command-impl.js" />
-        <option value="$PROJECT_DIR$/../firmament-yargs/ts/implementations/command-util-impl.js" />
-        <option value="$PROJECT_DIR$/../firmament-yargs/ts/implementations/command-line-impl.js" />
-      </list>
-    </option>
     <option name="configsExcludedFiles">
       <set>
         <option value="$PROJECT_DIR$/js" />
@@ -1002,7 +982,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ts/implementations/commands/make-command-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
+        <state relative-caret-position="8712">
           <caret line="494" column="8" lean-forward="false" selection-start-line="494" selection-start-column="8" selection-end-line="494" selection-end-column="8" />
           <folding />
         </state>
@@ -1010,8 +990,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+        <state relative-caret-position="792">
+          <caret line="44" column="29" lean-forward="false" selection-start-line="44" selection-start-column="29" selection-end-line="44" selection-end-column="29" />
           <folding />
         </state>
       </provider>
