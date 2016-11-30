@@ -5,7 +5,8 @@
   "main": "js/index.js",
   "typings": "js/index",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec js/test"
+    "build": "tsc --project ts/tsconfig.json",
+    "test": "mocha --reporter spec js/test"
   },
   "repository": {
     "type": "git",
