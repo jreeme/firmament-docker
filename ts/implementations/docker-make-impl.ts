@@ -324,14 +324,14 @@ export class DockerMakeImpl implements DockerMake {
                       return;
                     }
                     let cwd = expressApp.GitCloneFolder;
-                    self.spawn.spawnShellCommandSync(['bower', 'install', '--config.interactive=false'], {
+                    self.spawn.spawnShellCommandAsync(['bower', 'install', '--config.interactive=false'], {
                       cwd
                     }, cb);
                   },
                   (cb: (err: Error, result: any)=>void) => {
                     //Perform NPM install --ignore-scripts in case any scripts require node_modules
                     let cwd = expressApp.GitCloneFolder;
-                    self.spawn.spawnShellCommandSync(['npm', 'install', '--ignore-scripts'], {cwd}, cb);
+                    self.spawn.spawnShellCommandAsync(['npm', 'install', '--ignore-scripts'], {cwd}, cb);
                   },
                   (cb: (err: Error, result: any)=>void) => {//Execute local scripts
                     //noinspection JSUnusedLocalSymbols
@@ -340,7 +340,7 @@ export class DockerMakeImpl implements DockerMake {
                         let cwd = expressApp.GitCloneFolder + '/' + script.RelativeWorkingDir;
                         let cmd = [script.Command];
                         cmd = cmd.concat(script.Args);
-                        self.spawn.spawnShellCommandSync(cmd, {cwd}, cb);
+                        self.spawn.spawnShellCommandAsync(cmd, {cwd}, cb);
                       },
                       (err: Error, results: any) => {
                         cb(err, null);
@@ -348,12 +348,12 @@ export class DockerMakeImpl implements DockerMake {
                   },
                   (cb: (err: Error, result: any)=>void) => {//Perform Strongloop build ...
                     let cwd = expressApp.GitCloneFolder;
-                    self.spawn.spawnShellCommandSync(['slc', 'build', '--scripts'], {cwd}, cb);
+                    self.spawn.spawnShellCommandAsync(['slc', 'build', '--scripts'], {cwd}, cb);
                   },
                   (cb: (err: Error, result: any)=>void) => {//... and Strongloop deploy
                     let cwd = expressApp.GitCloneFolder;
                     console.log('StrongLoop Deploying @ ' + cwd);
-                    self.spawn.spawnShellCommandSync(['slc', 'deploy', '--service=' + expressApp.ServiceName,
+                    self.spawn.spawnShellCommandAsync(['slc', 'deploy', '--service=' + expressApp.ServiceName,
                       expressApp.StrongLoopServerUrl], {cwd}, cb);
                   }
                 ], cb);
@@ -433,7 +433,7 @@ export class DockerMakeImpl implements DockerMake {
   }
 
   private gitClone(gitUrl: string, gitBranch: string, localFolder: string, cb: (err: Error, child: any)=>void) {
-    this.spawn.spawnShellCommandSync(['git', 'clone', '-b', gitBranch, '--single-branch', gitUrl, localFolder],
+    this.spawn.spawnShellCommandAsync(['git', 'clone', '-b', gitBranch, '--single-branch', gitUrl, localFolder],
       {cwd: process.cwd(), stdio: 'pipe'}, cb);
   }
 
