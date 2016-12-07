@@ -2,16 +2,19 @@ import {injectable, inject} from 'inversify';
 import {DockerImageManagement} from '../interfaces/docker-image-management';
 import {DockerImage, ImageOrContainerRemoveResults, ImageOrContainer} from '../interfaces/dockerode';
 import {DockerUtilOptionsImpl} from './util/docker-util-options-impl';
-import {ForceErrorImpl} from 'firmament-yargs';
+import {ForceErrorImpl, CommandUtil} from 'firmament-yargs';
 import {DockerManagement} from "../interfaces/docker-management";
 
 @injectable()
 export class DockerImageManagementImpl extends ForceErrorImpl implements DockerImageManagement {
   private DM: DockerManagement;
+  private commandUtil: CommandUtil;
 
-  constructor(@inject('DockerManagement')_dockerManagement: DockerManagement) {
+  constructor(@inject('DockerManagement')_dockerManagement: DockerManagement,
+              @inject('CommandUtil')_commandUtil: CommandUtil) {
     super();
     this.DM = _dockerManagement;
+    this.commandUtil = _commandUtil;
   }
 
   listImages(listAllImages: boolean, cb: (err: Error, images: DockerImage[])=>void) {
@@ -44,7 +47,7 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
     this.DM.dockerode.forceError = this.forceError;
     let me = this;
     me.DM.dockerode.pull(imageName,
-      (err, outputStream)=> {
+      (err, outputStream) => {
         if (me.DM.commandUtil.callbackIfError(cb, err)) {
           return;
         }
@@ -63,16 +66,28 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
             }
           } catch (err) {
             progressCb('**error**', err.message, 0, 10);
+            if (cb) {
+              cb(err);
+              cb = null;
+            }
           }
         });
         outputStream.on('end', () => {
           //Assume all was well with pull from here. Hopefully 'error' will have been
           //emitted if something went wrong
-          cb(null);
+          if (cb) {
+            cb(null);
+            cb = null;
+          }
         });
-        outputStream.on('error', function (err:Error) {
+        outputStream.on('error', function (err: Error) {
           let msg = `Encountered error '${err.message}' while pulling image: '${imageName}'`;
-          me.DM.commandUtil.logError(new Error(msg), true);
+          let newError = new Error(msg);
+          me.DM.commandUtil.logError(newError, true);
+          if (cb) {
+            cb(newError);
+            cb = null;
+          }
         });
       });
   }
@@ -91,7 +106,7 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
     try {
       let tar = require('tar-fs');
       let tarStream = tar.pack(dockerFilePath);
-      tarStream.on('error', (err: Error)=> {
+      tarStream.on('error', (err: Error) => {
         cb(err);
       });
       me.DM.dockerode.buildImage(tarStream, {
@@ -105,7 +120,8 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
           try {
             let data = JSON.parse(chunk);
             if (data.stream) {
-              progressCb('start', data.stream, 0, 10);
+              me.commandUtil.stdoutWrite(data.stream);
+              //progressCb('start', data.stream, 0, 10);
             } else {
               if (data.error) {
                 error = data.error;
@@ -131,7 +147,7 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
             ? error
             : null);
         });
-        outputStream.on('error', function (err:Error) {
+        outputStream.on('error', function (err: Error) {
           let msg = `Encountered error '${err.message}' while building: '${dockerImageName}'`;
           me.DM.commandUtil.logError(new Error(msg), true);
         });

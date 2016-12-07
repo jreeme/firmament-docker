@@ -4,18 +4,20 @@ import {DockerDescriptors} from "../interfaces/docker-descriptors";
 import {
   ContainerConfig, DockerContainer, ExpressApp, ImageOrContainerRemoveResults
 } from "../interfaces/dockerode";
-import {Positive, FailureRetVal, CommandUtil, ProgressBar, Spawn} from "firmament-yargs";
+import {Positive, FailureRetVal, CommandUtil, ProgressBar, Spawn, ForceErrorImpl} from "firmament-yargs";
 import {DockerContainerManagement} from "../interfaces/docker-container-management";
 import {DockerImageManagement} from "../interfaces/docker-image-management";
 import * as async from 'async';
 import * as _ from 'lodash';
 import * as fs from 'fs';
+const path = require('path');
 const jsonFile = require('jsonfile');
 const request = require('request');
-const templateCatalogUrl ='https://raw.githubusercontent.com/jreeme/firmament-docker/master/docker/templateCatalog.json';
+const fileExists = require('file-exists');
+const templateCatalogUrl = 'https://raw.githubusercontent.com/jreeme/firmament-docker/master/docker/templateCatalog.json';
 
 @injectable()
-export class DockerMakeImpl implements DockerMake {
+export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
   private positive: Positive;
   private spawn: Spawn;
   private commandUtil: CommandUtil;
@@ -31,6 +33,7 @@ export class DockerMakeImpl implements DockerMake {
               @inject('DockerContainerManagement') _dockerContainerManagement: DockerContainerManagement,
               @inject('Positive') _positive: Positive,
               @inject('ProgressBar') _progressBar: ProgressBar) {
+    super();
     this.positive = _positive;
     this.progressBar = _progressBar;
     this.spawn = _spawn;
@@ -39,23 +42,30 @@ export class DockerMakeImpl implements DockerMake {
     this.commandUtil = _commandUtil;
   }
 
-  buildTemplate(argv: any, cb: (err: Error, result: string)=>void = null) {
-    let fullInputPath = DockerMakeImpl.getJsonConfigFilePath(argv.input);
-    console.log("Constructing Docker containers described in: '" + fullInputPath + "'");
-    const containerDescriptors = jsonFile.readFileSync(fullInputPath);
-    this.processContainerConfigs(containerDescriptors, (err: Error, result: string) => {
-      if (cb) {
-        cb(err, result);
-      } else {
-        this.commandUtil.processExitWithError(err);
+  buildTemplate(argv: any, cb: (err: Error, result?: string)=>void = null) {
+    cb = this.checkCallback(cb);
+    const fullInputPath = DockerMakeImpl.getJsonConfigFilePath(argv.input);
+    this.commandUtil.log("Constructing Docker containers described in: '" + fullInputPath + "'");
+    const baseDir = path.dirname(fullInputPath);
+    if (!fileExists(fullInputPath)) {
+      let err = new Error(`'${fullInputPath}' does not exist`);
+      if (this.commandUtil.callbackIfError(cb, err)) {
+        return;
       }
+    }
+    const containerDescriptors = jsonFile.readFileSync(fullInputPath);
+    this.processContainerConfigs(containerDescriptors, baseDir, (err: Error, result: string) => {
+      if (this.commandUtil.callbackIfError(cb, err)) {
+        return;
+      }
+      cb(err, result);
     });
   }
 
   makeTemplate(argv: any) {
+    let me = this;
     let fullOutputPath = DockerMakeImpl.getJsonConfigFilePath(argv.output);
     async.waterfall([
-        //Remove all containers mentioned in config file
         (cb: (err: Error, containerTemplatesToWrite?: any)=>void) => {
           if (argv.get === undefined) {
             cb(null, argv.full
@@ -72,10 +82,10 @@ export class DockerMakeImpl implements DockerMake {
                     templateMap[template.name] = template;
                   });
                   if (!argv.get.length) {
-                    console.log('\nAvailable templates:\n');
+                    me.commandUtil.log('\nAvailable templates:\n');
                     for (let key in templateMap) {
                       //noinspection JSUnfilteredForInLoop
-                      console.log('> ' + templateMap[key].name);
+                      me.commandUtil.log('> ' + templateMap[key].name);
                     }
                     cb(null, null);
                   } else if (argv.get) {
@@ -101,7 +111,7 @@ export class DockerMakeImpl implements DockerMake {
         (containerTemplatesToWrite: any, cb: (err: Error, msg?: any)=>void) => {
           if (containerTemplatesToWrite) {
             if (fs.existsSync(fullOutputPath)
-              && !this.positive.areYouSure(
+              && !me.positive.areYouSure(
                 `Config file '${fullOutputPath}' already exists. Overwrite? [Y/n] `,
                 'Operation canceled.',
                 true,
@@ -109,17 +119,17 @@ export class DockerMakeImpl implements DockerMake {
               cb(null, 'Canceling JSON template creation!');
               return;
             } else {
-              DockerMakeImpl.writeJsonTemplateFile(containerTemplatesToWrite, fullOutputPath);
+              me.writeJsonTemplateFile(containerTemplatesToWrite, fullOutputPath);
             }
           }
           cb(null);
         }],
       (err: Error, msg: any = null) => {
-        this.commandUtil.processExitWithError(err, msg);
+        me.commandUtil.processExitWithError(err, msg);
       });
   }
 
-  private processContainerConfigs(containerConfigs: ContainerConfig[], cb: (err: Error, results: string)=>void) {
+  private processContainerConfigs(containerConfigs: ContainerConfig[], baseDir: string, cb: (err: Error, results: string)=>void) {
     let self = this;
     let containerConfigsByImageName = {};
     containerConfigs.forEach(containerConfig => {
@@ -129,11 +139,7 @@ export class DockerMakeImpl implements DockerMake {
     async.waterfall([
       //Remove all containers mentioned in config file
       (cb: (err: Error, containerRemoveResults: ImageOrContainerRemoveResults[])=>void) => {
-        //this.dockerContainerManagement.removeContainers(containerConfigs.map(containerConfig => containerConfig.name), cb);
-        this.dockerContainerManagement.removeContainers(containerConfigs.map(containerConfig => containerConfig.name),
-          (err: Error, result: any[]) => {
-            cb(err, result);
-          });
+        this.dockerContainerManagement.removeContainers(containerConfigs.map(containerConfig => containerConfig.name), cb);
       },
       (containerRemoveResults: ImageOrContainerRemoveResults[], cb: (err: Error, missingImageNames: string[])=>void) => {
         this.dockerImageManagement.listImages(false, (err, images) => {
@@ -161,7 +167,7 @@ export class DockerMakeImpl implements DockerMake {
           (missingImageName, cb: (err: Error, missingImageName: string)=>void) => {
             //Try to pull image
             this.dockerImageManagement.pullImage(missingImageName,
-              function (taskId, status, current, total) {
+              (taskId, status, current, total) => {
                 self.progressBar.showProgressForTask(taskId, status, current, total);
               },
               (err: Error) => {
@@ -180,9 +186,7 @@ export class DockerMakeImpl implements DockerMake {
           (missingImageName, cb: (err: Error, containerBuildError: Error)=>void) => {
             const containerConfig = containerConfigsByImageName[missingImageName];
             //Try to build from Dockerfile
-            let path = require('path');
-            let cwd = process.cwd();
-            let dockerFilePath = path.join(cwd, containerConfig.DockerFilePath);
+            let dockerFilePath = path.resolve(baseDir, containerConfig.DockerFilePath);
             let dockerImageName = containerConfig.Image;
             this.dockerImageManagement.buildDockerFile(dockerFilePath, dockerImageName,
               function (taskId, status, current, total) {
@@ -352,7 +356,7 @@ export class DockerMakeImpl implements DockerMake {
                   },
                   (cb: (err: Error, result: any)=>void) => {//... and Strongloop deploy
                     let cwd = expressApp.GitCloneFolder;
-                    console.log('StrongLoop Deploying @ ' + cwd);
+                    this.commandUtil.log('StrongLoop Deploying @ ' + cwd);
                     self.spawn.spawnShellCommandAsync(['slc', 'deploy', '--service=' + expressApp.ServiceName,
                       expressApp.StrongLoopServerUrl], {cwd}, cb);
                   }
@@ -423,11 +427,11 @@ export class DockerMakeImpl implements DockerMake {
     let cwd = expressApp.GitCloneFolder;
     let serviceName = expressApp.ServiceName;
     let serverUrl = expressApp.StrongLoopServerUrl;
-    console.log(msg + ' "' + serviceName + '" @ "' + cwd + '" via "' + serverUrl + '"');
+    this.commandUtil.log(msg + ' "' + serviceName + '" @ "' + cwd + '" via "' + serverUrl + '"');
     const baseCmd = ['slc', 'ctl', '-C', serverUrl];
     Array.prototype.push.apply(baseCmd, cmd);
     this.spawn.spawnShellCommandAsync(baseCmd, {cwd, stdio: 'pipe'}, (err, result) => {
-      console.log(result);
+      this.commandUtil.log(result);
       cb(err, result);
     });
   }
@@ -437,17 +441,16 @@ export class DockerMakeImpl implements DockerMake {
       {cwd: process.cwd(), stdio: 'pipe'}, cb);
   }
 
-  private static writeJsonTemplateFile(objectToWrite: any, fullOutputPath: string) {
-    console.log("Writing JSON template file '" + fullOutputPath + "' ...");
+  private writeJsonTemplateFile(objectToWrite: any, fullOutputPath: string) {
+    this.commandUtil.log("Writing JSON template file '" + fullOutputPath + "' ...");
     const jsonFile = require('jsonfile');
     jsonFile.spaces = 2;
     jsonFile.writeFileSync(fullOutputPath, objectToWrite);
   }
 
   private static getJsonConfigFilePath(filename) {
-    let path = require('path');
-    let cwd = process.cwd();
     let regex = new RegExp('(.*)\\' + DockerMakeImpl.jsonFileExtension + '$', 'i');
+    let cwd = process.cwd();
     if (regex.test(filename)) {
       filename = filename.replace(regex, '$1' + DockerMakeImpl.jsonFileExtension);
     } else {
@@ -455,5 +458,4 @@ export class DockerMakeImpl implements DockerMake {
     }
     return path.resolve(cwd, filename);
   }
-
 }

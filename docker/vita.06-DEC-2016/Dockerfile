@@ -1,7 +1,7 @@
 FROM ubuntu:15.04
 
 #
-# Node 5.9.1
+# Node 6.9.2
 #
 # gpg keys listed at https://github.com/nodejs/node
 
@@ -22,7 +22,7 @@ RUN set -ex \
   done
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 5.9.1
+ENV NODE_VERSION 6.9.2
 
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz"
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc"
@@ -38,11 +38,11 @@ RUN rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc SHASUMS256.txt
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mongodb && useradd -r -g mongodb mongodb
 
-RUN apt-get update \
-	&& apt-get install -y --no-install-recommends \
-		ca-certificates wget \
-		numactl \
-	&& rm -rf /var/lib/apt/lists/*
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends ca-certificates
+RUN apt-get install -y --no-install-recommends wget
+RUN apt-get install -y --no-install-recommends numactl
+RUN rm -rf /var/lib/apt/lists/*
 
 # grab gosu for easy step-down from root
 ENV GOSU_VERSION 1.7
@@ -85,27 +85,11 @@ RUN apt-get install -y git
 RUN apt-get install -y vim
 RUN apt-get install -y procps
 RUN apt-get install -y sudo
-#RUN apt-get install -y python
-#RUN add-apt-repository -y ppa:webupd8team/java
-#RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee /etc/apt/sources.list.d/webupd8team-java.list
-#RUN echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list
-#RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
-#RUN apt-get update -y; exit 0
-#RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
-#RUN apt-get install -y oracle-java8-installer
+RUN apt-get install -y python
+RUN apt-get install -y build-essential
 
-#RUN useradd -ms /bin/bash strong-pm && echo "strong-pm:strong-pm" | chpasswd && adduser strong-pm sudo
-#RUN chown -R strong-pm:strong-pm /usr/local
-#RUN su strong-pm -c "npm install -g strong-pm && npm cache clear"
 RUN npm install -g strong-pm && npm cache clear
 RUN npm install -g strongloop && npm cache clear
-
-# Set up some semblance of an environment
-#WORKDIR /home/strong-pm
-#ENV HOME=/home/strong-pm
-
-# Define commonly used JAVA_HOME variable
-#ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
 # Expose strong-pm port
 EXPOSE 8701 3000 3001 3002 3003
@@ -117,47 +101,4 @@ RUN apt-get install -y supervisor
 
 COPY _etc_supervisor.conf /etc/supervisor/supervisord.conf
 
-#
-# ElasticSearch 2.3
-#
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-repositories.html
-# https://packages.elasticsearch.org/GPG-KEY-elasticsearch
-RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 46095ACC8548582C1A2699A9D27D666CD88E42B4
-
-ENV ELASTICSEARCH_MAJOR 2.3
-ENV ELASTICSEARCH_VERSION 2.3.3
-ENV ELASTICSEARCH_REPO_BASE http://packages.elasticsearch.org/elasticsearch/2.x/debian
-
-RUN echo "deb $ELASTICSEARCH_REPO_BASE stable main" > /etc/apt/sources.list.d/elasticsearch.list
-
-RUN set -x \
-	&& apt-get update \
-	&& apt-get install -y --no-install-recommends elasticsearch=$ELASTICSEARCH_VERSION \
-	&& rm -rf /var/lib/apt/lists/*
-
-ENV PATH /usr/share/elasticsearch/bin:$PATH
-
-WORKDIR /usr/share/elasticsearch
-
-RUN set -ex \
-	&& for path in \
-		./data \
-		./logs \
-		./config \
-		./config/scripts \
-	; do \
-		mkdir -p "$path"; \
-		chown -R elasticsearch:elasticsearch "$path"; \
-	done
-
-COPY config ./config
-
-#VOLUME /usr/share/elasticsearch/data
-#EXPOSE 9200 9300
-
-# Run as non-privileged user inside container
-#USER strong-pm
-
-#ENTRYPOINT ["/usr/local/bin/sl-pm", "--base", ".", "--listen", "8701"]
-#CMD ["/bin/bash"]
 CMD supervisord -c /etc/supervisor/supervisord.conf
