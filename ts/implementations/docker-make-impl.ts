@@ -12,7 +12,7 @@ import * as _ from 'lodash';
 import * as fs from 'fs';
 const jsonFile = require('jsonfile');
 const request = require('request');
-const templateCatalogUrl = 'https://raw.githubusercontent.com/Sotera/firmament/typescript/docker/templateCatalog.json';
+const templateCatalogUrl ='https://raw.githubusercontent.com/jreeme/firmament-docker/master/docker/templateCatalog.json';
 
 @injectable()
 export class DockerMakeImpl implements DockerMake {
