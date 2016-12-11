@@ -25,8 +25,6 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
   private dockerImageManagement: DockerImageManagement;
   private dockerContainerManagement: DockerContainerManagement;
 
-  static jsonFileExtension = '.json';
-
   constructor(@inject('CommandUtil') _commandUtil: CommandUtil,
               @inject('Spawn') _spawn: Spawn,
               @inject('DockerImageManagement') _dockerImageManagement: DockerImageManagement,
@@ -44,7 +42,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
 
   buildTemplate(argv: any, cb: (err: Error, result?: string)=>void = null) {
     cb = this.checkCallback(cb);
-    const fullInputPath = DockerMakeImpl.getJsonConfigFilePath(argv.input);
+    const fullInputPath = this.commandUtil.getConfigFilePath(argv.input, '.json');
     this.commandUtil.log("Constructing Docker containers described in: '" + fullInputPath + "'");
     const baseDir = path.dirname(fullInputPath);
     if (!fileExists(fullInputPath)) {
@@ -64,7 +62,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
 
   makeTemplate(argv: any) {
     let me = this;
-    let fullOutputPath = DockerMakeImpl.getJsonConfigFilePath(argv.output);
+    const fullOutputPath = this.commandUtil.getConfigFilePath(argv.input, '.json');
     async.waterfall([
         (cb: (err: Error, containerTemplatesToWrite?: any)=>void) => {
           if (argv.get === undefined) {
@@ -446,16 +444,5 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
     const jsonFile = require('jsonfile');
     jsonFile.spaces = 2;
     jsonFile.writeFileSync(fullOutputPath, objectToWrite);
-  }
-
-  private static getJsonConfigFilePath(filename) {
-    let regex = new RegExp('(.*)\\' + DockerMakeImpl.jsonFileExtension + '$', 'i');
-    let cwd = process.cwd();
-    if (regex.test(filename)) {
-      filename = filename.replace(regex, '$1' + DockerMakeImpl.jsonFileExtension);
-    } else {
-      filename = filename + DockerMakeImpl.jsonFileExtension;
-    }
-    return path.resolve(cwd, filename);
   }
 }
