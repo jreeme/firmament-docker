@@ -20,8 +20,8 @@ export class MakeCommandImpl implements Command {
   private dockerMake: DockerMake;
 
   constructor(@inject('DockerMake') _dockerMake: DockerMake) {
-    this.buildCommandTree();
     this.dockerMake = _dockerMake;
+    this.buildCommandTree();
   }
 
   private buildCommandTree() {
