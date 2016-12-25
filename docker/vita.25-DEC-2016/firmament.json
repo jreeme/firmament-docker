@@ -1,18 +1,30 @@
 [
   {
     "name": "vita-strongloop",
-    "Image": "jreeme/vita:06-DEC-2016",
+    "Image": "jreeme/vita:25-DEC-2016",
     "DockerFilePath": ".",
     "Hostname": "vita-strongloop",
     "ExposedPorts": {
-      "8080/tcp": {},
-      "8888/tcp": {}
+      "8080/tcp": {}
     },
     "HostConfig": {
+      "Binds": [
+        "/tmp:/tmp"
+      ],
       "PortBindings": {
-        "8888/tcp": [
+        "3001/tcp": [
           {
-            "HostPort": "8888"
+            "HostPort": "3001"
+          }
+        ],
+        "3002/tcp": [
+          {
+            "HostPort": "3002"
+          }
+        ],
+        "3003/tcp": [
+          {
+            "HostPort": "3003"
           }
         ],
         "8080/tcp": [

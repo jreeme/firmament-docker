@@ -74,6 +74,7 @@ RUN mkdir -p /data/db /data/configdb \
 	&& chown -R mongodb:mongodb /data/db /data/configdb
 
 #VOLUME /data/db /data/configdb
+VOLUME /tmp
 
 #
 # Utils & Java8
@@ -92,7 +93,7 @@ RUN npm install -g strong-pm && npm cache clear
 RUN npm install -g strongloop && npm cache clear
 
 # Expose strong-pm port
-EXPOSE 8701 3000 3001 3002 3003
+EXPOSE 8701 3001 3002 3003
 
 #
 # Supervisor (for running multiple services in Docker container
