@@ -40,6 +40,22 @@
       }
     },
     "ExpressApps": [
+      {
+        "GitUrl": "https://github.com/Sotera/loopback-webpack-typescript-amino.git",
+        "DeployExisting": false,
+        "GitSrcBranchName": "master",
+        "StrongLoopBranchName": "deploy",
+        "StrongLoopServerUrl": "http://localhost:8701",
+        "ServiceName": "vita",
+        "DoBowerInstall": false,
+        "ClusterSize": 1,
+        "EnvironmentVariables": {
+          "PORT": 8080,
+          "NODE_ENV": "production"
+        },
+        "Scripts": [
+        ]
+      }
     ]
   }
 ]

@@ -7,13 +7,14 @@ import {
 import {Positive, FailureRetVal, CommandUtil, ProgressBar, Spawn, ForceErrorImpl} from "firmament-yargs";
 import {DockerContainerManagement} from "../interfaces/docker-container-management";
 import {DockerImageManagement} from "../interfaces/docker-image-management";
-import * as async from 'async';
 import * as _ from 'lodash';
 import * as fs from 'fs';
+import {FirmamentTemplateCatalog} from "../custom-typings";
 const path = require('path');
 const jsonFile = require('jsonfile');
 const request = require('request');
 const fileExists = require('file-exists');
+const async = require('async');
 const templateCatalogUrl = 'https://raw.githubusercontent.com/jreeme/firmament-docker/master/docker/templateCatalog.json';
 @injectable()
 export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
@@ -73,7 +74,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
             request(templateCatalogUrl,
               (err, res, body) => {
                 try {
-                  let templateCatalog: any[] = JSON.parse(body);
+                  let templateCatalog: FirmamentTemplateCatalog[] = JSON.parse(body);
                   let templateMap = {};
                   templateCatalog.forEach(template => {
                     templateMap[template.name] = template;
@@ -89,14 +90,29 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
                     if (!templateMap[argv.get]) {
                       cb(new Error("Could not find template '" + argv.get + "'"));
                     } else {
-                      request(templateMap[argv.get].url,
-                        (err, res, body) => {
-                          try {
-                            cb(null, JSON.parse(body));
-                          } catch (e) {
-                            cb(new Error('Template found but is not valid (not JSON)' + e.message));
-                          }
-                        });
+                      let fnArray = [];
+                      templateMap[argv.get].urls.forEach(url => {
+                        fnArray.push(async.apply((url,cb) => {
+                          let u = url;
+                          cb();
+                        }, url));
+                      });
+                      async.parallel(fnArray,(err,results)=>{
+                        let r = results;
+                      });
+/*                      async.each(templateMap[argv.get].urls, (url, cb) => {
+                          request(templateMap[argv.get].url,
+                            (err, res, body) => {
+                              try {
+                                cb(JSON.parse(body));
+                              } catch (e) {
+                                cb(new Error('Template found but is not valid (not JSON)' + e.message));
+                              }
+                            });
+                        },
+                        (err) => {
+                          cb(err);
+                        });*/
                     }
                   }
                 } catch (e) {
