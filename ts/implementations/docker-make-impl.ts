@@ -91,6 +91,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
                       cb(new Error("Could not find template '" + argv.get + "'"));
                     } else {
                       let fnArray = [];
+                      let uu = templateMap[argv.get].urls;
                       templateMap[argv.get].urls.forEach(url => {
                         fnArray.push(async.apply((url,cb) => {
                           let u = url;
