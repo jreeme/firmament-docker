@@ -15,7 +15,6 @@ const jsonFile = require('jsonfile');
 const request = require('request');
 const fileExists = require('file-exists');
 const templateCatalogUrl = 'https://raw.githubusercontent.com/jreeme/firmament-docker/master/docker/templateCatalog.json';
-
 @injectable()
 export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
   private positive: Positive;
@@ -62,7 +61,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
 
   makeTemplate(argv: any) {
     let me = this;
-    const fullOutputPath = this.commandUtil.getConfigFilePath(argv.input, '.json');
+    const fullOutputPath = this.commandUtil.getConfigFilePath(argv.output, '.json');
     async.waterfall([
         (cb: (err: Error, containerTemplatesToWrite?: any)=>void) => {
           if (argv.get === undefined) {

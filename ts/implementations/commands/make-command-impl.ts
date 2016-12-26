@@ -56,7 +56,7 @@ export class MakeCommandImpl implements Command {
         desc: 'Create a full JSON template with all Docker options set to reasonable defaults'
       }
     };
-    templateCommand.handler = this.dockerMake.makeTemplate;
+    templateCommand.handler = this.dockerMake.makeTemplate.bind(this.dockerMake);
     this.subCommands.push(templateCommand);
   };
 
@@ -73,7 +73,7 @@ export class MakeCommandImpl implements Command {
         desc: 'Name the config JSON file'
       }
     };
-    buildCommand.handler = this.dockerMake.buildTemplate;
+    buildCommand.handler = this.dockerMake.buildTemplate.bind(this.dockerMake);
     this.subCommands.push(buildCommand);
   };
 }

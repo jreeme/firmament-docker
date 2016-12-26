@@ -1,14 +1,22 @@
 [
   {
     "name": "vita",
-    "url": "https://raw.githubusercontent.com/jreeme/firmament-docker/master/docker/vita.25-DEC-2016/firmament.json"
+    "urls": [
+      "https://raw.githubusercontent.com/jreeme/firmament-docker/master/docker/vita.25-DEC-2016/firmament.json"
+    ]
   },
   {
     "name": "genie-ui",
-    "url": "https://raw.githubusercontent.com/jreeme/firmament-docker/master/docker/genie-ui.08-JUN-2016/firmament.json"
+    "urls": [
+      "https://raw.githubusercontent.com/jreeme/firmament-docker/master/docker/genie-ui.08-JUN-2016/firmament.json"
+    ]
   },
   {
     "name": "datawake",
-    "url": "https://raw.githubusercontent.com/jreeme/firmament-docker/master/docker/datawake.18-MAY-2016/firmament.json"
+    "urls": [
+      "https://raw.githubusercontent.com/jreeme/firmament-docker/master/docker/datawake.18-MAY-2016/firmament.json",
+      "https://raw.githubusercontent.com/jreeme/firmament-docker/master/docker/datawake.18-MAY-2016/_etc_supervisor.conf",
+      "https://raw.githubusercontent.com/jreeme/firmament-docker/master/docker/datawake.18-MAY-2016/Dockerfile"
+    ]
   }
 ]
