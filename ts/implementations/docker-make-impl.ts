@@ -62,7 +62,22 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
 
   makeTemplate(argv: any) {
     let me = this;
-    const fullOutputPath = this.commandUtil.getConfigFilePath(argv.output, '.json');
+    if (argv.get === undefined) {
+      //Just write out the descriptors we have "baked in" to this application
+      me.writeJsonTemplateFile(argv.full
+        ? DockerDescriptors.dockerContainerDefaultTemplate
+        : DockerDescriptors.dockerContainerConfigTemplate, this.commandUtil.getConfigFilePath(argv.output, '.json'));
+    }else{
+      //Need to interact with the network to get templates
+      if(!argv.get.length){
+        //User specified --get with no template name so write available templates to console
+        let a = 3;
+      }else{
+        let a = 3;
+      }
+    }
+    //vvvv -- Old code!
+    const fullOutputPath = '';
     async.waterfall([
         (cb: (err: Error, containerTemplatesToWrite?: any)=>void) => {
           if (argv.get === undefined) {
@@ -91,29 +106,17 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
                       cb(new Error("Could not find template '" + argv.get + "'"));
                     } else {
                       let fnArray = [];
-                      let uu = templateMap[argv.get].urls;
                       templateMap[argv.get].urls.forEach(url => {
-                        fnArray.push(async.apply((url,cb) => {
-                          let u = url;
-                          cb();
+                        fnArray.push(async.apply((url, cb) => {
+                          request(url,
+                            (err, res, body) => {
+                              cb(null, {url, body});
+                            });
                         }, url));
                       });
-                      async.parallel(fnArray,(err,results)=>{
-                        let r = results;
+                      async.parallel(fnArray, (err, results) => {
+                        cb(err, results);
                       });
-/*                      async.each(templateMap[argv.get].urls, (url, cb) => {
-                          request(templateMap[argv.get].url,
-                            (err, res, body) => {
-                              try {
-                                cb(JSON.parse(body));
-                              } catch (e) {
-                                cb(new Error('Template found but is not valid (not JSON)' + e.message));
-                              }
-                            });
-                        },
-                        (err) => {
-                          cb(err);
-                        });*/
                     }
                   }
                 } catch (e) {
