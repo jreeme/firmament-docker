@@ -1,4 +1,8 @@
 export interface FirmamentTemplateCatalog {
   name:string;
-  urls:string[]
+  urls:string[];
+}
+export interface FirmamentTemplateDownloadResult{
+  url:string;
+  body:string;
 }
