@@ -42,7 +42,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
     this.commandUtil = _commandUtil;
   }
 
-  buildTemplate(argv: any){
+  buildTemplate(argv: any) {
     let me = this;
     const fullInputPath = me.commandUtil.getConfigFilePath(argv.input, '.json');
     me.commandUtil.log("Constructing Docker containers described in: '" + fullInputPath + "'");
@@ -53,7 +53,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
     const baseDir = path.dirname(fullInputPath);
     const containerDescriptors = jsonFile.readFileSync(fullInputPath);
     me.processContainerConfigs(containerDescriptors, baseDir, (err: Error, result: string) => {
-      me.commandUtil.processExitWithError(err, `\nFinished.`);
+      me.commandUtil.processExitWithError(err, `Finished.\n`);
     });
   }
 
@@ -424,19 +424,12 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
                            cbFinal: (err: Error, result: string)=>void): (err: Error, result: string)=>void {
     if (cbFinal) {
       let returnString = JSON.stringify({code, signal, stdoutText, stderrText}, undefined, 2);
-      if (code !== null) {
-        if (code !== 0) {
-          cbFinal(new Error(returnString), returnString);
-        }
-        else {
-          cbFinal(null, returnString);
-        }
-      } else {
-        cbFinal(null, returnString);
-      }
-      cbFinal = null;
+      let error = (code !== null && code !== 0)
+        ? new Error(returnString)
+        : null;
+      cbFinal(error, returnString);
     }
-    return cbFinal;
+    return (err: Error, result: string)=>{};
   }
 
   private containerDependencySort(containerConfigs) {
