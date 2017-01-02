@@ -43,7 +43,7 @@
       {
         "GitUrl": "https://github.com/Sotera/loopback-webpack-typescript-amino.git",
         "DeployExisting": false,
-        "GitSrcBranchName": "master",
+        "GitSrcBranchName": "vita2",
         "StrongLoopBranchName": "deploy",
         "StrongLoopServerUrl": "http://localhost:8701",
         "ServiceName": "vita",
