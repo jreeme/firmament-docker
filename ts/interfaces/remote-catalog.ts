@@ -4,7 +4,7 @@ import {Url} from 'url';
 export interface RemoteCatalogResource {
   name: string;
   parentCatalogEntryName: string;
-  url: string,
+  absoluteUrl: string,
   text: string;
   parsedObject: any;
 }
