@@ -7,6 +7,18 @@
         "vita.25-DEC-2016/_etc_supervisor.conf",
         "vita.25-DEC-2016/Dockerfile"
       ]
+    },
+    {
+      "name": "genie-ui",
+      "urls": [
+        "genie-ui.08-JUN-2016/firmament.json"
+      ]
+    },
+    {
+      "name": "datawake",
+      "urls": [
+        "datawake.18-MAY-2016/firmament.json"
+      ]
     }
   ]
 }

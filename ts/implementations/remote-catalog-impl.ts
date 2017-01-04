@@ -20,12 +20,12 @@ export class RemoteCatalogGetterImpl extends ForceErrorImpl implements RemoteCat
   getCatalogFromUrl(url: Url|string, cb: (err, remoteCatalog) => void) {
     let me = this;
     let parsedUrl = me.getParsedUrl(url);
-    if(parsedUrl.protocol){
+    if (parsedUrl.protocol) {
       me.baseUrl = `${parsedUrl.protocol}//${parsedUrl.hostname}${path.dirname(parsedUrl.path)}`;
-    }else{
+    } else {
       me.baseUrl = path.dirname(parsedUrl.path);
     }
-    me.getRemoteCatalogResource(parsedUrl, 'root', (err, remoteCatalogResource) => {
+    me.getRemoteResource(parsedUrl, 'root', (err, remoteCatalogResource) => {
       if (me.commandUtil.callbackIfError(cb, err)) {
         return;
       }
@@ -34,7 +34,11 @@ export class RemoteCatalogGetterImpl extends ForceErrorImpl implements RemoteCat
         let fnArray: any[] = [];
         remoteCatalog.entries.forEach(entry => {
           entry.urls.forEach(url => {
-            fnArray.push(async.apply(me.getRemoteCatalogResource.bind(me), url, entry.name));
+            let parsedUrl = me.getParsedUrl(url);
+            if (!parsedUrl.protocol) {
+              url = path.isAbsolute(parsedUrl.path) ? parsedUrl.path : `${me.baseUrl}/${parsedUrl.path}`;
+            }
+            fnArray.push(async.apply(me.getRemoteResource.bind(me), url, entry.name));
           });
         });
         async.parallel(fnArray, (err, results) => {
@@ -53,9 +57,9 @@ export class RemoteCatalogGetterImpl extends ForceErrorImpl implements RemoteCat
 
   //Right now uri can be a web address (http(s)://somewhere.com/some.json) or an absolute path (/tmp/some.json)
   //or a path relative to cwd (subdir/some.json)
-  private getRemoteCatalogResource(url: Url | string,
-                                   parentCatalogEntryName: string,
-                                   cb: (err: Error, remoteCatalogResource?: RemoteCatalogResource) => void) {
+  private getRemoteResource(url: Url | string,
+                            parentCatalogEntryName: string,
+                            cb: (err: Error, remoteCatalogResource?: RemoteCatalogResource) => void) {
     let me = this;
     cb = me.checkCallback(cb);
     try {
@@ -67,8 +71,6 @@ export class RemoteCatalogGetterImpl extends ForceErrorImpl implements RemoteCat
       }
       if (!parsedUrl.protocol) {
         let urlString = parsedUrl.path;
-        //Not a web address, maybe a local file
-        urlString = path.isAbsolute(urlString) ? urlString : path.resolve(me.baseUrl, urlString);
         if (!fileExists(urlString)) {
           cb(new Error(`${urlString} doesn't exist`), null);
           return;
