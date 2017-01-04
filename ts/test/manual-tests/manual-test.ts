@@ -13,10 +13,10 @@ process.on('uncaughtException', err => {
 });
 
 
-remoteCatalogGetter.getCatalogFromUrl(templateCatalogUrl, (err, remoteCatalog) => {
-  let e = err;
-});
-/*dockerMake.makeTemplate({get:''});*/
+/*remoteCatalogGetter.getCatalogFromUrl(templateCatalogUrl, (err, remoteCatalog) => {
+ let e = err;
+ });*/
+dockerMake.makeTemplate({get: 'vita'});
 
 /*dockerMake.buildTemplate({input: '/home/jreeme/src/firmament-docker/docker/vita.06-DEC-2016/firmament.json'},
  (err: Error, result: string) => {
