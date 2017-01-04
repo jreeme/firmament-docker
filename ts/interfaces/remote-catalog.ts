@@ -1,9 +1,18 @@
 import {ForceError} from 'firmament-yargs';
 import {Url} from 'url';
 
+export interface RemoteCatalogResource {
+  name: string;
+  parentCatalogEntryName: string;
+  url: string,
+  text: string;
+  parsedObject: any;
+}
+
 export interface RemoteCatalogEntry {
-  name: string,
-  urls: string[]
+  name: string;
+  urls: string[];
+  resources: RemoteCatalogResource[];
 }
 
 export interface RemoteCatalog {
