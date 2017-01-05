@@ -12,51 +12,47 @@ const deepExtend = require('deep-extend');
 
 @injectable()
 export class DockerContainerManagementImpl extends ForceErrorImpl implements DockerContainerManagement {
-  private DM: DockerManagement;
-
-  constructor(@inject('DockerManagement')_dockerManagement: DockerManagement
-  ) {
+  constructor(@inject('DockerManagement') private DM: DockerManagement) {
     super();
-    this.DM = _dockerManagement;
   }
 
-  listContainers(listAllContainers: boolean, cb: (err: Error, dockerContainers?: DockerContainer[])=>void) {
+  listContainers(listAllContainers: boolean, cb: (err: Error, dockerContainers?: DockerContainer[]) => void) {
     let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Container, listAllContainers);
     this.DM.dockerUtil.forceError = this.forceError;
     this.DM.dockerUtil.listImagesOrContainers(dockerUtilOptions, cb);
   }
 
-  getContainers(ids: string[], cb: (err: Error, dockerContainers: DockerContainer[])=>void) {
+  getContainers(ids: string[], cb: (err: Error, dockerContainers: DockerContainer[]) => void) {
     let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Container);
     this.DM.dockerUtil.forceError = this.forceError;
     this.DM.dockerUtil.getImagesOrContainers(ids, dockerUtilOptions, cb);
   }
 
-  getContainer(id: string, cb: (err: Error, dockerContainer: DockerContainer)=>void) {
+  getContainer(id: string, cb: (err: Error, dockerContainer: DockerContainer) => void) {
     let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Container);
     this.DM.dockerUtil.forceError = this.forceError;
     this.DM.dockerUtil.getImageOrContainer(id, dockerUtilOptions, cb);
   }
 
-  removeContainers(ids: string[], cb: (err: Error, containerRemoveResults: ImageOrContainerRemoveResults[])=>void) {
+  removeContainers(ids: string[], cb: (err: Error, containerRemoveResults: ImageOrContainerRemoveResults[]) => void) {
     let dockerUtilOptions = new DockerUtilOptionsImpl(ImageOrContainer.Container);
     this.DM.dockerUtil.forceError = this.forceError;
     this.DM.dockerUtil.removeImagesOrContainers(ids, dockerUtilOptions, cb);
   }
 
-  createContainer(dockerContainerConfig: any, cb: (err: Error, dockerContainer: DockerContainer)=>void) {
+  createContainer(dockerContainerConfig: any, cb: (err: Error, dockerContainer: DockerContainer) => void) {
     this.DM.dockerode.forceError = this.forceError;
-    var fullContainerConfigCopy = {ExpressApps: []};
+    let fullContainerConfigCopy = {ExpressApps: []};
     deepExtend(fullContainerConfigCopy, dockerContainerConfig);
     this.DM.dockerode.createContainer(fullContainerConfigCopy, cb);
   }
 
-  startOrStopContainers(ids: string[], start: boolean, cb: ()=>void) {
+  startOrStopContainers(ids: string[], start: boolean, cb: () => void) {
     let me = this;
-    me.getContainers(ids, (err: Error, dockerContainersOrMessages: any[])=> {
+    me.getContainers(ids, (err: Error, dockerContainersOrMessages: any[]) => {
       me.DM.commandUtil.logError(err);
       async.mapSeries(dockerContainersOrMessages,
-        (dockerContainerOrMessage, cb)=> {
+        (dockerContainerOrMessage, cb) => {
           if (typeof dockerContainerOrMessage === 'string') {
             me.DM.commandUtil.logAndCallback(dockerContainerOrMessage, cb);
           } else {
@@ -66,7 +62,7 @@ export class DockerContainerManagementImpl extends ForceErrorImpl implements Doc
             let fnStartStop = start
               ? dockerContainer.start.bind(dockerContainer)
               : dockerContainer.stop.bind(dockerContainer);
-            fnStartStop((err: Error)=> {
+            fnStartStop((err: Error) => {
               me.DM.commandUtil.logAndCallback(me.DM.commandUtil.returnErrorStringOrMessage(err, resultMessage), cb);
             });
           }
@@ -74,9 +70,9 @@ export class DockerContainerManagementImpl extends ForceErrorImpl implements Doc
     });
   }
 
-  exec(id: string, command: string, cb: (err: Error, result: any)=>void): void {
+  exec(id: string, command: string, cb: (err: Error, result: any) => void): void {
     let me = this;
-    me.getContainer(id, (err: Error, dockerContainer: DockerContainer)=> {
+    me.getContainer(id, (err: Error, dockerContainer: DockerContainer) => {
       if (me.DM.commandUtil.callbackIfError(cb, err)) {
         return;
       }

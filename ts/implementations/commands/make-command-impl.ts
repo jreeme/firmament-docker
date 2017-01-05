@@ -10,17 +10,13 @@ export class MakeCommandImpl implements Command {
   aliases: string[] = [];
   command: string = '';
   commandDesc: string = '';
-  //noinspection JSUnusedGlobalSymbols
-  //noinspection JSUnusedLocalSymbols
   handler: (argv: any)=>void = (argv: any) => {
   };
   options: any = {};
   subCommands: Command[] = [];
   static defaultConfigFilename = 'firmament.json';
-  private dockerMake: DockerMake;
 
-  constructor(@inject('DockerMake') _dockerMake: DockerMake) {
-    this.dockerMake = _dockerMake;
+  constructor(@inject('DockerMake') private dockerMake: DockerMake) {
     this.buildCommandTree();
   }
 

@@ -10,29 +10,17 @@ export class DockerCommandImpl implements Command {
   aliases: string[] = [];
   command: string = '';
   commandDesc: string = '';
-  //noinspection JSUnusedGlobalSymbols
-  //noinspection JSUnusedLocalSymbols
-  handler: (argv: any)=>void = (argv: any) => {
+  handler: (argv: any) => void = (argv: any) => {
   };
   options: any = {};
   subCommands: Command[] = [];
-  private commandUtil: CommandUtil;
-  private dockerImageManagement: DockerImageManagement;
-  private dockerContainerManagement: DockerContainerManagement;
-  private commandLine: CommandLine;
-  private spawn: Spawn;
 
-  constructor(@inject('CommandUtil') _commandUtil: CommandUtil,
-              @inject('Spawn') _spawn: Spawn,
-              @inject('DockerImageManagement') _dockerImageManagement: DockerImageManagement,
-              @inject('DockerContainerManagement') _dockerContainerManagement: DockerContainerManagement,
-              @inject('CommandLine') _commandLine: CommandLine) {
+  constructor(@inject('CommandUtil') private commandUtil: CommandUtil,
+              @inject('Spawn') private spawn: Spawn,
+              @inject('DockerImageManagement') private dockerImageManagement: DockerImageManagement,
+              @inject('DockerContainerManagement') private dockerContainerManagement: DockerContainerManagement,
+              @inject('CommandLine') private commandLine: CommandLine) {
     this.buildCommandTree();
-    this.commandUtil = _commandUtil;
-    this.spawn = _spawn;
-    this.dockerContainerManagement = _dockerContainerManagement;
-    this.dockerImageManagement = _dockerImageManagement;
-    this.commandLine = _commandLine;
   }
 
   private buildCommandTree() {
@@ -56,7 +44,7 @@ export class DockerCommandImpl implements Command {
     cleanVolumesCommand.commandDesc = 'Clean orphaned Docker resources';
     //noinspection JSUnusedLocalSymbols
     cleanVolumesCommand.handler = (argv) => {
-      var script = require('path').resolve(__dirname, '../../bash/_docker-cleanup-volumes.sh');
+      let script = require('path').resolve(__dirname, '../../bash/_docker-cleanup-volumes.sh');
       me.spawn.sudoSpawnAsync(['/bin/bash', script], {}, (err: Error) => {
         me.commandUtil.processExitWithError(err);
       });
@@ -162,19 +150,19 @@ export class DockerCommandImpl implements Command {
     this.subCommands.push(psCommand);
   }
 
-  private printImagesList(argv: any, cb: ()=>void) {
+  private printImagesList(argv: any, cb: () => void) {
     this.dockerImageManagement.listImages(argv.a, (err, images) => {
       this.prettyPrintDockerImagesList(err, images, cb);
     });
   }
 
-  private printContainerList(argv: any, cb: ()=>void) {
+  private printContainerList(argv: any, cb: () => void) {
     this.dockerContainerManagement.listContainers(argv.a, (err, containers) => {
       this.prettyPrintDockerContainerList(err, containers, argv.a, cb);
     });
   }
 
-  private bashInToContainer(ids: string[], cb: (err: Error)=>void) {
+  private bashInToContainer(ids: string[], cb: (err: Error) => void) {
     if (ids.length !== 1) {
       let msg = '\nSpecify container to shell into by FirmamentId, Docker ID or Name.\n';
       msg += '\nExample: $ ... d sh 2  <= Open bash shell in container with FirmamentId "2"\n';
@@ -184,35 +172,36 @@ export class DockerCommandImpl implements Command {
     this.dockerContainerManagement.exec(ids[0].toString(), '/bin/bash', cb);
   }
 
-  private prettyPrintDockerImagesList(err: Error, images: DockerImage[], cb: ()=>void) {
+  private prettyPrintDockerImagesList(err: Error, images: DockerImage[], cb: () => void) {
     let me = this;
     if (!images || !images.length) {
       let msg = me.commandUtil.returnErrorStringOrMessage(err, '\nNo images\n');
       console.log(msg);
     } else {
-      var timeAgo = require('time-ago')();
-      var fileSize = require('filesize');
+      let timeAgo = require('time-ago')();
+      let fileSize = require('filesize');
       me.commandLine.printTable(images.map(image => {
         try {
-          var ID = image.firmamentId;
-          var repoTags = image.RepoTags[0].split(':');
-          var Repository = repoTags[0];
-          var Tag = repoTags[1];
-          var ImageId = image.Id.substring(7, 19);
-          var nowTicks = +new Date();
-          var tickDiff = nowTicks - (1000 * image.Created);
-          var Created = timeAgo.ago(nowTicks - tickDiff);
-          var Size = fileSize(image.Size);
+          let ID = image.firmamentId;
+          let repoTags = image.RepoTags[0].split(':');
+          let Repository = repoTags[0];
+          let Tag = repoTags[1];
+          let ImageId = image.Id.substring(7, 19);
+          let nowTicks = +new Date();
+          let tickDiff = nowTicks - (1000 * image.Created);
+          let Created = timeAgo.ago(nowTicks - tickDiff);
+          let Size = fileSize(image.Size);
+          return {ID, Repository, Tag, ImageId, Created, Size};
         } catch (err) {
           console.log(err.message);
+          return {};
         }
-        return {ID, Repository, Tag, ImageId, Created, Size};
       }));
     }
     cb();
   }
 
-  private prettyPrintDockerContainerList(err: Error, containers: any[], all: boolean, cb: ()=>void) {
+  private prettyPrintDockerContainerList(err: Error, containers: any[], all: boolean, cb: () => void) {
     let me = this;
     if (!containers || !containers.length) {
       let msg = me.commandUtil.returnErrorStringOrMessage(err, '\nNo ' + (all ? '' : 'Running ') + 'Containers\n');

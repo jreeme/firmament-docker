@@ -13,8 +13,6 @@ import {DockerManagement} from "./interfaces/docker-management";
 import {DockerManagementImpl} from "./implementations/docker-management-impl";
 import {DockerMakeImpl} from "./implementations/docker-make-impl";
 import {DockerMake} from "./interfaces/docker-make";
-import {RemoteCatalogGetter} from "./interfaces/remote-catalog";
-import {RemoteCatalogGetterImpl} from "./implementations/remote-catalog-impl";
 
 kernel.bind<DockerManagement>('DockerManagement').to(DockerManagementImpl);
 kernel.bind<DockerMake>('DockerMake').to(DockerMakeImpl);
@@ -22,7 +20,6 @@ kernel.bind<DockerImageManagement>('DockerImageManagement').to(DockerImageManage
 kernel.bind<DockerContainerManagement>('DockerContainerManagement').to(DockerContainerManagementImpl);
 kernel.bind<DockerOde>('DockerOde').to(DockerOdeImpl);
 kernel.bind<DockerUtil>('DockerUtil').to(DockerUtilImpl);
-kernel.bind<RemoteCatalogGetter>('RemoteCatalogGetter').to(RemoteCatalogGetterImpl);
 kernel.bind<Command>('Command').to(DockerCommandImpl);
 kernel.bind<Command>('Command').to(MakeCommandImpl);
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import 'reflect-metadata';
 import kernel from '../../inversify.config';
-import {DockerMake} from "../../interfaces/docker-make";
-import {RemoteCatalogGetter} from "../../interfaces/remote-catalog";
+import {DockerMake} from '../../interfaces/docker-make';
+import {RemoteCatalogGetter} from 'firmament-yargs';
 //const templateCatalogUrl = '/home/jreeme/src/firmament-docker/docker/templateCatalog.json';
 const templateCatalogUrl = 'https://raw.githubusercontent.com/jreeme/firmament-docker/master/docker/templateCatalog.json';
 const dockerMake = kernel.get<DockerMake>('DockerMake');
@@ -16,9 +16,9 @@ process.on('uncaughtException', err => {
 /*remoteCatalogGetter.getCatalogFromUrl(templateCatalogUrl, (err, remoteCatalog) => {
  let e = err;
  });*/
-dockerMake.makeTemplate({get: 'vita'});
+/*dockerMake.makeTemplate({get: 'vita'});*/
 
-/*dockerMake.buildTemplate({input: '/home/jreeme/src/firmament-docker/docker/vita.06-DEC-2016/firmament.json'},
- (err: Error, result: string) => {
- var r = result;
- });*/
+dockerMake.buildTemplate({input: '/home/jreeme/src/firmament-docker/docker/vita.25-DEC-2016/firmament.json'},
+  (err: Error, result: string) => {
+    var r = result;
+  });

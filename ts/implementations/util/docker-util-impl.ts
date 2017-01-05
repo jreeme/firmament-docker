@@ -12,17 +12,10 @@ const deepExtend = require('deep-extend');
 const async = require('async');
 @injectable()
 export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
-  private dockerode: DockerOde;
-  private commandUtil: CommandUtil;
-  private positive: Positive;
-
-  constructor(@inject('DockerOde') _dockerode: DockerOde,
-              @inject('Positive') _positive: Positive,
-              @inject('CommandUtil') _commandUtil: CommandUtil) {
+  constructor(@inject('DockerOde') private dockerode: DockerOde,
+              @inject('Positive') private positive: Positive,
+              @inject('CommandUtil') private commandUtil: CommandUtil) {
     super();
-    this.dockerode = _dockerode;
-    this.positive = _positive;
-    this.commandUtil = _commandUtil;
   }
 
   listImagesOrContainers(options: DockerUtilOptions,

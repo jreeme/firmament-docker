@@ -1,47 +1,33 @@
-import {injectable, inject} from "inversify";
-import {ChildProcess, spawn} from 'child_process';
-import {DockerMake} from "../interfaces/docker-make";
-import {DockerDescriptors} from "../interfaces/docker-descriptors";
+import {injectable, inject} from 'inversify';
+import {DockerMake} from '../interfaces/docker-make';
+import {DockerDescriptors} from '../interfaces/docker-descriptors';
 import {
   ContainerConfig, DockerContainer, ExpressApp, ImageOrContainerRemoveResults
-} from "../interfaces/dockerode";
-import {Positive, FailureRetVal, CommandUtil, ProgressBar, Spawn, ForceErrorImpl} from "firmament-yargs";
-import {DockerContainerManagement} from "../interfaces/docker-container-management";
-import {DockerImageManagement} from "../interfaces/docker-image-management";
+} from '../interfaces/dockerode';
+import {Positive, FailureRetVal, CommandUtil, ProgressBar, Spawn, ForceErrorImpl} from 'firmament-yargs';
+import {DockerContainerManagement} from '../interfaces/docker-container-management';
+import {DockerImageManagement} from '../interfaces/docker-image-management';
 import * as _ from 'lodash';
 import * as fs from 'fs';
-import {FirmamentTemplateCatalog, FirmamentTemplateDownloadResult} from "../custom-typings";
-import {RemoteCatalogGetter, RemoteCatalogResource, RemoteCatalogEntry} from "../interfaces/remote-catalog";
+import url = require('url');
+import {RemoteCatalogGetter, RemoteCatalogEntry} from 'firmament-yargs';
 const path = require('path');
 const jsonFile = require('jsonfile');
 const request = require('request');
 const fileExists = require('file-exists');
 const async = require('async');
+//const templateCatalogUrl = '/home/jreeme/src/firmament-docker/docker/templateCatalog.json';
 const templateCatalogUrl = 'https://raw.githubusercontent.com/jreeme/firmament-docker/master/docker/templateCatalog.json';
-const url = require('url');
 @injectable()
 export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
-  private positive: Positive;
-  private spawn: Spawn;
-  private commandUtil: CommandUtil;
-  private progressBar: ProgressBar;
-  private dockerImageManagement: DockerImageManagement;
-  private dockerContainerManagement: DockerContainerManagement;
-
-  constructor(@inject('CommandUtil') _commandUtil: CommandUtil,
-              @inject('Spawn') _spawn: Spawn,
+  constructor(@inject('CommandUtil') private commandUtil: CommandUtil,
+              @inject('Spawn') private spawn: Spawn,
               @inject('RemoteCatalogGetter') private remoteCatalogGetter: RemoteCatalogGetter,
-              @inject('DockerImageManagement') _dockerImageManagement: DockerImageManagement,
-              @inject('DockerContainerManagement') _dockerContainerManagement: DockerContainerManagement,
-              @inject('Positive') _positive: Positive,
-              @inject('ProgressBar') _progressBar: ProgressBar) {
+              @inject('DockerImageManagement') private dockerImageManagement: DockerImageManagement,
+              @inject('DockerContainerManagement') private dockerContainerManagement: DockerContainerManagement,
+              @inject('Positive') private positive: Positive,
+              @inject('ProgressBar') private progressBar: ProgressBar) {
     super();
-    this.positive = _positive;
-    this.progressBar = _progressBar;
-    this.spawn = _spawn;
-    this.dockerImageManagement = _dockerImageManagement;
-    this.dockerContainerManagement = _dockerContainerManagement;
-    this.commandUtil = _commandUtil;
   }
 
   buildTemplate(argv: any) {
@@ -54,7 +40,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
     }
     const baseDir = path.dirname(fullInputPath);
     const containerDescriptors = jsonFile.readFileSync(fullInputPath);
-    me.processContainerConfigs(containerDescriptors, baseDir, (err: Error, result: string) => {
+    me.processContainerConfigs(containerDescriptors, baseDir, (err: Error) => {
       me.commandUtil.processExitWithError(err, `Finished.\n`);
     });
   }
@@ -95,7 +81,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
           if (!template) {
             me.commandUtil.processExitWithError(new Error(`\nTemplate catalog '${argv.get}' does not exist.\n`));
           }
-          template.resources.forEach(resource=>{
+          template.resources.forEach(resource => {
             try {
               let outputPath = path.resolve(process.cwd(), path.basename(resource.name));
               fs.writeFileSync(outputPath, resource.text);
@@ -103,24 +89,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
               me.commandUtil.processExitWithError(err);
             }
           });
-          const finishedMsg = `\nTemplate '${template.name}' written.\n`;
-          me.commandUtil.processExit(0, finishedMsg);
-          /*          async.parallel(fnArray, (err, results: FirmamentTemplateDownloadResult[]) => {
-           const finishedMsg = `\nTemplate '${templateToDownload.name}' written.\n`;
-           if (err) {
-           me.commandUtil.processExitWithError(err, finishedMsg);
-           }
-           results.forEach(result => {
-           try {
-           let parsedUrl = url.parse(result.url);
-           let outputPath = path.resolve(process.cwd(), path.basename(parsedUrl.path));
-           fs.writeFileSync(outputPath, result.body);
-           } catch (err) {
-           me.commandUtil.processExitWithError(err);
-           }
-           });
-           me.commandUtil.processExit(0, finishedMsg);
-           });*/
+          me.commandUtil.processExit(0, `\nTemplate '${template.name}' written.\n`);
         }
       });
     }
@@ -325,7 +294,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
                       return;
                     }
                     let cwd = expressApp.GitCloneFolder;
-                    me.spawnIt(['bower', 'install', '--config.interactive=false'], {cwd},
+                    me.spawn.spawnShellCommandAsync(['bower', 'install', '--config.interactive=false'], {cwd},
                       (err, result) => {
                         me.commandUtil.log(result.toString());
                       },
@@ -334,7 +303,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
                   (cb: (err: Error, result: any) => void) => {
                     let cwd = expressApp.GitCloneFolder;
                     //Do an 'npm install' here in case any scripts need node_modules
-                    me.spawnIt(['npm', 'install', '--quiet'], {cwd},
+                    me.spawn.spawnShellCommandAsync(['npm', 'install', '--quiet'], {cwd},
                       (err, result) => {
                         me.commandUtil.log(result.toString());
                       },
@@ -347,7 +316,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
                         let cwd = expressApp.GitCloneFolder + '/' + script.RelativeWorkingDir;
                         let cmd = [script.Command];
                         cmd = cmd.concat(script.Args);
-                        me.spawnIt(cmd, {cwd},
+                        me.spawn.spawnShellCommandAsync(cmd, {cwd},
                           (err, result) => {
                             me.commandUtil.log(result.toString());
                           },
@@ -359,7 +328,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
                   },
                   (cb: (err: Error, result: any) => void) => {//Perform Strongloop build ...
                     let cwd = expressApp.GitCloneFolder;
-                    me.spawnIt(['slc', 'build', '--scripts'], {cwd},
+                    me.spawn.spawnShellCommandAsync(['slc', 'build', '--scripts'], {cwd},
                       (err, result) => {
                         me.commandUtil.log(result.toString());
                       },
@@ -368,7 +337,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
                   (cb: (err: Error, result: any) => void) => {//... and Strongloop deploy
                     let cwd = expressApp.GitCloneFolder;
                     me.commandUtil.log('StrongLoop Deploying @ ' + cwd);
-                    me.spawnIt(['slc', 'deploy', '--service=' + expressApp.ServiceName, expressApp.StrongLoopServerUrl], {cwd},
+                    me.spawn.spawnShellCommandAsync(['slc', 'deploy', '--service=' + expressApp.ServiceName, expressApp.StrongLoopServerUrl], {cwd},
                       (err, result) => {
                         me.commandUtil.log(result.toString());
                       },
@@ -379,55 +348,6 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
           }, cb);
       }
     ], cb);
-  }
-
-  private spawnIt(cmd,
-                  options,
-                  cbStatus: (err: Error, result?: string) => void,
-                  cbFinal: (err: Error, result?: any) => void): ChildProcess {
-    let me = this;
-    let args = cmd.slice(0);
-    cmd = args.shift();
-    let stdoutText = '';
-    let stderrText = '';
-    console.log(`Spawning: ${cmd} : ${args}`);
-    let childProcess = spawn(cmd, args, options);
-    childProcess.stderr.on('data', (dataChunk: Uint8Array) => {
-      let text = dataChunk.toString();
-      cbStatus(new Error(text), text);
-      stderrText += text;
-    });
-    childProcess.stdout.on('data', (dataChunk: Uint8Array) => {
-      let text = dataChunk.toString();
-      cbStatus(null, text);
-      stdoutText += text;
-    });
-    childProcess.on('error', (code: number) => {
-      cbFinal = me.childCloseOrExit(code, '', stdoutText, stderrText, cbFinal);
-    });
-    childProcess.on('exit', (code: number, signal: string) => {
-      cbFinal = me.childCloseOrExit(code, signal, stdoutText, stderrText, cbFinal);
-    });
-    childProcess.on('close', (code: number, signal: string) => {
-      cbFinal = me.childCloseOrExit(code, signal, stdoutText, stderrText, cbFinal);
-    });
-    return childProcess;
-  }
-
-  private childCloseOrExit(code: number,
-                           signal: string,
-                           stdoutText: string,
-                           stderrText: string,
-                           cbFinal: (err: Error, result: string) => void): (err: Error, result: string) => void {
-    if (cbFinal) {
-      let returnString = JSON.stringify({code, signal, stdoutText, stderrText}, undefined, 2);
-      let error = (code !== null && code !== 0)
-        ? new Error(returnString)
-        : null;
-      cbFinal(error, returnString);
-    }
-    return (err: Error, result: string) => {
-    };
   }
 
   private containerDependencySort(containerConfigs) {
@@ -493,7 +413,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
     this.commandUtil.log(msg + ' "' + serviceName + '" @ "' + cwd + '" via "' + serverUrl + '"');
     const baseCmd = ['slc', 'ctl', '-C', serverUrl];
     Array.prototype.push.apply(baseCmd, cmd);
-    this.spawnIt(baseCmd, {cwd, stdio: 'pipe'},
+    this.spawn.spawnShellCommandAsync(baseCmd, {cwd, stdio: 'pipe'},
       (err, result) => {
         this.commandUtil.log(result.toString());
       },
@@ -504,7 +424,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
   }
 
   private gitClone(gitUrl: string, gitBranch: string, localFolder: string, cb: (err: Error, child: any) => void) {
-    this.spawnIt(['git', 'clone', '-b', gitBranch, '--single-branch', gitUrl, localFolder],
+    this.spawn.spawnShellCommandAsync(['git', 'clone', '-b', gitBranch, '--single-branch', gitUrl, localFolder],
       {cwd: process.cwd(), stdio: 'pipe'},
       (err, result) => {
         this.commandUtil.log(result.toString());
