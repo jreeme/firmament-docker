@@ -413,7 +413,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
     this.commandUtil.log(msg + ' "' + serviceName + '" @ "' + cwd + '" via "' + serverUrl + '"');
     const baseCmd = ['slc', 'ctl', '-C', serverUrl];
     Array.prototype.push.apply(baseCmd, cmd);
-    this.spawn.spawnShellCommandAsync(baseCmd, {cwd, stdio: 'pipe'},
+    this.spawn.spawnShellCommandAsync(baseCmd, {cwd, stdio: 'pipe', cacheStdOut: true, cacheStdErr: true},
       (err, result) => {
         this.commandUtil.log(result.toString());
       },
