@@ -243,7 +243,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
                     });
                   },
                   (cb: (err: Error, result: any) => void) => {//Make sure there's a Strongloop PM listening
-                    let retries: number = 3;
+                    let retries: number = 20;
                     (function checkForStrongloop() {
                       me.remoteSlcCtlCommand('Looking for SLC PM ...', expressApp, ['info'],
                         (err: Error, result: string) => {
