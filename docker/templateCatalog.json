@@ -19,6 +19,12 @@
       "urls": [
         "datawake.18-MAY-2016/firmament.json"
       ]
+    },
+    {
+      "name": "watchman",
+      "urls": [
+        "https://raw.githubusercontent.com/Sotera/watchman/master/firmament/deploy.json"
+      ]
     }
   ]
 }
