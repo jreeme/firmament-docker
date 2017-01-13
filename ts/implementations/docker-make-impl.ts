@@ -178,8 +178,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
         try {
           let sortedContainerConfigs = me.containerDependencySort(containerConfigs);
           //noinspection JSUnusedLocalSymbols
-          async.mapLimit(sortedContainerConfigs,
-            4,
+          async.mapSeries(sortedContainerConfigs,
             (containerConfig, cb: (err: Error, result: any) => void) => {
               this.dockerContainerManagement.createContainer(containerConfig, (err: Error, container: DockerContainer) => {
                 me.commandUtil.logAndCallback('Container "' + containerConfig.name + '" created.', cb, err, container);
