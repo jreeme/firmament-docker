@@ -44,7 +44,7 @@ export class DockerCommandImpl implements Command {
     cleanVolumesCommand.commandDesc = 'Clean orphaned Docker resources';
     //noinspection JSUnusedLocalSymbols
     cleanVolumesCommand.handler = (argv) => {
-      let script = require('path').resolve(__dirname, '../../bash/_docker-cleanup-volumes.sh');
+      let script = require('path').resolve(__dirname, '../../../bash/_docker-cleanup-volumes.sh');
       me.spawn.sudoSpawnAsync(['/bin/bash', script], {}, (err: Error) => {
         me.commandUtil.processExitWithError(err);
       });
@@ -97,10 +97,27 @@ export class DockerCommandImpl implements Command {
     let startCommand = kernel.get<Command>('CommandImpl');
     startCommand.aliases = ['start'];
     startCommand.commandDesc = 'Start Docker containers';
-    startCommand.handler = (argv) => {
-      me.dockerContainerManagement.startOrStopContainers(argv._.slice(2), true, () => me.commandUtil.processExit());
+    //noinspection ReservedWordAsName
+    startCommand.options = {
+      input: {
+        alias: 'i',
+        type: 'string',
+        desc: 'Firmament JSON file describing the containers to start (in correct order)'
+      }
     };
+    startCommand.handler = me.startOrStopContainers.bind(me);
+/*      startCommand.handler = (argv) => {
+      me.dockerContainerManagement.startOrStopContainers(argv._.slice(2), true, () => me.commandUtil.processExit());
+    };*/
     me.subCommands.push(startCommand);
+  }
+
+  public startOrStopContainers(argv){
+    let me = this;
+    if(argv.input){
+      let i = 3;
+    }
+    me.dockerContainerManagement.startOrStopContainers(argv._.slice(2), true, () => me.commandUtil.processExit());
   }
 
   private pushStopCommand() {
