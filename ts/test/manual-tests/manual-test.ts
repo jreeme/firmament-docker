@@ -13,7 +13,7 @@ import {DockerCommandImpl} from "../../implementations/commands/docker-command-i
 process.on('uncaughtException', err => {
   console.log(err);
 });
-dockerCommand.startOrStopContainers({input: '/home/jreeme/tmp/deploy.json'});
+/*dockerCommand.startOrStopContainers({input: '/home/jreeme/tmp/deploy.json'});*/
 /*remoteCatalogGetter.getCatalogFromUrl(templateCatalogUrl, (err, remoteCatalog) => {
  let e = err;
  });*/
