@@ -4,19 +4,23 @@ import {Command, CommandLine, CommandUtil, Spawn} from 'firmament-yargs';
 import {DockerImage} from "../../interfaces/dockerode";
 import {DockerImageManagement} from "../../interfaces/docker-image-management";
 import {DockerContainerManagement} from "../../interfaces/docker-container-management";
+import * as _ from 'lodash';
+import {DockerMake} from "../../interfaces/docker-make";
+import {MakeCommandImpl} from "./make-command-impl";
 
 @injectable()
 export class DockerCommandImpl implements Command {
   aliases: string[] = [];
   command: string = '';
   commandDesc: string = '';
-  handler: (argv: any) => void = (argv: any) => {
+  handler: (argv: any) => void = () => {
   };
   options: any = {};
   subCommands: Command[] = [];
 
   constructor(@inject('CommandUtil') private commandUtil: CommandUtil,
               @inject('Spawn') private spawn: Spawn,
+              @inject('DockerMake') private dockerMake: DockerMake,
               @inject('DockerImageManagement') private dockerImageManagement: DockerImageManagement,
               @inject('DockerContainerManagement') private dockerContainerManagement: DockerContainerManagement,
               @inject('CommandLine') private commandLine: CommandLine) {
@@ -97,7 +101,6 @@ export class DockerCommandImpl implements Command {
     let startCommand = kernel.get<Command>('CommandImpl');
     startCommand.aliases = ['start'];
     startCommand.commandDesc = 'Start Docker containers';
-    //noinspection ReservedWordAsName
     startCommand.options = {
       input: {
         alias: 'i',
@@ -106,18 +109,29 @@ export class DockerCommandImpl implements Command {
       }
     };
     startCommand.handler = me.startOrStopContainers.bind(me);
-/*      startCommand.handler = (argv) => {
-      me.dockerContainerManagement.startOrStopContainers(argv._.slice(2), true, () => me.commandUtil.processExit());
-    };*/
     me.subCommands.push(startCommand);
   }
 
-  public startOrStopContainers(argv){
-    let me = this;
-    if(argv.input){
-      let i = 3;
+  private startOrStopContainers(argv) {
+    const me = this;
+    let action = 'Stopping';
+    let start = false;
+
+    if (argv._[1] === 'start') {
+      action = 'Starting';
+      start = true;
     }
-    me.dockerContainerManagement.startOrStopContainers(argv._.slice(2), true, () => me.commandUtil.processExit());
+
+    let containerNames: string[];
+    if (argv.input === undefined) {
+      containerNames = argv._.slice(2);
+    } else {
+      let {fullInputPath, sortedContainerConfigs} =
+        me.dockerMake.getSortedContainerConfigsFromJsonFile(argv.input || MakeCommandImpl.defaultConfigFilename);
+      me.commandUtil.log(`${action} Docker containers described in: '${fullInputPath}'`);
+      containerNames = <string[]> _.map(start ? sortedContainerConfigs : sortedContainerConfigs.reverse(), 'name');
+    }
+    me.dockerContainerManagement.startOrStopContainers(containerNames, start, () => me.commandUtil.processExit());
   }
 
   private pushStopCommand() {
@@ -125,9 +139,14 @@ export class DockerCommandImpl implements Command {
     let stopCommand = kernel.get<Command>('CommandImpl');
     stopCommand.aliases = ['stop'];
     stopCommand.commandDesc = 'Stop Docker containers';
-    stopCommand.handler = argv => {
-      me.dockerContainerManagement.startOrStopContainers(argv._.slice(2), false, () => me.commandUtil.processExit());
+    stopCommand.options = {
+      input: {
+        alias: 'i',
+        type: 'string',
+        desc: 'Firmament JSON file describing the containers to start (in correct order)'
+      }
     };
+    stopCommand.handler = me.startOrStopContainers.bind(me);
     me.subCommands.push(stopCommand);
   }
 

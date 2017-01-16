@@ -32,15 +32,10 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
 
   buildTemplate(argv: any) {
     let me = this;
-    const fullInputPath = me.commandUtil.getConfigFilePath(argv.input, '.json');
-    me.commandUtil.log("Constructing Docker containers described in: '" + fullInputPath + "'");
-    if (!fileExists(fullInputPath)) {
-      let err = new Error(`\n'${fullInputPath}' does not exist`);
-      me.commandUtil.processExitWithError(err);
-    }
+    let {fullInputPath, sortedContainerConfigs} = me.getSortedContainerConfigsFromJsonFile(argv.input);
     const baseDir = path.dirname(fullInputPath);
-    const containerDescriptors = jsonFile.readFileSync(fullInputPath);
-    me.processContainerConfigs(containerDescriptors, baseDir, (err: Error) => {
+    me.commandUtil.log("Constructing Docker containers described in: '" + fullInputPath + "'");
+    me.processContainerConfigs(sortedContainerConfigs, baseDir, (err: Error) => {
       me.commandUtil.processExitWithError(err, `Finished.\n`);
     });
   }
@@ -93,6 +88,17 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
         }
       });
     }
+  }
+
+  getSortedContainerConfigsFromJsonFile(inputPath: string) {
+    let me = this;
+    const fullInputPath = me.commandUtil.getConfigFilePath(inputPath, '.json');
+    if (!fileExists(fullInputPath)) {
+      me.commandUtil.processExitWithError(new Error(`\n'${fullInputPath}' does not exist`));
+    }
+    const containerConfigs = jsonFile.readFileSync(fullInputPath);
+    const sortedContainerConfigs = me.containerDependencySort(containerConfigs);
+    return {fullInputPath, sortedContainerConfigs};
   }
 
   private processContainerConfigs(containerConfigs: ContainerConfig[], baseDir: string, cb: (err: Error, results: string) => void) {
@@ -176,9 +182,9 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
       },
       (errs: Error[], cb: (err: Error, results: any) => void) => {
         try {
-          let sortedContainerConfigs = me.containerDependencySort(containerConfigs);
+          //let sortedContainerConfigs = me.containerDependencySort(containerConfigs);
           //noinspection JSUnusedLocalSymbols
-          async.mapSeries(sortedContainerConfigs,
+          async.mapSeries(containerConfigs,
             (containerConfig, cb: (err: Error, result: any) => void) => {
               this.dockerContainerManagement.createContainer(containerConfig, (err: Error, container: DockerContainer) => {
                 me.commandUtil.logAndCallback('Container "' + containerConfig.name + '" created.', cb, err, container);
@@ -188,7 +194,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
               if (me.commandUtil.callbackIfError(cb, err)) {
                 return;
               }
-              let sortedContainerNames = sortedContainerConfigs.map(containerConfig => containerConfig.name);
+              let sortedContainerNames = containerConfigs.map(containerConfig => containerConfig.name);
               this.dockerContainerManagement.startOrStopContainers(sortedContainerNames, true, () => {
                 cb(null, null);
               });
@@ -226,7 +232,15 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
                         return;
                       }
                     }
-                    expressApp.GitCloneFolder = cwd + '/' + expressApp.ServiceName + (new Date()).getTime();
+                    //On really fast computers .getTime() can be the same across two calls so call a few times
+                    //to make sure it's different
+                    let refTimeStamp = (new Date()).getTime();
+                    let timeStamp = refTimeStamp;
+                    while (timeStamp === refTimeStamp) {
+                      timeStamp = (new Date()).getTime();
+                    }
+
+                    expressApp.GitCloneFolder = `${cwd}/${expressApp.ServiceName}${timeStamp}`;
                     cb(null);
                   },
                   (cb: (err: Error, result?: any) => void) => {//Clone Express app Git Repo
