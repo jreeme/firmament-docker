@@ -23,7 +23,7 @@
     {
       "name": "watchman",
       "urls": [
-        "https://raw.githubusercontent.com/Sotera/watchman/master/firmament/deploy.json"
+        "https://raw.githubusercontent.com/Sotera/watchman/master/deploy/firmament/deploy.json"
       ]
     }
   ]
