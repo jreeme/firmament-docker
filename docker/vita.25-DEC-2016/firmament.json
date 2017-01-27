@@ -36,6 +36,11 @@
           {
             "HostPort": "8701"
           }
+        ],
+        "27017/tcp": [
+          {
+            "HostPort": "27017"
+          }
         ]
       }
     },
@@ -43,7 +48,7 @@
       {
         "GitUrl": "https://github.com/Sotera/loopback-webpack-typescript-amino.git",
         "DeployExisting": false,
-        "GitSrcBranchName": "vita2",
+        "GitSrcBranchName": "webSockets",
         "StrongLoopBranchName": "deploy",
         "StrongLoopServerUrl": "http://localhost:8701",
         "ServiceName": "vita",
