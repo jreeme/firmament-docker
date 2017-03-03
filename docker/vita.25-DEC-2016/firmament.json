@@ -9,7 +9,8 @@
     },
     "HostConfig": {
       "Binds": [
-        "/tmp:/tmp"
+        "/home/jreeme/tmp/config:/var/tmp",
+        "/home/jreeme/watch:/var/log"
       ],
       "PortBindings": {
         "3001/tcp": [
@@ -48,7 +49,7 @@
       {
         "GitUrl": "https://github.com/Sotera/loopback-webpack-typescript-amino.git",
         "DeployExisting": false,
-        "GitSrcBranchName": "webSockets",
+        "GitSrcBranchName": "vita3",
         "StrongLoopBranchName": "deploy",
         "StrongLoopServerUrl": "http://localhost:8701",
         "ServiceName": "vita",
@@ -56,7 +57,8 @@
         "ClusterSize": 1,
         "EnvironmentVariables": {
           "PORT": 8080,
-          "NODE_ENV": "production"
+          "NODE_ENV": "production",
+          "CONFIG_FILE_FOLDER": "/var/tmp"
         },
         "Scripts": [
         ]
