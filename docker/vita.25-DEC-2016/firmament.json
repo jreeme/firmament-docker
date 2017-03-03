@@ -9,8 +9,8 @@
     },
     "HostConfig": {
       "Binds": [
-        "/home/jreeme/tmp/config:/var/tmp",
-        "/home/jreeme/watch:/var/log"
+        "/home/jreeme/src/loopback-webpack-typescript-amino/server:/home/vita/config",
+        "/home/jreeme/watch:/home/vita/input-data"
       ],
       "PortBindings": {
         "3001/tcp": [
@@ -58,7 +58,7 @@
         "EnvironmentVariables": {
           "PORT": 8080,
           "NODE_ENV": "production",
-          "CONFIG_FILE_FOLDER": "/var/tmp"
+          "CONFIG_FILE_FOLDER": "/home/vita/config"
         },
         "Scripts": [
         ]

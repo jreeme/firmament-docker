@@ -98,6 +98,8 @@ EXPOSE 8701 3001 3002 3003
 #
 # Create some folders to mount
 #
+RUN mkdir -p /home/vita/config
+RUN mkdir -p /home/vita/input-data
 
 #
 # Supervisor (for running multiple services in Docker container)
