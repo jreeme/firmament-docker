@@ -96,7 +96,11 @@ RUN npm install -g strongloop && npm cache clear
 EXPOSE 8701 3001 3002 3003
 
 #
-# Supervisor (for running multiple services in Docker container
+# Create some folders to mount
+#
+
+#
+# Supervisor (for running multiple services in Docker container)
 #
 RUN apt-get install -y supervisor
 
