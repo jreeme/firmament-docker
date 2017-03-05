@@ -19,10 +19,10 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
   }
 
   listImagesOrContainers(options: DockerUtilOptions,
-                         cb: (err: Error, imagesOrContainers: any[])=>void) {
+                         cb: (err: Error, imagesOrContainers: any[]) => void) {
     this.dockerode.forceError = this.forceError;
     let me = this;
-    let listFn: (options: any, cb: (err: Error, imagesOrContainers: any[])=>void)=>void;
+    let listFn: (options: any, cb: (err: Error, imagesOrContainers: any[]) => void) => void;
     deepExtend(options, {all: true});
     listFn = (options.IorC === ImageOrContainer.Image)
       ? me.dockerode.listImages
@@ -32,10 +32,19 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
       {
         all: true
       },
-      (err: Error, imagesOrContainers: any[])=> {
+      (err: Error, imagesOrContainers: any[]) => {
         if (me.commandUtil.callbackIfError(cb, err)) {
           return;
         }
+        //05-MAR-2017 JReeme sez: Ran across a weird situation where RepoTags was <null> on a container. Things broke,
+        //of course. So now we need to cull images or containers without 'Names' or 'RepoTags'. Very painful.
+        _.remove(imagesOrContainers, (iOrC) => {
+          if (options.IorC === ImageOrContainer.Container) {
+            return !iOrC.Names;
+          } else if (options.IorC === ImageOrContainer.Image) {
+            return !iOrC.RepoTags;
+          }
+        });
         //Sort by name so firmament id is consistent
         imagesOrContainers.sort(function (a, b) {
           if (options.IorC === ImageOrContainer.Container) {
@@ -48,14 +57,14 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
           }
         });
         let firmamentId = 0;
-        imagesOrContainers = imagesOrContainers.map(imageOrContainer=> {
+        imagesOrContainers = imagesOrContainers.map(imageOrContainer => {
           imageOrContainer.firmamentId = (++firmamentId).toString();
           if (options.IorC === ImageOrContainer.Container) {
             return (options.listAll || (imageOrContainer.Status.substring(0, 2) === 'Up')) ? imageOrContainer : null;
           } else {
             return (options.listAll || (imageOrContainer.RepoTags[0] !== '<none>:<none>')) ? imageOrContainer : null;
           }
-        }).filter(imageOrContainer=> {
+        }).filter(imageOrContainer => {
           return imageOrContainer !== null;
         });
         cb(null, imagesOrContainers);
@@ -64,46 +73,46 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
 
   getImagesOrContainers(ids: string[],
                         options: DockerUtilOptions,
-                        cb: (err: Error, imagesOrContainers: DockerImageOrContainer[])=>void) {
+                        cb: (err: Error, imagesOrContainers: DockerImageOrContainer[]) => void) {
     this.dockerode.forceError = this.forceError;
     let me = this;
     if (!ids) {
       //if 'ids' is 'falsy' then return all containers or images
       options.listAll = true;
-      me.listImagesOrContainers(options, (err: Error, imagesOrContainers: any[])=> {
+      me.listImagesOrContainers(options, (err: Error, imagesOrContainers: any[]) => {
         if (me.commandUtil.callbackIfError(cb, err)) {
           return;
         }
         ids = [];
-        imagesOrContainers.forEach(imageOrContainer=> {
+        imagesOrContainers.forEach(imageOrContainer => {
           ids.push(imageOrContainer.firmamentId);
         });
         me.getImagesOrContainers(ids, options, cb);
       });
       return;
     }
-    let fnArray = ids.map(id=> {
+    let fnArray = ids.map(id => {
       return async.apply(me.getImageOrContainer.bind(me), id.toString(), options);
     });
-    async.series(fnArray, (err: Error, results: any[])=> {
+    async.series(fnArray, (err: Error, results: any[]) => {
       if (!me.commandUtil.callbackIfError(cb, err)) {
-        cb(err, results.filter(result=>!!result));
+        cb(err, results.filter(result => !!result));
       }
     });
   }
 
   getImageOrContainer(id: string,
                       options: DockerUtilOptions,
-                      cb: (err: Error, imageOrContainer: any)=>void) {
+                      cb: (err: Error, imageOrContainer: any) => void) {
     this.dockerode.forceError = this.forceError;
     let me = this;
     async.waterfall([
-        (cb: (err: Error)=>void)=> {
+        (cb: (err: Error) => void) => {
           options.listAll = true;
           me.listImagesOrContainers(options, cb);
         },
-        (imagesOrContainers: any[], cb: (err: Error, imageOrContainerOrString: any)=>void)=> {
-          let foundImagesOrContainers = imagesOrContainers.filter(imageOrContainer=> {
+        (imagesOrContainers: any[], cb: (err: Error, imageOrContainerOrString: any) => void) => {
+          let foundImagesOrContainers = imagesOrContainers.filter(imageOrContainer => {
             if (imageOrContainer.firmamentId === id) {
               return true;
             } else {
@@ -154,7 +163,7 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
 
   removeImagesOrContainers(ids: string[],
                            options: DockerUtilOptions,
-                           cb: (err: Error, imageOrContainerRemoveResults: ImageOrContainerRemoveResults[])=>void) {
+                           cb: (err: Error, imageOrContainerRemoveResults: ImageOrContainerRemoveResults[]) => void) {
     this.dockerode.forceError = this.forceError;
     let me = this;
     ids = ids || [];
@@ -177,20 +186,20 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
       }
       ids = null;
     }
-    me.getImagesOrContainers(ids, options, (err: Error, dockerImagesOrContainers: DockerImageOrContainer[])=> {
+    me.getImagesOrContainers(ids, options, (err: Error, dockerImagesOrContainers: DockerImageOrContainer[]) => {
       if (me.commandUtil.callbackIfError(cb, err)) {
         return;
       }
       async.map(dockerImagesOrContainers,
-        (imageOrContainer: DockerImageOrContainer, cb)=> {
+        (imageOrContainer: DockerImageOrContainer, cb) => {
           if (typeof imageOrContainer === 'string') {
             me.commandUtil.logAndCallback(imageOrContainer,
               cb,
               null,
               {msg: imageOrContainer});
           } else {
-            imageOrContainer.remove({force: 1}, (err: Error)=> {
-              let msg = `Removing ${thingToRemove} '${imageOrContainer.Name}' with id: '${imageOrContainer.Id.substr(0,8)}'`;
+            imageOrContainer.remove({force: 1}, (err: Error) => {
+              let msg = `Removing ${thingToRemove} '${imageOrContainer.Name}' with id: '${imageOrContainer.Id.substr(0, 8)}'`;
               me.commandUtil.logAndCallback(msg, cb, err, {msg});
             });
           }
