@@ -1,18 +1,25 @@
 [
   {
     "name": "vita-strongloop",
-    "Image": "jreeme/vita:25-DEC-2016",
+    "Image": "jreeme/vita:06-MAR-2017",
     "DockerFilePath": ".",
     "Hostname": "vita-strongloop",
     "ExposedPorts": {
-      "8080/tcp": {}
+      "8080/tcp": {},
+      "7001/tcp": {}
     },
     "HostConfig": {
       "Binds": [
         "/home/jreeme/src/loopback-webpack-typescript-amino/server:/home/vita/config",
-        "/home/jreeme/watch:/home/vita/input-data"
+        "/home/jreeme/watch:/home/vita/input-data",
+        "/home/jreeme/watch:/home/vita/output-data"
       ],
       "PortBindings": {
+        "7001/tcp": [
+          {
+            "HostPort": "7001"
+          }
+        ],
         "3001/tcp": [
           {
             "HostPort": "3001"
