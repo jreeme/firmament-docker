@@ -52,96 +52,111 @@ export class DockerDescriptors {
           ServiceName: 'FirmamentTestApp',
           DoBowerInstall: true,
           ClusterSize: 1,
-          ServicePort: 8082,
-          'Scripts': []
+          EnvironmentVariables: {
+            PORT: 8080,
+            NODE_ENV: 'production'
+          },
+          Scripts: [
+            {
+              StopDeployOnFailure: false,
+              RelativeWorkingDir: '.',
+              Command: '/bin/sh',
+              Args: [
+                'ls',
+                '-F',
+                '-a',
+                '-l'
+              ]
+            }
+          ]
         }
       ]
     }
   ];
   static dockerContainerDefaultDescriptor =
-  {
-    "Hostname": "",
-    "Domainname": "",
-    "User": "",
-    "AttachStdin": false,
-    "AttachStdout": true,
-    "AttachStderr": true,
-    "Tty": false,
-    "OpenStdin": false,
-    "StdinOnce": false,
-    "Env": [
-      "FOO=bar"
-    ],
-    "Cmd": [],
-    "Entrypoint": "",
-    "Image": "ubuntu",
-    "Labels": {
-      "com.example.vendor": "Acme",
-      "com.example.license": "GPL",
-      "com.example.version": "1.0"
-    },
-    "Mounts": [
-      {
-        "Name": "fac362...80535",
-        "Source": "/data",
-        "Destination": "/data",
-        "Driver": "local",
-        "Mode": "ro,Z",
-        "RW": false,
-        "Propagation": ""
+    {
+      "Hostname": "",
+      "Domainname": "",
+      "User": "",
+      "AttachStdin": false,
+      "AttachStdout": true,
+      "AttachStderr": true,
+      "Tty": false,
+      "OpenStdin": false,
+      "StdinOnce": false,
+      "Env": [
+        "FOO=bar"
+      ],
+      "Cmd": [],
+      "Entrypoint": "",
+      "Image": "ubuntu",
+      "Labels": {
+        "com.example.vendor": "Acme",
+        "com.example.license": "GPL",
+        "com.example.version": "1.0"
+      },
+      "Mounts": [
+        {
+          "Name": "fac362...80535",
+          "Source": "/data",
+          "Destination": "/data",
+          "Driver": "local",
+          "Mode": "ro,Z",
+          "RW": false,
+          "Propagation": ""
+        }
+      ],
+      "WorkingDir": "",
+      "NetworkDisabled": false,
+      "MacAddress": "12:34:56:78:9a:bc",
+      "ExposedPorts": {
+        "22/tcp": {}
+      },
+      "StopSignal": "SIGTERM",
+      "HostConfig": {
+        "Binds": ["/tmp:/tmp"],
+        "Links": ["redis3:redis"],
+        "Memory": 0,
+        "MemorySwap": 0,
+        "MemoryReservation": 0,
+        "KernelMemory": 0,
+        "CpuShares": 512,
+        "CpuPeriod": 100000,
+        "CpuQuota": 50000,
+        "CpusetCpus": "0,1",
+        "CpusetMems": "0,1",
+        "BlkioWeight": 300,
+        "BlkioWeightDevice": [{}],
+        "BlkioDeviceReadBps": [{}],
+        "BlkioDeviceReadIOps": [{}],
+        "BlkioDeviceWriteBps": [{}],
+        "BlkioDeviceWriteIOps": [{}],
+        "MemorySwappiness": 60,
+        "OomKillDisable": false,
+        "OomScoreAdj": 500,
+        "PortBindings": {"22/tcp": [{"HostPort": "11022"}]},
+        "PublishAllPorts": false,
+        "Privileged": false,
+        "ReadonlyRootfs": false,
+        "Dns": ["8.8.8.8"],
+        "DnsOptions": [""],
+        "DnsSearch": [""],
+        "ExtraHosts": null,
+        "VolumesFrom": ["parent", "other:ro"],
+        "CapAdd": ["NET_ADMIN"],
+        "CapDrop": ["MKNOD"],
+        "GroupAdd": ["newgroup"],
+        "RestartPolicy": {"Name": "", "MaximumRetryCount": 0},
+        "NetworkMode": "bridge",
+        "Devices": [],
+        "Ulimits": [{}],
+        "LogConfig": {"Type": "json-file", "Config": {}},
+        "SecurityOpt": [""],
+        "CgroupParent": "",
+        "VolumeDriver": "",
+        "ShmSize": 67108864
       }
-    ],
-    "WorkingDir": "",
-    "NetworkDisabled": false,
-    "MacAddress": "12:34:56:78:9a:bc",
-    "ExposedPorts": {
-      "22/tcp": {}
-    },
-    "StopSignal": "SIGTERM",
-    "HostConfig": {
-      "Binds": ["/tmp:/tmp"],
-      "Links": ["redis3:redis"],
-      "Memory": 0,
-      "MemorySwap": 0,
-      "MemoryReservation": 0,
-      "KernelMemory": 0,
-      "CpuShares": 512,
-      "CpuPeriod": 100000,
-      "CpuQuota": 50000,
-      "CpusetCpus": "0,1",
-      "CpusetMems": "0,1",
-      "BlkioWeight": 300,
-      "BlkioWeightDevice": [{}],
-      "BlkioDeviceReadBps": [{}],
-      "BlkioDeviceReadIOps": [{}],
-      "BlkioDeviceWriteBps": [{}],
-      "BlkioDeviceWriteIOps": [{}],
-      "MemorySwappiness": 60,
-      "OomKillDisable": false,
-      "OomScoreAdj": 500,
-      "PortBindings": {"22/tcp": [{"HostPort": "11022"}]},
-      "PublishAllPorts": false,
-      "Privileged": false,
-      "ReadonlyRootfs": false,
-      "Dns": ["8.8.8.8"],
-      "DnsOptions": [""],
-      "DnsSearch": [""],
-      "ExtraHosts": null,
-      "VolumesFrom": ["parent", "other:ro"],
-      "CapAdd": ["NET_ADMIN"],
-      "CapDrop": ["MKNOD"],
-      "GroupAdd": ["newgroup"],
-      "RestartPolicy": {"Name": "", "MaximumRetryCount": 0},
-      "NetworkMode": "bridge",
-      "Devices": [],
-      "Ulimits": [{}],
-      "LogConfig": {"Type": "json-file", "Config": {}},
-      "SecurityOpt": [""],
-      "CgroupParent": "",
-      "VolumeDriver": "",
-      "ShmSize": 67108864
-    }
-  };
+    };
   /*  {
 
    Image: '',

@@ -295,7 +295,10 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
                       expressApp, ['set-size', expressApp.ServiceName, clusterSize], cb);
                   },
                   (cb: (err: Error, result?: any) => void) => {//Set ExpressApp environment
-                    expressApp.EnvironmentVariables = expressApp.EnvironmentVariables || {};
+                    if (!_.keys(expressApp.EnvironmentVariables).length) {
+                      cb(null);
+                      return;
+                    }
                     let cmd = ['env-set', expressApp.ServiceName];
                     for (let environmentVariable in expressApp.EnvironmentVariables) {
                       //noinspection JSUnfilteredForInLoop
@@ -337,7 +340,9 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
                           (err, result) => {
                             me.commandUtil.log(result.toString());
                           },
-                          cb);
+                          (err: Error, result: any) => {
+                            cb(script.StopDeployOnFailure ? err : null, result);
+                          });
                       },
                       (err: Error, results: any) => {
                         cb(err, null);
