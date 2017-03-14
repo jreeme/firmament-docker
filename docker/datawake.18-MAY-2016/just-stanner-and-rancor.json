@@ -12,6 +12,9 @@
       "8701/tcp" : {}
     },
     "HostConfig"    : {
+      "Binds": [
+        "/tmp:/tmp"
+      ],
       "PortBindings": {
         "27017/tcp": [
           {

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/firmament-docker.iml" afterPath="$PROJECT_DIR$/.idea/firmament-docker.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docker/datawake.18-MAY-2016/firmament.json" afterPath="$PROJECT_DIR$/docker/datawake.18-MAY-2016/firmament.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docker/datawake.18-MAY-2016/just-datawake.json" afterPath="$PROJECT_DIR$/docker/datawake.18-MAY-2016/just-datawake.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docker/datawake.18-MAY-2016/just-stanner-and-rancor.json" afterPath="$PROJECT_DIR$/docker/datawake.18-MAY-2016/just-stanner-and-rancor.json" />
     </list>
@@ -27,7 +27,17 @@
     <favorites_list name="firmament-docker" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="firmament.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docker/vita.25-DEC-2016/firmament.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="firmament.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docker/datawake.18-MAY-2016/firmament.json">
           <provider selected="true" editor-type-id="text-editor">
@@ -41,8 +51,18 @@
       <file leaf-file-name="just-datawake.json" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/docker/datawake.18-MAY-2016/just-datawake.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="12" column="5" lean-forward="false" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
+            <state relative-caret-position="540">
+              <caret line="47" column="35" lean-forward="false" selection-start-line="47" selection-start-column="35" selection-end-line="47" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="just-stanner-and-rancor.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docker/datawake.18-MAY-2016/just-stanner-and-rancor.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1116">
+              <caret line="62" column="10" lean-forward="false" selection-start-line="62" selection-start-column="10" selection-end-line="62" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -163,6 +183,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -277,7 +298,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -948,7 +968,7 @@
     <editor active="false" />
     <layout>
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2636656" sideWeight="0.4939378" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14812863" sideWeight="0.47777778" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14812863" sideWeight="0.47777778" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39248434" sideWeight="0.5044808" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32368702" sideWeight="0.4949921" order="7" side_tool="false" content_ui="tabs" />
@@ -994,7 +1014,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="-&gt; v.0.2.23" />
     <MESSAGE value="-&gt; v.0.2.24" />
     <MESSAGE value="-&gt; v.0.2.25" />
     <MESSAGE value="-&gt; v.0.2.26" />
@@ -1019,7 +1038,8 @@
     <MESSAGE value="v.1.3.7-&gt;NPM Patched the edge case of an Image having &lt;null&gt; RepoTags value. While I was there also patched Container having &lt;null&gt; Names property." />
     <MESSAGE value="Fix missing EnvironmentVariables in firmament.json bug" />
     <MESSAGE value="v.1.3.9-&gt;NPM Make deploys continue when there's a script error" />
-    <option name="LAST_COMMIT_MESSAGE" value="v.1.3.9-&gt;NPM Make deploys continue when there's a script error" />
+    <MESSAGE value="Patch some firmament config files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch some firmament config files" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1251,25 +1271,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docker/vita.25-DEC-2016/firmament.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="571">
-          <caret line="64" column="0" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docker/datawake.18-MAY-2016/_run2.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
           <caret line="1" column="47" lean-forward="false" selection-start-line="1" selection-start-column="47" selection-end-line="1" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docker/datawake.18-MAY-2016/just-stanner-and-rancor.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="684">
-          <caret line="62" column="10" lean-forward="false" selection-start-line="62" selection-start-column="10" selection-end-line="62" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1317,10 +1322,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/docker/vita.25-DEC-2016/firmament.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/datawake.18-MAY-2016/just-stanner-and-rancor.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1116">
+          <caret line="62" column="10" lean-forward="false" selection-start-line="62" selection-start-column="10" selection-end-line="62" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/docker/datawake.18-MAY-2016/just-datawake.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="5" lean-forward="false" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
+        <state relative-caret-position="540">
+          <caret line="47" column="35" lean-forward="false" selection-start-line="47" selection-start-column="35" selection-end-line="47" selection-end-column="35" />
           <folding />
         </state>
       </provider>
