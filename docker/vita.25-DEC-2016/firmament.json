@@ -1,46 +1,34 @@
 [
   {
-    "name": "vita-strongloop",
-    "Image": "jreeme/vita:06-MAR-2017",
+    "name"          : "vita-strongloop",
+    "Image"         : "jreeme/vita:06-MAR-2017",
     "DockerFilePath": ".",
-    "Hostname": "vita-strongloop",
-    "ExposedPorts": {
+    "Hostname"      : "vita-strongloop",
+    "ExposedPorts"  : {
       "8080/tcp": {},
       "7001/tcp": {}
     },
-    "HostConfig": {
-      "Binds": [
-        "/home/jreeme/src/loopback-webpack-typescript-amino/server:/home/vita/config",
-        "/home/jreeme/watch:/home/vita/input-data",
-        "/home/jreeme/watch:/home/vita/output-data"
+    "Volumes":{
+      "/home/vita/config":{},
+      "/home/vita/input-data":{}
+    },
+    "HostConfig"    : {
+      "Binds"       : [
+        "/home/jreeme/src/vita-deploy:/home/vita/config",
+        "/home/jreeme/watch:/home/vita/input-data"
       ],
       "PortBindings": {
-        "7001/tcp": [
+        "7001/tcp" : [
           {
             "HostPort": "7001"
           }
         ],
-        "3001/tcp": [
-          {
-            "HostPort": "3001"
-          }
-        ],
-        "3002/tcp": [
-          {
-            "HostPort": "3002"
-          }
-        ],
-        "3003/tcp": [
-          {
-            "HostPort": "3003"
-          }
-        ],
-        "8080/tcp": [
+        "8080/tcp" : [
           {
             "HostPort": "8080"
           }
         ],
-        "8701/tcp": [
+        "8701/tcp" : [
           {
             "HostPort": "8701"
           }
@@ -52,22 +40,22 @@
         ]
       }
     },
-    "ExpressApps": [
+    "ExpressApps"   : [
       {
-        "GitUrl": "https://github.com/Sotera/loopback-webpack-typescript-amino.git",
-        "DeployExisting": false,
-        "GitSrcBranchName": "vita3",
+        "GitUrl"              : "https://github.com/Sotera/loopback-webpack-typescript-amino.git",
+        "DeployExisting"      : false,
+        "GitSrcBranchName"    : "vita3",
         "StrongLoopBranchName": "deploy",
-        "StrongLoopServerUrl": "http://localhost:8701",
-        "ServiceName": "vita",
-        "DoBowerInstall": false,
-        "ClusterSize": 1,
+        "StrongLoopServerUrl" : "http://localhost:8701",
+        "ServiceName"         : "vita",
+        "DoBowerInstall"      : false,
+        "ClusterSize"         : 1,
         "EnvironmentVariables": {
-          "PORT": 8080,
-          "NODE_ENV": "production",
+          "PORT"              : 8080,
+          "NODE_ENV"          : "production",
           "CONFIG_FILE_FOLDER": "/home/vita/config"
         },
-        "Scripts": [
+        "Scripts"             : [
         ]
       }
     ]
