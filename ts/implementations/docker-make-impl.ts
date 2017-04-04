@@ -141,7 +141,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
             //Try to pull image
             this.dockerImageManagement.pullImage(missingImageName,
               (taskId, status, current, total) => {
-                me.progressBar.showProgressForTask(taskId, status, current, total);
+                //me.progressBar.showProgressForTask(taskId, status, current, total);
               },
               (err: Error) => {
                 cb(null, err ? missingImageName : null);
@@ -151,7 +151,9 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
             if (me.commandUtil.callbackIfError(cb, err)) {
               return;
             }
-            cb(null, missingImageNames.filter(missingImageName => !!missingImageName));
+            cb(null, missingImageNames.filter(missingImageName => {
+              return !!missingImageName;
+            }));
           });
       },
       (missingImageNames: string[], cb: (err: Error, containerBuildErrors: Error[]) => void) => {
@@ -163,8 +165,8 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
             let dockerFilePath = path.resolve(baseDir, containerConfig.DockerFilePath);
             let dockerImageName = containerConfig.Image;
             this.dockerImageManagement.buildDockerFile(dockerFilePath, dockerImageName,
-              function (taskId, status, current, total) {
-                me.progressBar.showProgressForTask(taskId, status, current, total);
+              (taskId, status, current, total) => {
+                //me.progressBar.showProgressForTask(taskId, status, current, total);
               },
               (err: Error) => {
                 cb(null, err
@@ -176,7 +178,9 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
             if (me.commandUtil.callbackIfError(cb, err)) {
               return;
             }
-            errors = errors.filter(error => !!error);
+            errors = errors.filter(error => {
+              return !!error;
+            });
             cb(me.commandUtil.logErrors(errors).length ? new Error() : null, errors);
           });
       },
