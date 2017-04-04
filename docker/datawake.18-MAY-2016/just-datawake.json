@@ -1,8 +1,8 @@
 [
   {
     "name"          : "datawake",
-    "Image"         : "jreeme/datawake:rancor-stanner",
-    "DockerFilePath": "",
+    "Image"         : "jreeme/datawake:stanner-rancor-testdata",
+    "DockerFilePath": "..",
     "Hostname"      : "datawake",
     "ExposedPorts"  : {
       "27017/tcp": {},
@@ -13,7 +13,6 @@
     },
     "HostConfig"    : {
       "Binds": [
-        "/tmp:/tmp"
       ],
       "PortBindings": {
         "8182/tcp": [
