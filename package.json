@@ -36,7 +36,7 @@
     "chai": "^3.5.0",
     "mocha": "^2.5.3",
     "sinon": "^1.17.6",
-    "typescript": "2.1.5"
+    "typescript": "2.2.2"
   },
   "dependencies": {
     "async": "^2.0.0-rc.2",
