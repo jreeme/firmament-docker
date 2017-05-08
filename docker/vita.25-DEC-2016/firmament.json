@@ -20,11 +20,13 @@
       "PortBindings": {
         "7001/tcp" : [
           {
+            "HostIp": "192.168.96.152",
             "HostPort": "7001"
           }
         ],
         "8080/tcp" : [
           {
+            "HostIp": "192.168.96.152",
             "HostPort": "8080"
           }
         ],
@@ -35,6 +37,7 @@
         ],
         "27017/tcp": [
           {
+            "HostIp": "192.168.96.152",
             "HostPort": "27017"
           }
         ]
@@ -43,7 +46,7 @@
     "ExpressApps"   : [
       {
         "GitUrl"              : "https://github.com/Sotera/loopback-webpack-typescript-amino.git",
-        "DeployExisting"      : false,
+        "DeployExisting"      : true,
         "GitSrcBranchName"    : "vita3",
         "StrongLoopBranchName": "deploy",
         "StrongLoopServerUrl" : "http://localhost:8701",
