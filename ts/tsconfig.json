@@ -9,7 +9,7 @@
     "preserveConstEnums": true,
     "declaration": true,
     "suppressImplicitAnyIndexErrors": true,
-    "outDir": "../js",
+    "outDir": "/mnt/RAM_disk/firmament/node_modules/firmament-docker/js",
     "pretty": true,
     "sourceMap": true,
     "lib": [
