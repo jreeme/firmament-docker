@@ -1,12 +1,9 @@
 import {injectable, inject} from "inversify";
 import kernel from '../../inversify.config';
 import {Command} from 'firmament-yargs';
-import {DockerMake} from "../../interfaces/docker-make";
-
-const fs = require('fs');
 
 @injectable()
-export class MakeCommandImpl implements Command {
+export class ProvisionCommandImpl implements Command {
   aliases: string[] = [];
   command: string = '';
   commandDesc: string = '';
@@ -14,24 +11,24 @@ export class MakeCommandImpl implements Command {
   };
   options: any = {};
   subCommands: Command[] = [];
-  static defaultConfigFilename = 'firmament.json';
+  static defaultConfigFilename = 'docker-provision.json';
 
-  constructor(@inject('DockerMake') private dockerMake: DockerMake) {
+  constructor() {
     this.buildCommandTree();
   }
 
   private buildCommandTree() {
-    this.aliases = ['make', 'm'];
+    this.aliases = ['provision', 'p'];
     this.command = '<subCommand>';
-    this.commandDesc = 'Support for building Docker container clusters';
-    this.pushBuildCommand();
+    this.commandDesc = 'Support for provisioning docker swarms & stacks';
+    //this.pushBuildCommand();
     this.pushTemplateCommand();
   };
 
   private pushTemplateCommand() {
     let templateCommand = kernel.get<Command>('CommandImpl');
     templateCommand.aliases = ['template', 't'];
-    templateCommand.commandDesc = 'Create a template JSON spec for a container cluster';
+    templateCommand.commandDesc = 'Create a template JSON spec for creating docker stack/swarm';
     //noinspection ReservedWordAsName
     templateCommand.options = {
       get: {
@@ -41,7 +38,7 @@ export class MakeCommandImpl implements Command {
       },
       output: {
         alias: 'o',
-        default: MakeCommandImpl.defaultConfigFilename,
+        default: ProvisionCommandImpl.defaultConfigFilename,
         type: 'string',
         desc: 'Name the output JSON file'
       },
@@ -52,11 +49,11 @@ export class MakeCommandImpl implements Command {
         desc: 'Create a full JSON template with all Docker options set to reasonable defaults'
       }
     };
-    templateCommand.handler = this.dockerMake.makeTemplate.bind(this.dockerMake);
+    //templateCommand.handler = this.dockerMake.makeTemplate.bind(this.dockerMake);
     this.subCommands.push(templateCommand);
   };
 
-  private pushBuildCommand() {
+/*  private pushBuildCommand() {
     let buildCommand = kernel.get<Command>('CommandImpl');
     buildCommand.aliases = ['build', 'b'];
     buildCommand.commandDesc = 'Build Docker containers based on JSON spec';
@@ -71,6 +68,6 @@ export class MakeCommandImpl implements Command {
     };
     buildCommand.handler = this.dockerMake.buildTemplate.bind(this.dockerMake);
     this.subCommands.push(buildCommand);
-  };
+  };*/
 }
 
