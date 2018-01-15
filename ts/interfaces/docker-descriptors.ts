@@ -1,4 +1,25 @@
+export interface DockerStackConfigTemplate {
+  clusterPrefix: string,
+  workerHostCount: number,
+  dockerMachineWorkerOptions: any,
+  dockerMachineMasterOptions: any,
+  dockerMachineDriverOptions: any
+}
+
 export class DockerDescriptors {
+  static dockerStackConfigTemplate: DockerStackConfigTemplate = {
+    clusterPrefix: 'amino3',
+    workerHostCount: 1,
+    dockerMachineWorkerOptions: {},
+    dockerMachineMasterOptions: {
+      engineLabel: 'role=master'
+    },
+    dockerMachineDriverOptions: {
+      driver: 'virtualbox',
+      virtualboxCpuCount: 2,
+      engineInsecureRegistry: '52.0.211.45:5000'
+    }
+  };
   static dockerContainerConfigTemplate = [
     {
       name: 'mongo',

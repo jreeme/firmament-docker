@@ -1,0 +1,30 @@
+{
+  "entries": [
+    {
+      "name": "vita",
+      "urls": [
+        "vita.25-DEC-2016/firmament.json",
+        "vita.25-DEC-2016/_etc_supervisor.conf",
+        "vita.25-DEC-2016/Dockerfile"
+      ]
+    },
+    {
+      "name": "genie-ui",
+      "urls": [
+        "genie-ui.08-JUN-2016/firmament.json"
+      ]
+    },
+    {
+      "name": "datawake",
+      "urls": [
+        "datawake.18-MAY-2016/firmament.json"
+      ]
+    },
+    {
+      "name": "watchman",
+      "urls": [
+        "https://raw.githubusercontent.com/Sotera/watchman/master/deploy/firmament/deploy.json"
+      ]
+    }
+  ]
+}

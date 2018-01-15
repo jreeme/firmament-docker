@@ -2,11 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/ts/interfaces/docker-provision.ts" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/docker/provisionTemplateCatalog.json" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/jreeme.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/jreeme.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
       <change beforePath="$PROJECT_DIR$/ts/implementations/commands/provision-command-impl.ts" afterPath="$PROJECT_DIR$/ts/implementations/commands/provision-command-impl.ts" />
+      <change beforePath="$PROJECT_DIR$/ts/implementations/docker-make-impl.ts" afterPath="$PROJECT_DIR$/ts/implementations/docker-make-impl.ts" />
+      <change beforePath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" afterPath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" />
+      <change beforePath="$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts" afterPath="$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts" />
+      <change beforePath="$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts" afterPath="$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts" />
+      <change beforePath="$PROJECT_DIR$/ts/interfaces/docker-provision.ts" afterPath="$PROJECT_DIR$/ts/interfaces/docker-provision.ts" />
+      <change beforePath="$PROJECT_DIR$/ts/interfaces/docker-util.ts" afterPath="$PROJECT_DIR$/ts/interfaces/docker-util.ts" />
       <change beforePath="$PROJECT_DIR$/ts/inversify.config.ts" afterPath="$PROJECT_DIR$/ts/inversify.config.ts" />
+      <change beforePath="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" afterPath="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" />
+      <change beforePath="$PROJECT_DIR$/ts/tsconfig.json" afterPath="$PROJECT_DIR$/ts/tsconfig.json" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,7 +37,92 @@
     <favorites_list name="firmament-docker" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <splitter split-orientation="horizontal" split-proportion="0.52398527">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="docker-provision-impl.ts" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="476">
+                  <caret line="61" column="8" lean-forward="false" selection-start-line="61" selection-start-column="8" selection-end-line="61" selection-end-column="8" />
+                  <folding>
+                    <element signature="e#0#45#0" expanded="true" />
+                    <marker date="1516049722001" expanded="true" signature="3834:4279" ph="..." />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="tsconfig.json" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/ts/tsconfig.json">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="272">
+                  <caret line="16" column="10" lean-forward="false" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/node_modules/file-exists/index.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="68">
+                  <caret line="4" column="1" lean-forward="false" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="manual-test.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="357">
+                  <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#20#46#0" expanded="true" />
+                    <element signature="e#660#703#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="docker-make-impl.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/ts/implementations/docker-make-impl.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="255">
+                  <caret line="324" column="0" lean-forward="false" selection-start-line="324" selection-start-column="0" selection-end-line="324" selection-end-column="0" />
+                  <folding>
+                    <element signature="n#!!block;n#makeTemplate#0;n#DockerMakeImpl#0" expanded="false" />
+                    <element signature="n#!!block;n#containerDependencySort#0;n#DockerMakeImpl#0" expanded="false" />
+                    <element signature="n#!!block;n#topologicalDependencySort#0;n#DockerMakeImpl#0" expanded="false" />
+                    <element signature="n#!!block;n#remoteSlcCtlCommand#0;n#DockerMakeImpl#0" expanded="false" />
+                    <element signature="n#!!block;n#gitClone#0;n#DockerMakeImpl#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="docker-descriptors.ts" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="289">
+                  <caret line="17" column="26" lean-forward="false" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
+                  <folding>
+                    <element signature="e#658#2688#0" expanded="false" />
+                    <element signature="e#2738#5020#0" expanded="false" />
+                    <element signature="e#5024#6431#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -46,6 +141,9 @@
       <find>target</find>
       <find>lodash</find>
       <find>ServicePort</find>
+      <find>DockerUtil</find>
+      <find>time-ago</find>
+      <find>fileExists</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -54,9 +152,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/ts/interfaces/force-error.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/util/force-error-impl.ts" />
-        <option value="$PROJECT_DIR$/ts/interfaces/docker-util.ts" />
         <option value="$PROJECT_DIR$/ts/test/docker-util.test.ts" />
         <option value="$PROJECT_DIR$/ts/test/docker-ode-mock-impl.ts" />
         <option value="$PROJECT_DIR$/ts/test/docker-image-management.test.ts" />
@@ -82,14 +178,11 @@
         <option value="$PROJECT_DIR$/ts/implementations/docker-image-management-impl.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/docker-management-impl.ts" />
         <option value="$PROJECT_DIR$/ts/index.ts" />
-        <option value="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" />
         <option value="$PROJECT_DIR$/docker/templateCatalog.json" />
         <option value="$PROJECT_DIR$/ts/interfaces/docker-make.ts" />
         <option value="$PROJECT_DIR$/docker/vita.25-DEC-2016/_run.sh" />
-        <option value="$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts" />
         <option value="$PROJECT_DIR$/docker/vita.25-DEC-2016/Dockerfile" />
         <option value="$PROJECT_DIR$/docker/datawake.18-MAY-2016/just-stanner-and-rancor.json" />
-        <option value="$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts" />
         <option value="$PROJECT_DIR$/docker/datawake.18-MAY-2016/firmament.json" />
         <option value="$PROJECT_DIR$/docker/datawake.18-MAY-2016/datawake-all-in-one.json" />
         <option value="$PROJECT_DIR$/docker/datawake.18-MAY-2016/just-datawake.json" />
@@ -99,12 +192,17 @@
         <option value="$PROJECT_DIR$/docker/vita.25-DEC-2016/firmament.json" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/ts/implementations/commands/docker-command-impl.ts" />
-        <option value="$PROJECT_DIR$/ts/tsconfig.json" />
-        <option value="$PROJECT_DIR$/ts/implementations/docker-make-impl.ts" />
-        <option value="$PROJECT_DIR$/ts/interfaces/docker-provision.ts" />
-        <option value="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" />
-        <option value="$PROJECT_DIR$/ts/implementations/commands/provision-command-impl.ts" />
+        <option value="$PROJECT_DIR$/ts/interfaces/docker-util.ts" />
+        <option value="$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts" />
+        <option value="$PROJECT_DIR$/docker/provisionTemplateCatalog.json" />
         <option value="$PROJECT_DIR$/ts/inversify.config.ts" />
+        <option value="$PROJECT_DIR$/ts/implementations/docker-make-impl.ts" />
+        <option value="$PROJECT_DIR$/ts/implementations/commands/provision-command-impl.ts" />
+        <option value="$PROJECT_DIR$/ts/interfaces/docker-provision.ts" />
+        <option value="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" />
+        <option value="$PROJECT_DIR$/ts/tsconfig.json" />
+        <option value="$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts" />
+        <option value="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" />
       </list>
     </option>
   </component>
@@ -123,9 +221,9 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1920" />
-    <option name="width" value="786" />
-    <option name="height" value="592" />
+    <option name="x" value="1919" />
+    <option name="width" value="1922" />
+    <option name="height" value="1053" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -145,12 +243,18 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
               <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="docker" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
@@ -174,22 +278,41 @@
               <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
               <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
               <item name="ts" type="462c0819:PsiDirectoryNode" />
+              <item name="implementations" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="ts" type="462c0819:PsiDirectoryNode" />
               <item name="interfaces" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="ts" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="ts" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="manual-tests" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="JavaScript.Libraries" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/js/test/manual-tests/manual-test.js" />
     <property name="editor.config.accepted" value="true" />
     <property name="nodejs.mocha.mocha_node_package_dir" value="$PROJECT_DIR$/node_modules/mocha" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
@@ -203,11 +326,11 @@
       <recent name="$PROJECT_DIR$/ts/implementations/commands" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/docker" />
       <recent name="$PROJECT_DIR$/ts/implementations" />
       <recent name="$PROJECT_DIR$/ts/interfaces" />
       <recent name="$PROJECT_DIR$/ts/implementations/commands" />
       <recent name="$PROJECT_DIR$/docker/datawake.04-APR-2017" />
-      <recent name="$PROJECT_DIR$/docker" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -222,8 +345,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.firmament">
-    <configuration name="firmament" type="NodeJSConfigurationType" factoryName="Node.js" path-to-js-file="$PROJECT_DIR$/../firmament/js/firmament.js" working-dir="/tmp">
+  <component name="RunManager" selected="Node.js.manual-test.js">
+    <configuration name="firmament" type="NodeJSConfigurationType" factoryName="Node.js" application-parameters="p t" path-to-js-file="$PROJECT_DIR$/../firmament/js/firmament.js" working-dir="/tmp">
       <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
         <option name="envVars">
           <list />
@@ -249,32 +372,7 @@
         <profiling v8-profiler-path="" />
       </EXTENSION>
     </configuration>
-    <configuration name="manual-test.js" type="NodeJSConfigurationType" factoryName="Node.js" path-to-js-file="manual-test.js" working-dir="$PROJECT_DIR$/js/test/manual-tests">
-      <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
-        <option name="envVars">
-          <list />
-        </option>
-        <option name="extraHosts">
-          <list />
-        </option>
-        <option name="links">
-          <list />
-        </option>
-        <option name="networkDisabled" value="false" />
-        <option name="networkMode" value="bridge" />
-        <option name="portBindings">
-          <list />
-        </option>
-        <option name="publishAllPorts" value="false" />
-        <option name="version" value="1" />
-        <option name="volumeBindings">
-          <list />
-        </option>
-      </EXTENSION>
-      <EXTENSION ID="com.jetbrains.nodejs.run.NodeJSProfilingRunConfigurationExtension">
-        <profiling v8-profiler-path="" />
-      </EXTENSION>
-    </configuration>
+    <configuration name="manual-test.js" type="NodeJSConfigurationType" factoryName="Node.js" path-to-js-file="$PROJECT_DIR$/js/test/manual-tests/manual-test.js" working-dir="/tmp" />
     <configuration default="true" type="BashConfigurationType" factoryName="Bash">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="INTERPRETER_PATH" value="/bin/bash" />
@@ -404,8 +502,8 @@
       <item index="2" class="java.lang.String" itemvalue="Mocha.js/test/docker-image-management.test.js" />
       <item index="3" class="java.lang.String" itemvalue="Mocha.js/test/docker-util.test.js" />
       <item index="4" class="java.lang.String" itemvalue="Mocha.js/test/docker-make.test.js" />
-      <item index="5" class="java.lang.String" itemvalue="Node.js.manual-test.js" />
-      <item index="6" class="java.lang.String" itemvalue="Node.js.firmament" />
+      <item index="5" class="java.lang.String" itemvalue="Node.js.firmament" />
+      <item index="6" class="java.lang.String" itemvalue="Node.js.manual-test.js" />
       <item index="7" class="java.lang.String" itemvalue="npm.build" />
     </list>
     <recent_temporary>
@@ -869,23 +967,23 @@
     <frame x="1919" y="0" width="1922" height="1053" extended-state="6" />
     <layout>
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26264802" sideWeight="0.4939378" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21085925" sideWeight="0.47777778" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16816026" sideWeight="0.47777778" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39248434" sideWeight="0.5044808" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32846716" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3676313" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32403433" sideWeight="0.4949921" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16094987" sideWeight="0.5222222" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32846716" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40365985" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18406889" sideWeight="0.49551925" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35844994" sideWeight="0.49551925" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3676313" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -910,7 +1008,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="-&gt; v.0.2.25" />
     <MESSAGE value="-&gt; v.0.2.26" />
     <MESSAGE value="-&gt; v.0.2.27" />
     <MESSAGE value="-&gt; v.0.2.28 (Start using ForceError/Impl from firmament-yargs, get 'js' out of git repo)" />
@@ -935,66 +1032,31 @@
     <MESSAGE value="Put plugin build script back" />
     <MESSAGE value="Add datawake-all-in-one.json" />
     <MESSAGE value="v.1.4.2-&gt;NPM" />
-    <option name="LAST_COMMIT_MESSAGE" value="v.1.4.2-&gt;NPM" />
+    <MESSAGE value="Adding docker provision (stack/swarm)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding docker provision (stack/swarm)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ts/implementations/docker-make-impl.ts</url>
-          <line>177</line>
+          <line>181</line>
           <option name="timeStamp" value="503" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ts/implementations/docker-make-impl.ts</url>
-          <line>168</line>
+          <line>172</line>
           <option name="timeStamp" value="505" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="506" />
+      <option name="time" value="538" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/docker/genie-ui.08-JUN-2016/_etc_supervisor.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-container-management.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="11" column="2" lean-forward="false" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docker/vita.25-DEC-2016/_etc_supervisor.conf" />
-    <entry file="file://$PROJECT_DIR$/docker/genie-ui.08-JUN-2016/firmament.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="89">
-          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../firmament/node_modules/firmament-yargs/ts/implementations/spawn-impl.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="101" column="0" lean-forward="false" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-util.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ts/interfaces/remote-catalog.ts" />
     <entry file="file://$PROJECT_DIR$/docker/templateCatalog.dist" />
     <entry file="file://$PROJECT_DIR$/ts/implementations/remote-catalog-impl.ts" />
@@ -1040,13 +1102,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="15" column="76" lean-forward="false" selection-start-line="15" selection-start-column="76" selection-end-line="15" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ts/implementations/docker-container-management-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -1063,24 +1118,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../loopback-webpack-typescript-amino/server/services/implementations/db-monitor-impl.ts" />
     <entry file="file://$USER_HOME$/tmp/firmament.json" />
-    <entry file="file://$PROJECT_DIR$/docker/templateCatalog.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="20" column="6" lean-forward="false" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docker/vita.25-DEC-2016/_run.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
           <caret line="1" column="57" lean-forward="false" selection-start-line="1" selection-start-column="57" selection-end-line="1" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="42" column="29" lean-forward="false" selection-start-line="42" selection-start-column="29" selection-end-line="42" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -1113,13 +1154,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/datawake.18-MAY-2016/firmament.json.dist" />
-    <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1044">
-          <caret line="58" column="17" lean-forward="false" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docker/datawake.18-MAY-2016/firmament.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1116">
@@ -1191,14 +1225,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="18" lean-forward="false" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ts/implementations/commands/docker-command-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="219">
@@ -1207,33 +1233,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-make-impl.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
-          <caret line="109" column="0" lean-forward="false" selection-start-line="109" selection-start-column="0" selection-end-line="109" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-            <element signature="n#!!block;n#makeTemplate#0;n#DockerMakeImpl#0" expanded="false" />
-            <element signature="n#!!block;n#getSortedContainerConfigsFromJsonFile#0;n#DockerMakeImpl#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ts/implementations/commands/make-command-impl.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="16" column="34" lean-forward="false" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ts/interfaces/dockerode.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-969">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#56#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1241,51 +1244,168 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="58" lean-forward="false" selection-start-line="3" selection-start-column="58" selection-end-line="3" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-util-options.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-util.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="15" column="67" lean-forward="false" selection-start-line="15" selection-start-column="67" selection-end-line="15" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/templateCatalog.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="14" lean-forward="false" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/inversify.config.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="21" column="69" lean-forward="false" selection-start-line="21" selection-start-column="69" selection-end-line="21" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/test/docker-image-management.test.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#26#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/provisionTemplateCatalog.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/docker-compose.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="505">
+          <caret line="39" column="3" lean-forward="false" selection-start-line="39" selection-start-column="3" selection-end-line="39" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/commands/make-command-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="18" column="39" lean-forward="false" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/commands/provision-command-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="850">
+          <caret line="53" column="70" lean-forward="false" selection-start-line="53" selection-start-column="70" selection-end-line="53" selection-end-column="70" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-provision.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="31" lean-forward="false" selection-start-line="0" selection-start-column="31" selection-end-line="0" selection-end-column="31" />
+        <state relative-caret-position="34">
+          <caret line="2" column="40" lean-forward="false" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
+    <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+        <state relative-caret-position="357">
+          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding>
-            <element signature="e#0#45#0" expanded="true" />
+            <element signature="e#20#46#0" expanded="true" />
+            <element signature="e#660#703#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ts/implementations/commands/provision-command-impl.ts">
+    <entry file="file://$PROJECT_DIR$/node_modules/file-exists/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ts/inversify.config.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+        <state relative-caret-position="68">
+          <caret line="4" column="1" lean-forward="false" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-make-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="324" column="0" lean-forward="false" selection-start-line="324" selection-start-column="0" selection-end-line="324" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!block;n#makeTemplate#0;n#DockerMakeImpl#0" expanded="false" />
+            <element signature="n#!!block;n#containerDependencySort#0;n#DockerMakeImpl#0" expanded="false" />
+            <element signature="n#!!block;n#topologicalDependencySort#0;n#DockerMakeImpl#0" expanded="false" />
+            <element signature="n#!!block;n#remoteSlcCtlCommand#0;n#DockerMakeImpl#0" expanded="false" />
+            <element signature="n#!!block;n#gitClone#0;n#DockerMakeImpl#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ts/tsconfig.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="72" lean-forward="false" selection-start-line="11" selection-start-column="72" selection-end-line="11" selection-end-column="72" />
+        <state relative-caret-position="272">
+          <caret line="16" column="10" lean-forward="false" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="26" lean-forward="false" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
+          <folding>
+            <element signature="e#658#2688#0" expanded="false" />
+            <element signature="e#2738#5020#0" expanded="false" />
+            <element signature="e#5024#6431#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="61" column="8" lean-forward="false" selection-start-line="61" selection-start-column="8" selection-end-line="61" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+            <marker date="1516049722001" expanded="true" signature="3834:4279" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

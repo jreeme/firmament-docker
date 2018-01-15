@@ -1,3 +1,4 @@
 export interface DockerProvision {
-  makeTemplate(argv: any);
+  buildTemplate(argv: any);
+  makeTemplate(argv: any, cb?: () => void);
 }

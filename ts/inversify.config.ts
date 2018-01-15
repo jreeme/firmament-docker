@@ -14,9 +14,12 @@ import {DockerManagementImpl} from "./implementations/docker-management-impl";
 import {DockerMakeImpl} from "./implementations/docker-make-impl";
 import {DockerMake} from "./interfaces/docker-make";
 import {ProvisionCommandImpl} from "./implementations/commands/provision-command-impl";
+import {DockerProvision} from "./interfaces/docker-provision";
+import {DockerProvisionImpl} from "./implementations/docker-provision-impl";
 
 kernel.bind<DockerManagement>('DockerManagement').to(DockerManagementImpl);
 kernel.bind<DockerMake>('DockerMake').to(DockerMakeImpl);
+kernel.bind<DockerProvision>('DockerProvision').to(DockerProvisionImpl);
 kernel.bind<DockerImageManagement>('DockerImageManagement').to(DockerImageManagementImpl);
 kernel.bind<DockerContainerManagement>('DockerContainerManagement').to(DockerContainerManagementImpl);
 kernel.bind<DockerOde>('DockerOde').to(DockerOdeImpl);

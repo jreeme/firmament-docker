@@ -1,19 +1,20 @@
 import {injectable, inject} from "inversify";
 import kernel from '../../inversify.config';
 import {Command} from 'firmament-yargs';
+import {DockerProvision} from "../../interfaces/docker-provision";
 
 @injectable()
 export class ProvisionCommandImpl implements Command {
   aliases: string[] = [];
   command: string = '';
   commandDesc: string = '';
-  handler: (argv: any)=>void = (argv: any) => {
+  handler: (argv: any) => void = (argv: any) => {
   };
   options: any = {};
   subCommands: Command[] = [];
   static defaultConfigFilename = 'docker-provision.json';
 
-  constructor() {
+  constructor(@inject('DockerProvision') private dockerProvision: DockerProvision) {
     this.buildCommandTree();
   }
 
@@ -21,7 +22,7 @@ export class ProvisionCommandImpl implements Command {
     this.aliases = ['provision', 'p'];
     this.command = '<subCommand>';
     this.commandDesc = 'Support for provisioning docker swarms & stacks';
-    //this.pushBuildCommand();
+    this.pushBuildCommand();
     this.pushTemplateCommand();
   };
 
@@ -41,33 +42,27 @@ export class ProvisionCommandImpl implements Command {
         default: ProvisionCommandImpl.defaultConfigFilename,
         type: 'string',
         desc: 'Name the output JSON file'
-      },
-      full: {
-        alias: 'f',
-        type: 'boolean',
-        default: false,
-        desc: 'Create a full JSON template with all Docker options set to reasonable defaults'
       }
     };
-    //templateCommand.handler = this.dockerMake.makeTemplate.bind(this.dockerMake);
+    templateCommand.handler = this.dockerProvision.makeTemplate.bind(this.dockerProvision);
     this.subCommands.push(templateCommand);
   };
 
-/*  private pushBuildCommand() {
+  private pushBuildCommand() {
     let buildCommand = kernel.get<Command>('CommandImpl');
     buildCommand.aliases = ['build', 'b'];
-    buildCommand.commandDesc = 'Build Docker containers based on JSON spec';
+    buildCommand.commandDesc = 'Build Docker Stack based on JSON spec';
     //noinspection ReservedWordAsName
     buildCommand.options = {
       input: {
         alias: 'i',
-        default: MakeCommandImpl.defaultConfigFilename,
+        default: ProvisionCommandImpl.defaultConfigFilename,
         type: 'string',
         desc: 'Name the config JSON file'
       }
     };
-    buildCommand.handler = this.dockerMake.buildTemplate.bind(this.dockerMake);
+    buildCommand.handler = this.dockerProvision.buildTemplate.bind(this.dockerProvision);
     this.subCommands.push(buildCommand);
-  };*/
+  };
 }
 

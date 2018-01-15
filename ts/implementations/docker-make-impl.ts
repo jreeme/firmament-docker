@@ -11,6 +11,8 @@ import * as _ from 'lodash';
 import * as fs from 'fs';
 import url = require('url');
 import {RemoteCatalogGetter, RemoteCatalogEntry} from 'firmament-yargs';
+import {DockerUtil} from "../interfaces/docker-util";
+
 const path = require('path');
 const jsonFile = require('jsonfile');
 const request = require('request');
@@ -18,12 +20,14 @@ const fileExists = require('file-exists');
 const async = require('async');
 //const templateCatalogUrl = '/home/jreeme/src/firmament-docker/docker/templateCatalog.json';
 const templateCatalogUrl = 'https://raw.githubusercontent.com/jreeme/firmament-docker/master/docker/templateCatalog.json';
+
 @injectable()
 export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
   constructor(@inject('CommandUtil') private commandUtil: CommandUtil,
               @inject('Spawn') private spawn: Spawn,
               @inject('RemoteCatalogGetter') private remoteCatalogGetter: RemoteCatalogGetter,
               @inject('DockerImageManagement') private dockerImageManagement: DockerImageManagement,
+              @inject('DockerUtil') public dockerUtil: DockerUtil,
               @inject('DockerContainerManagement') private dockerContainerManagement: DockerContainerManagement,
               @inject('Positive') private positive: Positive,
               @inject('ProgressBar') private progressBar: ProgressBar) {
@@ -53,9 +57,9 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
           FailureRetVal.TRUE)) {
         me.commandUtil.processExit();
       } else {
-        me.writeJsonTemplateFile(argv.full
+        me.dockerUtil.writeJsonTemplateFile(argv.full
           ? DockerDescriptors.dockerContainerDefaultTemplate
-          : DockerDescriptors.dockerContainerConfigTemplate, this.commandUtil.getConfigFilePath(argv.output, '.json'));
+          : DockerDescriptors.dockerContainerConfigTemplate, fullOutputPath);
       }
       me.commandUtil.processExit();
     } else {
@@ -93,7 +97,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
   getSortedContainerConfigsFromJsonFile(inputPath: string) {
     let me = this;
     const fullInputPath = me.commandUtil.getConfigFilePath(inputPath, '.json');
-    if (!fileExists(fullInputPath)) {
+    if (!fileExists.sync(fullInputPath)) {
       me.commandUtil.processExitWithError(new Error(`\n'${fullInputPath}' does not exist`));
     }
     const containerConfigs = jsonFile.readFileSync(fullInputPath);
@@ -456,12 +460,5 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
         this.commandUtil.log(result.toString());
       },
       cb);
-  }
-
-  private writeJsonTemplateFile(objectToWrite: any, fullOutputPath: string) {
-    this.commandUtil.log("Writing JSON template file '" + fullOutputPath + "' ...");
-    const jsonFile = require('jsonfile');
-    jsonFile.spaces = 2;
-    jsonFile.writeFileSync(fullOutputPath, objectToWrite);
   }
 }

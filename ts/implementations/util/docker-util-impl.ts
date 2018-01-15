@@ -18,6 +18,13 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
     super();
   }
 
+  writeJsonTemplateFile(objectToWrite: any, fullOutputPath: string) {
+    this.commandUtil.log("Writing JSON template file '" + fullOutputPath + "' ...");
+    const jsonFile = require('jsonfile');
+    jsonFile.spaces = 2;
+    jsonFile.writeFileSync(fullOutputPath, objectToWrite);
+  }
+
   listImagesOrContainers(options: DockerUtilOptions,
                          cb: (err: Error, imagesOrContainers: any[]) => void) {
     this.dockerode.forceError = this.forceError;

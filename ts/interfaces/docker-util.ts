@@ -13,4 +13,5 @@ export interface DockerUtil extends ForceError {
   removeImagesOrContainers(ids: string[],
                            options: DockerUtilOptions,
                            cb: (err: Error, imageOrContainerRemoveResults: ImageOrContainerRemoveResults[])=>void);
+  writeJsonTemplateFile(objectToWrite: any, fullOutputPath: string);
 }

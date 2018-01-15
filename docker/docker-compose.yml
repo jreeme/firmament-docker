@@ -1,0 +1,31 @@
+version: "3.2"
+networks:
+  default:
+services:
+  postgres:
+    image: 52.0.211.45:5000/postgres:9.5.10
+    environment:
+      - POSTGRES_PASSWORD=password
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.role == manager
+    ports:
+      - "5432:5432"
+  amino3:
+    image: 52.0.211.45:5000/amino3:latest
+    environment:
+      - NODE_ENV=production
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.role == worker
+    ports:
+      - "3000:3000"
+
