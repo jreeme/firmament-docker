@@ -9,7 +9,7 @@ export interface DockerStackConfigTemplate {
 export class DockerDescriptors {
   static dockerStackConfigTemplate: DockerStackConfigTemplate = {
     clusterPrefix: 'amino3',
-    workerHostCount: 1,
+    workerHostCount: 3,
     dockerMachineWorkerOptions: {},
     dockerMachineMasterOptions: {
       engineLabel: 'role=master'

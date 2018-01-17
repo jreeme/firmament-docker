@@ -1,0 +1,142 @@
+{
+  "description"               : "Install 'docker-machine' + bash support",
+  "options"                   : {
+    "displayExecutionGraphDescription": true
+  },
+  "asynchronousCommands"      : [
+    {
+      "description"                : "[sudo] Download 'docker-machine' to /usr/local/bin",
+      "suppressOutput"             : false,
+      "showDiagnostics"            : false,
+      "showPreAndPostSpawnMessages": true,
+      "outputColor"                : "",
+      "useSudo"                    : true,
+      "sudoPassword"               : "password",
+      "workingDirectory"           : "/usr/local/bin",
+      "command"                    : "wget",
+      "args"                       : [
+        "https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-Linux-x86_64",
+        "-O",
+        "/usr/local/bin/docker-machine"
+      ]
+    },
+    {
+      "description"                : "[sudo] Download 'docker-machine.bash' to /etc/bash_completion.d/",
+      "suppressOutput"             : false,
+      "showDiagnostics"            : false,
+      "showPreAndPostSpawnMessages": true,
+      "outputColor"                : "",
+      "useSudo"                    : true,
+      "sudoPassword"               : "password",
+      "workingDirectory"           : "/usr/local/bin",
+      "command"                    : "wget",
+      "args"                       : [
+        "https://raw.githubusercontent.com/docker/machine/v0.13.0/contrib/completion/bash/docker-machine.bash",
+        "-O",
+        "/etc/bash_completion.d/docker-machine.bash"
+      ]
+    },
+    {
+      "description"                : "[sudo] Download 'docker-machine-wrapper.bash' to /etc/bash_completion.d/",
+      "suppressOutput"             : false,
+      "showDiagnostics"            : false,
+      "showPreAndPostSpawnMessages": true,
+      "outputColor"                : "",
+      "useSudo"                    : true,
+      "sudoPassword"               : "password",
+      "workingDirectory"           : "/usr/local/bin",
+      "command"                    : "wget",
+      "args"                       : [
+        "https://raw.githubusercontent.com/docker/machine/v0.13.0/contrib/completion/bash/docker-machine-wrapper.bash",
+        "-O",
+        "/etc/bash_completion.d/docker-machine-wrapper.bash"
+      ]
+    },
+    {
+      "description"                : "[sudo] Download 'docker-machine-prompt.bash' to /etc/bash_completion.d/",
+      "suppressOutput"             : false,
+      "showDiagnostics"            : false,
+      "showPreAndPostSpawnMessages": true,
+      "outputColor"                : "",
+      "useSudo"                    : true,
+      "sudoPassword"               : "password",
+      "workingDirectory"           : "/usr/local/bin",
+      "command"                    : "wget",
+      "args"                       : [
+        "https://raw.githubusercontent.com/docker/machine/v0.13.0/contrib/completion/bash/docker-machine-prompt.bash",
+        "-O",
+        "/etc/bash_completion.d/docker-machine-prompt.bash"
+      ]
+    }
+  ],
+  "serialSynchronizedCommands": [
+    {
+      "description"                : "[sudo] chmod 755 /usr/local/bin/docker-machine",
+      "suppressOutput"             : false,
+      "showDiagnostics"            : false,
+      "showPreAndPostSpawnMessages": true,
+      "useSudo"                    : true,
+      "sudoPassword"               : "password",
+      "command"                    : "chmod",
+      "args"                       : [
+        "755",
+        "/usr/local/bin/docker-machine"
+      ]
+    },
+    {
+      "description"                : "[sudo] ln -s /usr/local/bin/docker-machine /usr/local/bin/dm",
+      "suppressOutput"             : false,
+      "showDiagnostics"            : false,
+      "showPreAndPostSpawnMessages": true,
+      "useSudo"                    : true,
+      "sudoPassword"               : "password",
+      "command"                    : "/usr/bin/env",
+      "args"                       : [
+        "bash",
+        "-c",
+        "ln -s /usr/local/bin/docker-machine /usr/local/bin/dm"
+      ]
+    },
+    {
+      "description"                : "[sudo] cp /etc/bash_completion.d/docker-machine.bash /etc/bash_completion.d/dm.bash",
+      "suppressOutput"             : false,
+      "showDiagnostics"            : false,
+      "showPreAndPostSpawnMessages": true,
+      "useSudo"                    : true,
+      "sudoPassword"               : "password",
+      "command"                    : "/usr/bin/env",
+      "args"                       : [
+        "bash",
+        "-c",
+        "cp /etc/bash_completion.d/docker-machine.bash /etc/bash_completion.d/dm.bash"
+      ]
+    },
+    {
+      "description"                : "[sudo] sed -i 's/docker-machine/dm/g' /etc/bash_completion.d/dm.bash",
+      "suppressOutput"             : false,
+      "showDiagnostics"            : false,
+      "showPreAndPostSpawnMessages": true,
+      "useSudo"                    : true,
+      "sudoPassword"               : "password",
+      "command"                    : "/usr/bin/env",
+      "args"                       : [
+        "bash",
+        "-c",
+        "sed -i 's/docker-machine/dm/g' /etc/bash_completion.d/dm.bash"
+      ]
+    },
+    {
+      "description"                : "Add docker-machine prompt to .bashrc",
+      "suppressOutput"             : false,
+      "showDiagnostics"            : false,
+      "showPreAndPostSpawnMessages": true,
+      "useSudo"                    : false,
+      "command"                    : "/usr/bin/env",
+      "args"                       : [
+        "bash",
+        "-c",
+        "echo \"PS1='[\\u@\\h \\W\\$(__docker_machine_ps1)]\\$ '\" >> ~/.bashrc"
+      ]
+    }
+  ]
+}

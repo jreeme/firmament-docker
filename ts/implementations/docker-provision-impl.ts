@@ -1,9 +1,10 @@
 import {injectable, inject} from 'inversify';
 import {DockerDescriptors} from '../interfaces/docker-descriptors';
-import {Positive, FailureRetVal, CommandUtil, ProgressBar, Spawn, ForceErrorImpl} from 'firmament-yargs';
+import {Positive, FailureRetVal, CommandUtil, ProgressBar, Spawn, ForceErrorImpl, SafeJson} from 'firmament-yargs';
 import {DockerContainerManagement} from '../interfaces/docker-container-management';
 import {DockerImageManagement} from '../interfaces/docker-image-management';
 import * as _ from 'lodash';
+import * as async from 'async';
 import * as fs from 'fs';
 import * as YAML from 'yamljs';
 import * as path from 'path';
@@ -11,6 +12,7 @@ import {RemoteCatalogGetter, RemoteCatalogEntry} from 'firmament-yargs';
 import {DockerProvision} from "../interfaces/docker-provision";
 import {DockerUtil} from "../interfaces/docker-util";
 import {DockerStackConfigTemplate} from "../";
+import {ProcessCommandJson} from "firmament-bash/js/interfaces/process-command-json";
 
 const fileExists = require('file-exists');
 const jsonFile = require('jsonfile');
@@ -24,7 +26,9 @@ const templateCatalogUrl = '/home/jreeme/src/firmament-docker/docker/provisionTe
 export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvision {
   constructor(@inject('CommandUtil') private commandUtil: CommandUtil,
               @inject('Spawn') private spawn: Spawn,
+              @inject('SafeJson') private safeJson: SafeJson,
               @inject('RemoteCatalogGetter') private remoteCatalogGetter: RemoteCatalogGetter,
+              @inject('ProcessCommandJson') private processCommandJson: ProcessCommandJson,
               @inject('DockerUtil') public dockerUtil: DockerUtil,
               @inject('DockerImageManagement') private dockerImageManagement: DockerImageManagement,
               @inject('DockerContainerManagement') private dockerContainerManagement: DockerContainerManagement,
@@ -37,6 +41,14 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     let me = this;
     let {fullInputPath, stackConfigTemplate} = me.getContainerConfigsFromJsonFile(argv.input);
     me.commandUtil.log("Constructing Docker Stack described in: '" + fullInputPath + "'");
+    me.createDockerMachines(stackConfigTemplate, (err, result) => {
+      me.commandUtil.processExitWithError(err, 'OK');
+    });
+  }
+
+  private createDockerMachines(stackConfigTemplate: DockerStackConfigTemplate, cb: (err, result?) => void) {
+    const me = this;
+    cb = me.checkCallback(cb);
     const dockerMachineCmd = [
       'docker-machine',
       'create'
@@ -47,24 +59,180 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
       const optionValue = stackConfigTemplate.dockerMachineDriverOptions[dockerMachineDriverOption];
       dockerMachineCmd.push(`--${optionKey}=${optionValue}`);
     }
-    for (const dockerMachineMasterOption in stackConfigTemplate.dockerMachineMasterOptions) {
-      const optionKey = camelToSnake(dockerMachineMasterOption, '-');
-      const optionValue = stackConfigTemplate.dockerMachineMasterOptions[dockerMachineMasterOption];
-      dockerMachineCmd.push(`--${optionKey}=${optionValue}`);
-    }
     const masterMachineName = `${stackConfigTemplate.clusterPrefix}-master`;
-    dockerMachineCmd.push(masterMachineName);
+    async.waterfall([
+      (cb) => {
+        const masterDockerMachineCmd = dockerMachineCmd.slice();
+        for (const dockerMachineMasterOption in stackConfigTemplate.dockerMachineMasterOptions) {
+          const optionKey = camelToSnake(dockerMachineMasterOption, '-');
+          const optionValue = stackConfigTemplate.dockerMachineMasterOptions[dockerMachineMasterOption];
+          masterDockerMachineCmd.push(`--${optionKey}=${optionValue}`);
+        }
+        masterDockerMachineCmd.push(masterMachineName);
+        me.createDockerMachine(masterDockerMachineCmd, cb);
+      },
+      (cb) => {
+        const dockerMachineInitSwarmCmd = [
+          'docker-machine',
+          'ip',
+          masterMachineName
+        ];
+        me.spawn.spawnShellCommandAsync(dockerMachineInitSwarmCmd,
+          {
+            cacheStdOut: true
+          },
+          (err, result) => {
+            me.commandUtil.log(result.toString());
+          },
+          (err, result) => {
+            const ip = me.safeJson.safeParseSync(result).obj.stdoutText.trim();
+            cb(null, ip);
+          });
+      },
+      (ip, cb) => {
+        const dockerMachineInitSwarmCmd = [
+          'docker-machine',
+          'ssh',
+          masterMachineName,
+          'docker',
+          'swarm',
+          'init',
+          '--advertise-addr',
+          ip
+        ];
+        me.spawn.spawnShellCommandAsync(dockerMachineInitSwarmCmd,
+          {
+            cacheStdOut: true
+          },
+          (err, result) => {
+            me.commandUtil.log(result.toString());
+          },
+          (err, result) => {
+            cb(null, ip);
+          });
+      },
+      (ip, cb) => {
+        const dockerMachineInitSwarmCmd = [
+          'docker-machine',
+          'ssh',
+          masterMachineName,
+          'docker',
+          'swarm',
+          'join-token',
+          'worker',
+          '-q'
+        ];
+        me.spawn.spawnShellCommandAsync(dockerMachineInitSwarmCmd,
+          {
+            cacheStdOut: true
+          },
+          (err, result) => {
+            me.commandUtil.log(result.toString());
+          },
+          (err, result) => {
+            const joinToken = me.safeJson.safeParseSync(result).obj.stdoutText.trim();
+            cb(null, ip, joinToken);
+          });
+      },
+      (ip, joinToken, cb) => {
+        let fnArray = [];
+        for (let i = 0; i < stackConfigTemplate.workerHostCount; ++i) {
+          const workerDockerMachineCmd = dockerMachineCmd.slice();
+          const workerMachineName = `${stackConfigTemplate.clusterPrefix}-worker-${i}`;
+          for (const dockerMachineWorkerOption in stackConfigTemplate.dockerMachineWorkerOptions) {
+            const optionKey = camelToSnake(dockerMachineWorkerOption, '-');
+            const optionValue = stackConfigTemplate.dockerMachineMasterOptions[dockerMachineWorkerOption];
+            workerDockerMachineCmd.push(`--${optionKey}=${optionValue}`);
+          }
+          workerDockerMachineCmd.push(workerMachineName);
+          fnArray.push(async.apply(me.createWorkerDockerMachine.bind(me),
+            workerDockerMachineCmd,
+            workerMachineName,
+            ip,
+            joinToken
+          ));
+        }
+        async.parallel(fnArray, (err, result) => {
+          cb(err, result);
+        });
+      },
+      (cb) => {
+        cb(null);
+      }
+    ], (err, result) => {
+      cb(null);
+    });
+  }
+
+  private createWorkerDockerMachine(dockerMachineCmd: any[],
+                                    workerMachineName,
+                                    masterIp,
+                                    joinToken, cb: (err, result?) => void) {
+    const me = this;
+    me.createDockerMachine(dockerMachineCmd, (err, result) => {
+      if (err) {
+        return cb(err);
+      }
+      const dockerMachineJoinSwarmCmd = [
+        'docker-machine',
+        'ssh',
+        workerMachineName,
+        'docker',
+        'swarm',
+        'join',
+        '--token',
+        joinToken,
+        `${masterIp}:2377`
+      ];
+      me.spawn.spawnShellCommandAsync(dockerMachineJoinSwarmCmd,
+        {
+          cacheStdOut: true
+        },
+        (err, result) => {
+          me.commandUtil.log(result.toString());
+        },
+        (err, result) => {
+          const joinToken = me.safeJson.safeParseSync(result).obj.stdoutText.trim();
+          cb(null, joinToken);
+        });
+    });
+  }
+
+  private createDockerMachine(dockerMachineCmd: any[], cb: (err, result?) => void) {
+    const me = this;
     me.spawn.spawnShellCommandAsync(dockerMachineCmd, {},
       (err, result) => {
         me.commandUtil.log(result.toString());
       },
       (err, result) => {
-        me.commandUtil.processExitWithError(err, `Finished.\n`);
+        if (err) {
+          me.safeJson.safeParse(err.message, (err: Error, obj: any) => {
+            try {
+              if (obj.code.code === 'ENOENT') {
+                if (me.positive.areYouSure(
+                    `Looks like 'docker-machine' is not installed. Want me to try to install it?`,
+                    'Operation canceled.',
+                    true,
+                    FailureRetVal.TRUE)) {
+                  const installDockerMachineJson = path.resolve(__dirname, '../../firmament-bash/install-docker-machine.json');
+                  me.processCommandJson.processAbsoluteUrl(installDockerMachineJson, (err, result) => {
+                    const msg = `'docker-machine' installed. Try provisioning again.`;
+                    cb(err, err ? null : msg);
+                  });
+                  return;
+                }
+                return cb(null);
+              }
+              cb(null);
+            } catch (err) {
+              cb(err);
+            }
+          });
+          return;
+        }
+        cb(null);
       });
-    /*    me.processContainerConfigs(sortedContainerConfigs, baseDir, (err: Error) => {
-          me.commandUtil.processExitWithError(err, `Finished.\n`);
-        });*/
-  }
+  };
 
   private getContainerConfigsFromJsonFile(inputPath: string) {
     let me = this;

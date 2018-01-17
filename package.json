@@ -45,6 +45,7 @@
     "dockerode": "^2.5.0",
     "file-exists": "^4.0.0",
     "filesize": "^3.5.10",
+    "firmament-bash": "^1.1.11",
     "firmament-yargs": "^1.1.10",
     "inversify": "^4.3.0",
     "jsnlog": "^2.24.1",
