@@ -3,11 +3,11 @@ import {DockerDescriptors} from '../interfaces/docker-descriptors';
 import {Positive, FailureRetVal, CommandUtil, ProgressBar, Spawn, ForceErrorImpl, SafeJson} from 'firmament-yargs';
 import {DockerContainerManagement} from '../interfaces/docker-container-management';
 import {DockerImageManagement} from '../interfaces/docker-image-management';
-import * as _ from 'lodash';
 import * as async from 'async';
 import * as fs from 'fs';
 import * as YAML from 'yamljs';
 import * as path from 'path';
+import * as tmp from 'tmp';
 import {RemoteCatalogGetter, RemoteCatalogEntry} from 'firmament-yargs';
 import {DockerProvision} from "../interfaces/docker-provision";
 import {DockerUtil} from "../interfaces/docker-util";
@@ -153,11 +153,67 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
           ));
         }
         async.parallel(fnArray, (err, result) => {
-          cb(err, result);
+          cb(err);
         });
       },
       (cb) => {
-        cb(null);
+        const dockerMachineGetMasterEnvCmd = [
+          'docker-machine',
+          'env',
+          masterMachineName
+        ];
+        me.spawn.spawnShellCommandAsync(dockerMachineGetMasterEnvCmd,
+          {
+            cacheStdOut: true
+          },
+          (err, result) => {
+            me.commandUtil.log(result.toString());
+          },
+          (err, result) => {
+            const regex = /export (.*)/g;
+            const envString = me.safeJson.safeParseSync(result).obj.stdoutText.trim();
+            let match: string[];
+            let env: any = {};
+            do {
+              match = regex.exec(envString);
+              if (match) {
+                const keyValue = match[1].split('=');
+                env[keyValue[0]] = keyValue[1].replace(/"/g,'');
+              }
+            } while (match);
+            cb(null, env);
+          });
+      },
+      (env, cb) => {
+        tmp.file((err, tmpPath, fd, cleanupCb) => {
+          const yaml = YAML.dump(stackConfigTemplate.dockerComposeYaml);
+          if (me.commandUtil.callbackIfError(err)) {
+            return;
+          }
+          fs.writeFile(tmpPath, yaml, (err) => {
+            const dockerMachineDeployCmd = [
+              'docker',
+              'stack',
+              'deploy',
+              '-c',
+              tmpPath,
+              stackConfigTemplate.clusterPrefix
+            ];
+            me.spawn.spawnShellCommandAsync(dockerMachineDeployCmd,
+              {
+                env,
+                cacheStdOut: true
+              },
+              (err, result) => {
+                me.commandUtil.log(result.toString());
+              },
+              (err, result) => {
+                //const joinToken = me.safeJson.safeParseSync(result).obj.stdoutText.trim();
+                cleanupCb();
+                cb(null);
+              });
+          });
+        });
       }
     ], (err, result) => {
       cb(null);
@@ -259,7 +315,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
       } else {
         const dockerComposeYamlPath = path.resolve(__dirname, '../../docker/docker-compose.yml');
         const dockerComposeYaml = YAML.load(dockerComposeYamlPath);
-        let jsonTemplate = Object.assign({dockerComposeYaml}, DockerDescriptors.dockerStackConfigTemplate);
+        let jsonTemplate = Object.assign({}, DockerDescriptors.dockerStackConfigTemplate, {dockerComposeYaml});
         me.dockerUtil.writeJsonTemplateFile(jsonTemplate, fullOutputPath);
       }
       if (cb) {

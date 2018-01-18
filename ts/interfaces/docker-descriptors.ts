@@ -1,5 +1,6 @@
 export interface DockerStackConfigTemplate {
   clusterPrefix: string,
+  dockerComposeYaml: any,
   workerHostCount: number,
   dockerMachineWorkerOptions: any,
   dockerMachineMasterOptions: any,
@@ -9,8 +10,11 @@ export interface DockerStackConfigTemplate {
 export class DockerDescriptors {
   static dockerStackConfigTemplate: DockerStackConfigTemplate = {
     clusterPrefix: 'amino3',
-    workerHostCount: 3,
-    dockerMachineWorkerOptions: {},
+    dockerComposeYaml: {},
+    workerHostCount: 1,
+    dockerMachineWorkerOptions: {
+      engineLabel: 'role=worker'
+    },
     dockerMachineMasterOptions: {
       engineLabel: 'role=master'
     },
