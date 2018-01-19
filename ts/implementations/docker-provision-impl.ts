@@ -37,9 +37,20 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     super();
   }
 
+  makeTemplate(argv: any, cb: () => void = null) {
+    const me = this;
+    const dockerComposeYamlPath = argv.yaml || path.resolve(__dirname, '../../docker/merlin.yml');
+    me.composeAndWriteTemplate(argv.get, dockerComposeYamlPath, argv.output, (err) => {
+/*      if (cb) {
+        return cb();
+      }*/
+      me.commandUtil.processExitWithError(err, 'Template written.');
+    });
+  }
+
   buildTemplate(argv: any) {
-    let me = this;
-    let {fullInputPath, stackConfigTemplate} = me.getContainerConfigsFromJsonFile(argv.input);
+    const me = this;
+    const {fullInputPath, stackConfigTemplate} = me.getContainerConfigsFromJsonFile(argv.input);
     me.commandUtil.log("Constructing Docker Stack described in: '" + fullInputPath + "'");
     me.createDockerMachines(stackConfigTemplate, (err, result) => {
       me.commandUtil.processExitWithError(err, 'OK');
@@ -178,7 +189,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
               match = regex.exec(envString);
               if (match) {
                 const keyValue = match[1].split('=');
-                env[keyValue[0]] = keyValue[1].replace(/"/g,'');
+                env[keyValue[0]] = keyValue[1].replace(/"/g, '');
               }
             } while (match);
             cb(null, env);
@@ -291,7 +302,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
   };
 
   private getContainerConfigsFromJsonFile(inputPath: string) {
-    let me = this;
+    const me = this;
     const fullInputPath = me.commandUtil.getConfigFilePath(inputPath, '.json');
     if (!fileExists.sync(fullInputPath)) {
       me.commandUtil.processExitWithError(new Error(`\n'${fullInputPath}' does not exist`));
@@ -300,10 +311,13 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     return {fullInputPath, stackConfigTemplate};
   }
 
-  makeTemplate(argv: any, cb: () => void = null) {
-    let me = this;
-    const fullOutputPath = this.commandUtil.getConfigFilePath(argv.output, '.json');
-    if (argv.get === undefined) {
+  private composeAndWriteTemplate(catalogEntryName: string,
+                                  dockerComposeYamlPath: string,
+                                  outputTemplateFileName: string,
+                                  cb: (err: Error) => void) {
+    const me = this;
+    const fullOutputPath = this.commandUtil.getConfigFilePath(outputTemplateFileName, '.json');
+    if (catalogEntryName === undefined) {
       //Just write out the descriptors we have "baked in" to this application
       if (fs.existsSync(fullOutputPath)
         && !me.positive.areYouSure(
@@ -311,20 +325,14 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
           'Operation canceled.',
           true,
           FailureRetVal.TRUE)) {
-        me.commandUtil.processExit();
       } else {
-        const dockerComposeYamlPath = path.resolve(__dirname, '../../docker/docker-compose.yml');
         const dockerComposeYaml = YAML.load(dockerComposeYamlPath);
         let jsonTemplate = Object.assign({}, DockerDescriptors.dockerStackConfigTemplate, {dockerComposeYaml});
         me.dockerUtil.writeJsonTemplateFile(jsonTemplate, fullOutputPath);
       }
-      if (cb) {
-        cb();
-        return;
-      }
-      me.commandUtil.processExit();
+      cb(null);
     } else {
-      me.commandUtil.processExit();
+      cb(null);
       //Need to interact with the network to get templates
       /*      me.remoteCatalogGetter.getCatalogFromUrl(templateCatalogUrl, (err, remoteCatalog) => {
               if (!argv.get.length) {

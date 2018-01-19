@@ -17,7 +17,9 @@ const dockerMake = kernel.get<DockerMake>('DockerMake');
 const dockerProvision = kernel.get<DockerProvision>('DockerProvision');
 //dockerMake.makeTemplate({});
 dockerProvision.makeTemplate({
-  output: ProvisionCommandImpl.defaultConfigFilename
+  output: ProvisionCommandImpl.defaultConfigFilename,
+  yaml: '/mnt/RAM_disk/firmament-docker/docker/etl.yml',
+  //yaml: ProvisionCommandImpl.defaultComposeYamlFilename
 }, () => {
   dockerProvision.buildTemplate({
     input: ProvisionCommandImpl.defaultConfigFilename

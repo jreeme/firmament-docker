@@ -13,6 +13,7 @@ export class ProvisionCommandImpl implements Command {
   options: any = {};
   subCommands: Command[] = [];
   static defaultConfigFilename = 'docker-provision.json';
+  static defaultComposeYamlFilename = 'merlin.yml';
 
   constructor(@inject('DockerProvision') private dockerProvision: DockerProvision) {
     this.buildCommandTree();
@@ -37,11 +38,17 @@ export class ProvisionCommandImpl implements Command {
         type: 'string',
         desc: '.. get [templateName]. If no templateName is specified then lists available templates'
       },
+      yaml: {
+        alias: 'y',
+        default: ProvisionCommandImpl.defaultComposeYamlFilename,
+        type: 'string',
+        desc: 'Name of the input docker-compose YAML file to embed in template'
+      },
       output: {
         alias: 'o',
         default: ProvisionCommandImpl.defaultConfigFilename,
         type: 'string',
-        desc: 'Name the output JSON file'
+        desc: 'Name of the output JSON file'
       }
     };
     templateCommand.handler = this.dockerProvision.makeTemplate.bind(this.dockerProvision);

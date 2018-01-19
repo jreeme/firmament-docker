@@ -9,7 +9,7 @@ export interface DockerStackConfigTemplate {
 
 export class DockerDescriptors {
   static dockerStackConfigTemplate: DockerStackConfigTemplate = {
-    clusterPrefix: 'amino3',
+    clusterPrefix: 'merlin',
     dockerComposeYaml: {},
     workerHostCount: 1,
     dockerMachineWorkerOptions: {
