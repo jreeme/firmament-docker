@@ -4,6 +4,9 @@
     <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change beforePath="$PROJECT_DIR$/ts/implementations/commands/provision-command-impl.ts" afterPath="$PROJECT_DIR$/ts/implementations/commands/provision-command-impl.ts" />
+      <change beforePath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" afterPath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" />
+      <change beforePath="$PROJECT_DIR$/ts/tsconfig.json" afterPath="$PROJECT_DIR$/ts/tsconfig.json" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,11 +27,11 @@
     <favorites_list name="firmament-docker" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-470">
+            <state relative-caret-position="34">
               <caret line="2" column="18" lean-forward="false" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
               <folding />
             </state>
@@ -61,6 +64,7 @@
       <find>apply</find>
       <find>callbackIfError</find>
       <find>docker-compose</find>
+      <find>merlin.yml</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -114,11 +118,11 @@
         <option value="/tmp/docker-provision.json" />
         <option value="$PROJECT_DIR$/docker/docker-compose.yml" />
         <option value="$PROJECT_DIR$/docker/merlin.yml" />
-        <option value="$PROJECT_DIR$/ts/implementations/commands/provision-command-impl.ts" />
         <option value="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" />
-        <option value="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" />
-        <option value="$PROJECT_DIR$/ts/tsconfig.json" />
         <option value="$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts" />
+        <option value="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" />
+        <option value="$PROJECT_DIR$/ts/implementations/commands/provision-command-impl.ts" />
+        <option value="$PROJECT_DIR$/ts/tsconfig.json" />
         <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
@@ -163,8 +167,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -175,17 +177,43 @@
             <path>
               <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
               <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
-              <item name="docker" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
               <item name="firmament-bash" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
               <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="implementations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="implementations" type="462c0819:PsiDirectoryNode" />
+              <item name="commands" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
               <item name="ts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="ts" type="462c0819:PsiDirectoryNode" />
+              <item name="implementations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="ts" type="462c0819:PsiDirectoryNode" />
+              <item name="implementations" type="462c0819:PsiDirectoryNode" />
+              <item name="commands" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
@@ -210,6 +238,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -872,8 +902,8 @@
   <component name="ToolWindowManager">
     <frame x="1919" y="0" width="1922" height="1053" extended-state="6" />
     <layout>
-      <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26264802" sideWeight="0.4939378" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14654718" sideWeight="0.47777778" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17438105" sideWeight="0.4939378" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17448603" sideWeight="0.47777778" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39248434" sideWeight="0.5044808" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3676313" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -915,7 +945,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="-&gt; v.0.2.27" />
     <MESSAGE value="-&gt; v.0.2.28 (Start using ForceError/Impl from firmament-yargs, get 'js' out of git repo)" />
     <MESSAGE value="-&gt; v.0.2.28 publish to NPM" />
     <MESSAGE value="-&gt; v.0.2.30 publish to NPM" />
@@ -940,7 +969,8 @@
     <MESSAGE value="v.1.4.2-&gt;NPM" />
     <MESSAGE value="Adding docker provision (stack/swarm)" />
     <MESSAGE value="Docker provision alpha" />
-    <option name="LAST_COMMIT_MESSAGE" value="Docker provision alpha" />
+    <MESSAGE value="1.4.4 -&gt; NPM" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.4.4 -&gt; NPM" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -957,8 +987,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts</url>
-          <line>194</line>
-          <properties lambdaOrdinal="-1" />
+          <line>193</line>
           <option name="timeStamp" value="603" />
         </line-breakpoint>
       </breakpoints>
@@ -970,21 +999,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ts/test/docker-make.test.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ts/index.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../firmament/node_modules/firmament-yargs/ts/implementations/remote-catalog-impl.ts" />
     <entry file="file://$PROJECT_DIR$/../loopback-webpack-typescript-amino/server/services/implementations/db-monitor-impl.ts" />
     <entry file="file://$USER_HOME$/tmp/firmament.json" />
     <entry file="file://$PROJECT_DIR$/docker/vita.25-DEC-2016/_run.sh">
@@ -1136,31 +1150,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docker/templateCatalog.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="14" lean-forward="false" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ts/test/docker-image-management.test.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docker/provisionTemplateCatalog.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ts/implementations/commands/make-command-impl.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="18" column="39" lean-forward="false" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
         </state>
       </provider>
     </entry>
@@ -1172,20 +1165,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/file-exists/index.js" />
-    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-make-impl.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4471">
-          <caret line="324" column="0" lean-forward="false" selection-start-line="324" selection-start-column="0" selection-end-line="324" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!block;n#makeTemplate#0;n#DockerMakeImpl#0" expanded="false" />
-            <element signature="n#!!block;n#containerDependencySort#0;n#DockerMakeImpl#0" expanded="false" />
-            <element signature="n#!!block;n#topologicalDependencySort#0;n#DockerMakeImpl#0" expanded="false" />
-            <element signature="n#!!block;n#remoteSlcCtlCommand#0;n#DockerMakeImpl#0" expanded="false" />
-            <element signature="n#!!block;n#gitClone#0;n#DockerMakeImpl#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/test/manual-tests/manual-test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1237,14 +1216,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ts/implementations/commands/provision-command-impl.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="40" column="12" lean-forward="false" selection-start-line="40" selection-start-column="12" selection-end-line="40" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docker/etl.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1264,22 +1235,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ts/tsconfig.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="38" lean-forward="false" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docker/merlin.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="4" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -1292,17 +1247,214 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/docker/provisionTemplateCatalog.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/templateCatalog.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="6" lean-forward="false" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/merlin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="4" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-management-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#45#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-make-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="634">
+          <caret line="107" column="131" lean-forward="false" selection-start-line="107" selection-start-column="131" selection-end-line="107" selection-end-column="131" />
+          <folding>
+            <element signature="n#!!block;n#constructor#0;n#DockerMakeImpl#0" expanded="false" />
+            <element signature="e#2285#2355#0" expanded="false" />
+            <element signature="e#3145#4454#0" expanded="false" />
+            <element signature="e#3297#4446#0" expanded="false" />
+            <element signature="e#3329#3654#0" expanded="false" />
+            <element signature="e#3538#3602#0" expanded="false" />
+            <element signature="e#3660#4438#0" expanded="false" />
+            <element signature="e#3801#3858#0" expanded="false" />
+            <element signature="e#3886#4013#0" expanded="false" />
+            <element signature="e#4063#4341#0" expanded="false" />
+            <element signature="e#4081#4245#0" expanded="false" />
+            <element signature="e#4258#4329#0" expanded="false" />
+            <element signature="n#!!block;n#getSortedContainerConfigsFromJsonFile#0;n#DockerMakeImpl#0" expanded="false" />
+            <element signature="e#4661#4761#0" expanded="false" />
+            <element signature="n#!!block;n#processContainerConfigs#0;n#DockerMakeImpl#0" expanded="false" />
+            <element signature="e#5209#5292#0" expanded="false" />
+            <element signature="e#5377#18754#0" expanded="false" />
+            <element signature="e#5527#5660#0" expanded="false" />
+            <element signature="e#5784#6533#0" expanded="false" />
+            <element signature="e#5856#6523#0" expanded="false" />
+            <element signature="e#5913#5946#0" expanded="false" />
+            <element signature="e#6016#6083#0" expanded="false" />
+            <element signature="e#6188#6464#0" expanded="false" />
+            <element signature="e#6388#6452#0" expanded="false" />
+            <element signature="e#6629#7445#0" expanded="false" />
+            <element signature="e#6770#7144#0" expanded="false" />
+            <element signature="e#6921#7024#0" expanded="false" />
+            <element signature="e#7056#7130#0" expanded="false" />
+            <element signature="e#7201#7435#0" expanded="false" />
+            <element signature="e#7260#7297#0" expanded="false" />
+            <element signature="e#7364#7420#0" expanded="false" />
+            <element signature="e#7543#8772#0" expanded="false" />
+            <element signature="e#7686#8431#0" expanded="false" />
+            <element signature="e#8097#8200#0" expanded="false" />
+            <element signature="e#8232#8417#0" expanded="false" />
+            <element signature="e#8476#8762#0" expanded="false" />
+            <element signature="e#8535#8572#0" expanded="false" />
+            <element signature="e#8617#8662#0" expanded="false" />
+            <element signature="e#8839#9921#0" expanded="false" />
+            <element signature="e#8853#9838#0" expanded="false" />
+            <element signature="e#8865#8941#0" expanded="false" />
+            <element signature="e#9104#9381#0" expanded="false" />
+            <element signature="e#9228#9365#0" expanded="false" />
+            <element signature="e#9442#9815#0" expanded="false" />
+            <element signature="e#9503#9544#0" expanded="false" />
+            <element signature="e#9750#9799#0" expanded="false" />
+            <element signature="e#9851#9913#0" expanded="false" />
+            <element signature="e#10011#18748#0" expanded="false" />
+            <element signature="e#10198#18734#0" expanded="false" />
+            <element signature="e#10392#18716#0" expanded="false" />
+            <element signature="e#10475#18694#0" expanded="false" />
+            <element signature="e#10539#12152#0" expanded="false" />
+            <element signature="e#10760#11594#0" expanded="false" />
+            <element signature="e#10852#10967#0" expanded="false" />
+            <element signature="e#11029#11349#0" expanded="false" />
+            <element signature="e#11392#11572#0" expanded="false" />
+            <element signature="e#11615#11705#0" expanded="false" />
+            <element signature="e#11924#12005#0" expanded="false" />
+            <element signature="e#12216#12913#0" expanded="false" />
+            <element signature="e#12217#12245#0" expanded="false" />
+            <element signature="e#12437#12891#0" expanded="false" />
+            <element signature="e#12470#12804#0" expanded="false" />
+            <element signature="e#12712#12778#0" expanded="false" />
+            <element signature="e#12810#12869#0" expanded="false" />
+            <element signature="e#12976#14067#0" expanded="false" />
+            <element signature="e#13120#14043#0" expanded="false" />
+            <element signature="e#13271#14019#0" expanded="false" />
+            <element signature="e#13490#13653#0" expanded="false" />
+            <element signature="e#13689#13777#0" expanded="false" />
+            <element signature="e#13800#13892#0" expanded="false" />
+            <element signature="e#13898#13993#0" expanded="false" />
+            <element signature="e#14130#14383#0" expanded="false" />
+            <element signature="e#14447#14869#0" expanded="false" />
+            <element signature="e#14515#14600#0" expanded="false" />
+            <element signature="e#14933#15636#0" expanded="false" />
+            <element signature="e#15036#15121#0" expanded="false" />
+            <element signature="e#15274#15518#0" expanded="false" />
+            <element signature="e#15700#16218#0" expanded="false" />
+            <element signature="e#15789#15874#0" expanded="false" />
+            <element signature="e#16082#16170#0" expanded="false" />
+            <element signature="e#16281#16690#0" expanded="false" />
+            <element signature="e#16554#16642#0" expanded="false" />
+            <element signature="e#16753#17713#0" expanded="false" />
+            <element signature="e#16754#16777#0" expanded="false" />
+            <element signature="e#16969#17573#0" expanded="false" />
+            <element signature="e#17284#17380#0" expanded="false" />
+            <element signature="e#17437#17547#0" expanded="false" />
+            <element signature="e#17627#17691#0" expanded="false" />
+            <element signature="e#17776#18130#0" expanded="false" />
+            <element signature="e#17994#18082#0" expanded="false" />
+            <element signature="e#18193#18676#0" expanded="false" />
+            <element signature="e#18540#18628#0" expanded="false" />
+            <element signature="n#!!block;n#containerDependencySort#0;n#DockerMakeImpl#0" expanded="false" />
+            <element signature="e#19029#19585#0" expanded="false" />
+            <element signature="e#19089#19170#0" expanded="false" />
+            <element signature="e#19348#19522#0" expanded="false" />
+            <element signature="e#19415#19512#0" expanded="false" />
+            <element signature="e#19731#19820#0" expanded="false" />
+            <element signature="n#!!block;n#topologicalDependencySort#0;n#DockerMakeImpl#0" expanded="false" />
+            <element signature="e#19992#20035#0" expanded="false" />
+            <element signature="e#20071#20750#0" expanded="false" />
+            <element signature="e#20151#20742#0" expanded="false" />
+            <element signature="e#20221#20249#0" expanded="false" />
+            <element signature="e#20289#20325#0" expanded="false" />
+            <element signature="e#20456#20705#0" expanded="false" />
+            <element signature="e#20501#20635#0" expanded="false" />
+            <element signature="e#20762#20893#0" expanded="false" />
+            <element signature="n#!!block;n#remoteSlcCtlCommand#0;n#DockerMakeImpl#0" expanded="false" />
+            <element signature="e#21510#21568#0" expanded="false" />
+            <element signature="e#21593#21665#0" expanded="false" />
+            <element signature="n#!!block;n#gitClone#0;n#DockerMakeImpl#0" expanded="false" />
+            <element signature="e#21967#22025#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/commands/make-command-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="18" column="39" lean-forward="false" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/implementations/docker-provision-impl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="38" lean-forward="false" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/commands/provision-command-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="65" lean-forward="false" selection-start-line="16" selection-start-column="65" selection-end-line="16" selection-end-column="65" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/tsconfig.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="45" lean-forward="false" selection-start-line="11" selection-start-column="45" selection-end-line="11" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/implementations/commands/provision-command-impl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="68" column="63" lean-forward="false" selection-start-line="68" selection-start-column="63" selection-end-line="68" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4741">
-          <caret line="327" column="0" lean-forward="false" selection-start-line="327" selection-start-column="0" selection-end-line="327" selection-end-column="0" />
+        <state relative-caret-position="136">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-470">
+        <state relative-caret-position="34">
           <caret line="2" column="18" lean-forward="false" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
           <folding />
         </state>

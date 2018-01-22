@@ -1,5 +1,6 @@
 import {injectable, inject} from "inversify";
 import kernel from '../../inversify.config';
+import * as path from 'path';
 import {Command} from 'firmament-yargs';
 import {DockerProvision} from "../../interfaces/docker-provision";
 
@@ -13,7 +14,7 @@ export class ProvisionCommandImpl implements Command {
   options: any = {};
   subCommands: Command[] = [];
   static defaultConfigFilename = 'docker-provision.json';
-  static defaultComposeYamlFilename = 'merlin.yml';
+  static defaultComposeYamlFilename = path.resolve(__dirname, '../../../docker/merlin.yml');
 
   constructor(@inject('DockerProvision') private dockerProvision: DockerProvision) {
     this.buildCommandTree();

@@ -39,8 +39,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
 
   makeTemplate(argv: any, cb: () => void = null) {
     const me = this;
-    const dockerComposeYamlPath = argv.yaml || path.resolve(__dirname, '../../docker/merlin.yml');
-    me.composeAndWriteTemplate(argv.get, dockerComposeYamlPath, argv.output, (err) => {
+    me.composeAndWriteTemplate(argv.get, argv.yaml, argv.output, (err) => {
 /*      if (cb) {
         return cb();
       }*/
