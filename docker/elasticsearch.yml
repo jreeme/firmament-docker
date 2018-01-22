@@ -1,0 +1,22 @@
+version: "3.2"
+
+networks:
+  default:
+    external:
+      name: merlin_net
+services:
+  #HDFS and Spark Name Node Service
+  elasticsearch:
+    image: 52.0.211.45:5000/elasticsearch:5.6.6
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.role == worker
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    command: "elasticsearch -Enetwork.host=0.0.0.0 -Ediscovery.zen.ping.unicast.hosts=elasticsearch -Ediscovery.zen.minimum_master_nodes=1"
+

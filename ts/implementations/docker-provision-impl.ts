@@ -39,11 +39,11 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
 
   makeTemplate(argv: any, cb: () => void = null) {
     const me = this;
-    me.composeAndWriteTemplate(argv.get, argv.yaml, argv.output, (err) => {
-/*      if (cb) {
-        return cb();
-      }*/
-      me.commandUtil.processExitWithError(err, 'Template written.');
+    me.composeAndWriteTemplate(argv.get, argv.yaml, argv.output, (err: Error, msg: string) => {
+      /*      if (cb) {
+              return cb();
+            }*/
+      me.commandUtil.processExitWithError(err, msg);
     });
   }
 
@@ -313,7 +313,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
   private composeAndWriteTemplate(catalogEntryName: string,
                                   dockerComposeYamlPath: string,
                                   outputTemplateFileName: string,
-                                  cb: (err: Error) => void) {
+                                  cb: (err: Error, msg?: string) => void) {
     const me = this;
     const fullOutputPath = this.commandUtil.getConfigFilePath(outputTemplateFileName, '.json');
     if (catalogEntryName === undefined) {
@@ -324,14 +324,15 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
           'Operation canceled.',
           true,
           FailureRetVal.TRUE)) {
+        cb(null);
       } else {
         const dockerComposeYaml = YAML.load(dockerComposeYamlPath);
         let jsonTemplate = Object.assign({}, DockerDescriptors.dockerStackConfigTemplate, {dockerComposeYaml});
         me.dockerUtil.writeJsonTemplateFile(jsonTemplate, fullOutputPath);
+        cb(null, 'Template written.');
       }
-      cb(null);
     } else {
-      cb(null);
+      cb(new Error('Provision from template not implemented.'));
       //Need to interact with the network to get templates
       /*      me.remoteCatalogGetter.getCatalogFromUrl(templateCatalogUrl, (err, remoteCatalog) => {
               if (!argv.get.length) {
