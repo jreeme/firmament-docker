@@ -15,3 +15,5 @@ RUN rm -rf /var/cache/apk/*
 #  "-Enetwork.host=0.0.0.0", \
 #  "-Ediscovery.zen.minimum_master_nodes=2", \
 #  "-Ediscovery.zen.ping.unicast.hosts=es-master"]
+
+# http://derpturkey.com/elasticsearch-cluster-with-docker-engine-swarm-mode/
