@@ -1,4 +1,4 @@
-version: "3.3"
+version: '3.3'
 networks:
   net:
 services:
@@ -14,7 +14,7 @@ services:
         constraints:
           - node.role == manager
     ports:
-      - "5432:5432"
+      - '5432:5432'
     networks:
       - net
   amino3:
@@ -29,7 +29,20 @@ services:
         constraints:
           - node.role == manager
     ports:
-      - "3000:3000"
+      - '3000:3000'
+    networks:
+      - net
+  nginx:
+    image: 52.0.211.45:5000/nginx:1.13.8
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.role == worker
+    ports:
+        - '9200:9200'
     networks:
       - net
 
