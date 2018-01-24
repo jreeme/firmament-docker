@@ -21,6 +21,7 @@ export class DockerDescriptors {
     dockerMachineDriverOptions: {
       driver: 'virtualbox',
       virtualboxCpuCount: 2,
+      virtualboxMemory: 8092,
       engineInsecureRegistry: '52.0.211.45:5000'
     }
   };
