@@ -55,7 +55,8 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
       me.commandUtil.processExitWithError(err, 'OK');
     });
   }
-
+//(alter vm.max_map_count in boot2docker ISO
+//https://github.com/boot2docker/boot2docker/issues/1216
   private createDockerMachines(stackConfigTemplate: DockerStackConfigTemplate, cb: (err, result?) => void) {
     const me = this;
     cb = me.checkCallback(cb);
