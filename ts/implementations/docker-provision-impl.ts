@@ -40,9 +40,9 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
   makeTemplate(argv: any, cb: () => void = null) {
     const me = this;
     me.composeAndWriteTemplate(argv.get, argv.yaml, argv.output, (err: Error, msg: string) => {
-      /*      if (cb) {
-              return cb();
-            }*/
+      if (cb) {
+        return cb();
+      }
       me.commandUtil.processExitWithError(err, msg);
     });
   }
@@ -55,6 +55,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
       me.commandUtil.processExitWithError(err, 'OK');
     });
   }
+
 //(alter vm.max_map_count in boot2docker ISO
 //https://github.com/boot2docker/boot2docker/issues/1216
   private createDockerMachines(stackConfigTemplate: DockerStackConfigTemplate, cb: (err, result?) => void) {
@@ -273,7 +274,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
       },
       (err, result) => {
         if (err) {
-          me.safeJson.safeParse(err.message, (err: Error, obj: any) => {
+          return me.safeJson.safeParse(err.message, (err: Error, obj: any) => {
             try {
               if (obj.code.code === 'ENOENT') {
                 if (me.positive.areYouSure(
@@ -295,9 +296,26 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
               cb(err);
             }
           });
-          return;
         }
-        cb(null);
+        //HACK: Need to up the vm.max_map_count to 262144 to support elasticsearch 5
+        const machineName = dockerMachineCmd[dockerMachineCmd.length - 1];
+        const dockerMachineJoinSwarmCmd = [
+          'docker-machine',
+          'ssh',
+          machineName,
+          `echo 'sysctl -w vm.max_map_count=262144' | sudo tee -a /var/lib/boot2docker/profile && sudo /etc/init.d/docker restart`
+        ];
+        me.spawn.spawnShellCommandAsync(dockerMachineJoinSwarmCmd,
+          {
+            cacheStdOut: true
+          },
+          (err, result) => {
+            me.commandUtil.log(result.toString());
+          },
+          (err, result) => {
+            const joinToken = me.safeJson.safeParseSync(result).obj.stdoutText.trim();
+            cb(null);
+          });
       });
   };
 
