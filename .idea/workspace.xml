@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/docker/nginx/docker-mount/default.conf" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/jreeme.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/jreeme.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/docker/elasticsearch/5.6.6/Dockerfile" afterPath="$PROJECT_DIR$/docker/elasticsearch/5.6.6/Dockerfile" />
+      <change beforePath="$PROJECT_DIR$/docker/elasticsearch.yml" afterPath="$PROJECT_DIR$/docker/elasticsearch.yml" />
       <change beforePath="$PROJECT_DIR$/docker/nginx/1.13.8/Dockerfile" afterPath="$PROJECT_DIR$/docker/nginx/1.13.8/Dockerfile" />
-      <change beforePath="$PROJECT_DIR$/docker/nginx/1.13.8/_run.sh" afterPath="$PROJECT_DIR$/docker/nginx/1.13.8/_run.sh" />
-      <change beforePath="$PROJECT_DIR$/docker/nginx/1.13.8/default.conf" afterPath="$PROJECT_DIR$/docker/nginx/1.13.8/default.conf" />
+      <change beforePath="$PROJECT_DIR$/docker/nginx/1.13.8/nginx-start.sh" afterPath="$PROJECT_DIR$/docker/nginx/1.13.8/nginx-start.sh" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,17 +30,17 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="elasticsearch.yml" pinned="false" current-in-tab="false">
+          <file leaf-file-name="elasticsearch.yml" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/docker/elasticsearch.yml">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="578">
-                  <caret line="34" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+                <state relative-caret-position="187">
+                  <caret line="11" column="16" lean-forward="false" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="default.conf" pinned="false" current-in-tab="true">
+          <file leaf-file-name="default.conf" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/default.conf">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="629">
@@ -54,8 +53,18 @@
           <file leaf-file-name="Dockerfile" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/Dockerfile">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="153">
-                  <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+                <state relative-caret-position="323">
+                  <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="merlin.yml" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/docker/merlin.yml">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="784">
+                  <caret line="47" column="0" lean-forward="false" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -64,8 +73,8 @@
           <file leaf-file-name="nginx-start.sh" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/nginx-start.sh">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="68">
-                  <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+                <state relative-caret-position="51">
+                  <caret line="3" column="31" lean-forward="false" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
                   <folding />
                 </state>
               </provider>
@@ -180,7 +189,6 @@
         <option value="$PROJECT_DIR$/docker/merlin.yml" />
         <option value="$PROJECT_DIR$/docker/nginx/1.13.8/nginx-start.ts" />
         <option value="$PROJECT_DIR$/docker/nginx/1.13.8/supervisord.conf" />
-        <option value="$PROJECT_DIR$/docker/nginx/1.13.8/nginx-start.sh" />
         <option value="$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" />
         <option value="$PROJECT_DIR$/package.json" />
@@ -188,12 +196,13 @@
         <option value="$PROJECT_DIR$/docker/elasticsearch-head/5.x/_build.sh" />
         <option value="$PROJECT_DIR$/docker/elasticsearch-head/5.x/Dockerfile" />
         <option value="$PROJECT_DIR$/docker/elasticsearch-head/5.x/_run.sh" />
-        <option value="$PROJECT_DIR$/docker/elasticsearch.yml" />
-        <option value="$PROJECT_DIR$/docker/nginx/1.13.8/Dockerfile" />
         <option value="$PROJECT_DIR$/docker/nginx/1.13.8/_run.sh" />
         <option value="$PROJECT_DIR$/docker/nginx/docker-mount/default.conf" />
         <option value="$PROJECT_DIR$/docker/elasticsearch/5.6.6/Dockerfile" />
         <option value="$PROJECT_DIR$/docker/nginx/1.13.8/default.conf" />
+        <option value="$PROJECT_DIR$/docker/nginx/1.13.8/nginx-start.sh" />
+        <option value="$PROJECT_DIR$/docker/nginx/1.13.8/Dockerfile" />
+        <option value="$PROJECT_DIR$/docker/elasticsearch.yml" />
       </list>
     </option>
   </component>
@@ -1450,14 +1459,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docker/merlin.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="760">
-          <caret line="47" column="0" lean-forward="false" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -1529,30 +1530,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docker/elasticsearch.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="34" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/nginx-start.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docker/elasticsearch-head/5.x/Dockerfile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -1589,6 +1566,38 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="629">
           <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/nginx-start.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="31" lean-forward="false" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/merlin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="784">
+          <caret line="47" column="0" lean-forward="false" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/elasticsearch.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="16" lean-forward="false" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
           <folding />
         </state>
       </provider>

@@ -9,7 +9,9 @@
       <w>jsonfile</w>
       <w>jstnldrs</w>
       <w>mongo</w>
+      <w>sbin</w>
       <w>strongloop</w>
+      <w>supervisord</w>
       <w>yaml</w>
     </words>
   </dictionary>

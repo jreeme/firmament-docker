@@ -8,17 +8,17 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" > /etc/apk/reposito
   echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
 
 #RUN apk update && apk upgrade
-RUN apk add --update nodejs nodejs-npm
-RUN apk add bash dumb-init supervisor && \
+#RUN apk add --update nodejs nodejs-npm
+RUN apk add --update bash dumb-init supervisor && \
   rm -rf /var/cache/apk/*
 RUN rm /etc/supervisord.conf
 RUN mkdir -p /var/local/supervisor
 COPY nginx-start.sh /var/local/supervisor/
 RUN chmod 755 /var/local/supervisor/nginx-start.sh
 COPY supervisord.conf /etc/
-#COPY default.conf /etc/nginx/conf.d
+COPY default.conf /etc/nginx/conf.d
 
-#ENTRYPOINT ["/usr/bin/dumb-init","--"]
-#CMD ["/usr/bin/supervisord"]
-CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/usr/bin/dumb-init","--"]
+CMD ["/usr/bin/supervisord"]
+#CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
 
