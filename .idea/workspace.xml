@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="NPM -&gt; 1.4.7">
-      <change beforePath="" afterPath="$PROJECT_DIR$/docker/elasticsearch-head/5.x/Dockerfile" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/docker/elasticsearch-head/5.x/_build.sh" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/docker/elasticsearch-head/5.x/_run.sh" />
+    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/docker/nginx/docker-mount/default.conf" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/docker/elasticsearch.yml" afterPath="$PROJECT_DIR$/docker/elasticsearch.yml" />
       <change beforePath="$PROJECT_DIR$/docker/elasticsearch/5.6.6/Dockerfile" afterPath="$PROJECT_DIR$/docker/elasticsearch/5.6.6/Dockerfile" />
-      <change beforePath="$PROJECT_DIR$/docker/elasticsearch/5.6.6/_build.sh" afterPath="$PROJECT_DIR$/docker/elasticsearch/5.6.6/_build.sh" />
+      <change beforePath="$PROJECT_DIR$/docker/nginx/1.13.8/Dockerfile" afterPath="$PROJECT_DIR$/docker/nginx/1.13.8/Dockerfile" />
+      <change beforePath="$PROJECT_DIR$/docker/nginx/1.13.8/_run.sh" afterPath="$PROJECT_DIR$/docker/nginx/1.13.8/_run.sh" />
+      <change beforePath="$PROJECT_DIR$/docker/nginx/1.13.8/default.conf" afterPath="$PROJECT_DIR$/docker/nginx/1.13.8/default.conf" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,28 +28,86 @@
     <favorites_list name="firmament-docker" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="elasticsearch.yml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/docker/elasticsearch.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" column="11" lean-forward="false" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Dockerfile" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/Dockerfile">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="39" lean-forward="false" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="elasticsearch.yml" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/docker/elasticsearch.yml">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="578">
+                  <caret line="34" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="default.conf" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/default.conf">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="629">
+                  <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Dockerfile" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/Dockerfile">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="153">
+                  <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="nginx-start.sh" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/nginx-start.sh">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="68">
+                  <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="_run.sh" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/_run.sh">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="17">
+                  <caret line="1" column="47" lean-forward="false" selection-start-line="1" selection-start-column="47" selection-end-line="1" selection-end-column="47" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Dockerfile" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/Dockerfile">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="187">
+                  <caret line="11" column="71" lean-forward="false" selection-start-line="11" selection-start-column="71" selection-end-line="11" selection-end-column="71" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="default.conf" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/docker/nginx/docker-mount/default.conf">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="17">
+                  <caret line="1" column="16" lean-forward="false" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -86,7 +143,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/ts/implementations/docker-image-management-impl.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/docker-management-impl.ts" />
         <option value="$PROJECT_DIR$/ts/index.ts" />
         <option value="$PROJECT_DIR$/docker/templateCatalog.json" />
@@ -119,16 +175,13 @@
         <option value="$PROJECT_DIR$/docker/elasticsearch/2.3.4/Dockerfile" />
         <option value="$PROJECT_DIR$/elasticsearch.yml" />
         <option value="$PROJECT_DIR$/docker/etl.yml" />
-        <option value="$PROJECT_DIR$/docker/nginx/1.13.8/_run.sh" />
         <option value="$PROJECT_DIR$/docker/nginx/1.13.8/_build.sh" />
         <option value="$PROJECT_DIR$/docker/nginx/1.13.8/nginx.conf" />
         <option value="$PROJECT_DIR$/docker/merlin.yml" />
         <option value="$PROJECT_DIR$/docker/nginx/1.13.8/nginx-start.ts" />
-        <option value="$PROJECT_DIR$/docker/nginx/1.13.8/Dockerfile" />
         <option value="$PROJECT_DIR$/docker/nginx/1.13.8/supervisord.conf" />
         <option value="$PROJECT_DIR$/docker/nginx/1.13.8/nginx-start.sh" />
         <option value="$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts" />
-        <option value="$PROJECT_DIR$/docker/nginx/1.13.8/default.conf" />
         <option value="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/docker/elasticsearch/5.6.6/_build.sh" />
@@ -136,7 +189,11 @@
         <option value="$PROJECT_DIR$/docker/elasticsearch-head/5.x/Dockerfile" />
         <option value="$PROJECT_DIR$/docker/elasticsearch-head/5.x/_run.sh" />
         <option value="$PROJECT_DIR$/docker/elasticsearch.yml" />
+        <option value="$PROJECT_DIR$/docker/nginx/1.13.8/Dockerfile" />
+        <option value="$PROJECT_DIR$/docker/nginx/1.13.8/_run.sh" />
+        <option value="$PROJECT_DIR$/docker/nginx/docker-mount/default.conf" />
         <option value="$PROJECT_DIR$/docker/elasticsearch/5.6.6/Dockerfile" />
+        <option value="$PROJECT_DIR$/docker/nginx/1.13.8/default.conf" />
       </list>
     </option>
   </component>
@@ -234,6 +291,13 @@
             <path>
               <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
               <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="docker" type="462c0819:PsiDirectoryNode" />
+              <item name="nginx" type="462c0819:PsiDirectoryNode" />
+              <item name="docker-mount" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
               <item name="firmament-bash" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -276,11 +340,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/docker/nginx/docker-mount" />
       <recent name="$PROJECT_DIR$/docker" />
       <recent name="$PROJECT_DIR$/docker/nginx/1.13.8" />
       <recent name="$PROJECT_DIR$/docker/nginx" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/docker/elasticsearch/2.3.4" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/docker" />
@@ -965,7 +1029,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Bang around on template to download files needed for 'docker build'" />
     <MESSAGE value="Stashing: Need to continue work on makeTemplate" />
     <MESSAGE value="v0..3.3-&gt;NPM Seems to work." />
     <MESSAGE value="Use relative paths in templateCatalog so it can be used off filesystem as well as network" />
@@ -990,7 +1053,8 @@
     <MESSAGE value="Add nginx support (1.13.8)" />
     <MESSAGE value="NPM -&gt; 1.4.6" />
     <MESSAGE value="NPM -&gt; 1.4.7" />
-    <option name="LAST_COMMIT_MESSAGE" value="NPM -&gt; 1.4.7" />
+    <MESSAGE value="Get to running elasticsearch-head" />
+    <option name="LAST_COMMIT_MESSAGE" value="Get to running elasticsearch-head" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1026,7 +1090,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/docker/datawake.04-APR-2017/build-from-docker-file.json" />
     <entry file="file://$PROJECT_DIR$/ts/implementations/docker-image-management-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="411">
@@ -1371,26 +1434,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/_run.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/supervisord.conf">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="580">
           <caret line="140" column="28" lean-forward="false" selection-start-line="140" selection-start-column="28" selection-end-line="140" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/nginx-start.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1422,14 +1469,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/default.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-583">
@@ -1439,14 +1478,6 @@
             <element signature="n#!!block;n#buildTemplate#0;n#DockerProvisionImpl#0" expanded="false" />
             <element signature="n#!!block;n#getContainerConfigsFromJsonFile#0;n#DockerProvisionImpl#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="49" lean-forward="false" selection-start-line="2" selection-start-column="49" selection-end-line="2" selection-end-column="49" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1490,14 +1521,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docker/elasticsearch-head/5.x/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -1506,18 +1529,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/Dockerfile">
+    <entry file="file://$PROJECT_DIR$/docker/elasticsearch.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="39" lean-forward="false" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
+        <state relative-caret-position="578">
+          <caret line="34" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docker/elasticsearch.yml">
+    <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/nginx-start.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="11" lean-forward="false" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
+        <state relative-caret-position="68">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/elasticsearch-head/5.x/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="71" lean-forward="false" selection-start-line="11" selection-start-column="71" selection-end-line="11" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/nginx/docker-mount/default.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="16" lean-forward="false" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/_run.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="47" lean-forward="false" selection-start-line="1" selection-start-column="47" selection-end-line="1" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/default.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
           <folding />
         </state>
       </provider>

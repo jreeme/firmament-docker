@@ -8,6 +8,8 @@ RUN rm -rf /var/cache/apk/*
 #RUN echo "vm.max_map_count=262144" >> /etc/sysctl.conf
 RUN echo "http.cors.enabled: true" >> /usr/share/elasticsearch/config/elasticsearch.yml
 RUN echo "http.cors.allow-headers: \"*\"" >> /usr/share/elasticsearch/config/elasticsearch.yml
+RUN echo "http.cors.allow-origin: \"*\"" >> /usr/share/elasticsearch/config/elasticsearch.yml
+RUN echo "http.cors.allow-methods: OPTIONS, HEAD, GET, POST, PUT, DELETE" >> /usr/share/elasticsearch/config/elasticsearch.yml
 
 #CMD ["elasticsearch", \
 #  "-Ecluster.name=es-cluster", \
