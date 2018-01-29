@@ -18,7 +18,7 @@ const dockerProvision = kernel.get<DockerProvision>('DockerProvision');
 //dockerMake.makeTemplate({});
 dockerProvision.makeTemplate({
   output: ProvisionCommandImpl.defaultConfigFilename,
-  yaml: '/mnt/RAM_disk/firmament-docker/docker/merlin.yml',
+  yaml: '/mnt/RAM_disk/firmament-docker/docker/elasticsearch2.yml',
   //yaml: ProvisionCommandImpl.defaultComposeYamlFilename
 }, () => {
   dockerProvision.buildTemplate({

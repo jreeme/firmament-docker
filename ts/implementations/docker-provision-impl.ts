@@ -165,10 +165,10 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
           ));
         }
         async.parallel(fnArray, (err, result) => {
-          cb(err);
+          cb(err, ip);
         });
       },
-      (cb) => {
+      (ip, cb) => {
         const dockerMachineGetMasterEnvCmd = [
           'docker-machine',
           'env',
@@ -193,12 +193,12 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
                 env[keyValue[0]] = keyValue[1].replace(/"/g, '');
               }
             } while (match);
-            cb(null, env);
+            cb(null, env, ip);
           });
       },
-      (env, cb) => {
+      (env, ip, cb) => {
         tmp.file((err, tmpPath, fd, cleanupCb) => {
-          const yaml = YAML.dump(stackConfigTemplate.dockerComposeYaml);
+          const yaml = YAML.dump(stackConfigTemplate.dockerComposeYaml).replace(/\$\{MASTER_IP\}/g, ip);
           if (me.commandUtil.callbackIfError(err)) {
             return;
           }
