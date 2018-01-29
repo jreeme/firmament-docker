@@ -5,7 +5,6 @@ networks:
   elasticsearch-frontend:
 
 services:
-  #HDFS and Spark Name Node Service
 #  nginx-proxy:
 #    image: 52.0.211.45:5000/nginx-proxy:1.13
 #    volumes:
@@ -24,6 +23,7 @@ services:
 #      placement:
 #        constraints:
 #          - node.role == manager
+
   elasticsearch:
     image: 52.0.211.45:5000/elasticsearch:2.4.6
     networks:
@@ -39,9 +39,10 @@ services:
         delay: 60s
       restart_policy:
         condition: on-failure
-      placement:
-        constraints:
-          - node.role == manager
+
+#      placement:
+#        constraints:
+#          - node.role == manager
     command:
       - elasticsearch
       - -Des.discovery.zen.ping.multicast.enabled=false
@@ -50,20 +51,4 @@ services:
       - -Des.discovery.zen.minimum_master_nodes=2
       - -Des.gateway.recover_after_nodes=2
       - -Des.network.bind=_eth0:ipv4_
-
-#    ports:
-#      - "9200:9200"
-#      - "9300:9300"
-    #command: "elasticsearch -Enetwork.host=0.0.0.0 -Ediscovery.zen.ping.unicast.hosts=elasticsearch -Ediscovery.zen.minimum_master_nodes=1"
-#  elasticsearch-head:
-#    image: 52.0.211.45:5000/elasticsearch-head:5.x
-#    deploy:
-#      replicas: 1
-#      restart_policy:
-#        condition: on-failure
-#      placement:
-#        constraints:
-#          - node.role == worker
-#    ports:
-#      - "9100:9100"
 
