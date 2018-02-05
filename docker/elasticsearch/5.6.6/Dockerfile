@@ -1,7 +1,6 @@
 FROM elasticsearch:5.6.6-alpine
 
-RUN apk update \
-    && apk upgrade
+RUN apk update && apk upgrade
 RUN apk add curl wget bash openssl
 RUN rm -rf /var/cache/apk/*
 #RUN sysctl -w vm.max_map_count=262144
@@ -10,6 +9,8 @@ RUN echo "http.cors.enabled: true" >> /usr/share/elasticsearch/config/elasticsea
 RUN echo "http.cors.allow-headers: \"*\"" >> /usr/share/elasticsearch/config/elasticsearch.yml
 RUN echo "http.cors.allow-origin: \"*\"" >> /usr/share/elasticsearch/config/elasticsearch.yml
 RUN echo "http.cors.allow-methods: OPTIONS, HEAD, GET, POST, PUT, DELETE" >> /usr/share/elasticsearch/config/elasticsearch.yml
+
+RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install -b ingest-attachment
 
 #CMD ["elasticsearch", \
 #  "-Ecluster.name=es-cluster", \

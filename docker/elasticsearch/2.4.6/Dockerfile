@@ -1,7 +1,6 @@
 FROM elasticsearch:2.4.6-alpine
 
-RUN apk update \
-    && apk upgrade
+RUN apk update && apk upgrade
 RUN apk add curl wget bash openssl
 RUN rm -rf /var/cache/apk/*
 RUN echo "http.cors.enabled: true" >> /usr/share/elasticsearch/config/elasticsearch.yml
