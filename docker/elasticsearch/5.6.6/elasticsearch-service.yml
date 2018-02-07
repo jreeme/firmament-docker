@@ -19,7 +19,7 @@ services:
 #    ports:
 #      - "9200:9200"
 #      - "9300:9300"
-    command: "elasticsearch -Enetwork.host=0.0.0.0 -Ediscovery.zen.ping.unicast.hosts=elasticsearch -Ediscovery.zen.minimum_master_nodes=1"
+#    command: "elasticsearch -Enetwork.host=0.0.0.0 -Ediscovery.zen.ping.unicast.hosts=elasticsearch -Ediscovery.zen.minimum_master_nodes=1"
   elasticsearch-head:
     image: 52.0.211.45:5000/elasticsearch-head:5.x
     deploy:

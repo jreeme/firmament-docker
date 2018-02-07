@@ -1,6 +1,7 @@
 <component name="ProjectDictionaryState">
   <dictionary name="jreeme">
     <words>
+      <w>addr</w>
       <w>autorestart</w>
       <w>autostart</w>
       <w>bashrc</w>
@@ -44,6 +45,7 @@
       <w>progname</w>
       <w>req</w>
       <w>rpcinterface</w>
+      <w>sameorigin</w>
       <w>sbin</w>
       <w>serverurl</w>
       <w>setuid</w>
