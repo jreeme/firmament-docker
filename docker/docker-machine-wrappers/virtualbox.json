@@ -1,0 +1,18 @@
+{
+  "clusterPrefix"             : "merlin",
+  "dockerComposeYaml"         : {
+  },
+  "workerHostCount"           : 1,
+  "dockerMachineWorkerOptions": {
+    "engineLabel": "role=worker"
+  },
+  "dockerMachineMasterOptions": {
+    "engineLabel": "role=master"
+  },
+  "dockerMachineDriverOptions": {
+    "driver"                : "virtualbox",
+    "virtualboxCpuCount"    : 2,
+    "virtualboxMemory"      : 8092,
+    "engineInsecureRegistry": "52.0.211.45:5000"
+  }
+}

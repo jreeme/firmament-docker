@@ -1,0 +1,24 @@
+{
+  "clusterPrefix"             : "merlin",
+  "dockerComposeYaml"         : {
+  },
+  "workerHostCount"           : 1,
+  "dockerMachineWorkerOptions": {
+    "engineLabel": "role=worker"
+  },
+  "dockerMachineMasterOptions": {
+    "engineLabel": "role=master"
+  },
+  "dockerMachineDriverOptions": {
+    "driver"                 : "openstack",
+    "openstackUsername"      : "",
+    "openstackPassword"      : "",
+    "openstackAuthUrl"       : "http://10.1.70.100:5000/v2.0",
+    "openstackFlavorId"      : "d2ea7e52-5c57-4856-96c0-cab27c03e160",
+    "openstackImageId"       : "2a680ec7-fc97-4e9e-8b51-606907b9aa2b",
+    "openstackSecGroups"     : "All",
+    "openstackSshUser"       : "ubuntu",
+    "openstackFloatingipPool": "external-penet",
+    "openstackTenantName"    : "Newman"
+  }
+}

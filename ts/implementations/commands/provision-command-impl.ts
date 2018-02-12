@@ -34,6 +34,11 @@ export class ProvisionCommandImpl implements Command {
     templateCommand.commandDesc = 'Create a template JSON spec for creating docker stack/swarm';
     //noinspection ReservedWordAsName
     templateCommand.options = {
+      dm: {
+        type: 'string',
+        default: 'virtualbox',
+        desc: `docker-machine host type ['virtualbox','openstack','esxi']`,
+      },
       get: {
         alias: 'g',
         type: 'string',

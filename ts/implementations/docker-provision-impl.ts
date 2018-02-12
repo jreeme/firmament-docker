@@ -39,7 +39,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
 
   makeTemplate(argv: any, cb: () => void = null) {
     const me = this;
-    me.composeAndWriteTemplate(argv.get, argv.yaml, argv.output, (err: Error, msg: string) => {
+    me.composeAndWriteTemplate(argv.get, argv.dm, argv.yaml, argv.output, (err: Error, msg: string) => {
       if (cb) {
         return cb();
       }
@@ -330,6 +330,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
   }
 
   private composeAndWriteTemplate(catalogEntryName: string,
+                                  dockerMachineHostType: string,
                                   dockerComposeYamlPath: string,
                                   outputTemplateFileName: string,
                                   cb: (err: Error, msg?: string) => void) {
@@ -345,8 +346,12 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
           FailureRetVal.TRUE)) {
         cb(null);
       } else {
+        const dockerMachineWrapperPath =
+          path.resolve(__dirname,`../../docker/docker-machine-wrappers/${dockerMachineHostType}.json`);
+        const dockerMachineWrapper = jsonFile.readFileSync(dockerMachineWrapperPath);
         const dockerComposeYaml = YAML.load(dockerComposeYamlPath);
-        let jsonTemplate = Object.assign({}, DockerDescriptors.dockerStackConfigTemplate, {dockerComposeYaml});
+        const jsonTemplate = Object.assign({}, dockerMachineWrapper, {dockerComposeYaml});
+        //let jsonTemplate = Object.assign({}, DockerDescriptors.dockerStackConfigTemplate, {dockerComposeYaml});
         me.dockerUtil.writeJsonTemplateFile(jsonTemplate, fullOutputPath);
         cb(null, 'Template written.');
       }

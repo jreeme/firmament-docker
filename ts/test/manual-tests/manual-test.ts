@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import 'reflect-metadata';
+import * as path from 'path';
 import kernel from '../../inversify.config';
 import {DockerMake} from '../../interfaces/docker-make';
 import {RemoteCatalogGetter, Command} from 'firmament-yargs';
@@ -18,12 +19,14 @@ const dockerProvision = kernel.get<DockerProvision>('DockerProvision');
 //dockerMake.makeTemplate({});
 dockerProvision.makeTemplate({
   output: ProvisionCommandImpl.defaultConfigFilename,
-  yaml: '/mnt/RAM_disk/firmament-docker/docker/elasticsearch2.yml',
+  yaml: path.resolve(__dirname, '../../../docker/elasticsearch/5.6.6/elasticsearch-service.yml'),
+  dm: 'openstack'
+  //dm: 'virtualbox'
   //yaml: ProvisionCommandImpl.defaultComposeYamlFilename
 }, () => {
-  dockerProvision.buildTemplate({
+/*  dockerProvision.buildTemplate({
     input: ProvisionCommandImpl.defaultConfigFilename
-  });
+  });*/
 });
 process.on('uncaughtException', err => {
   console.log(err);
