@@ -11,7 +11,10 @@ import * as tmp from 'tmp';
 import {RemoteCatalogGetter, RemoteCatalogEntry} from 'firmament-yargs';
 import {DockerProvision} from "../interfaces/docker-provision";
 import {DockerUtil} from "../interfaces/docker-util";
-import {DockerStackConfigTemplate} from "../";
+import {
+  DockerMachineDriverOptions_openstack, DockerMachineDriverOptions_vmwarevsphere,
+  DockerStackConfigTemplate
+} from "../";
 import {ProcessCommandJson} from "firmament-bash/js/interfaces/process-command-json";
 
 const fileExists = require('file-exists');
@@ -47,11 +50,41 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     });
   }
 
-  buildTemplate(argv: any) {
+  buildTemplate(argv: any, cb: () => void = null) {
     const me = this;
     const {fullInputPath, stackConfigTemplate} = me.getContainerConfigsFromJsonFile(argv.input);
+    switch (stackConfigTemplate.dockerMachineDriverOptions.driver) {
+      case 'openstack': {
+        const dockerMachineDriverOptions =
+          (<DockerMachineDriverOptions_openstack>stackConfigTemplate.dockerMachineDriverOptions);
+        if (argv.username) {
+          dockerMachineDriverOptions.openstackUsername = argv.username;
+        }
+        if (argv.password) {
+          dockerMachineDriverOptions.openstackPassword = argv.password;
+        }
+        break;
+      }
+      case 'vmwarevsphere': {
+        const dockerMachineDriverOptions =
+          (<DockerMachineDriverOptions_vmwarevsphere>stackConfigTemplate.dockerMachineDriverOptions);
+        if (argv.username) {
+          dockerMachineDriverOptions.vmwarevsphereUsername = argv.username;
+        }
+        if (argv.password) {
+          dockerMachineDriverOptions.vmwarevspherePassword = argv.password;
+        }
+        break;
+      }
+      case 'virtualbox':
+      default:
+        break;
+    }
     me.commandUtil.log("Constructing Docker Stack described in: '" + fullInputPath + "'");
     me.createDockerMachines(stackConfigTemplate, (err, result) => {
+      if (cb) {
+        return cb();
+      }
       me.commandUtil.processExitWithError(err, 'OK');
     });
   }
@@ -347,7 +380,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
         cb(null);
       } else {
         const dockerMachineWrapperPath =
-          path.resolve(__dirname,`../../docker/docker-machine-wrappers/${dockerMachineHostType}.json`);
+          path.resolve(__dirname, `../../docker/docker-machine-wrappers/${dockerMachineHostType}.json`);
         const dockerMachineWrapper = jsonFile.readFileSync(dockerMachineWrapperPath);
         const dockerComposeYaml = YAML.load(dockerComposeYamlPath);
         const jsonTemplate = Object.assign({}, dockerMachineWrapper, {dockerComposeYaml});

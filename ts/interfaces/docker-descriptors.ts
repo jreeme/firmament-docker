@@ -1,30 +1,44 @@
+export interface DockerMachineDriverOptions {
+  driver: string;
+}
+
+export interface DockerMachineDriverOptions_vmwarevsphere extends DockerMachineDriverOptions {
+  vmwarevsphereUsername: string,
+  vmwarevspherePassword: string,
+  vmwarevsphereCpuCount: number,
+  vmwarevsphereDiskSize: number,
+  vmwarevsphereMemorySize: number,
+  vmwarevsphereVcenter: string
+}
+
+export interface DockerMachineDriverOptions_virtualbox extends DockerMachineDriverOptions {
+  virtualboxCpuCount: number,
+  virtualboxMemory: number,
+  engineInsecureRegistry: string
+}
+
+export interface DockerMachineDriverOptions_openstack extends DockerMachineDriverOptions {
+  openstackUsername: string,
+  openstackPassword: string,
+  openstackAuthUrl: string,
+  openstackFlavorId: string,
+  openstackImageId: string,
+  openstackSecGroups: string,
+  openstackSshUser: string,
+  openstackFloatingipPool: string,
+  openstackTenantName: string
+}
+
 export interface DockerStackConfigTemplate {
   clusterPrefix: string,
   dockerComposeYaml: any,
   workerHostCount: number,
   dockerMachineWorkerOptions: any,
   dockerMachineMasterOptions: any,
-  dockerMachineDriverOptions: any
+  dockerMachineDriverOptions: DockerMachineDriverOptions
 }
 
 export class DockerDescriptors {
-  static dockerStackConfigTemplate: DockerStackConfigTemplate = {
-    clusterPrefix: 'merlin',
-    dockerComposeYaml: {},
-    workerHostCount: 1,
-    dockerMachineWorkerOptions: {
-      engineLabel: 'role=worker'
-    },
-    dockerMachineMasterOptions: {
-      engineLabel: 'role=master'
-    },
-    dockerMachineDriverOptions: {
-      driver: 'virtualbox',
-      virtualboxCpuCount: 2,
-      virtualboxMemory: 8092,
-      engineInsecureRegistry: '52.0.211.45:5000'
-    }
-  };
   static dockerContainerConfigTemplate = [
     {
       name: 'mongo',

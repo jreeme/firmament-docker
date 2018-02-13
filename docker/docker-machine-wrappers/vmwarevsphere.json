@@ -1,5 +1,5 @@
 {
-  "clusterPrefix"             : "merlin",
+  "clusterPrefix"             : "merlin2",
   "dockerComposeYaml"         : {
   },
   "workerHostCount"           : 1,
@@ -10,6 +10,7 @@
     "engineLabel": "role=master"
   },
   "dockerMachineDriverOptions": {
+    "engineInsecureRegistry": "52.0.211.45:5000",
     "driver"                 : "vmwarevsphere",
     "vmwarevsphereUsername"  : "",
     "vmwarevspherePassword"  : "",

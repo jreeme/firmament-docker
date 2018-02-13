@@ -19,14 +19,19 @@ const dockerProvision = kernel.get<DockerProvision>('DockerProvision');
 //dockerMake.makeTemplate({});
 dockerProvision.makeTemplate({
   output: ProvisionCommandImpl.defaultConfigFilename,
-  yaml: path.resolve(__dirname, '../../../docker/elasticsearch/5.6.6/elasticsearch-service.yml'),
-  dm: 'openstack'
+  yaml: path.resolve(__dirname, '../../../docker/merlin.yml'),
+  //yaml: path.resolve(__dirname, '../../../docker/elasticsearch/5.6.6/elasticsearch-service.yml'),
+  dm: 'vmwarevsphere'
   //dm: 'virtualbox'
   //yaml: ProvisionCommandImpl.defaultComposeYamlFilename
 }, () => {
-/*  dockerProvision.buildTemplate({
+  dockerProvision.buildTemplate({
+    username: 'root',
+    password: 'run2walk!',
     input: ProvisionCommandImpl.defaultConfigFilename
-  });*/
+  }, () => {
+    process.exit(0);
+  });
 });
 process.on('uncaughtException', err => {
   console.log(err);

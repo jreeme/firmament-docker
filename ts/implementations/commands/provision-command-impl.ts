@@ -67,6 +67,16 @@ export class ProvisionCommandImpl implements Command {
     buildCommand.commandDesc = 'Build Docker Stack based on JSON spec';
     //noinspection ReservedWordAsName
     buildCommand.options = {
+      username: {
+        alias: 'u',
+        type: 'string',
+        desc: 'username for Docker Machine host'
+      },
+      password: {
+        alias: 'p',
+        type: 'string',
+        desc: 'password for Docker Machine host'
+      },
       input: {
         alias: 'i',
         default: ProvisionCommandImpl.defaultConfigFilename,
