@@ -1,0 +1,21 @@
+{
+  "clusterPrefix"             : "merlin",
+  "dockerComposeYaml"         : {
+  },
+  "workerHostCount"           : 1,
+  "dockerMachineWorkerOptions": {
+    "engineLabel": "role=worker"
+  },
+  "dockerMachineMasterOptions": {
+    "engineLabel": "role=master"
+  },
+  "dockerMachineDriverOptions": {
+    "driver"                 : "vmwarevsphere",
+    "vmwarevsphereUsername"  : "",
+    "vmwarevspherePassword"  : "",
+    "vmwarevsphereCpuCount"  : 2,
+    "vmwarevsphereDiskSize"  : 40000,
+    "vmwarevsphereMemorySize": 4096,
+    "vmwarevsphereVcenter"   : "192.168.96.200"
+  }
+}

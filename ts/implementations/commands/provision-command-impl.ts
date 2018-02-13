@@ -34,10 +34,11 @@ export class ProvisionCommandImpl implements Command {
     templateCommand.commandDesc = 'Create a template JSON spec for creating docker stack/swarm';
     //noinspection ReservedWordAsName
     templateCommand.options = {
-      dm: {
+      'docker-machine': {
+        alias: 'dm',
         type: 'string',
         default: 'virtualbox',
-        desc: `docker-machine host type ['virtualbox','openstack','esxi']`,
+        desc: `docker-machine host type ['virtualbox','openstack','vmwarevsphere']`,
       },
       get: {
         alias: 'g',
@@ -46,7 +47,6 @@ export class ProvisionCommandImpl implements Command {
       },
       yaml: {
         alias: 'y',
-        default: ProvisionCommandImpl.defaultComposeYamlFilename,
         type: 'string',
         desc: 'Name of the input docker-compose YAML file to embed in template'
       },
