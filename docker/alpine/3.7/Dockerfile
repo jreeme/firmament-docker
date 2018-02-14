@@ -1,4 +1,10 @@
+FROM alpine:3.7 as base
+
+RUN apk update
+RUN apk add --no-cache ca-certificates
+
 FROM alpine:3.7
+COPY --from=base /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 
 RUN apk update
 # Install some software (--no-cache switch does not remove files in /var/cache/apk)
