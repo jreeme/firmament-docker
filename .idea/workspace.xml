@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/docker/portainer/1.16.2/_build.sh" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/docker/portainer/1.16.2/_run.sh" />
+    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="Convert portainer container to use supervisor">
+      <change beforePath="" afterPath="$PROJECT_DIR$/docker/portainer/1.16.2/Dockerfile" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/docker/portainer/1.16.2/portainer-start.sh" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/docker/portainer/1.16.2/portainer-supervisord.conf" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/jreeme.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/jreeme.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/docker/alpine/3.7/Dockerfile" afterPath="$PROJECT_DIR$/docker/alpine/3.7/Dockerfile" />
-      <change beforePath="$PROJECT_DIR$/docker/merlin.yml" afterPath="$PROJECT_DIR$/docker/merlin.yml" />
+      <change beforePath="$PROJECT_DIR$/docker/portainer/1.16.2/_build.sh" afterPath="$PROJECT_DIR$/docker/portainer/1.16.2/_build.sh" />
+      <change beforePath="$PROJECT_DIR$/docker/portainer/1.16.2/_run.sh" afterPath="$PROJECT_DIR$/docker/portainer/1.16.2/_run.sh" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,18 +29,66 @@
     <favorites_list name="firmament-docker" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="_build.sh" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/_build.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="20" lean-forward="false" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf>
+          <file leaf-file-name="Dockerfile" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/Dockerfile">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="289">
+                  <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="portainer-supervisord.conf" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/portainer-supervisord.conf">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="17">
+                  <caret line="1" column="36" lean-forward="false" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="portainer-start.sh" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/portainer-start.sh">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="51">
+                  <caret line="3" column="9" lean-forward="false" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="_run.sh" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/_run.sh">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="17">
+                  <caret line="1" column="57" lean-forward="false" selection-start-line="1" selection-start-column="57" selection-end-line="1" selection-end-column="57" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="_build.sh" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/_build.sh">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="153">
+                  <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -86,9 +136,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/docker/nginx/1.13.8/nginx-start.sh" />
-        <option value="$PROJECT_DIR$/docker/elasticsearch.yml" />
-        <option value="$PROJECT_DIR$/docker/elasticsearch/2.3.4/_build.sh" />
         <option value="$PROJECT_DIR$/docker/elasticsearch/2.3.4/_run.sh" />
         <option value="$PROJECT_DIR$/docker/elasticsearch/2.4.6/_build.sh" />
         <option value="$PROJECT_DIR$/docker/elasticsearch/2.4.6/_run.sh" />
@@ -136,6 +183,9 @@
         <option value="$PROJECT_DIR$/docker/merlin.yml" />
         <option value="$PROJECT_DIR$/docker/alpine/3.7/Dockerfile" />
         <option value="$PROJECT_DIR$/docker/portainer/1.16.2/_run.sh" />
+        <option value="$PROJECT_DIR$/docker/portainer/1.16.2/portainer-start.sh" />
+        <option value="$PROJECT_DIR$/docker/portainer/1.16.2/Dockerfile" />
+        <option value="$PROJECT_DIR$/docker/portainer/1.16.2/portainer-supervisord.conf" />
         <option value="$PROJECT_DIR$/docker/portainer/1.16.2/_build.sh" />
       </list>
     </option>
@@ -197,38 +247,6 @@
               <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
               <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
               <item name="docker" type="462c0819:PsiDirectoryNode" />
-              <item name="alpine" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
-              <item name="docker" type="462c0819:PsiDirectoryNode" />
-              <item name="alpine" type="462c0819:PsiDirectoryNode" />
-              <item name="3.7" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
-              <item name="docker" type="462c0819:PsiDirectoryNode" />
-              <item name="alpine-jre" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
-              <item name="docker" type="462c0819:PsiDirectoryNode" />
-              <item name="alpine-jre" type="462c0819:PsiDirectoryNode" />
-              <item name="3.7-8" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
-              <item name="docker" type="462c0819:PsiDirectoryNode" />
-              <item name="elasticsearch" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
-              <item name="docker" type="462c0819:PsiDirectoryNode" />
               <item name="nginx" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -250,11 +268,6 @@
               <item name="docker" type="462c0819:PsiDirectoryNode" />
               <item name="portainer" type="462c0819:PsiDirectoryNode" />
               <item name="1.16.2" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
-              <item name="ts" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -285,11 +298,11 @@
       <recent name="$PROJECT_DIR$/ts/implementations/commands" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/docker/portainer/1.16.2" />
       <recent name="$PROJECT_DIR$/docker/portainer" />
       <recent name="$PROJECT_DIR$/docker/docker-machine-wrappers" />
       <recent name="$PROJECT_DIR$/docker/alpine-jre/3.7-8" />
       <recent name="$PROJECT_DIR$/docker" />
-      <recent name="$PROJECT_DIR$/docker/elasticsearch/5.6.6" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -1103,7 +1116,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="v.1.3.0-&gt;NPM (build to es5, parallelize some docker operations)" />
     <MESSAGE value="v.1.3.1-&gt;NPM (build to es5, parallelize some docker operations)" />
     <MESSAGE value="v.1.3.4-&gt;NPM (new yargs)" />
     <MESSAGE value="v.1.3.5-&gt;NPM (new yargs)" />
@@ -1128,7 +1140,8 @@
     <MESSAGE value="Work on Alpine3.7 image as base for nginx + Dockerfile" />
     <MESSAGE value="Add support for vmware vsphere" />
     <MESSAGE value="Works on vmware vsphere!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Works on vmware vsphere!" />
+    <MESSAGE value="Add portainer build" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add portainer build" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1158,22 +1171,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../tmp/docker-provision.json" />
-    <entry file="file://$PROJECT_DIR$/docker/alpine/3.7/_run.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="65" lean-forward="false" selection-start-line="1" selection-start-column="65" selection-end-line="1" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/nginx-start.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="31" lean-forward="false" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docker/alpine/3.7/etcd.conf" />
     <entry file="file://$PROJECT_DIR$/docker/alpine/3.7/etcd.sh" />
     <entry file="file://$PROJECT_DIR$/docker/elasticsearch/2.4.6/Dockerfile">
@@ -1300,14 +1297,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="512">
-          <caret line="145" column="17" lean-forward="false" selection-start-line="145" selection-start-column="17" selection-end-line="145" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -1444,14 +1433,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/_run.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="45" lean-forward="false" selection-start-line="1" selection-start-column="45" selection-end-line="1" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docker/alpine-jre/3.7-8/_build.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -1492,10 +1473,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/_run.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="57" lean-forward="false" selection-start-line="1" selection-start-column="57" selection-end-line="1" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="563">
+          <caret line="148" column="0" lean-forward="false" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/portainer-start.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="9" lean-forward="false" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/portainer-supervisord.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="36" lean-forward="false" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/_build.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="20" lean-forward="false" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+        <state relative-caret-position="153">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding />
         </state>
       </provider>

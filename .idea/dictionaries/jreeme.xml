@@ -41,6 +41,7 @@
       <w>notif</w>
       <w>numprocs</w>
       <w>pidfile</w>
+      <w>portainer</w>
       <w>prog</w>
       <w>progname</w>
       <w>req</w>
