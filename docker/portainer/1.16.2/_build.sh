@@ -10,6 +10,7 @@ echo '!portainer-supervisord.conf' >> .dockerignore
 yarn
 PATH=/home/jreeme/src/firmament-docker/docker/portainer/1.16.2/portainer/node_modules/.bin:$PATH ./build.sh 1.16.2
 docker tag portainer/portainer:linux-amd64 52.0.211.45:5000/portainer:1.16.2
+docker tag portainer/portainer:linux-amd64 10.1.70.193:5000/portainer:1.16.2
 cd ..
 rm -rf $PWD/portainer
 echo "docker push 52.0.211.45:5000/portainer:1.16.2"
