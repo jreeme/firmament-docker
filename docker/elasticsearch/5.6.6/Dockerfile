@@ -4,9 +4,8 @@ FROM 52.0.211.45:5000/alpine-jre:3.7-8
 # ensure elasticsearch user exists
 RUN addgroup -S elasticsearch && adduser -S -G elasticsearch elasticsearch
 
-# grab su-exec for easy step-down from root
-# and bash for "bin/elasticsearch" among others
-RUN apk add --no-cache 'su-exec>=0.2' openssl && rm -rf /var/cache/apk/*
+# bash for "bin/elasticsearch" among others
+RUN apk add --no-cache openssl && rm -rf /var/cache/apk/*
 
 WORKDIR /usr/share/elasticsearch
 ENV PATH /usr/share/elasticsearch/bin:$PATH
