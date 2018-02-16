@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/docker/elasticsearch/5.6.6/_build.sh" afterPath="$PROJECT_DIR$/docker/elasticsearch/5.6.6/_build.sh" />
+      <change beforePath="$PROJECT_DIR$/docker/merlin.yml" afterPath="$PROJECT_DIR$/docker/merlin.yml" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -35,7 +35,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="elasticsearch-service.yml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="elasticsearch-service.yml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/elasticsearch-service.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="119">
@@ -65,7 +65,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_build.sh" pinned="false" current-in-tab="true">
+      <file leaf-file-name="_build.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/_build.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="17">
@@ -160,7 +160,6 @@
         <option value="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" />
         <option value="/tmp/docker-provision.json" />
         <option value="$PROJECT_DIR$/docker/docker-machine-wrappers/vmwarevsphere.json" />
-        <option value="$PROJECT_DIR$/docker/merlin.yml" />
         <option value="$PROJECT_DIR$/docker/alpine/3.7/Dockerfile" />
         <option value="$PROJECT_DIR$/docker/portainer/1.16.2/_run.sh" />
         <option value="$PROJECT_DIR$/docker/portainer/1.16.2/portainer-start.sh" />
@@ -185,6 +184,7 @@
         <option value="$PROJECT_DIR$/docker/elasticsearch/5.6.6/Dockerfile" />
         <option value="$PROJECT_DIR$/docker/elasticsearch/5.6.6/elasticsearch-start.sh" />
         <option value="$PROJECT_DIR$/docker/elasticsearch/5.6.6/_build.sh" />
+        <option value="$PROJECT_DIR$/docker/merlin.yml" />
       </list>
     </option>
   </component>
@@ -1170,7 +1170,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Put plugin build script back" />
     <MESSAGE value="Add datawake-all-in-one.json" />
     <MESSAGE value="v.1.4.2-&gt;NPM" />
     <MESSAGE value="Adding docker provision (stack/swarm)" />
@@ -1195,7 +1194,8 @@
     <MESSAGE value="1.4.9 -&gt; NPM" />
     <MESSAGE value="Tell supervisord to run elasticsearch as 'user=elasticsearch'" />
     <MESSAGE value="Remove su-exec. Use supervisord's user to lower priv for elasticsearch (which won't run as root)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove su-exec. Use supervisord's user to lower priv for elasticsearch (which won't run as root)" />
+    <MESSAGE value="Correct openstack ip address" />
+    <option name="LAST_COMMIT_MESSAGE" value="Correct openstack ip address" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1468,14 +1468,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docker/merlin.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="7" lean-forward="false" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/nginx-supervisord.conf">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1532,14 +1524,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/elasticsearch-service.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/elasticsearch-start.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -1560,6 +1544,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="66" lean-forward="false" selection-start-line="1" selection-start-column="66" selection-end-line="1" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/merlin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="35" column="37" lean-forward="false" selection-start-line="35" selection-start-column="37" selection-end-line="35" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/elasticsearch-service.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding />
         </state>
       </provider>
