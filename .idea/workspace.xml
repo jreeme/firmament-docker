@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/docker/elasticsearch/5.6.6/Dockerfile" afterPath="$PROJECT_DIR$/docker/elasticsearch/5.6.6/Dockerfile" />
-      <change beforePath="$PROJECT_DIR$/docker/elasticsearch/5.6.6/elasticsearch-start.sh" afterPath="$PROJECT_DIR$/docker/elasticsearch/5.6.6/elasticsearch-start.sh" />
+      <change beforePath="$PROJECT_DIR$/docker/elasticsearch/5.6.6/_build.sh" afterPath="$PROJECT_DIR$/docker/elasticsearch/5.6.6/_build.sh" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -56,11 +55,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="elasticsearch-supervisord.conf" pinned="false" current-in-tab="true">
+      <file leaf-file-name="elasticsearch-supervisord.conf" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/elasticsearch-supervisord.conf">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="34">
               <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_build.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/_build.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="66" lean-forward="false" selection-start-line="1" selection-start-column="66" selection-end-line="1" selection-end-column="66" />
               <folding />
             </state>
           </provider>
@@ -167,7 +176,6 @@
         <option value="$PROJECT_DIR$/docker/alpine/3.7/_build.sh" />
         <option value="$PROJECT_DIR$/docker/alpine-jre/3.7-8/_build.sh" />
         <option value="$PROJECT_DIR$/docker/amino3/1.1/_build.sh" />
-        <option value="$PROJECT_DIR$/docker/elasticsearch/5.6.6/_build.sh" />
         <option value="$PROJECT_DIR$/docker/elasticsearch-head/5.x/_build.sh" />
         <option value="$PROJECT_DIR$/docker/nginx/1.13.8/_build.sh" />
         <option value="$PROJECT_DIR$/docker/portainer/1.16.2/_build.sh" />
@@ -176,6 +184,7 @@
         <option value="$PROJECT_DIR$/docker/elasticsearch/5.6.6/elasticsearch-supervisord.conf" />
         <option value="$PROJECT_DIR$/docker/elasticsearch/5.6.6/Dockerfile" />
         <option value="$PROJECT_DIR$/docker/elasticsearch/5.6.6/elasticsearch-start.sh" />
+        <option value="$PROJECT_DIR$/docker/elasticsearch/5.6.6/_build.sh" />
       </list>
     </option>
   </component>
@@ -1161,7 +1170,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Fix missing EnvironmentVariables in firmament.json bug" />
     <MESSAGE value="Put plugin build script back" />
     <MESSAGE value="Add datawake-all-in-one.json" />
     <MESSAGE value="v.1.4.2-&gt;NPM" />
@@ -1186,7 +1194,8 @@
     <MESSAGE value="Tag with 10.1.70.193" />
     <MESSAGE value="1.4.9 -&gt; NPM" />
     <MESSAGE value="Tell supervisord to run elasticsearch as 'user=elasticsearch'" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tell supervisord to run elasticsearch as 'user=elasticsearch'" />
+    <MESSAGE value="Remove su-exec. Use supervisord's user to lower priv for elasticsearch (which won't run as root)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove su-exec. Use supervisord's user to lower priv for elasticsearch (which won't run as root)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1430,13 +1439,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/_build.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="72" lean-forward="false" selection-start-line="1" selection-start-column="72" selection-end-line="1" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docker/elasticsearch-head/5.x/_build.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -1550,6 +1552,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/_build.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="66" lean-forward="false" selection-start-line="1" selection-start-column="66" selection-end-line="1" selection-end-column="66" />
           <folding />
         </state>
       </provider>
