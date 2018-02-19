@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="patch tag on amino3 -&gt; 1.1">
+    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/docker/merlin+etl.yml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/docker/elasticsearch/5.6.6/config/elasticsearch.yml" afterPath="$PROJECT_DIR$/docker/elasticsearch/5.6.6/config/elasticsearch.yml" />
-      <change beforePath="$PROJECT_DIR$/docker/merlin.yml" afterPath="$PROJECT_DIR$/docker/merlin.yml" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,54 +24,14 @@
     <favorites_list name="firmament-docker" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.6155795">
+    <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="elasticsearch-start.sh" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/elasticsearch-start.sh">
+        <leaf>
+          <file leaf-file-name="merlin+etl.yml" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/docker/merlin+etl.yml">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="51">
-                  <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="merlin.yml" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/docker/merlin.yml">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="527">
-                  <caret line="76" column="4" lean-forward="false" selection-start-line="76" selection-start-column="4" selection-end-line="76" selection-end-column="4" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="_run.sh" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/_run.sh">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="17">
-                  <caret line="1" column="57" lean-forward="false" selection-start-line="1" selection-start-column="57" selection-end-line="1" selection-end-column="57" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="amino3-start.sh" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/docker/amino3/1.1/amino3-start.sh">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="51">
-                  <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="elasticsearch-service.yml" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/elasticsearch-service.yml">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="119">
-                  <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+                <state relative-caret-position="561">
+                  <caret line="33" column="6" lean-forward="false" selection-start-line="33" selection-start-column="6" selection-end-line="33" selection-end-column="6" />
                   <folding />
                 </state>
               </provider>
@@ -82,11 +41,11 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="elasticsearch.yml" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/config/elasticsearch.yml">
+          <file leaf-file-name="etl.yml" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/docker/etl.yml">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="17">
-                  <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+                <state relative-caret-position="119">
+                  <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -143,7 +102,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/docker/alpine/3.7/etcd.conf" />
         <option value="$PROJECT_DIR$/docker/alpine/3.7/dummy.conf" />
         <option value="$PROJECT_DIR$/docker/alpine/3.7/etcd.sh" />
         <option value="$PROJECT_DIR$/docker/elasticsearch/2.4.6/Dockerfile" />
@@ -194,6 +152,7 @@
         <option value="$PROJECT_DIR$/docker/elasticsearch/5.6.6/Dockerfile" />
         <option value="$PROJECT_DIR$/docker/merlin.yml" />
         <option value="$PROJECT_DIR$/docker/elasticsearch/5.6.6/config/elasticsearch.yml" />
+        <option value="$PROJECT_DIR$/docker/merlin+etl.yml" />
       </list>
     </option>
   </component>
@@ -255,22 +214,14 @@
               <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
               <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
               <item name="docker" type="462c0819:PsiDirectoryNode" />
-              <item name="elasticsearch" type="462c0819:PsiDirectoryNode" />
+              <item name="portainer" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
               <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
               <item name="docker" type="462c0819:PsiDirectoryNode" />
-              <item name="elasticsearch" type="462c0819:PsiDirectoryNode" />
-              <item name="5.6.6" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
-              <item name="docker" type="462c0819:PsiDirectoryNode" />
-              <item name="elasticsearch" type="462c0819:PsiDirectoryNode" />
-              <item name="5.6.6" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
+              <item name="portainer" type="462c0819:PsiDirectoryNode" />
+              <item name="1.16.2" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -292,19 +243,19 @@
     <property name="typescript-compiler-editor-notification" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/docker" />
+      <recent name="$PROJECT_DIR$/docker/amino3/1.1" />
+      <recent name="$PROJECT_DIR$/docker/amino3" />
+      <recent name="$PROJECT_DIR$/firmament-bash" />
+      <recent name="$PROJECT_DIR$/docker/portainer/1.16.2" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/docker/amino3/1.1" />
       <recent name="$PROJECT_DIR$/docker/elasticsearch/5.6.6" />
       <recent name="$PROJECT_DIR$/docker" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/ts/implementations/util" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/docker/amino3/1.1" />
-      <recent name="$PROJECT_DIR$/docker/amino3" />
-      <recent name="$PROJECT_DIR$/firmament-bash" />
-      <recent name="$PROJECT_DIR$/docker/portainer/1.16.2" />
-      <recent name="$PROJECT_DIR$/docker/portainer" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -1122,7 +1073,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="v.1.4.2-&gt;NPM" />
     <MESSAGE value="Adding docker provision (stack/swarm)" />
     <MESSAGE value="Docker provision alpha" />
     <MESSAGE value="1.4.4 -&gt; NPM" />
@@ -1147,7 +1097,8 @@
     <MESSAGE value="Remove su-exec. Use supervisord's user to lower priv for elasticsearch (which won't run as root)" />
     <MESSAGE value="Correct openstack ip address" />
     <MESSAGE value="patch tag on amino3 -&gt; 1.1" />
-    <option name="LAST_COMMIT_MESSAGE" value="patch tag on amino3 -&gt; 1.1" />
+    <MESSAGE value="Tweak elastic search for running on VMWare" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tweak elastic search for running on VMWare" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1176,13 +1127,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-provision.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="43" lean-forward="false" selection-start-line="1" selection-start-column="43" selection-end-line="1" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ts/tsconfig.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -1251,14 +1195,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docker/etl.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="5" lean-forward="false" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/nginx.conf">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1277,13 +1213,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="29" lean-forward="false" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/portainer-start.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="9" lean-forward="false" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -1331,13 +1260,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1105">
           <caret line="65" column="13" lean-forward="false" selection-start-line="65" selection-start-column="13" selection-end-line="65" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1397,13 +1319,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/portainer-supervisord.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docker/amino3/1.1/amino3-supervisord.conf">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -1415,6 +1330,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="18" lean-forward="false" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1515,6 +1431,46 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="527">
           <caret line="76" column="4" lean-forward="false" selection-start-line="76" selection-start-column="4" selection-end-line="76" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/etl.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/portainer-start.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="9" lean-forward="false" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/portainer-supervisord.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker/merlin+etl.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="33" column="6" lean-forward="false" selection-start-line="33" selection-start-column="6" selection-end-line="33" selection-end-column="6" />
           <folding />
         </state>
       </provider>
