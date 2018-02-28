@@ -242,7 +242,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
               'deploy',
               '-c',
               tmpPath,
-              stackConfigTemplate.clusterPrefix
+              stackConfigTemplate.stackName?stackConfigTemplate.stackName:stackConfigTemplate.clusterPrefix
             ];
             me.spawn.spawnShellCommandAsync(dockerMachineDeployCmd,
               {

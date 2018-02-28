@@ -30,6 +30,7 @@ export interface DockerMachineDriverOptions_openstack extends DockerMachineDrive
 }
 
 export interface DockerStackConfigTemplate {
+  stackName: string
   clusterPrefix: string,
   dockerComposeYaml: any,
   workerHostCount: number,

@@ -1,4 +1,5 @@
 {
+  "stackName"             : "merlin2",
   "clusterPrefix"             : "merlin2",
   "dockerComposeYaml"         : {
   },
