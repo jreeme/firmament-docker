@@ -2,12 +2,12 @@ version: "3.2"
 networks:
   net:
 volumes:
-  flibber:
+  datavolume:
     driver: local
     driver_opts:
       type: cifs
       device: //10.1.70.252/merlin
-      options: "username=jreeme,password:&UJM4rfv"
+      o: username=,password=
 services:
   stagingserver:
       image: 10.1.70.193:5000/merlin-hadoop-base
@@ -16,7 +16,7 @@ services:
         restart_policy:
           condition: on-failure
       volumes:
-        - flibber:/share
+        - datavolume:/share
       networks:
         - net
-      command: "/root/hadoop_entrypoint.sh"
+      command: /root/hadoop_entrypoint.sh
