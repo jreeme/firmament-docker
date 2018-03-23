@@ -1,5 +1,4 @@
 import {injectable, inject} from 'inversify';
-import {DockerDescriptors} from '../interfaces/docker-descriptors';
 import {Positive, FailureRetVal, CommandUtil, ProgressBar, Spawn, ForceErrorImpl, SafeJson} from 'firmament-yargs';
 import {DockerContainerManagement} from '../interfaces/docker-container-management';
 import {DockerImageManagement} from '../interfaces/docker-image-management';
@@ -8,7 +7,7 @@ import * as fs from 'fs';
 import * as YAML from 'yamljs';
 import * as path from 'path';
 import * as tmp from 'tmp';
-import {RemoteCatalogGetter, RemoteCatalogEntry} from 'firmament-yargs';
+import {RemoteCatalogGetter} from 'firmament-yargs';
 import {DockerProvision} from "../interfaces/docker-provision";
 import {DockerUtil} from "../interfaces/docker-util";
 import {
@@ -19,7 +18,6 @@ import {ProcessCommandJson} from "firmament-bash/js/interfaces/process-command-j
 
 const fileExists = require('file-exists');
 const jsonFile = require('jsonfile');
-const camelToSnake = require('camel-to-snake');
 
 //const path = require('path');
 const templateCatalogUrl = '/home/jreeme/src/firmament-docker/docker/provisionTemplateCatalog.json';
@@ -38,6 +36,12 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
               @inject('Positive') private positive: Positive,
               @inject('ProgressBar') private progressBar: ProgressBar) {
     super();
+  }
+
+  private camelToSnake(name,separator){
+    return name.replace(/([a-z]|(?:[A-Z]+))([A-Z]|$)/g, function(_, $1, $2) {
+      return $1 + ($2 && (separator || '_') + $2);
+    }).toLowerCase();
   }
 
   makeTemplate(argv: any, cb: () => void = null) {
@@ -100,7 +104,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     ];
     //Add base driver options (the ones used for both master & worker)
     for (const dockerMachineDriverOption in stackConfigTemplate.dockerMachineDriverOptions) {
-      const optionKey = camelToSnake(dockerMachineDriverOption, '-');
+      const optionKey = me.camelToSnake(dockerMachineDriverOption, '-');
       const optionValue = stackConfigTemplate.dockerMachineDriverOptions[dockerMachineDriverOption];
       dockerMachineCmd.push(`--${optionKey}=${optionValue}`);
     }
@@ -109,7 +113,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
       (cb) => {
         const masterDockerMachineCmd = dockerMachineCmd.slice();
         for (const dockerMachineMasterOption in stackConfigTemplate.dockerMachineMasterOptions) {
-          const optionKey = camelToSnake(dockerMachineMasterOption, '-');
+          const optionKey = me.camelToSnake(dockerMachineMasterOption, '-');
           const optionValue = stackConfigTemplate.dockerMachineMasterOptions[dockerMachineMasterOption];
           masterDockerMachineCmd.push(`--${optionKey}=${optionValue}`);
         }
@@ -185,7 +189,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
           const workerDockerMachineCmd = dockerMachineCmd.slice();
           const workerMachineName = `${stackConfigTemplate.clusterPrefix}-worker-${i}`;
           for (const dockerMachineWorkerOption in stackConfigTemplate.dockerMachineWorkerOptions) {
-            const optionKey = camelToSnake(dockerMachineWorkerOption, '-');
+            const optionKey = me.camelToSnake(dockerMachineWorkerOption, '-');
             const optionValue = stackConfigTemplate.dockerMachineMasterOptions[dockerMachineWorkerOption];
             workerDockerMachineCmd.push(`--${optionKey}=${optionValue}`);
           }
