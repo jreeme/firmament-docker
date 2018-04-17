@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="add volumetest.yml">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change beforePath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" afterPath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" afterPath="$PROJECT_DIR$/yarn.lock" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,9 +29,8 @@
           <file leaf-file-name="volumetest.yml" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/docker/volumetest.yml">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                  <caret line="9" column="27" lean-forward="false" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
-                  <folding />
+                <state relative-caret-position="135">
+                  <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
                 </state>
               </provider>
             </entry>
@@ -42,8 +38,8 @@
           <file leaf-file-name="docker-provision-impl.ts" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="358">
-                  <caret line="120" column="8" lean-forward="false" selection-start-line="120" selection-start-column="8" selection-end-line="120" selection-end-column="8" />
+                <state relative-caret-position="1560">
+                  <caret line="120" column="8" selection-start-line="120" selection-start-column="8" selection-end-line="120" selection-end-column="8" />
                   <folding>
                     <element signature="e#0#45#0" expanded="true" />
                   </folding>
@@ -54,9 +50,8 @@
           <file leaf-file-name="vmwarevsphere.json" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/docker/docker-machine-wrappers/vmwarevsphere.json">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="340">
-                  <caret line="20" column="31" lean-forward="false" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
-                  <folding />
+                <state relative-caret-position="300">
+                  <caret line="20" column="31" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
                 </state>
               </provider>
             </entry>
@@ -64,9 +59,8 @@
           <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/package.json">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="34">
-                  <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-                  <folding />
+                <state relative-caret-position="705">
+                  <caret line="47" column="30" selection-start-line="47" selection-start-column="30" selection-end-line="47" selection-end-column="30" />
                 </state>
               </provider>
             </entry>
@@ -74,9 +68,8 @@
           <file leaf-file-name="manual-test.ts" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="357">
-                  <caret line="28" column="20" lean-forward="false" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="20" />
-                  <folding />
+                <state relative-caret-position="315">
+                  <caret line="28" column="20" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="20" />
                 </state>
               </provider>
             </entry>
@@ -88,9 +81,8 @@
           <file leaf-file-name="volumetest.yml" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/docker/volumetest.yml">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="153">
-                  <caret line="9" column="27" lean-forward="false" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
-                  <folding />
+                <state relative-caret-position="135">
+                  <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
                 </state>
               </provider>
             </entry>
@@ -222,28 +214,19 @@
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1577" />
-    <option name="width" value="1920" />
+    <option name="x" value="1919" />
+    <option name="width" value="1922" />
     <option name="height" value="1053" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
-      <flattenPackages />
-      <showMembers />
-      <showModules />
-      <showLibraryContents />
-      <hideEmptyPackages />
-      <abbreviatePackageNames />
-      <autoscrollToSource />
-      <autoscrollFromSource />
-      <sortByType />
-      <manualOrder />
+    <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -271,21 +254,22 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="editor.config.accepted" value="true" />
-    <property name="nodejs.mocha.mocha_node_package_dir" value="$PROJECT_DIR$/node_modules/mocha" />
-    <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="SearchEverywhereHistoryKey" value="pa&#9;FILE&#9;file:///home/jreeme/src/firmament-docker/package.json&#10;tscon&#9;FILE&#9;file:///home/jreeme/src/firmament-docker/ts/tsconfig.json&#10;pack&#9;FILE&#9;file:///home/jreeme/src/firmament-docker/package.json&#10;ma&#9;FILE&#9;file:///home/jreeme/src/firmament-docker/ts/test/manual-tests/manual-test.ts&#10;pac&#9;FILE&#9;file:///home/jreeme/src/firmament-docker/package.json" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="editor.config.accepted" value="true" />
+    <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="js.eslint.eslintPackage" value="" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.prettier" value="true" />
+    <property name="node.js.path.for.package.prettier" value="project" />
+    <property name="node.js.selected.package.prettier" value="" />
+    <property name="nodejs.mocha.mocha_node_package_dir" value="$PROJECT_DIR$/node_modules/mocha" />
+    <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
+    <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
     <property name="typescript-compiler-editor-notification" value="false" />
   </component>
   <component name="RecentsManager">
@@ -317,32 +301,7 @@
     </option>
   </component>
   <component name="RunManager" selected="Node.js.manual-test.js">
-    <configuration name="firmament" type="NodeJSConfigurationType" factoryName="Node.js" application-parameters="p t" path-to-js-file="$PROJECT_DIR$/../firmament/js/firmament.js" working-dir="/tmp">
-      <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
-        <option name="envVars">
-          <list />
-        </option>
-        <option name="extraHosts">
-          <list />
-        </option>
-        <option name="links">
-          <list />
-        </option>
-        <option name="networkDisabled" value="false" />
-        <option name="networkMode" value="bridge" />
-        <option name="portBindings">
-          <list />
-        </option>
-        <option name="publishAllPorts" value="false" />
-        <option name="version" value="1" />
-        <option name="volumeBindings">
-          <list />
-        </option>
-      </EXTENSION>
-      <EXTENSION ID="com.jetbrains.nodejs.run.NodeJSProfilingRunConfigurationExtension">
-        <profiling v8-profiler-path="" />
-      </EXTENSION>
-    </configuration>
+    <configuration name="firmament" type="NodeJSConfigurationType" factoryName="Node.js" application-parameters="p t" path-to-js-file="$PROJECT_DIR$/../firmament/js/firmament.js" working-dir="/tmp" />
     <configuration name="manual-test.js" type="NodeJSConfigurationType" factoryName="Node.js" path-to-js-file="$PROJECT_DIR$/js/test/manual-tests/manual-test.js" working-dir="/tmp" />
     <configuration default="true" type="BashConfigurationType" factoryName="Bash">
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -416,7 +375,6 @@
       <node-options />
       <working-directory>$PROJECT_DIR$</working-directory>
       <pass-parent-env>true</pass-parent-env>
-      <envs />
       <ui>bdd</ui>
       <extra-mocha-options />
       <test-kind>SUITE</test-kind>
@@ -430,7 +388,6 @@
       <node-options />
       <working-directory>$PROJECT_DIR$</working-directory>
       <pass-parent-env>true</pass-parent-env>
-      <envs />
       <ui>bdd</ui>
       <extra-mocha-options />
       <test-kind>DIRECTORY</test-kind>
@@ -442,7 +399,6 @@
       <node-options />
       <working-directory>$PROJECT_DIR$</working-directory>
       <pass-parent-env>true</pass-parent-env>
-      <envs />
       <ui>bdd</ui>
       <extra-mocha-options />
       <test-kind>TEST_FILE</test-kind>
@@ -453,7 +409,6 @@
       <node-options />
       <working-directory>$PROJECT_DIR$</working-directory>
       <pass-parent-env>true</pass-parent-env>
-      <envs />
       <ui>bdd</ui>
       <extra-mocha-options />
       <test-kind>TEST_FILE</test-kind>
@@ -464,7 +419,6 @@
       <node-options />
       <working-directory>$PROJECT_DIR$</working-directory>
       <pass-parent-env>true</pass-parent-env>
-      <envs />
       <ui>bdd</ui>
       <extra-mocha-options />
       <test-kind>TEST_FILE</test-kind>
@@ -475,32 +429,28 @@
       <node-options />
       <working-directory>$PROJECT_DIR$</working-directory>
       <pass-parent-env>true</pass-parent-env>
-      <envs />
       <ui>bdd</ui>
       <extra-mocha-options />
       <test-kind>TEST_FILE</test-kind>
       <test-file>$PROJECT_DIR$/js/test/docker-util.test.js</test-file>
     </configuration>
-    <list size="9">
-      <item index="0" class="java.lang.String" itemvalue="Mocha.Unit Tests" />
-      <item index="1" class="java.lang.String" itemvalue="Mocha.js/test/docker-container-management.test.js" />
-      <item index="2" class="java.lang.String" itemvalue="Mocha.js/test/docker-image-management.test.js" />
-      <item index="3" class="java.lang.String" itemvalue="Mocha.js/test/docker-util.test.js" />
-      <item index="4" class="java.lang.String" itemvalue="Mocha.js/test/docker-make.test.js" />
-      <item index="5" class="java.lang.String" itemvalue="Node.js.firmament" />
-      <item index="6" class="java.lang.String" itemvalue="Node.js.manual-test.js" />
-      <item index="7" class="java.lang.String" itemvalue="npm.build" />
-      <item index="8" class="java.lang.String" itemvalue="Mocha.DockerContainerManagement" />
+    <list>
+      <item itemvalue="Mocha.Unit Tests" />
+      <item itemvalue="Mocha.js/test/docker-container-management.test.js" />
+      <item itemvalue="Mocha.js/test/docker-image-management.test.js" />
+      <item itemvalue="Mocha.js/test/docker-util.test.js" />
+      <item itemvalue="Mocha.js/test/docker-make.test.js" />
+      <item itemvalue="Node.js.firmament" />
+      <item itemvalue="Node.js.manual-test.js" />
+      <item itemvalue="npm.build" />
+      <item itemvalue="Mocha.DockerContainerManagement" />
     </list>
     <recent_temporary>
-      <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Mocha.DockerContainerManagement" />
-        <item index="1" class="java.lang.String" itemvalue="npm.build" />
+      <list>
+        <item itemvalue="Mocha.DockerContainerManagement" />
+        <item itemvalue="npm.build" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="ShelveChangesManager" show_recycled="false">
-    <option name="remove_strategy" value="false" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -568,6 +518,7 @@
       <workItem from="1485550138790" duration="96000" />
       <workItem from="1486307464305" duration="231000" />
       <workItem from="1486307745515" duration="19000" />
+      <workItem from="1523980334905" duration="33000" />
     </task>
     <task id="LOCAL-00006" summary="-&gt; v.0.2.2">
       <created>1478528720897</created>
@@ -948,85 +899,37 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="272069000" />
+    <option name="totallyTimeSpent" value="272102000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1919" y="0" width="1922" height="1053" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39181915" sideWeight="0.5044808" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32831" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3229279" sideWeight="0.4949921" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16094987" sideWeight="0.5222222" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13885899" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2992465" sideWeight="0.4939378" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1676331" sideWeight="0.47777778" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42949408" sideWeight="0.49551925" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3676313" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.47777778" visible="true" weight="0.1676331" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5044808" side_tool="true" weight="0.39181915" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32831" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4949921" weight="0.3229279" />
+      <window_info id="npm" order="2" sideWeight="0.5222222" side_tool="true" weight="0.16094987" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.13885899" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49551925" weight="0.42949408" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="TypeScript" order="7" sideWeight="0.4939378" weight="0.2992465" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.3290461" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3676313" />
+      <window_info anchor="bottom" id="Messages" order="7" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
-    <option name="exactExcludedFiles">
-      <list>
-        <option value="$PROJECT_DIR$/../amino3-server/server/server.js.map" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/inversify.config.js.map" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/inversify.config.d.ts" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/server.js" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/globals.d.ts" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/server.d.ts" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/globals.js" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/globals.js.map" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/inversify.config.js" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/startup/boot-manager.d.ts" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/startup/boot-manager.js" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/startup/boot-manager.js.map" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/test/amino-user-model.js.map" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/test/amino-user-model.js" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/test/amino-user-model.d.ts" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/rxjs-socket-io-client.d.ts" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/rxjs-socket-io-client.js" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/util.js" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/util.js.map" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/util.d.ts" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/rxjs-socket-io-client.js.map" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/postgres/load-postgres-db.js.map" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/postgres/load-postgres-db.d.ts" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/postgres/load-postgres-db.js" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/websockets/socketIoWrapper.js.map" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/websockets/postal-socket-connection-impl.js.map" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/websockets/postal-socket-connection-impl.js" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/websockets/socketIoWrapper.js" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/websockets/socketIoWrapper.d.ts" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/websockets/postal-socket-connection-impl.d.ts" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/database-helpers/interfaces/base-database-helper.js.map" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/database-helpers/interfaces/postgres-helper.js" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/database-helpers/interfaces/base-database-helper.d.ts" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/database-helpers/interfaces/mysql-helper.d.ts" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/database-helpers/interfaces/mysql-helper.js.map" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/database-helpers/interfaces/mysql-helper.js" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/database-helpers/interfaces/postgres-helper.d.ts" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/database-helpers/interfaces/base-database-helper.js" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/database-helpers/interfaces/postgres-helper.js.map" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/database-helpers/implementations/mysql-helper-impl.js" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/database-helpers/implementations/mysql-helper-impl.js.map" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/database-helpers/implementations/postgres-helper-impl.js.map" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/database-helpers/implementations/postgres-helper-impl.js" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/database-helpers/implementations/mysql-helper-impl.d.ts" />
-        <option value="$PROJECT_DIR$/../amino3-server/server/util/database-helpers/implementations/postgres-helper-impl.d.ts" />
-      </list>
-    </option>
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.npmignore" />
@@ -1104,7 +1007,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts</url>
           <line>120</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="631" />
         </line-breakpoint>
       </breakpoints>
@@ -1113,35 +1015,24 @@
       </breakpoints-dialog>
       <option name="time" value="632" />
     </breakpoint-manager>
-    <watches-manager />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/../firmament-bash/command-json/build-merlin-docker-images-01.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/firmament-bash/install-docker-machine.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1637">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
+        <state relative-caret-position="-1637" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/amino3/1.1/_run.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/amino3/1.1/amino3-server/package.json" />
     <entry file="file://$PROJECT_DIR$/node_modules/@types/async/index.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
-          <caret line="115" column="16" lean-forward="false" selection-start-line="115" selection-start-column="16" selection-end-line="115" selection-end-column="16" />
+          <caret line="115" column="16" selection-start-line="115" selection-start-column="16" selection-end-line="115" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -1149,198 +1040,173 @@
     <entry file="file://$PROJECT_DIR$/docker/elasticsearch-head/5.x/Dockerfile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
-          <caret line="2" column="108" lean-forward="false" selection-start-line="2" selection-start-column="108" selection-end-line="2" selection-end-column="108" />
+          <caret line="2" column="108" selection-start-line="2" selection-start-column="108" selection-end-line="2" selection-end-column="108" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/amino3/1.1/Dockerfile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1105">
-          <caret line="65" column="13" lean-forward="false" selection-start-line="65" selection-start-column="13" selection-end-line="65" selection-end-column="13" />
+          <caret line="65" column="13" selection-start-line="65" selection-start-column="13" selection-end-line="65" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/alpine/3.7/_build.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="1" column="51" lean-forward="false" selection-start-line="1" selection-start-column="51" selection-end-line="1" selection-end-column="51" />
+          <caret line="1" column="51" selection-start-line="1" selection-start-column="51" selection-end-line="1" selection-end-column="51" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/alpine-jre/3.7-8/_build.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/amino3/1.1/_build.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
-          <caret line="2" column="46" lean-forward="false" selection-start-line="2" selection-start-column="46" selection-end-line="2" selection-end-column="46" />
+          <caret line="2" column="46" selection-start-line="2" selection-start-column="46" selection-end-line="2" selection-end-column="46" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/elasticsearch-head/5.x/_build.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="1" column="74" lean-forward="false" selection-start-line="1" selection-start-column="74" selection-end-line="1" selection-end-column="74" />
+          <caret line="1" column="74" selection-start-line="1" selection-start-column="74" selection-end-line="1" selection-end-column="74" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/Dockerfile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="512">
-          <caret line="145" column="17" lean-forward="false" selection-start-line="145" selection-start-column="17" selection-end-line="145" selection-end-column="17" />
+          <caret line="145" column="17" selection-start-line="145" selection-start-column="17" selection-end-line="145" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/_build.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
-          <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/_build.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
-          <caret line="12" column="53" lean-forward="false" selection-start-line="12" selection-start-column="53" selection-end-line="12" selection-end-column="53" />
+          <caret line="12" column="53" selection-start-line="12" selection-start-column="53" selection-end-line="12" selection-end-column="53" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/nginx/1.13.8/nginx-supervisord.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/alpine/3.7/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/_build.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="1" column="66" lean-forward="false" selection-start-line="1" selection-start-column="66" selection-end-line="1" selection-end-column="66" />
+          <caret line="1" column="66" selection-start-line="1" selection-start-column="66" selection-end-line="1" selection-end-column="66" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/tmp/docker-provision.json" />
+    <entry file="file://$PROJECT_DIR$/../docker-provision.json" />
     <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/_run.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
-          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/_run.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="1" column="57" lean-forward="false" selection-start-line="1" selection-start-column="57" selection-end-line="1" selection-end-column="57" />
+          <caret line="1" column="57" selection-start-line="1" selection-start-column="57" selection-end-line="1" selection-end-column="57" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/elasticsearch-start.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/Dockerfile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="833">
-          <caret line="49" column="12" lean-forward="false" selection-start-line="49" selection-start-column="12" selection-end-line="49" selection-end-column="12" />
+          <caret line="49" column="12" selection-start-line="49" selection-start-column="12" selection-end-line="49" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/elasticsearch-supervisord.conf">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
-          <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/config/elasticsearch.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/elasticsearch-service.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/portainer-start.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
-          <caret line="3" column="9" lean-forward="false" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+          <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/portainer-supervisord.conf">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/Dockerfile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/postgres/9.5.10/_run.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/alpine-jre/3.7-8/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/merlin+etl.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="731">
-          <caret line="43" column="10" lean-forward="false" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
-          <folding />
+          <caret line="43" column="10" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/postgres/9.5.10/_build.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/postgres/9.5.10/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/ts/implementations/docker-container-management-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
-          <caret line="5" column="29" lean-forward="false" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="29" />
+          <caret line="5" column="29" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -1348,105 +1214,84 @@
     <entry file="file://$PROJECT_DIR$/ts/test/docker-image-management.test.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2091">
-          <caret line="129" column="79" lean-forward="false" selection-start-line="129" selection-start-column="79" selection-end-line="129" selection-end-column="79" />
+          <caret line="129" column="79" selection-start-line="129" selection-start-column="79" selection-end-line="129" selection-end-column="79" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/test/docker-container-management.test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/docker-machine-wrappers/virtualbox.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
-          <caret line="16" column="47" lean-forward="false" selection-start-line="16" selection-start-column="47" selection-end-line="16" selection-end-column="47" />
+          <caret line="16" column="47" selection-start-line="16" selection-start-column="47" selection-end-line="16" selection-end-column="47" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/docker-machine-wrappers/openstack.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/js/implementations/docker-provision-impl.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5219">
-          <caret line="307" column="81" lean-forward="false" selection-start-line="307" selection-start-column="81" selection-end-line="307" selection-end-column="81" />
-          <folding />
+          <caret line="307" column="81" selection-start-line="307" selection-start-column="81" selection-end-line="307" selection-end-column="81" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/etl.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/amino3/1.1/amino3-start.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
-          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/amino3/1.1/amino3-supervisord.conf">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/camel-to-snake/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/camel-to-snake/index.js" />
     <entry file="file://$PROJECT_DIR$/docker/volumetest.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="9" column="27" lean-forward="false" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
-          <folding />
+        <state relative-caret-position="135">
+          <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/merlin.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
-          <caret line="64" column="46" lean-forward="false" selection-start-line="64" selection-start-column="46" selection-end-line="64" selection-end-column="46" />
-          <folding />
+          <caret line="64" column="46" selection-start-line="64" selection-start-column="46" selection-end-line="64" selection-end-column="46" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="28" column="20" lean-forward="false" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="20" />
-          <folding />
+        <state relative-caret-position="315">
+          <caret line="28" column="20" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docker/docker-machine-wrappers/vmwarevsphere.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="31" lean-forward="false" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
-          <folding />
+        <state relative-caret-position="300">
+          <caret line="20" column="31" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="120" column="8" lean-forward="false" selection-start-line="120" selection-start-column="8" selection-end-line="120" selection-end-column="8" />
+        <state relative-caret-position="1560">
+          <caret line="120" column="8" selection-start-line="120" selection-start-column="8" selection-end-line="120" selection-end-column="8" />
           <folding>
             <element signature="e#0#45#0" expanded="true" />
           </folding>
@@ -1455,9 +1300,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-          <folding />
+        <state relative-caret-position="705">
+          <caret line="47" column="30" selection-start-line="47" selection-start-column="30" selection-end-line="47" selection-end-column="30" />
         </state>
       </provider>
     </entry>
