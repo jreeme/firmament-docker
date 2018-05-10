@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="add volumetest.yml">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/jreeme.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/jreeme.xml" afterDir="false" />
+    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/implementations/commands/provision-command-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/commands/provision-command-impl.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/interfaces/docker-provision.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/interfaces/docker-provision.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/ts/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -178,7 +171,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -190,6 +182,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -199,7 +192,7 @@
     <property name="editor.config.accepted" value="true" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="js.eslint.eslintPackage" value="" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../firmament-yargs" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../firmament-bash" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
     <property name="node.js.selected.package.prettier" value="" />
@@ -457,14 +450,8 @@
       <workItem from="1486307464305" duration="231000" />
       <workItem from="1486307745515" duration="19000" />
       <workItem from="1523980334905" duration="33000" />
-      <workItem from="1525969474386" duration="13258000" />
-    </task>
-    <task id="LOCAL-00006" summary="-&gt; v.0.2.2">
-      <created>1478528720897</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1478528720897</updated>
+      <workItem from="1525969474386" duration="13691000" />
+      <workItem from="1525983314825" duration="24000" />
     </task>
     <task id="LOCAL-00007" summary="-&gt; v.0.2.2 (add .npmignore to stop publishing .idea directory)">
       <created>1478528850237</created>
@@ -802,7 +789,14 @@
       <option name="project" value="LOCAL" />
       <updated>1485182669941</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Add code to export YAML from firmament provision JSON">
+      <created>1525982895932</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1525982895933</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -838,32 +832,33 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="285360000" />
+    <option name="totallyTimeSpent" value="285817000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1919" y="0" width="1922" height="1053" extended-state="6" />
+    <editor active="true" />
     <layout>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47777778" visible="true" weight="0.1676331" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5044808" side_tool="true" weight="0.39181915" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4949921" weight="0.3229279" />
       <window_info id="npm" order="2" sideWeight="0.5222222" side_tool="true" weight="0.16094987" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32831" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.21790724" />
-      <window_info anchor="bottom" id="TypeScript" order="7" sideWeight="0.4939378" weight="0.18770227" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.47777778" visible="true" weight="0.1676331" />
-      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3676313" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.5296656" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49551925" weight="0.36785328" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TypeScript" order="7" sideWeight="0.4939378" weight="0.18770227" />
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.3290461" />
       <window_info anchor="bottom" id="Messages" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3676313" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -897,7 +892,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="1.4.5 -&gt; NPM" />
     <MESSAGE value="Got elastic search running in stack (one node)" />
     <MESSAGE value="Add nginx support (1.13.8)" />
     <MESSAGE value="NPM -&gt; 1.4.6" />
@@ -922,7 +916,8 @@
     <MESSAGE value="Get volumes to cifs working on OpenStack" />
     <MESSAGE value="v.1.4.11 -&gt; NPM" />
     <MESSAGE value="add volumetest.yml" />
-    <option name="LAST_COMMIT_MESSAGE" value="add volumetest.yml" />
+    <MESSAGE value="Add code to export YAML from firmament provision JSON" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add code to export YAML from firmament provision JSON" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -940,19 +935,16 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts</url>
           <line>474</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="662" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts</url>
           <line>47</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="665" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts</url>
           <line>64</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="666" />
         </line-breakpoint>
       </breakpoints>
@@ -963,6 +955,13 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1800">
@@ -1246,9 +1245,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="594">
           <caret line="106" column="73" selection-start-line="106" selection-start-column="73" selection-end-line="106" selection-end-column="73" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
