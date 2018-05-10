@@ -17,6 +17,15 @@ import {ProvisionCommandImpl} from "../../implementations/commands/provision-com
 const dockerMake = kernel.get<DockerMake>('DockerMake');
 const dockerProvision = kernel.get<DockerProvision>('DockerProvision');
 //dockerMake.makeTemplate({});
+
+/*dockerProvision.extractYamlFromJson({
+    inputJsonFile: '/home/jreeme/src/parrot-stack/firmament/docker/deploy/vmwarevsphere-parrot.json',
+    outputYamlFile: '/tmp/baz/outOfThisWorld.goo'//.yaml'
+  },
+  () => {
+    process.exit(0);
+  }
+);*/
 dockerProvision.makeTemplate({
   output: ProvisionCommandImpl.defaultConfigFilename,
   yaml: path.resolve(__dirname, '../../../docker/merlin.yml'),
@@ -25,14 +34,16 @@ dockerProvision.makeTemplate({
   //dm: 'virtualbox'
   //yaml: ProvisionCommandImpl.defaultComposeYamlFilename
 }, () => {
-  dockerProvision.buildTemplate({
+/*  dockerProvision.buildTemplate({
     username: 'root',
     password: 'run2walk!',
     input: ProvisionCommandImpl.defaultConfigFilename
   }, () => {
     process.exit(0);
-  });
+  });*/
+  process.exit(0);
 });
+
 process.on('uncaughtException', err => {
   console.log(err);
 });

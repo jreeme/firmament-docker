@@ -7,14 +7,16 @@ import * as fs from 'fs';
 import * as YAML from 'yamljs';
 import * as path from 'path';
 import * as tmp from 'tmp';
+import * as mkdirp from 'mkdirp';
+import * as touch from 'touch';
 import {RemoteCatalogGetter} from 'firmament-yargs';
-import {DockerProvision} from "../interfaces/docker-provision";
-import {DockerUtil} from "../interfaces/docker-util";
+import {DockerProvision} from '../interfaces/docker-provision';
+import {DockerUtil} from '../interfaces/docker-util';
 import {
   DockerMachineDriverOptions_openstack, DockerMachineDriverOptions_vmwarevsphere,
   DockerStackConfigTemplate
-} from "../";
-import {ProcessCommandJson} from "firmament-bash/js/interfaces/process-command-json";
+} from '../';
+import {ProcessCommandJson} from 'firmament-bash/js/interfaces/process-command-json';
 
 const fileExists = require('file-exists');
 const jsonFile = require('jsonfile');
@@ -38,19 +40,29 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     super();
   }
 
-  private camelToSnake(name,separator){
-    return name.replace(/([a-z]|(?:[A-Z]+))([A-Z]|$)/g, function(_, $1, $2) {
-      return $1 + ($2 && (separator || '_') + $2);
-    }).toLowerCase();
+  extractYamlFromJson(argv: any, cb: () => void = null) {
+    const me = this;
+    const {fullInputPath, stackConfigTemplate} = me.getContainerConfigsFromJsonFile(argv.inputJsonFile);
+    me.createOutputPath(fullInputPath, argv.outputYamlFile, '.yaml', (err, outputYamlPath, outputFileExists) => {
+      me.callbackAndExitIfError(err, cb);
+      if (outputFileExists && !me.positive.areYouSure(
+        `Output file '${outputYamlPath}' already exists. Overwrite? [Y/n] `,
+        'Operation canceled.',
+        true,
+        FailureRetVal.TRUE)) {
+        me.callbackAndExitWithError(err, cb);
+      }
+      const yaml = YAML.stringify(stackConfigTemplate.dockerComposeYaml, 8, 2);
+      fs.writeFile(outputYamlPath, yaml, (err) => {
+        me.callbackAndExitWithError(err, cb);
+      });
+    });
   }
 
   makeTemplate(argv: any, cb: () => void = null) {
     const me = this;
     me.composeAndWriteTemplate(argv.get, argv.dm, argv.yaml, argv.output, (err: Error, msg: string) => {
-      if (cb) {
-        return cb();
-      }
-      me.commandUtil.processExitWithError(err, msg);
+      me.callbackAndExitWithError(err, cb);
     });
   }
 
@@ -235,7 +247,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
       },
       (env, ip, cb) => {
         tmp.file((err, tmpPath, fd, cleanupCb) => {
-          const yaml = YAML.dump(stackConfigTemplate.dockerComposeYaml).replace(/\$\{MASTER_IP\}/g, ip);
+          const yaml = YAML.stringify(stackConfigTemplate.dockerComposeYaml, 8, 2).replace(/\$\{MASTER_IP\}/g, ip);
           if (me.commandUtil.callbackIfError(err)) {
             return;
           }
@@ -246,7 +258,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
               'deploy',
               '-c',
               tmpPath,
-              stackConfigTemplate.stackName?stackConfigTemplate.stackName:stackConfigTemplate.clusterPrefix
+              stackConfigTemplate.stackName ? stackConfigTemplate.stackName : stackConfigTemplate.clusterPrefix
             ];
             me.spawn.spawnShellCommandAsync(dockerMachineDeployCmd,
               {
@@ -315,10 +327,10 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
             try {
               if (obj.code.code === 'ENOENT') {
                 if (me.positive.areYouSure(
-                    `Looks like 'docker-machine' is not installed. Want me to try to install it?`,
-                    'Operation canceled.',
-                    true,
-                    FailureRetVal.TRUE)) {
+                  `Looks like 'docker-machine' is not installed. Want me to try to install it?`,
+                  'Operation canceled.',
+                  true,
+                  FailureRetVal.TRUE)) {
                   const installDockerMachineJson = path.resolve(__dirname, '../../firmament-bash/install-docker-machine.json');
                   me.processCommandJson.processAbsoluteUrl(installDockerMachineJson, (err, result) => {
                     const msg = `'docker-machine' installed. Try provisioning again.`;
@@ -372,17 +384,17 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
                                   outputTemplateFileName: string,
                                   cb: (err: Error, msg?: string) => void) {
     const me = this;
-    const fullOutputPath = this.commandUtil.getConfigFilePath(outputTemplateFileName, '.json');
-    if (catalogEntryName === undefined) {
-      //Just write out the descriptors we have "baked in" to this application
-      if (fs.existsSync(fullOutputPath)
-        && !me.positive.areYouSure(
-          `Config file '${fullOutputPath}' already exists. Overwrite? [Y/n] `,
-          'Operation canceled.',
-          true,
-          FailureRetVal.TRUE)) {
-        cb(null);
-      } else {
+    me.createOutputPath(path.resolve(process.cwd(), 'tmp.txt'), outputTemplateFileName, '.json', (err, fullOutputPath, outputFileExists) => {
+      if (catalogEntryName === undefined) {
+        //Just write out the descriptors we have "baked in" to this application
+        if (fileExists.sync(fullOutputPath)
+          && !me.positive.areYouSure(
+            `Config file '${fullOutputPath}' already exists. Overwrite? [Y/n] `,
+            'Operation canceled.',
+            true,
+            FailureRetVal.TRUE)) {
+          return cb(null);
+        }
         const dockerMachineWrapperPath =
           path.resolve(__dirname, `../../docker/docker-machine-wrappers/${dockerMachineHostType}.json`);
         const dockerMachineWrapper = jsonFile.readFileSync(dockerMachineWrapperPath);
@@ -391,37 +403,89 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
         //let jsonTemplate = Object.assign({}, DockerDescriptors.dockerStackConfigTemplate, {dockerComposeYaml});
         me.dockerUtil.writeJsonTemplateFile(jsonTemplate, fullOutputPath);
         cb(null, 'Template written.');
-      }
-    } else {
-      cb(new Error('Provision from template not implemented.'));
-      //Need to interact with the network to get templates
-      /*      me.remoteCatalogGetter.getCatalogFromUrl(templateCatalogUrl, (err, remoteCatalog) => {
-              if (!argv.get.length) {
-                //User specified --get with no template name so write available template names to console
-                me.commandUtil.log('\nAvailable templates:\n');
-                remoteCatalog.entries.forEach(entry => {
-                  me.commandUtil.log('> ' + entry.name);
-                });
-                me.commandUtil.processExit();
-              } else {
-                //User specified a template, let's go get it
-                let template: RemoteCatalogEntry = _.find(remoteCatalog.entries, entry => {
-                  return entry.name === argv.get;
-                });
-                if (!template) {
-                  me.commandUtil.processExitWithError(new Error(`\nTemplate catalog '${argv.get}' does not exist.\n`));
-                }
-                template.resources.forEach(resource => {
-                  try {
-                    let outputPath = path.resolve(process.cwd(), path.basename(resource.name));
-                    fs.writeFileSync(outputPath, resource.text);
-                  } catch (err) {
-                    me.commandUtil.processExitWithError(err);
+      } else {
+        cb(new Error('Provision from template not implemented.'));
+        //Need to interact with the network to get templates
+        /*      me.remoteCatalogGetter.getCatalogFromUrl(templateCatalogUrl, (err, remoteCatalog) => {
+                if (!argv.get.length) {
+                  //User specified --get with no template name so write available template names to console
+                  me.commandUtil.log('\nAvailable templates:\n');
+                  remoteCatalog.entries.forEach(entry => {
+                    me.commandUtil.log('> ' + entry.name);
+                  });
+                  me.commandUtil.processExit();
+                } else {
+                  //User specified a template, let's go get it
+                  let template: RemoteCatalogEntry = _.find(remoteCatalog.entries, entry => {
+                    return entry.name === argv.get;
+                  });
+                  if (!template) {
+                    me.commandUtil.processExitWithError(new Error(`\nTemplate catalog '${argv.get}' does not exist.\n`));
                   }
-                });
-                me.commandUtil.processExit(0, `\nTemplate '${template.name}' written.\n`);
-              }
-            });*/
-    }
+                  template.resources.forEach(resource => {
+                    try {
+                      let outputPath = path.resolve(process.cwd(), path.basename(resource.name));
+                      fs.writeFileSync(outputPath, resource.text);
+                    } catch (err) {
+                      me.commandUtil.processExitWithError(err);
+                    }
+                  });
+                  me.commandUtil.processExit(0, `\nTemplate '${template.name}' written.\n`);
+                }
+              });*/
+      }
+    });
   }
+
+  private callbackAndExitIfError(err: Error, cb: () => void) {
+    if (!err) {
+      return;
+    }
+    if (cb) {
+      cb();
+    }
+    this.commandUtil.processExitWithError(err, 'OK');
+  }
+
+  private callbackAndExitWithError(err: Error, cb: () => void) {
+    if (cb) {
+      cb();
+    }
+    this.commandUtil.processExitWithError(err, 'OK');
+  }
+
+  private camelToSnake(name, separator) {
+    return name.replace(/([a-z]|(?:[A-Z]+))([A-Z]|$)/g, function (_, $1, $2) {
+      return $1 + ($2 && (separator || '_') + $2);
+    }).toLowerCase();
+  }
+
+  private createOutputPath(inPathFragment: string,
+                           outPathFragment: string,
+                           extension: string,
+                           cb: (err: Error, createdOutputPath: string, exists?: boolean) => void) {
+    if (path.extname(outPathFragment) !== extension) {
+      outPathFragment += extension;
+    }
+    if (!path.isAbsolute(outPathFragment)) {
+      outPathFragment = path.resolve(path.dirname(inPathFragment), outPathFragment);
+    }
+    const pathDirname = path.dirname(outPathFragment);
+    mkdirp(pathDirname, (err) => {
+      if (err) {
+        return cb(err, outPathFragment);
+      }
+      //Check existence of file
+      fileExists(outPathFragment, (err, exists) => {
+        touch(outPathFragment, (err) => {
+          if (err || exists) {
+            return cb(err, outPathFragment, exists);
+          }
+          fs.unlink(outPathFragment, (err) => {
+            return cb(err, outPathFragment, exists);
+          });
+        });
+      });
+    });
+  };
 }

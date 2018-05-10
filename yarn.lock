@@ -76,6 +76,10 @@ JSONStream@0.10.0:
     jsonparse "0.0.5"
     through ">=2.2.7 <3"
 
+abbrev@1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
+
 ajv@^5.1.0:
   version "5.5.2"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-5.5.2.tgz#73b5eeca3fab653e3d3f9422b341ad42205dc965"
@@ -531,6 +535,29 @@ firmament-yargs@^1.1.10:
     shorthash "0.0.2"
     username "^3.0.0"
 
+firmament-yargs@^1.1.11:
+  version "1.1.11"
+  resolved "https://registry.yarnpkg.com/firmament-yargs/-/firmament-yargs-1.1.11.tgz#f0ee12f65da59e30242afbbc3be06b350b6ef17c"
+  dependencies:
+    async "^2.5.0"
+    black-hole-stream "0.0.1"
+    easy-table "^1.1.0"
+    file-exists "^4.0.0"
+    inpath "^1.0.2"
+    inversify "^4.13.0"
+    lodash "^4.17.4"
+    nested-yargs "^1.0.7"
+    node-status "^1.0.0"
+    positive "^1.0.9"
+    postal "^2.0.5"
+    ps-tree "^1.1.0"
+    readline-sync "^1.4.7"
+    reflect-metadata "^0.1.10"
+    request "^2.81.0"
+    safe-json-parse "^4.0.0"
+    shorthash "0.0.2"
+    username "^3.0.0"
+
 forever-agent@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
@@ -667,6 +694,10 @@ inherits@2, inherits@^2.0.1, inherits@~2.0.1, inherits@~2.0.3:
 inpath@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/inpath/-/inpath-1.0.2.tgz#4ac219710ec7a72f460ff94bf424dd3ef0e52817"
+
+inversify@^4.13.0:
+  version "4.13.0"
+  resolved "https://registry.yarnpkg.com/inversify/-/inversify-4.13.0.tgz#0ab40570bfa4474b04d5b919bbab3a4f682a72f5"
 
 inversify@^4.3.0:
   version "4.10.0"
@@ -948,6 +979,12 @@ node-status@^1.0.0:
     cli-cursor "^1.0.2"
     cli-spinners "0.2.0"
     colors "1.1.2"
+
+nopt@~1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/nopt/-/nopt-1.0.10.tgz#6ddd21bd2a31417b92727dd585f8a6f37608ebee"
+  dependencies:
+    abbrev "1"
 
 npm-run-path@^2.0.0:
   version "2.0.2"
@@ -1340,6 +1377,12 @@ tmp@^0.0.33:
 tmpl@1.0.x:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/tmpl/-/tmpl-1.0.4.tgz#23640dd7b42d00433911140820e5cf440e521dd1"
+
+touch@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/touch/-/touch-3.1.0.tgz#fe365f5f75ec9ed4e56825e0bb76d24ab74af83b"
+  dependencies:
+    nopt "~1.0.10"
 
 tough-cookie@~2.3.3:
   version "2.3.3"

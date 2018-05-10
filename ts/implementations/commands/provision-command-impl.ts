@@ -1,15 +1,15 @@
-import {injectable, inject} from "inversify";
+import {injectable, inject} from 'inversify';
 import kernel from '../../inversify.config';
 import * as path from 'path';
 import {Command} from 'firmament-yargs';
-import {DockerProvision} from "../../interfaces/docker-provision";
+import {DockerProvision} from '../../interfaces/docker-provision';
 
 @injectable()
 export class ProvisionCommandImpl implements Command {
   aliases: string[] = [];
   command: string = '';
   commandDesc: string = '';
-  handler: (argv: any) => void = (argv: any) => {
+  handler: (argv: any) => void = (/*argv: any*/) => {
   };
   options: any = {};
   subCommands: Command[] = [];
@@ -26,15 +26,15 @@ export class ProvisionCommandImpl implements Command {
     this.commandDesc = 'Support for provisioning docker swarms & stacks';
     this.pushBuildCommand();
     this.pushTemplateCommand();
+    this.pushExtractYamlCommand();
   };
 
   private pushTemplateCommand() {
     let templateCommand = kernel.get<Command>('CommandImpl');
     templateCommand.aliases = ['template', 't'];
     templateCommand.commandDesc = 'Create a template JSON spec for creating docker stack/swarm';
-    //noinspection ReservedWordAsName
     templateCommand.options = {
-      'docker-machine': {
+      dockermachine: {
         alias: 'dm',
         type: 'string',
         default: 'virtualbox',
@@ -65,7 +65,6 @@ export class ProvisionCommandImpl implements Command {
     let buildCommand = kernel.get<Command>('CommandImpl');
     buildCommand.aliases = ['build', 'b'];
     buildCommand.commandDesc = 'Build Docker Stack based on JSON spec';
-    //noinspection ReservedWordAsName
     buildCommand.options = {
       username: {
         alias: 'u',
@@ -86,6 +85,27 @@ export class ProvisionCommandImpl implements Command {
     };
     buildCommand.handler = this.dockerProvision.buildTemplate.bind(this.dockerProvision);
     this.subCommands.push(buildCommand);
+  };
+
+  private pushExtractYamlCommand() {
+    let extractYamlCommand = kernel.get<Command>('CommandImpl');
+    extractYamlCommand.aliases = ['extract-yaml', 'x'];
+    extractYamlCommand.commandDesc = 'Extract Docker Compose (for Swarm) YAML from firmament provision JSON file';
+    extractYamlCommand.options = {
+      inputJsonFile: {
+        alias: 'i',
+        type: 'string',
+        default: ProvisionCommandImpl.defaultConfigFilename,
+        desc: 'The input firmament provision JSON file'
+      },
+      outputYamlFile: {
+        alias: 'o',
+        type: 'string',
+        desc: 'The output Docker Compose YAML file'
+      }
+    };
+    extractYamlCommand.handler = this.dockerProvision.extractYamlFromJson.bind(this.dockerProvision);
+    this.subCommands.push(extractYamlCommand);
   };
 }
 

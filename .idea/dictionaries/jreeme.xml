@@ -12,6 +12,7 @@
       <w>chown</w>
       <w>deps</w>
       <w>dockerfile</w>
+      <w>dockermachine</w>
       <w>ecluster</w>
       <w>ediscovery</w>
       <w>elasticsearch</w>
@@ -33,6 +34,7 @@
       <w>maxbytes</w>
       <w>minfds</w>
       <w>minprocs</w>
+      <w>mkdirp</w>
       <w>mongo</w>
       <w>mysupervisor</w>
       <w>nocleanup</w>
@@ -40,6 +42,7 @@
       <w>nogroup</w>
       <w>notif</w>
       <w>numprocs</w>
+      <w>openstack</w>
       <w>pidfile</w>
       <w>portainer</w>
       <w>prog</w>
@@ -65,6 +68,8 @@
       <w>theprogramname</w>
       <w>umask</w>
       <w>unicast</w>
+      <w>virtualbox</w>
+      <w>vmwarevsphere</w>
       <w>yaml</w>
     </words>
   </dictionary>
