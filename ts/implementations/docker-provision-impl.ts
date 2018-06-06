@@ -97,7 +97,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
         break;
     }
     me.commandUtil.log("Constructing Docker Stack described in: '" + fullInputPath + "'");
-    me.createDockerMachines(stackConfigTemplate, (err, result) => {
+    me.createDockerMachines(fullInputPath, stackConfigTemplate, (err, result) => {
       if (cb) {
         return cb();
       }
@@ -107,7 +107,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
 
 //(alter vm.max_map_count in boot2docker ISO
 //https://github.com/boot2docker/boot2docker/issues/1216
-  private createDockerMachines(stackConfigTemplate: DockerStackConfigTemplate, cb: (err, result?) => void) {
+  private createDockerMachines(fullInputPath: string, stackConfigTemplate: DockerStackConfigTemplate, cb: (err, result?) => void) {
     const me = this;
     cb = me.checkCallback(cb);
     const dockerMachineCmd = [
@@ -246,7 +246,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
           });
       },
       (env, ip, cb) => {
-        tmp.file((err, tmpPath, fd, cleanupCb) => {
+        tmp.file({dir: path.dirname(fullInputPath)}, (err, tmpPath, fd, cleanupCb) => {
           const yaml = YAML.stringify(stackConfigTemplate.dockerComposeYaml, 8, 2).replace(/\$\{MASTER_IP\}/g, ip);
           if (me.commandUtil.callbackIfError(err)) {
             return;
