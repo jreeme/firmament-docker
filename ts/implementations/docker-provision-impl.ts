@@ -118,7 +118,11 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     for (const dockerMachineDriverOption in stackConfigTemplate.dockerMachineDriverOptions) {
       const optionKey = me.camelToSnake(dockerMachineDriverOption, '-');
       const optionValue = stackConfigTemplate.dockerMachineDriverOptions[dockerMachineDriverOption];
-      dockerMachineCmd.push(`--${optionKey}=${optionValue}`);
+      //There are some options --engine-opt & --engine-env that require a <space> instead of an <=> symbol
+      //between Key & Value. This seems to be because the Value has an <=> symbol in it.
+      //(e.g. --engine-opt dns=8.8.8.8 & --engine-env HTTP_PROXY=http://bananna-daiquiri.drink
+      const keyValueSeparator = ((typeof optionValue !== 'string') || (optionValue.indexOf('=') === -1)) ? '=' : ' ';
+      dockerMachineCmd.push(`--${optionKey}${keyValueSeparator}${optionValue}`);
     }
     const masterMachineName = `${stackConfigTemplate.clusterPrefix}-master`;
     async.waterfall([

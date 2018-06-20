@@ -34,14 +34,15 @@ const dockerProvision = kernel.get<DockerProvision>('DockerProvision');
   dm: 'virtualbox'
   //yaml: ProvisionCommandImpl.defaultComposeYamlFilename
 }, () => {*/
-  dockerProvision.buildTemplate({
-    username: 'root',
-    password: 'run2walk!',
-    input: ProvisionCommandImpl.defaultConfigFilename
-  }, () => {
-    process.exit(0);
-  });
-  //process.exit(0);
+dockerProvision.buildTemplate({
+  username: 'root',
+  password: 'run2walk!',
+  //input: ProvisionCommandImpl.defaultConfigFilename
+  input: '/home/jreeme/src/parrot-stack/firmament/deploy/vmware/vmware-les.parrot.keyw/postgres-amino3.json'
+}, () => {
+  process.exit(0);
+});
+//process.exit(0);
 //});
 
 process.on('uncaughtException', err => {
