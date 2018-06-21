@@ -352,23 +352,40 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
         }
         //HACK: Need to up the vm.max_map_count to 262144 to support elasticsearch 5
         const machineName = dockerMachineCmd[dockerMachineCmd.length - 1];
-        const dockerMachineJoinSwarmCmd = [
-          'docker-machine',
-          'ssh',
-          machineName,
-          `echo 'sysctl -w vm.max_map_count=262144' | sudo tee -a /var/lib/boot2docker/profile && sudo /etc/init.d/docker restart`
+        const dockerMachineJoinSwarmCmds = [
+          [
+            'docker-machine',
+            'ssh',
+            machineName,
+            `echo 'sysctl -w vm.max_map_count=262144' | sudo tee -a /var/lib/boot2docker/profile && sudo /etc/init.d/docker restart`
+          ],
+          [
+            'docker-machine',
+            'ssh',
+            machineName,
+            `echo 'echo "nameserver 192.168.104.11" | sudo tee /etc/resolv.conf' | sudo tee -a /var/lib/boot2docker/profile`
+          ]
         ];
-        me.spawn.spawnShellCommandAsync(dockerMachineJoinSwarmCmd,
-          {
-            cacheStdOut: true
-          },
-          (err, result) => {
-            me.commandUtil.log(result.toString());
-          },
-          (err, result) => {
-            const joinToken = me.safeJson.safeParseSync(result).obj.stdoutText.trim();
-            cb(null);
-          });
+        async
+          .each(
+            dockerMachineJoinSwarmCmds,
+            (dockerMachineJoinSwarmCmd, cb) => {
+              me.spawn.spawnShellCommandAsync(dockerMachineJoinSwarmCmd,
+                {
+                  cacheStdOut: true
+                },
+                (err, result) => {
+                  me.commandUtil.log(result.toString());
+                },
+                (err, result) => {
+                  const joinToken = me.safeJson.safeParseSync(result).obj.stdoutText.trim();
+                  cb(null);
+                });
+            },
+            (err) => {
+              cb(err);
+            }
+          );
       });
   };
 

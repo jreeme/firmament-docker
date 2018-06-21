@@ -10,6 +10,7 @@
       <w>childlogdir</w>
       <w>childutils</w>
       <w>chown</w>
+      <w>cmds</w>
       <w>deps</w>
       <w>dockerfile</w>
       <w>dockermachine</w>
@@ -37,6 +38,7 @@
       <w>mkdirp</w>
       <w>mongo</w>
       <w>mysupervisor</w>
+      <w>nameserver</w>
       <w>nocleanup</w>
       <w>nodaemon</w>
       <w>nogroup</w>
@@ -48,6 +50,7 @@
       <w>prog</w>
       <w>progname</w>
       <w>req</w>
+      <w>resolv</w>
       <w>rpcinterface</w>
       <w>sameorigin</w>
       <w>sbin</w>
@@ -59,6 +62,7 @@
       <w>stopsignal</w>
       <w>stopwaitsecs</w>
       <w>strongloop</w>
+      <w>sudo</w>
       <w>supervisorctl</w>
       <w>supervisord</w>
       <w>sysctl</w>
