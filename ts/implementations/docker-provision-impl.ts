@@ -17,6 +17,7 @@ import {
   DockerStackConfigTemplate
 } from '../';
 import {ProcessCommandJson} from 'firmament-bash/js/interfaces/process-command-json';
+import set = Reflect.set;
 
 const fileExists = require('file-exists');
 const jsonFile = require('jsonfile');
@@ -27,6 +28,8 @@ const templateCatalogUrl = '/home/jreeme/src/firmament-docker/docker/provisionTe
 //const templateCatalogUrl = 'https://raw.githubusercontent.com/jreeme/firmament-docker/master/docker/provisionTemplateCatalog.json';
 @injectable()
 export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvision {
+  private stackConfigTemplate: DockerStackConfigTemplate;
+
   constructor(@inject('CommandUtil') private commandUtil: CommandUtil,
               @inject('Spawn') private spawn: Spawn,
               @inject('SafeJson') private safeJson: SafeJson,
@@ -69,6 +72,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
   buildTemplate(argv: any, cb: () => void = null) {
     const me = this;
     const {fullInputPath, stackConfigTemplate} = me.getContainerConfigsFromJsonFile(argv.input);
+    me.stackConfigTemplate = stackConfigTemplate;
     switch (stackConfigTemplate.dockerMachineDriverOptions.driver) {
       case 'openstack': {
         const dockerMachineDriverOptions =
@@ -319,75 +323,139 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     });
   }
 
+  private handleDockerMachineExecutionFailure(err: Error, cb: (err, result?) => void) {
+    const me = this;
+    me.safeJson.safeParse(err.message, (err: Error, obj: any) => {
+      try {
+        if (obj.code.code === 'ENOENT') {
+          if (me.positive.areYouSure(
+            `Looks like 'docker-machine' is not installed. Want me to try to install it?`,
+            'Operation canceled.',
+            true,
+            FailureRetVal.TRUE)) {
+            const installDockerMachineJson = path.resolve(__dirname, '../../firmament-bash/install-docker-machine.json');
+            return me.processCommandJson.processAbsoluteUrl(installDockerMachineJson, (err) => {
+              const msg = `'docker-machine' installed. Try provisioning again.`;
+              cb(err, err ? null : msg);
+            });
+          }
+          return cb(null);
+        }
+        cb(null);
+      } catch (err) {
+        cb(err);
+      }
+    });
+  }
+
   private createDockerMachine(dockerMachineCmd: any[], cb: (err, result?) => void) {
     const me = this;
-    me.spawn.spawnShellCommandAsync(dockerMachineCmd, {},
+    me.spawn.spawnShellCommandAsync(
+      dockerMachineCmd,
+      {},
       (err, result) => {
         me.commandUtil.log(result.toString());
       },
-      (err, result) => {
+      (err) => {
         if (err) {
-          return me.safeJson.safeParse(err.message, (err: Error, obj: any) => {
-            try {
-              if (obj.code.code === 'ENOENT') {
-                if (me.positive.areYouSure(
-                  `Looks like 'docker-machine' is not installed. Want me to try to install it?`,
-                  'Operation canceled.',
-                  true,
-                  FailureRetVal.TRUE)) {
-                  const installDockerMachineJson = path.resolve(__dirname, '../../firmament-bash/install-docker-machine.json');
-                  me.processCommandJson.processAbsoluteUrl(installDockerMachineJson, (err, result) => {
-                    const msg = `'docker-machine' installed. Try provisioning again.`;
-                    cb(err, err ? null : msg);
-                  });
-                  return;
-                }
-                return cb(null);
-              }
-              cb(null);
-            } catch (err) {
-              cb(err);
-            }
-          });
+          return me.handleDockerMachineExecutionFailure(err, cb);
         }
-        //HACK: Need to up the vm.max_map_count to 262144 to support elasticsearch 5
+        //Below is where we do any tweaks to the underlying docker-machine host. This host is sometimes a boot2docker
+        //machine (VMWare, VirtualBox) and sometimes a cloud-init, usually Ubuntu, image (OpenStack, AWS).
         const machineName = dockerMachineCmd[dockerMachineCmd.length - 1];
-        const dockerMachineJoinSwarmCmds = [
-          [
-            'docker-machine',
-            'ssh',
-            machineName,
-            `echo 'sysctl -w vm.max_map_count=262144' | sudo tee -a /var/lib/boot2docker/profile && sudo /etc/init.d/docker restart`
-          ],
-          [
-            'docker-machine',
-            'ssh',
-            machineName,
-            `echo 'echo "nameserver 192.168.104.11" | sudo tee /etc/resolv.conf' | sudo tee -a /var/lib/boot2docker/profile`
-          ]
-        ];
-        async
-          .each(
-            dockerMachineJoinSwarmCmds,
-            (dockerMachineJoinSwarmCmd, cb) => {
-              me.spawn.spawnShellCommandAsync(dockerMachineJoinSwarmCmd,
-                {
-                  cacheStdOut: true
-                },
-                (err, result) => {
-                  me.commandUtil.log(result.toString());
-                },
-                (err, result) => {
-                  const joinToken = me.safeJson.safeParseSync(result).obj.stdoutText.trim();
-                  cb(null);
-                });
-            },
-            (err) => {
-              cb(err);
-            }
-          );
+        switch (me.stackConfigTemplate.dockerMachineDriverOptions.driver) {
+          case('vmwarevsphere'):
+            return me.finalConfig_VMWareVSphere(machineName, cb);
+          case('openstack'):
+            return me.finalConfig_OpenStack(machineName, cb);
+          case('virtualbox'):
+          default:
+            return me.finalConfig_VirtualBox(machineName, cb);
+        }
       });
   };
+
+  private finalConfig_VirtualBox(machineName: string, cb: (err) => void) {
+    this.adjustBoot2DockerProfile(machineName, cb);
+  }
+
+  private finalConfig_OpenStack(machineName: string, cb: (err) => void) {
+    cb(null);
+  }
+
+  private finalConfig_VMWareVSphere(machineName: string, cb: (err) => void) {
+    const me = this;
+    me.adjustBoot2DockerProfile(machineName, (err) => {
+      cb(err);
+    });
+  }
+
+  //NOTE: The boot2docker profile file (living at /var/lib/boot2docker/profile on the VM host) is appropriate for
+  //changing the way the docker daemon behaves. Settings for non-docker daemons need to be handled another way.
+  private adjustBoot2DockerProfile(machineName: string, cb: (err) => void) {
+    const me = this;
+    //Need to up the vm.max_map_count to 262144 to support elasticsearch 5
+    //NETDEVICES="$(awk -F: '\''/eth.:|tr.:/{print $1}'\'' /proc/net/dev 2>/dev/null)"
+    const profileLines = (me.stackConfigTemplate.hostMachineDnsServer)
+      ? `
+#Need to set vm.max_map_count to 262144 to support ElasticSearch (ES fails in production without it)    
+sysctl -w vm.max_map_count=262144
+
+NETDEVICES="$(awk -F: '\\''/eth.:|tr.:/{print $1}'\\'' /proc/net/dev 2>/dev/null)"
+for DEVICE in $NETDEVICES; do
+  DHCP_PID_FILE=/var/run/udhcpc.$DEVICE.pid
+  echo "Checking existence of $DHCP_PID_FILE ..."
+  until [ -f $DHCP_PID_FILE ];
+  do
+    echo "Waiting for $DHCP_PID_FILE to exist ..."
+    sleep 1
+  done
+done
+
+echo "$DHCP_PID_FILE exists ..."
+
+RESOLV_CONF=/etc/resolv.conf
+echo "Checking existence of $RESOLV_CONF ..."
+until [ -f $RESOLV_CONF ];
+do
+    echo "Waiting for $RESOLV_CONF to exist ..."
+    sleep 1
+done
+  
+echo "$RESOLV_CONF exists ..."
+
+DATE_OF_DHCP_PID_FILE=$(date -u -r $DHCP_PID_FILE +%s)
+DATE_OF_RESOLV_CONF=$(date -u -r $RESOLV_CONF +%s)
+NOW=$(date -u +%s)
+
+echo "$DHCP_PID_FILE last modified at $DATE_OF_DHCP_PID_FILE"
+echo "$RESOLV_CONF last modified at $DATE_OF_RESOLV_CONF"
+
+echo $(( \${DATE_OF_DHCP_PID_FILE}-\${DATE_OF_RESOLV_CONF} ))
+
+echo 'nameserver ${me.stackConfigTemplate.hostMachineDnsServer}' > /etc/resolv.conf
+` : `
+#Need to set vm.max_map_count to 262144 to support ElasticSearch (ES fails in production without it)    
+sysctl -w vm.max_map_count=262144
+`;
+    const dockerMachineJoinSwarmCmd = [
+      `echo '${profileLines}' | sudo tee -a /var/lib/boot2docker/profile && sudo /etc/init.d/docker restart`
+    ];
+    me.runCommandOnDockerMachineHost(machineName, dockerMachineJoinSwarmCmd, cb);
+  }
+
+  private runCommandOnDockerMachineHost(machineName: string, commandArray: string[], cb: (err, result) => void) {
+    const me = this;
+    commandArray.unshift('docker-machine', 'ssh', machineName);
+    me.spawn.spawnShellCommandAsync(commandArray,
+      {
+        cacheStdOut: true
+      },
+      (err, result) => {
+        me.commandUtil.log(result.toString());
+      }, cb);
+    //const joinToken = me.safeJson.safeParseSync(result).obj.stdoutText.trim();
+  }
 
   private getContainerConfigsFromJsonFile(inputPath: string) {
     const me = this;

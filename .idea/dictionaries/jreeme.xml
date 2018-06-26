@@ -12,6 +12,7 @@
       <w>chown</w>
       <w>cmds</w>
       <w>deps</w>
+      <w>dhcp</w>
       <w>dockerfile</w>
       <w>dockermachine</w>
       <w>ecluster</w>
@@ -19,12 +20,14 @@
       <w>elasticsearch</w>
       <w>enetwork</w>
       <w>enode</w>
+      <w>enoent</w>
       <w>epath</w>
       <w>etcd</w>
       <w>etcdctl</w>
       <w>eventlistener</w>
       <w>exitcodes</w>
       <w>filenames</w>
+      <w>floatingip</w>
       <w>iface</w>
       <w>inet</w>
       <w>jreeme</w>
@@ -39,6 +42,7 @@
       <w>mongo</w>
       <w>mysupervisor</w>
       <w>nameserver</w>
+      <w>netdevices</w>
       <w>nocleanup</w>
       <w>nodaemon</w>
       <w>nogroup</w>
@@ -47,6 +51,7 @@
       <w>openstack</w>
       <w>pidfile</w>
       <w>portainer</w>
+      <w>proc</w>
       <w>prog</w>
       <w>progname</w>
       <w>req</w>
@@ -70,8 +75,10 @@
       <w>theeventlistenername</w>
       <w>thegroupname</w>
       <w>theprogramname</w>
+      <w>udhcpc</w>
       <w>umask</w>
       <w>unicast</w>
+      <w>vcenter</w>
       <w>virtualbox</w>
       <w>vmwarevsphere</w>
       <w>yaml</w>

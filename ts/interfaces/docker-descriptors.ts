@@ -11,11 +11,11 @@ export interface DockerMachineDriverOptions_vmwarevsphere extends DockerMachineD
   vmwarevsphereVcenter: string
 }
 
-export interface DockerMachineDriverOptions_virtualbox extends DockerMachineDriverOptions {
+/*export interface DockerMachineDriverOptions_virtualbox extends DockerMachineDriverOptions {
   virtualboxCpuCount: number,
   virtualboxMemory: number,
   engineInsecureRegistry: string
-}
+}*/
 
 export interface DockerMachineDriverOptions_openstack extends DockerMachineDriverOptions {
   openstackUsername: string,
@@ -32,6 +32,7 @@ export interface DockerMachineDriverOptions_openstack extends DockerMachineDrive
 export interface DockerStackConfigTemplate {
   stackName: string
   clusterPrefix: string,
+  hostMachineDnsServer: string,
   dockerComposeYaml: any,
   workerHostCount: number,
   dockerMachineWorkerOptions: any,
