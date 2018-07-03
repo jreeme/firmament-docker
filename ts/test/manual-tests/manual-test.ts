@@ -13,10 +13,13 @@ import {Url, parse as urlParse} from 'url';
 import {DockerCommandImpl} from "../../implementations/commands/docker-command-impl";
 import {DockerProvision} from "../../interfaces/docker-provision";
 import {ProvisionCommandImpl} from "../../implementations/commands/provision-command-impl";
+import {DockerContainerManagement} from "../../interfaces/docker-container-management";
 
 const dockerMake = kernel.get<DockerMake>('DockerMake');
 const dockerProvision = kernel.get<DockerProvision>('DockerProvision');
 //dockerMake.makeTemplate({});
+
+const dockerContainerManagement = kernel.get<DockerContainerManagement>('DockerContainerManagement');
 
 /*dockerProvision.extractYamlFromJson({
     inputJsonFile: '/home/jreeme/src/parrot-stack/firmament/docker/deploy/vmwarevsphere-parrot.json',
@@ -34,14 +37,14 @@ const dockerProvision = kernel.get<DockerProvision>('DockerProvision');
   dm: 'virtualbox'
   //yaml: ProvisionCommandImpl.defaultComposeYamlFilename
 }, () => {*/
-dockerProvision.buildTemplate({
+/*dockerProvision.buildTemplate({
   username: 'root',
   password: 'run2walk!',
   //input: ProvisionCommandImpl.defaultConfigFilename
   input: '/home/jreeme/src/parrot-stack/firmament/deploy/vmware/vmware-les.parrot.keyw/postgres-amino3.json'
 }, () => {
   process.exit(0);
-});
+});*/
 //process.exit(0);
 //});
 
@@ -57,3 +60,7 @@ process.on('uncaughtException', err => {
  (err: Error, result: string) => {
  var r = result;
  });*/
+
+dockerContainerManagement.exec('2da1', '/bin/bash', (err, result) => {
+  process.exit(3);
+});

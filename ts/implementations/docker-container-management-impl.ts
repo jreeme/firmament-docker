@@ -74,18 +74,23 @@ export class DockerContainerManagementImpl extends ForceErrorImpl implements Doc
   exec(id: string, command: string, cb: (err: Error, result: any) => void): void {
     let me = this;
     me.getContainer(id, (err: Error, dockerContainer: DockerContainer) => {
-      if (me.DM.commandUtil.callbackIfError(cb, err)) {
-        return;
+        if (me.DM.commandUtil.callbackIfError(cb, err)) {
+          return;
+        }
+        const columns = process.stdout.columns;
+        const rows = process.stdout.rows;
+        childProcess.spawnSync('docker', [
+          'exec',
+          '-it',
+          '-e',
+          `COLUMNS=${columns}`,//Provide tty dimensions to 'docker exec' so no typing overwrite
+          '-e',
+          `LINES=${rows}`,
+          dockerContainer.Name.slice(1), command], {
+          stdio: 'inherit'
+        });
+        cb(null, 0);
       }
-      childProcess.spawnSync('docker', [
-        'exec',
-        '-it',
-        '-e COLUMNS="`tput cols`"',
-        '-e LINES="`tput lines`"',
-        dockerContainer.Name.slice(1), command], {
-        stdio: 'inherit'
-      });
-      cb(null, 0);
-    });
+    );
   }
 }
