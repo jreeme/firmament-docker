@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="Add dns server to /etc/resolv.conf on boot2docker container host">
+    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dictionaries/jreeme.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/jreeme.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ts/implementations/docker-container-management-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/docker-container-management-impl.ts" afterDir="false" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,11 +28,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="docker-provision-impl.ts" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
+      <file leaf-file-name="docker-command-impl.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ts/implementations/commands/docker-command-impl.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="440" column="38" selection-start-line="440" selection-start-column="38" selection-end-line="440" selection-end-column="38" />
+            <state relative-caret-position="450">
+              <caret line="201" column="10" selection-start-line="201" selection-start-column="10" selection-end-line="201" selection-end-column="10" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
               </folding>
@@ -39,20 +40,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="docker-descriptors.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="2" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="2" />
+            <state relative-caret-position="30">
+              <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="manual-test.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts">
+      <file leaf-file-name="docker-container-management-impl.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ts/implementations/docker-container-management-impl.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="39" column="3" selection-start-line="39" selection-start-column="3" selection-end-line="39" selection-end-column="3" />
+            <state relative-caret-position="45">
+              <caret line="3" column="7" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="docker-container-management-impl.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/implementations/docker-container-management-impl.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="69" column="66" selection-start-line="69" selection-start-column="66" selection-end-line="69" selection-end-column="66" />
             </state>
           </provider>
         </entry>
@@ -110,7 +120,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/docker/elasticsearch/2.4.6/Dockerfile" />
         <option value="$PROJECT_DIR$/docker/elasticsearch5.yml" />
         <option value="$PROJECT_DIR$/docker/nginx/1.13.8/default.conf" />
         <option value="$PROJECT_DIR$/docker/nginx/1.13.8/elasticsearch-nginx.conf" />
@@ -158,9 +167,10 @@
         <option value="$PROJECT_DIR$/ts/implementations/commands/provision-command-impl.ts" />
         <option value="$PROJECT_DIR$/ts/tsconfig.json" />
         <option value="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" />
         <option value="$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts" />
+        <option value="$PROJECT_DIR$/ts/implementations/docker-container-management-impl.ts" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -199,6 +209,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -209,7 +220,38 @@
             <path>
               <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
               <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="implementations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
               <item name="ts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="ts" type="462c0819:PsiDirectoryNode" />
+              <item name="implementations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="ts" type="462c0819:PsiDirectoryNode" />
+              <item name="implementations" type="462c0819:PsiDirectoryNode" />
+              <item name="commands" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="ts" type="462c0819:PsiDirectoryNode" />
+              <item name="implementations" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
@@ -228,7 +270,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -456,21 +497,10 @@
       <workItem from="1529527174892" duration="5855000" />
       <workItem from="1529673904677" duration="1309000" />
       <workItem from="1529931819341" duration="15513000" />
-      <workItem from="1529958991502" duration="9842000" />
-    </task>
-    <task id="LOCAL-00008" summary="-&gt; v.0.2.3">
-      <created>1478529094925</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1478529094925</updated>
-    </task>
-    <task id="LOCAL-00009" summary="-&gt; v.0.2.4">
-      <created>1478530909606</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1478530909606</updated>
+      <workItem from="1529958991502" duration="10515000" />
+      <workItem from="1530034985783" duration="854000" />
+      <workItem from="1530036912469" duration="5000" />
+      <workItem from="1530630248223" duration="524000" />
     </task>
     <task id="LOCAL-00010" summary="-&gt; v.0.2.5">
       <created>1478531604268</created>
@@ -801,7 +831,21 @@
       <option name="project" value="LOCAL" />
       <updated>1529596706974</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="Add dns server to /etc/resolv.conf on boot2docker container host">
+      <created>1530032549904</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1530032549904</updated>
+    </task>
+    <task id="LOCAL-00058" summary="NPM -&gt; v.1.4.21">
+      <created>1530032596212</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1530032596212</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -837,10 +881,11 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="324126000" />
+    <option name="totallyTimeSpent" value="326182000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1919" y="0" width="1922" height="1053" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TypeScript" order="7" sideWeight="0.4939378" weight="0.18770227" />
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.47777778" visible="true" weight="0.1676331" />
@@ -848,11 +893,11 @@
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5044808" side_tool="true" weight="0.39181915" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32831" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4949921" weight="0.3229279" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4949921" weight="0.32254586" />
       <window_info id="npm" order="2" sideWeight="0.5222222" side_tool="true" weight="0.16094987" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.40884575" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49551925" visible="true" weight="0.30312836" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.1724138" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49551925" weight="0.30312836" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -896,7 +941,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Add nginx support (1.13.8)" />
     <MESSAGE value="NPM -&gt; 1.4.6" />
     <MESSAGE value="NPM -&gt; 1.4.7" />
     <MESSAGE value="Get to running elasticsearch-head" />
@@ -921,7 +965,8 @@
     <MESSAGE value="add volumetest.yml" />
     <MESSAGE value="Add code to export YAML from firmament provision JSON" />
     <MESSAGE value="Add dns server to /etc/resolv.conf on boot2docker container host" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add dns server to /etc/resolv.conf on boot2docker container host" />
+    <MESSAGE value="NPM -&gt; v.1.4.21" />
+    <option name="LAST_COMMIT_MESSAGE" value="NPM -&gt; v.1.4.21" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -932,26 +977,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="47" column="30" selection-start-line="47" selection-start-column="30" selection-end-line="47" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docker/volumetest.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/firmament-bash/install-docker-machine.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1637" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docker/amino3/1.1/amino3-server/package.json" />
     <entry file="file://$PROJECT_DIR$/node_modules/@types/async/index.d.ts" />
     <entry file="file://$PROJECT_DIR$/docker/amino3/1.1/amino3-server/server/services/implementations/plugin-manager-impl.ts" />
     <entry file="file://$PROJECT_DIR$/docker/elasticsearch-head/5.x/Dockerfile">
@@ -1102,13 +1127,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-container-management-impl.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="29" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/hello" />
     <entry file="file://$PROJECT_DIR$/ts/test/docker-image-management.test.ts">
       <provider selected="true" editor-type-id="text-editor">
@@ -1216,10 +1234,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
+    <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+        <state relative-caret-position="255">
+          <caret line="17" column="2" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6465">
+          <caret line="450" column="6" selection-start-line="450" selection-start-column="6" selection-end-line="450" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-management-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-image-management-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1538">
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/commands/docker-command-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="201" column="10" selection-start-line="201" selection-start-column="10" selection-end-line="201" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1230,20 +1286,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts">
+    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-container-management-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="2" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="2" />
+        <state relative-caret-position="45">
+          <caret line="3" column="7" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
+    <entry file="file://$PROJECT_DIR$/js/implementations/docker-container-management-impl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="440" column="38" selection-start-line="440" selection-start-column="38" selection-end-line="440" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="180">
+          <caret line="69" column="66" selection-start-line="69" selection-start-column="66" selection-end-line="69" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
         </state>
       </provider>
     </entry>
