@@ -37,14 +37,15 @@ const dockerContainerManagement = kernel.get<DockerContainerManagement>('DockerC
   dm: 'virtualbox'
   //yaml: ProvisionCommandImpl.defaultComposeYamlFilename
 }, () => {*/
-/*dockerProvision.buildTemplate({
+dockerProvision.buildTemplate({
   username: 'root',
   password: 'run2walk!',
   //input: ProvisionCommandImpl.defaultConfigFilename
+  noports: false,
   input: '/home/jreeme/src/parrot-stack/firmament/deploy/vmware/vmware-les.parrot.keyw/postgres-amino3.json'
 }, () => {
   process.exit(0);
-});*/
+});
 //process.exit(0);
 //});
 
@@ -61,6 +62,6 @@ process.on('uncaughtException', err => {
  var r = result;
  });*/
 
-dockerContainerManagement.exec('2da1', '/bin/bash', (err, result) => {
+/*dockerContainerManagement.exec('2da1', '/bin/bash', (err, result) => {
   process.exit(3);
-});
+});*/

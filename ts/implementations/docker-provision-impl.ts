@@ -101,7 +101,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
         break;
     }
     me.commandUtil.log("Constructing Docker Stack described in: '" + fullInputPath + "'");
-    me.createDockerMachines(fullInputPath, stackConfigTemplate, (err, result) => {
+    me.createDockerMachines(fullInputPath, stackConfigTemplate, argv, (err, result) => {
       if (cb) {
         return cb();
       }
@@ -111,7 +111,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
 
 //(alter vm.max_map_count in boot2docker ISO
 //https://github.com/boot2docker/boot2docker/issues/1216
-  private createDockerMachines(fullInputPath: string, stackConfigTemplate: DockerStackConfigTemplate, cb: (err, result?) => void) {
+  private createDockerMachines(fullInputPath: string, stackConfigTemplate: DockerStackConfigTemplate, argv: any, cb: (err, result?) => void) {
     const me = this;
     cb = me.checkCallback(cb);
     const dockerMachineCmd = [
@@ -255,6 +255,19 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
       },
       (env, ip, cb) => {
         tmp.file({dir: path.dirname(fullInputPath)}, (err, tmpPath, fd, cleanupCb) => {
+          try {
+            if (argv.noports) {
+              for (const serviceName in stackConfigTemplate.dockerComposeYaml.services) {
+                const service = stackConfigTemplate.dockerComposeYaml.services[serviceName];
+                service.ports && delete service.ports;
+/*                if (service.ports) {
+                  delete service.ports;
+                }*/
+              }
+            }
+          } catch (err) {
+            me.commandUtil.error(`Failed to execute 'noports' option ${err}`);
+          }
           const yaml = YAML.stringify(stackConfigTemplate.dockerComposeYaml, 8, 2).replace(/\$\{MASTER_IP\}/g, ip);
           if (me.commandUtil.callbackIfError(err)) {
             return;

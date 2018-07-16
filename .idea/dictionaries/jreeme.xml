@@ -2,6 +2,7 @@
   <dictionary name="jreeme">
     <words>
       <w>addr</w>
+      <w>autoconfig</w>
       <w>autorestart</w>
       <w>autostart</w>
       <w>bashrc</w>
@@ -46,6 +47,7 @@
       <w>nocleanup</w>
       <w>nodaemon</w>
       <w>nogroup</w>
+      <w>noports</w>
       <w>notif</w>
       <w>numprocs</w>
       <w>openstack</w>
@@ -76,6 +78,7 @@
       <w>thegroupname</w>
       <w>theprogramname</w>
       <w>tput</w>
+      <w>traefik</w>
       <w>udhcpc</w>
       <w>umask</w>
       <w>unicast</w>

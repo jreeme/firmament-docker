@@ -81,6 +81,12 @@ export class ProvisionCommandImpl implements Command {
         default: ProvisionCommandImpl.defaultConfigFilename,
         type: 'string',
         desc: 'Name the config JSON file'
+      },
+      noports: {
+        alias: 'np',
+        default: false,
+        type: 'boolean',
+        desc: 'Suppress port publish blocks in compose files (to support Traefik autoconfig)'
       }
     };
     buildCommand.handler = this.dockerProvision.buildTemplate.bind(this.dockerProvision);
