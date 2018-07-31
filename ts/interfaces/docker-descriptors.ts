@@ -29,11 +29,22 @@ export interface DockerMachineDriverOptions_openstack extends DockerMachineDrive
   openstackTenantName: string
 }
 
+export interface DockerServiceDescription {
+  deploy: {
+    labels: string[]
+  }
+}
+
+export interface DockerComposeYaml {
+  services: any
+}
+
 export interface DockerStackConfigTemplate {
   stackName: string
   clusterPrefix: string,
   hostMachineDnsServer: string,
-  dockerComposeYaml: any,
+  traefikZoneName: string,
+  dockerComposeYaml: DockerComposeYaml,
   workerHostCount: number,
   dockerMachineWorkerOptions: any,
   dockerMachineMasterOptions: any,

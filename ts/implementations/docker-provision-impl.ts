@@ -13,17 +13,16 @@ import {RemoteCatalogGetter} from 'firmament-yargs';
 import {DockerProvision} from '../interfaces/docker-provision';
 import {DockerUtil} from '../interfaces/docker-util';
 import {
-  DockerMachineDriverOptions_openstack, DockerMachineDriverOptions_vmwarevsphere,
+  DockerMachineDriverOptions_openstack, DockerMachineDriverOptions_vmwarevsphere, DockerServiceDescription,
   DockerStackConfigTemplate
 } from '../';
 import {ProcessCommandJson} from 'firmament-bash/js/interfaces/process-command-json';
-import set = Reflect.set;
 
 const fileExists = require('file-exists');
 const jsonFile = require('jsonfile');
 
 //const path = require('path');
-const templateCatalogUrl = '/home/jreeme/src/firmament-docker/docker/provisionTemplateCatalog.json';
+//const templateCatalogUrl = '/home/jreeme/src/firmament-docker/docker/provisionTemplateCatalog.json';
 
 //const templateCatalogUrl = 'https://raw.githubusercontent.com/jreeme/firmament-docker/master/docker/provisionTemplateCatalog.json';
 @injectable()
@@ -41,6 +40,40 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
               @inject('Positive') private positive: Positive,
               @inject('ProgressBar') private progressBar: ProgressBar) {
     super();
+  }
+
+  validateDockerStackConfigTemplate(dockerStackConfigTemplate: DockerStackConfigTemplate,
+                                    cb: (err: Error, dockerStackConfigTemplate?: DockerStackConfigTemplate) => void) {
+    const dsct = dockerStackConfigTemplate;
+    for (const service in dsct.dockerComposeYaml.services) {
+      const s = <DockerServiceDescription>dsct.dockerComposeYaml.services[service];
+      const labels = {};
+      if (s.deploy.labels) {
+        s.deploy.labels.forEach((label) => {
+          const tuple = label.split('=');
+          labels[tuple[0]] = tuple[1];
+        });
+        if (labels['traefik.enable'] !== 'false') {
+          if (!labels['traefik.port']) {
+            return cb(new Error(`'traefik.port' label not present for service '${service}'`));
+          }
+          if (!labels['traefik.backend']) {
+            labels['traefik.backend'] = service;
+          }
+          if (!labels['traefik.frontend.rule']) {
+            if (!dsct.traefikZoneName) {
+              return cb(new Error(`'traefik.frontend.rule' label and 'traefikZoneName' both undefined for service '${service}'`));
+            }
+            labels['traefik.frontend.rule'] = `Host: ${service}.${dsct.traefikZoneName}`;
+          }
+        }
+        s.deploy.labels.length = 0;
+        for (const label in labels) {
+          s.deploy.labels.push(`${label}=${labels[label]}`);
+        }
+      }
+    }
+    cb(null, dsct);
   }
 
   extractYamlFromJson(argv: any, cb: () => void = null) {
@@ -72,40 +105,48 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
   buildTemplate(argv: any, cb: () => void = null) {
     const me = this;
     const {fullInputPath, stackConfigTemplate} = me.getContainerConfigsFromJsonFile(argv.input);
-    me.stackConfigTemplate = stackConfigTemplate;
-    switch (stackConfigTemplate.dockerMachineDriverOptions.driver) {
-      case 'openstack': {
-        const dockerMachineDriverOptions =
-          (<DockerMachineDriverOptions_openstack>stackConfigTemplate.dockerMachineDriverOptions);
-        if (argv.username) {
-          dockerMachineDriverOptions.openstackUsername = argv.username;
+    me.validateDockerStackConfigTemplate(stackConfigTemplate, (err, stackConfigTemplate) => {
+      if (err) {
+        if (cb) {
+          return cb();
         }
-        if (argv.password) {
-          dockerMachineDriverOptions.openstackPassword = argv.password;
-        }
-        break;
+        me.commandUtil.processExitWithError(err, 'OK');
       }
-      case 'vmwarevsphere': {
-        const dockerMachineDriverOptions =
-          (<DockerMachineDriverOptions_vmwarevsphere>stackConfigTemplate.dockerMachineDriverOptions);
-        if (argv.username) {
-          dockerMachineDriverOptions.vmwarevsphereUsername = argv.username;
+      me.stackConfigTemplate = stackConfigTemplate;
+      switch (stackConfigTemplate.dockerMachineDriverOptions.driver) {
+        case 'openstack': {
+          const dockerMachineDriverOptions =
+            (<DockerMachineDriverOptions_openstack>stackConfigTemplate.dockerMachineDriverOptions);
+          if (argv.username) {
+            dockerMachineDriverOptions.openstackUsername = argv.username;
+          }
+          if (argv.password) {
+            dockerMachineDriverOptions.openstackPassword = argv.password;
+          }
+          break;
         }
-        if (argv.password) {
-          dockerMachineDriverOptions.vmwarevspherePassword = argv.password;
+        case 'vmwarevsphere': {
+          const dockerMachineDriverOptions =
+            (<DockerMachineDriverOptions_vmwarevsphere>stackConfigTemplate.dockerMachineDriverOptions);
+          if (argv.username) {
+            dockerMachineDriverOptions.vmwarevsphereUsername = argv.username;
+          }
+          if (argv.password) {
+            dockerMachineDriverOptions.vmwarevspherePassword = argv.password;
+          }
+          break;
         }
-        break;
+        case 'virtualbox':
+        default:
+          break;
       }
-      case 'virtualbox':
-      default:
-        break;
-    }
-    me.commandUtil.log("Constructing Docker Stack described in: '" + fullInputPath + "'");
-    me.createDockerMachines(fullInputPath, stackConfigTemplate, argv, (err, result) => {
-      if (cb) {
-        return cb();
-      }
-      me.commandUtil.processExitWithError(err, 'OK');
+      me.commandUtil.log("Constructing Docker Stack described in: '" + fullInputPath + "'");
+      me.createDockerMachines(fullInputPath, stackConfigTemplate, argv, (err, result) => {
+        if (cb) {
+          return cb();
+        }
+        me.commandUtil.processExitWithError(err, 'OK');
+      });
     });
   }
 
@@ -260,9 +301,6 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
               for (const serviceName in stackConfigTemplate.dockerComposeYaml.services) {
                 const service = stackConfigTemplate.dockerComposeYaml.services[serviceName];
                 service.ports && delete service.ports;
-/*                if (service.ports) {
-                  delete service.ports;
-                }*/
               }
             }
           } catch (err) {
