@@ -30,6 +30,7 @@ export interface DockerMachineDriverOptions_openstack extends DockerMachineDrive
 }
 
 export interface DockerServiceDescription {
+  image: string,
   deploy: {
     labels: string[]
   }
@@ -43,6 +44,8 @@ export interface DockerStackConfigTemplate {
   stackName: string
   clusterPrefix: string,
   hostMachineDnsServer: string,
+  defaultDockerRegistry: string,
+  defaultDockerImageTag: string,
   traefikZoneName: string,
   dockerComposeYaml: DockerComposeYaml,
   workerHostCount: number,

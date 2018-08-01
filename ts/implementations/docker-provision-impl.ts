@@ -44,9 +44,19 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
 
   validateDockerStackConfigTemplate(dockerStackConfigTemplate: DockerStackConfigTemplate,
                                     cb: (err: Error, dockerStackConfigTemplate?: DockerStackConfigTemplate) => void) {
+    const me = this;
     const dsct = dockerStackConfigTemplate;
     for (const service in dsct.dockerComposeYaml.services) {
       const s = <DockerServiceDescription>dsct.dockerComposeYaml.services[service];
+      if (!s.image) {
+        if (!dsct.defaultDockerRegistry) {
+          return cb(new Error(`Service '${service}' missing 'image' property and 'defaultDockerRegistry' is undefined`));
+        }
+        if (!dsct.defaultDockerImageTag) {
+          return cb(new Error(`Service '${service}' missing 'image' property and 'defaultDockerImageTag' is undefined`));
+        }
+        s.image = `${dsct.defaultDockerRegistry}/${service}:${dsct.defaultDockerImageTag}`;
+      }
       const labels = {};
       if (s.deploy.labels) {
         s.deploy.labels.forEach((label) => {
@@ -73,6 +83,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
         }
       }
     }
+    me.dockerUtil.writeJsonTemplateFile(dsct, '/tmp/tmp.json');
     cb(null, dsct);
   }
 

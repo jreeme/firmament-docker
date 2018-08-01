@@ -1,6 +1,6 @@
 {
   "name": "firmament-docker",
-  "version": "1.4.25",
+  "version": "1.4.26",
   "description": "Typescript classes for performing Docker operations",
   "main": "js/index.js",
   "typings": "js/index",
