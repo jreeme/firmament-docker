@@ -44,12 +44,12 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
 
   validateDockerStackConfigTemplate(dockerStackConfigTemplate: DockerStackConfigTemplate,
                                     cb: (err: Error, dockerStackConfigTemplate?: DockerStackConfigTemplate) => void) {
-    const me = this;
     const dsct = dockerStackConfigTemplate;
     const dockerImageRegex = /.+?:\d+?\/.+?:.+$/g;
     for (const service in dsct.dockerComposeYaml.services) {
       const s = <DockerServiceDescription>dsct.dockerComposeYaml.services[service];
-      if (!s.image || !dockerImageRegex.test(s.image)) {
+      dockerImageRegex.lastIndex = 0;
+      if (!dockerImageRegex.test(s.image)) {
         if (!dsct.defaultDockerRegistry) {
           return cb(new Error(`Service '${service}' missing 'image' property and 'defaultDockerRegistry' is undefined`));
         }
@@ -70,6 +70,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
         const frontendRuleRegex = /traefik\.(.*?\.|)frontend.rule/g;
         s.deploy.labels.forEach((label) => {
           const tuple = label.split('=');
+          portRegex.lastIndex = frontendRuleRegex.lastIndex = 0;
           if(portRegex.test(tuple[0])){
             traefikPortLabelPresent = true;
           }
