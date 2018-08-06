@@ -152,6 +152,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
           }
           break;
         }
+        case 'amazonec2':
         case 'virtualbox':
         default:
           break;
@@ -435,6 +436,8 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
             return me.finalConfig_VMWareVSphere(machineName, cb);
           case('openstack'):
             return me.finalConfig_OpenStack(machineName, cb);
+          case('amazonec2'):
+            return me.finalConfig_AmazonEC2(machineName, cb);
           case('virtualbox'):
           default:
             return me.finalConfig_VirtualBox(machineName, cb);
@@ -444,6 +447,10 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
 
   private finalConfig_VirtualBox(machineName: string, cb: (err) => void) {
     this.adjustBoot2DockerProfile(machineName, cb);
+  }
+
+  private finalConfig_AmazonEC2(machineName: string, cb: (err) => void) {
+    cb(null);
   }
 
   private finalConfig_OpenStack(machineName: string, cb: (err) => void) {

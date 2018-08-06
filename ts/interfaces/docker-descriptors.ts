@@ -29,6 +29,39 @@ export interface DockerMachineDriverOptions_openstack extends DockerMachineDrive
   openstackTenantName: string
 }
 
+export interface DockerMachineDriverOptions_amazonec2 extends DockerMachineDriverOptions {
+  amazonec2AccessKey: string,
+  amazonec2Ami: string,
+  amazonec2BlockDurationMinutes: string,
+  amazonec2DeviceName: string,
+  amazonec2Endpoint: string,
+  amazonec2IamInstanceProfile: string,
+  amazonec2InsecureTransport: string,
+  amazonec2InstanceType: string,
+  amazonec2KeypairName: string,
+  amazonec2Monitoring: string,
+  amazonec2OpenPort: string,
+  amazonec2PrivateAddressOnly: string,
+  amazonec2Region: string,
+  amazonec2RequestSpotInstance: string,
+  amazonec2Retries: string,
+  amazonec2RootSize: string,
+  amazonec2SecretKey: string,
+  amazonec2SecurityGroup: string,
+  amazonec2SessionToken: string,
+  amazonec2SpotPrice: string,
+  amazonec2SshKeypath: string,
+  amazonec2SshUser: string,
+  amazonec2SubnetId: string,
+  amazonec2Tags: string,
+  amazonec2UseEbsOptimizedInstance: string,
+  amazonec2UsePrivateAddress: string,
+  amazonec2Userdata: string,
+  amazonec2VolumeType: string,
+  amazonec2VpcId: string,
+  amazonec2Zone: string
+}
+
 export interface DockerServiceDescription {
   image: string,
   deploy: {

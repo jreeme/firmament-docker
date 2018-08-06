@@ -2,6 +2,7 @@
   <dictionary name="jreeme">
     <words>
       <w>addr</w>
+      <w>amazonec</w>
       <w>autoconfig</w>
       <w>autorestart</w>
       <w>autostart</w>
@@ -34,6 +35,8 @@
       <w>jreeme</w>
       <w>jsonfile</w>
       <w>jstnldrs</w>
+      <w>keypair</w>
+      <w>keypath</w>
       <w>killasgroup</w>
       <w>loglevel</w>
       <w>maxbytes</w>
@@ -82,6 +85,7 @@
       <w>udhcpc</w>
       <w>umask</w>
       <w>unicast</w>
+      <w>userdata</w>
       <w>vcenter</w>
       <w>virtualbox</w>
       <w>vmwarevsphere</w>

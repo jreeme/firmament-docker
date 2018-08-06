@@ -38,7 +38,7 @@ export class ProvisionCommandImpl implements Command {
         alias: 'dm',
         type: 'string',
         default: 'virtualbox',
-        desc: `docker-machine host type ['virtualbox','openstack','vmwarevsphere']`,
+        desc: `docker-machine host type ['virtualbox','openstack','vmwarevsphere','amazonec2']`,
       },
       get: {
         alias: 'g',
