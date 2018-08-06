@@ -64,20 +64,30 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
       }
       const labels = {};
       if (s.deploy.labels) {
+        let traefikPortLabelPresent = false;
+        let frontendRuleLabelPresent = false;
+        const portRegex = /traefik\.(.*?\.|)port/g;
+        const frontendRuleRegex = /traefik\.(.*?\.|)frontend.rule/g;
         s.deploy.labels.forEach((label) => {
           const tuple = label.split('=');
+          if(portRegex.test(tuple[0])){
+            traefikPortLabelPresent = true;
+          }
+          if(frontendRuleRegex.test(tuple[0])){
+            frontendRuleLabelPresent = true;
+          }
           labels[tuple[0]] = tuple[1];
         });
         if (labels['traefik.enable'] !== 'false') {
-          if (!labels['traefik.port']) {
-            return cb(new Error(`'traefik.port' label not present for service '${service}'`));
+          if (!traefikPortLabelPresent) {
+            return cb(new Error(`'traefik.??.port' label not present for service '${service}'`));
           }
           if (!labels['traefik.backend']) {
             labels['traefik.backend'] = service;
           }
-          if (!labels['traefik.frontend.rule']) {
+          if (!frontendRuleLabelPresent) {
             if (!dsct.traefikZoneName) {
-              return cb(new Error(`'traefik.frontend.rule' label and 'traefikZoneName' both undefined for service '${service}'`));
+              return cb(new Error(`'traefik.??.frontend.rule' label and 'traefikZoneName' both undefined for service '${service}'`));
             }
             labels['traefik.frontend.rule'] = `Host: ${service}.${dsct.traefikZoneName}`;
           }

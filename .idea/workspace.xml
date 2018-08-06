@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/jreeme.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/jreeme.xml" afterDir="false" />
+    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="NPM -&gt; v.1.4.28 &amp;&amp; add some support for amazonec2 docker-machine driver">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/implementations/commands/provision-command-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/commands/provision-command-impl.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" afterDir="false" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -77,25 +74,27 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="json" value="1" />
-          <entry key="ts" value="3" />
+          <entry key="ts" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JSON" value="1" />
-          <entry key="TypeScript" value="3" />
+          <entry key="TypeScript" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="json" value="4" />
-          <entry key="ts" value="751" />
+          <entry key="json" value="12" />
+          <entry key="ts" value="1100" />
+          <entry key="txt" value="51" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JSON" value="4" />
-          <entry key="TypeScript" value="751" />
+          <entry key="JSON" value="12" />
+          <entry key="PLAIN_TEXT" value="51" />
+          <entry key="TypeScript" value="1100" />
         </counts>
       </usages-collector>
     </session>
@@ -117,13 +116,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="31" column="69" selection-start-line="31" selection-start-column="69" selection-end-line="31" selection-end-column="69" />
+            <state relative-caret-position="420">
+              <caret line="89" column="46" selection-start-line="89" selection-start-column="46" selection-end-line="89" selection-end-column="46" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
                 <element signature="n#!!block;n#extractYamlFromJson#0;n#DockerProvisionImpl#0" />
                 <element signature="n#!!block;n#makeTemplate#0;n#DockerProvisionImpl#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="232">
+              <caret line="30" column="3" selection-start-line="30" selection-start-column="3" selection-end-line="30" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -157,7 +165,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>DockerUtil</find>
       <find>time-ago</find>
       <find>fileExists</find>
       <find>async</find>
@@ -187,6 +194,7 @@
       <find>boot2dock</find>
       <find>24</find>
       <find>vmwarevsphere</find>
+      <find>traefik</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -244,10 +252,10 @@
         <option value="$PROJECT_DIR$/docker/docker-machine-wrappers/vmwarevsphere.json" />
         <option value="$PROJECT_DIR$/ts/tsconfig.json" />
         <option value="$PROJECT_DIR$/ts/implementations/docker-container-management-impl.ts" />
-        <option value="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" />
         <option value="$PROJECT_DIR$/ts/interfaces/docker-provision.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/commands/provision-command-impl.ts" />
         <option value="$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts" />
+        <option value="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" />
         <option value="$PROJECT_DIR$/package.json" />
       </list>
@@ -579,14 +587,7 @@
       <workItem from="1531751531091" duration="2217000" />
       <workItem from="1533045453732" duration="5506000" />
       <workItem from="1533152825372" duration="1224000" />
-      <workItem from="1533586667465" duration="1252000" />
-    </task>
-    <task id="LOCAL-00012" summary="-&gt; v.0.2.7">
-      <created>1478532888633</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1478532888633</updated>
+      <workItem from="1533586667465" duration="3442000" />
     </task>
     <task id="LOCAL-00013" summary="-&gt; v.0.2.8">
       <created>1478542433563</created>
@@ -924,7 +925,14 @@
       <option name="project" value="LOCAL" />
       <updated>1533051473454</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="NPM -&gt; v.1.4.28 &amp;&amp; add some support for amazonec2 docker-machine driver">
+      <created>1533587958118</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1533587958119</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -960,7 +968,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="337495000" />
+    <option name="totallyTimeSpent" value="339685000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1919" y="0" width="1922" height="1053" extended-state="6" />
@@ -973,11 +981,11 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3676313" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32831" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49551925" weight="0.3516129" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49551925" visible="true" weight="0.3516129" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="TypeScript" order="7" sideWeight="0.4939378" visible="true" weight="0.18709677" />
+      <window_info anchor="bottom" id="TypeScript" order="7" sideWeight="0.4939378" weight="0.18709677" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.40860215" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5044808" side_tool="true" weight="0.39181915" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.4949921" weight="0.32254586" />
@@ -1021,7 +1029,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Get to running elasticsearch-head" />
     <MESSAGE value="Fixed!" />
     <MESSAGE value="NPM -&gt; 1.4.8" />
     <MESSAGE value="Work on Alpine3.7 image + supervisor + etcd" />
@@ -1046,7 +1053,8 @@
     <MESSAGE value="NPM -&gt; v.1.4.21" />
     <MESSAGE value="NPM -&gt; v.1.4.24 &amp;&amp; add 'noports' switch to docker/provision/build" />
     <MESSAGE value="NPM -&gt; v.1.4.25 &amp;&amp; add traefik label filling out w/traefikZoneName" />
-    <option name="LAST_COMMIT_MESSAGE" value="NPM -&gt; v.1.4.25 &amp;&amp; add traefik label filling out w/traefikZoneName" />
+    <MESSAGE value="NPM -&gt; v.1.4.28 &amp;&amp; add some support for amazonec2 docker-machine driver" />
+    <option name="LAST_COMMIT_MESSAGE" value="NPM -&gt; v.1.4.28 &amp;&amp; add some support for amazonec2 docker-machine driver" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1055,6 +1063,12 @@
           <url>file://$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts</url>
           <line>113</line>
           <option name="timeStamp" value="713" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts</url>
+          <line>101</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="717" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -1321,13 +1335,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="472">
-          <caret line="46" column="2" selection-start-line="46" selection-start-column="2" selection-end-line="46" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-provision.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -1356,10 +1363,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="30" column="3" selection-start-line="30" selection-start-column="3" selection-end-line="30" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="69" selection-start-line="31" selection-start-column="69" selection-end-line="31" selection-end-column="69" />
+        <state relative-caret-position="420">
+          <caret line="89" column="46" selection-start-line="89" selection-start-column="46" selection-end-line="89" selection-end-column="46" />
           <folding>
             <element signature="e#0#45#0" expanded="true" />
             <element signature="n#!!block;n#extractYamlFromJson#0;n#DockerProvisionImpl#0" />
