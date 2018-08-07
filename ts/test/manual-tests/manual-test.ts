@@ -42,7 +42,7 @@ dockerProvision.buildTemplate({
   password: 'run2walk!',
   //input: ProvisionCommandImpl.defaultConfigFilename
   noports: false,
-  input: '/home/jreeme/src/merlin-stack/firmament/deploy/aws/full-stack.json'
+  input: '/home/jreeme/src/merlin-stack/firmament/deploy/aws/aws.parrot.keyw/full-stack.json'
   //input: '/home/jreeme/src/merlin-stack/firmament/deploy/vmware/vmware.parrot-les.keyw/full-stack.json'
 }, () => {
   process.exit(0);

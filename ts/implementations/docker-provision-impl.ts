@@ -64,18 +64,18 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
       }
       const labels = {};
       if (s.deploy.labels) {
-        let traefikPortLabelPresent = false;
-        let frontendRuleLabelPresent = false;
+        let traefikPortLabelPresent = 0;
+        let frontendRuleLabelPresent = 0;
         const portRegex = /traefik\.(.*?\.|)port/g;
         const frontendRuleRegex = /traefik\.(.*?\.|)frontend.rule/g;
         s.deploy.labels.forEach((label) => {
           const tuple = label.split('=');
           portRegex.lastIndex = frontendRuleRegex.lastIndex = 0;
           if(portRegex.test(tuple[0])){
-            traefikPortLabelPresent = true;
+            ++traefikPortLabelPresent;
           }
           if(frontendRuleRegex.test(tuple[0])){
-            frontendRuleLabelPresent = true;
+            ++frontendRuleLabelPresent;
           }
           labels[tuple[0]] = tuple[1];
         });
@@ -83,7 +83,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
           if (!traefikPortLabelPresent) {
             return cb(new Error(`'traefik.??.port' label not present for service '${service}'`));
           }
-          if (!labels['traefik.backend']) {
+          if (!labels['traefik.backend'] && frontendRuleLabelPresent === 1) {
             labels['traefik.backend'] = service;
           }
           if (!frontendRuleLabelPresent) {
