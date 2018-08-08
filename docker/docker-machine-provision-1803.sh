@@ -1,8 +1,6 @@
 #!/bin/sh
 set -e
 
-sleep 1m
-
 CHANNEL="stable"
 
 docker_version=18.03.1
