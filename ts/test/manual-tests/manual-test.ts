@@ -38,11 +38,12 @@ const dockerContainerManagement = kernel.get<DockerContainerManagement>('DockerC
   //yaml: ProvisionCommandImpl.defaultComposeYamlFilename
 }, () => {*/
 dockerProvision.buildTemplate({
-  username: 'root',
-  password: 'run2walk!',
+  //username: 'root',
+  //password: 'run2walk!',
   //input: ProvisionCommandImpl.defaultConfigFilename
-  noports: false,
-  input: '/home/jreeme/src/merlin-stack/firmament/deploy/aws/aws.parrot.keyw/full-stack.json'
+  //noports: false,
+  input: '/home/jreeme/src/merlin-stack/firmament/deploy/virtualbox/virtualbox.parrot.keyw/test.json'
+  //input: '/home/jreeme/src/merlin-stack/firmament/deploy/aws/aws.parrot.keyw/full-stack.json'
   //input: '/home/jreeme/src/merlin-stack/firmament/deploy/vmware/vmware.parrot-les.keyw/full-stack.json'
 }, () => {
   process.exit(0);

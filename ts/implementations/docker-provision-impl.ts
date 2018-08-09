@@ -56,9 +56,9 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
         if (!dsct.defaultDockerImageTag) {
           return cb(new Error(`Service '${service}' missing 'image' property and 'defaultDockerImageTag' is undefined`));
         }
-        if(s.image){
+        if (s.image) {
           s.image = `${dsct.defaultDockerRegistry}/${s.image}:${dsct.defaultDockerImageTag}`;
-        }else{
+        } else {
           s.image = `${dsct.defaultDockerRegistry}/${service}:${dsct.defaultDockerImageTag}`;
         }
       }
@@ -71,10 +71,10 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
         s.deploy.labels.forEach((label) => {
           const tuple = label.split('=');
           portRegex.lastIndex = frontendRuleRegex.lastIndex = 0;
-          if(portRegex.test(tuple[0])){
+          if (portRegex.test(tuple[0])) {
             ++traefikPortLabelPresent;
           }
-          if(frontendRuleRegex.test(tuple[0])){
+          if (frontendRuleRegex.test(tuple[0])) {
             ++frontendRuleLabelPresent;
           }
           labels[tuple[0]] = tuple[1];
@@ -207,7 +207,9 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
           masterDockerMachineCmd.push(`--${optionKey}=${optionValue}`);
         }
         masterDockerMachineCmd.push(masterMachineName);
-        me.createDockerMachine(masterDockerMachineCmd, cb);
+        me.createDockerMachine(masterDockerMachineCmd, (err: Error) => {
+          cb(err);
+        });
       },
       (cb) => {
         const dockerMachineInitSwarmCmd = [
@@ -373,7 +375,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
                                     masterIp,
                                     joinToken, cb: (err, result?) => void) {
     const me = this;
-    me.createDockerMachine(dockerMachineCmd, (err, result) => {
+    me.createDockerMachine(dockerMachineCmd, (err) => {
       if (err) {
         return cb(err);
       }
@@ -402,7 +404,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     });
   }
 
-  private handleDockerMachineExecutionFailure(err: Error, cb: (err, result?) => void) {
+  private handleDockerMachineExecutionFailure(err: Error, cb: (err: Error) => void) {
     const me = this;
     me.safeJson.safeParse(err.message, (err: Error, obj: any) => {
       try {
@@ -414,8 +416,8 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
             FailureRetVal.TRUE)) {
             const installDockerMachineJson = path.resolve(__dirname, '../../firmament-bash/install-docker-machine.json');
             return me.processCommandJson.processAbsoluteUrl(installDockerMachineJson, (err) => {
-              const msg = `'docker-machine' installed. Try provisioning again.`;
-              cb(err, err ? null : msg);
+              me.commandUtil.log(`'docker-machine' installed. Try provisioning again.`);
+              cb(err);
             });
           }
           return cb(null);
@@ -427,7 +429,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     });
   }
 
-  private createDockerMachine(dockerMachineCmd: any[], cb: (err, result?) => void) {
+  private createDockerMachine(dockerMachineCmd: any[], cb: (err: Error) => void) {
     const me = this;
     me.spawn.spawnShellCommandAsync(
       dockerMachineCmd,
@@ -469,10 +471,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
   }
 
   private finalConfig_VMWareVSphere(machineName: string, cb: (err) => void) {
-    const me = this;
-    me.adjustBoot2DockerProfile(machineName, (err) => {
-      cb(err);
-    });
+    this.adjustBoot2DockerProfile(machineName, cb);
   }
 
   //NOTE: The boot2docker profile file (living at /var/lib/boot2docker/profile on the VM host) is appropriate for
@@ -526,10 +525,13 @@ sysctl -w vm.max_map_count=262144
     const dockerMachineJoinSwarmCmd = [
       `echo '${profileLines}' | sudo tee -a /var/lib/boot2docker/profile && sudo /etc/init.d/docker restart`
     ];
-    me.runCommandOnDockerMachineHost(machineName, dockerMachineJoinSwarmCmd, cb);
+    me.runCommandOnDockerMachineHost(machineName, dockerMachineJoinSwarmCmd, (err: Error, result: string) => {
+      err && me.commandUtil.log(err.toString());
+      cb(err);
+    });
   }
 
-  private runCommandOnDockerMachineHost(machineName: string, commandArray: string[], cb: (err, result) => void) {
+  private runCommandOnDockerMachineHost(machineName: string, commandArray: string[], cb: (err: Error, result: string) => void) {
     const me = this;
     commandArray.unshift('docker-machine', 'ssh', machineName);
     me.spawn.spawnShellCommandAsync(commandArray,
