@@ -24,7 +24,7 @@ const jsonFile = require('jsonfile');
 //const path = require('path');
 //const templateCatalogUrl = '/home/jreeme/src/firmament-docker/docker/provisionTemplateCatalog.json';
 
-//const templateCatalogUrl = 'https://raw.githubusercontent.com/jreeme/firmament-docker/master/docker/provisionTemplateCatalog.json';
+//const templateCatalogUrl = 'https://raw.githubusercontent.com/jreeme/firmament-docker/manager/docker/provisionTemplateCatalog.json';
 @injectable()
 export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvision {
   private stackConfigTemplate: DockerStackConfigTemplate;
@@ -178,62 +178,78 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     });
   }
 
-//(alter vm.max_map_count in boot2docker ISO
-//https://github.com/boot2docker/boot2docker/issues/1216
-  private createDockerMachines(fullInputPath: string, stackConfigTemplate: DockerStackConfigTemplate, argv: any, cb: (err, result?) => void) {
+  private convertOptionsFromCamelToSnakeCase(options: any): string[] {
     const me = this;
-    cb = me.checkCallback(cb);
-    const dockerMachineCmd = [
-      'docker-machine',
-      'create'
-    ];
-    //Add base driver options (the ones used for both master & worker)
-    for (const dockerMachineDriverOption in stackConfigTemplate.dockerMachineDriverOptions) {
-      const optionKey = me.camelToSnake(dockerMachineDriverOption, '-');
-      const optionValue = stackConfigTemplate.dockerMachineDriverOptions[dockerMachineDriverOption];
+    const retVal = [];
+    const excludeProperties = ['nodeCount', 'nodeName'];
+    for (const option in options) {
+      if (excludeProperties.indexOf(option) !== -1) {
+        continue;
+      }
+      if (option === 'engineLabels') {
+        for (const engineLabel in options[option]) {
+          retVal.push('--engine-label');
+          retVal.push(`${engineLabel}=${options[option][engineLabel]}`);
+        }
+        continue;
+      }
+      const optionKey = me.camelToSnake(option, '-');
+      const optionValue = options[option];
       //There are some options --engine-opt & --engine-env that require a <space> instead of an <=> symbol
       //between Key & Value. This seems to be because the Value has an <=> symbol in it.
       //(e.g. --engine-opt dns=8.8.8.8 & --engine-env HTTP_PROXY=http://bananna-daiquiri.drink
       const keyValueSeparator = ((typeof optionValue !== 'string') || (optionValue.indexOf('=') === -1)) ? '=' : ' ';
-      dockerMachineCmd.push(`--${optionKey}${keyValueSeparator}${optionValue}`);
+      retVal.push(`--${optionKey}${keyValueSeparator}${optionValue}`);
     }
-    const masterMachineName = `${stackConfigTemplate.clusterPrefix}-master`;
+    return retVal;
+  }
+
+  private logErrAndResult(err: Error, result: string) {
+    const me = this;
+    if (err) {
+      return me.commandUtil.log(err.message);
+    }
+    me.commandUtil.log((result || '').toString());
+  }
+
+//(alter vm.max_map_count in boot2docker ISO
+//https://github.com/boot2docker/boot2docker/issues/1216
+  private createDockerMachines(fullInputPath: string, stackConfigTemplate: DockerStackConfigTemplate, argv: any, cb: (err: Error, result: string) => void) {
+    const me = this;
+    cb = me.checkCallback(cb);
+    const createOptions = me.convertOptionsFromCamelToSnakeCase(stackConfigTemplate.dockerMachineDriverOptions);
+    createOptions.push.apply(createOptions, me.convertOptionsFromCamelToSnakeCase(stackConfigTemplate.dockerMachines.common));
     async.waterfall([
-      (cb) => {
-        const masterDockerMachineCmd = dockerMachineCmd.slice();
-        for (const dockerMachineMasterOption in stackConfigTemplate.dockerMachineMasterOptions) {
-          const optionKey = me.camelToSnake(dockerMachineMasterOption, '-');
-          const optionValue = stackConfigTemplate.dockerMachineMasterOptions[dockerMachineMasterOption];
-          masterDockerMachineCmd.push(`--${optionKey}=${optionValue}`);
-        }
-        masterDockerMachineCmd.push(masterMachineName);
-        me.createDockerMachine(masterDockerMachineCmd, (err: Error) => {
-          cb(err);
+      (cb: (err: Error, managerMachineName: string) => void) => {
+        const managerMachineName = `${stackConfigTemplate.stackName}-${stackConfigTemplate.dockerMachines.manager.nodeName}`;
+        const managerDockerMachineCmd = createOptions.slice();
+        managerDockerMachineCmd.push.apply(managerDockerMachineCmd, me.convertOptionsFromCamelToSnakeCase(stackConfigTemplate.dockerMachines.manager));
+        managerDockerMachineCmd.push(managerMachineName);
+        me.createDockerMachine(managerDockerMachineCmd, (err: Error) => {
+          cb(err, managerMachineName);
         });
       },
-      (cb) => {
+      (managerMachineName: string, cb: (err: Error, managerMachineName: string, ip: string) => void) => {
         const dockerMachineInitSwarmCmd = [
           'docker-machine',
           'ip',
-          masterMachineName
+          managerMachineName
         ];
         me.spawn.spawnShellCommandAsync(dockerMachineInitSwarmCmd,
           {
             cacheStdOut: true
           },
-          (err, result) => {
-            me.commandUtil.log(result.toString());
-          },
+          me.logErrAndResult.bind(me),
           (err, result) => {
             const ip = me.safeJson.safeParseSync(result).obj.stdoutText.trim();
-            cb(null, ip);
+            cb(err, managerMachineName, ip);
           });
       },
-      (ip, cb) => {
+      (managerMachineName: string, ip: string, cb: (err: Error, managerMachineName: string, ip: string) => void) => {
         const dockerMachineInitSwarmCmd = [
           'docker-machine',
           'ssh',
-          masterMachineName,
+          managerMachineName,
           'docker',
           'swarm',
           'init',
@@ -244,18 +260,22 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
           {
             cacheStdOut: true
           },
-          (err, result) => {
-            me.commandUtil.log(result.toString());
-          },
-          (err, result) => {
-            cb(null, ip);
+          me.logErrAndResult.bind(me),
+          (_err: Error) => {
+            if (_err) {
+              const {err, obj} = me.safeJson.safeParseSync(_err.message);
+              if (!err && obj.code === 1) {
+                return cb(null, managerMachineName, ip);
+              }
+            }
+            cb(_err, managerMachineName, ip);
           });
       },
-      (ip, cb) => {
+      (managerMachineName: string, ip: string, cb: (err: Error, managerMachineName: string, ip: string, joinToken: string) => void) => {
         const dockerMachineInitSwarmCmd = [
           'docker-machine',
           'ssh',
-          masterMachineName,
+          managerMachineName,
           'docker',
           'swarm',
           'join-token',
@@ -266,41 +286,37 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
           {
             cacheStdOut: true
           },
-          (err, result) => {
-            me.commandUtil.log(result.toString());
-          },
-          (err, result) => {
+          me.logErrAndResult.bind(me),
+          (err: Error, result: any) => {
             const joinToken = me.safeJson.safeParseSync(result).obj.stdoutText.trim();
-            cb(null, ip, joinToken);
+            cb(null, managerMachineName, ip, joinToken);
           });
       },
-      (ip, joinToken, cb) => {
+      (managerMachineName: string, ip: string, joinToken: string, cb: (err: Error, managerMachineName: string, ip: string) => void) => {
         let fnArray = [];
-        for (let i = 0; i < stackConfigTemplate.workerHostCount; ++i) {
-          const workerDockerMachineCmd = dockerMachineCmd.slice();
-          const workerMachineName = `${stackConfigTemplate.clusterPrefix}-worker-${i}`;
-          for (const dockerMachineWorkerOption in stackConfigTemplate.dockerMachineWorkerOptions) {
-            const optionKey = me.camelToSnake(dockerMachineWorkerOption, '-');
-            const optionValue = stackConfigTemplate.dockerMachineMasterOptions[dockerMachineWorkerOption];
-            workerDockerMachineCmd.push(`--${optionKey}=${optionValue}`);
+        stackConfigTemplate.dockerMachines.workers.forEach((workerDockerMachine) => {
+          for (let i = 0; i < workerDockerMachine.nodeCount; ++i) {
+            const workerMachineName = `${stackConfigTemplate.stackName}-${workerDockerMachine.nodeName}-${i}`;
+            const workerDockerMachineCmd = createOptions.slice();
+            workerDockerMachineCmd.push.apply(workerDockerMachineCmd, me.convertOptionsFromCamelToSnakeCase(workerDockerMachine));
+            workerDockerMachineCmd.push(workerMachineName);
+            fnArray.push(async.apply(me.createWorkerDockerMachine.bind(me),
+              workerDockerMachineCmd,
+              workerMachineName,
+              ip,
+              joinToken
+            ));
           }
-          workerDockerMachineCmd.push(workerMachineName);
-          fnArray.push(async.apply(me.createWorkerDockerMachine.bind(me),
-            workerDockerMachineCmd,
-            workerMachineName,
-            ip,
-            joinToken
-          ));
-        }
-        async.parallel(fnArray, (err, result) => {
-          cb(err, ip);
+        });
+        async.parallel(fnArray, (err: Error) => {
+          cb(err, managerMachineName, ip);
         });
       },
-      (ip, cb) => {
+      (managerMachineName: string, ip: string, cb: (err: Error, env: any, ip: string) => void) => {
         const dockerMachineGetMasterEnvCmd = [
           'docker-machine',
           'env',
-          masterMachineName
+          managerMachineName
         ];
         me.spawn.spawnShellCommandAsync(dockerMachineGetMasterEnvCmd,
           {
@@ -324,7 +340,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
             cb(null, env, ip);
           });
       },
-      (env, ip, cb) => {
+      (env: any, ip: string, cb: (err?: Error) => void) => {
         tmp.file({dir: path.dirname(fullInputPath)}, (err, tmpPath, fd, cleanupCb) => {
           try {
             if (argv.noports) {
@@ -340,7 +356,11 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
           if (me.commandUtil.callbackIfError(err)) {
             return;
           }
-          fs.writeFile(tmpPath, yaml, (err) => {
+          fs.writeFile(tmpPath, yaml, (err: Error) => {
+            if (err) {
+              me.logErrAndResult(err, '');
+              return cb(err);
+            }
             const dockerMachineDeployCmd = [
               'docker',
               'stack',
@@ -358,21 +378,23 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
                 me.commandUtil.log(result.toString());
               },
               (err, result) => {
+                me.logErrAndResult(err, result);
                 //const joinToken = me.safeJson.safeParseSync(result).obj.stdoutText.trim();
                 cleanupCb();
-                cb(null);
+                cb();
               });
           });
         });
       }
-    ], (err, result) => {
-      cb(null);
+    ], (err: Error, result: string) => {
+      me.logErrAndResult(err, result);
+      cb(err, result);
     });
   }
 
   private createWorkerDockerMachine(dockerMachineCmd: any[],
                                     workerMachineName,
-                                    masterIp,
+                                    managerIp,
                                     joinToken, cb: (err, result?) => void) {
     const me = this;
     me.createDockerMachine(dockerMachineCmd, (err) => {
@@ -388,7 +410,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
         'join',
         '--token',
         joinToken,
-        `${masterIp}:2377`
+        `${managerIp}:2377`
       ];
       me.spawn.spawnShellCommandAsync(dockerMachineJoinSwarmCmd,
         {
@@ -429,8 +451,13 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     });
   }
 
-  private createDockerMachine(dockerMachineCmd: any[], cb: (err: Error) => void) {
+  private createDockerMachine(dockerMachineCreateCmdOptions: string[], cb: (err: Error) => void) {
     const me = this;
+    const dockerMachineCmd = [
+      'docker-machine',
+      'create'
+    ].concat(dockerMachineCreateCmdOptions);
+
     me.spawn.spawnShellCommandAsync(
       dockerMachineCmd,
       {},

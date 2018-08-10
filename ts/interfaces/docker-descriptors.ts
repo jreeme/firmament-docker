@@ -1,5 +1,11 @@
-export interface DockerMachineDriverOptions {
+export interface DockerMachineDriverOptionsBase {
+  nodeCount: number;
+  nodeName: string;
+}
+
+export interface DockerMachineDriverOptions extends DockerMachineDriverOptionsBase {
   driver: string;
+  engineInsecureRegistry: string;
 }
 
 export interface DockerMachineDriverOptions_vmwarevsphere extends DockerMachineDriverOptions {
@@ -11,11 +17,10 @@ export interface DockerMachineDriverOptions_vmwarevsphere extends DockerMachineD
   vmwarevsphereVcenter: string
 }
 
-/*export interface DockerMachineDriverOptions_virtualbox extends DockerMachineDriverOptions {
+export interface DockerMachineDriverOptions_virtualbox extends DockerMachineDriverOptions {
   virtualboxCpuCount: number,
   virtualboxMemory: number,
-  engineInsecureRegistry: string
-}*/
+}
 
 export interface DockerMachineDriverOptions_openstack extends DockerMachineDriverOptions {
   openstackUsername: string,
@@ -81,10 +86,16 @@ export interface DockerStackConfigTemplate {
   defaultDockerImageTag: string,
   traefikZoneName: string,
   dockerComposeYaml: DockerComposeYaml,
-  workerHostCount: number,
-  dockerMachineWorkerOptions: any,
-  dockerMachineMasterOptions: any,
-  dockerMachineDriverOptions: DockerMachineDriverOptions
+  dockerMachineDriverOptions: DockerMachineDriverOptions,
+  dockerMachines: {
+    common: any,
+    manager: DockerMachineDriverOptionsBase,
+    workers: DockerMachineDriverOptionsBase[]
+  }
+  //workerHostCount: number,
+  //dockerMachineWorkerOptions: any,
+  //dockerMachineMasterOptions: any,
+  //dockerMachineDriverOptions: DockerMachineDriverOptions
 }
 
 export class DockerDescriptors {
