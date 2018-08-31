@@ -74,8 +74,24 @@ export interface DockerServiceDescription {
   }
 }
 
+export interface DockerVolumeDescription {
+  driver: string,
+  driver_opts: {
+    type: string,
+    device: string,
+    o: string
+  }
+}
+
 export interface DockerComposeYaml {
-  services: any
+  services: any,
+  volumes: any
+}
+
+export interface NfsConfig {
+  exportBaseDir: string,
+  serverAddr: string,
+  options: string
 }
 
 export interface DockerStackConfigTemplate {
@@ -85,6 +101,7 @@ export interface DockerStackConfigTemplate {
   defaultDockerRegistry: string,
   defaultDockerImageTag: string,
   traefikZoneName: string,
+  nfsConfig: NfsConfig,
   dockerComposeYaml: DockerComposeYaml,
   dockerMachineDriverOptions: DockerMachineDriverOptions,
   dockerMachines: {
@@ -92,10 +109,6 @@ export interface DockerStackConfigTemplate {
     manager: DockerMachineDriverOptionsBase,
     workers: DockerMachineDriverOptionsBase[]
   }
-  //workerHostCount: number,
-  //dockerMachineWorkerOptions: any,
-  //dockerMachineMasterOptions: any,
-  //dockerMachineDriverOptions: DockerMachineDriverOptions
 }
 
 export class DockerDescriptors {

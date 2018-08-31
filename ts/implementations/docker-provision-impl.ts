@@ -14,7 +14,7 @@ import {DockerProvision} from '../interfaces/docker-provision';
 import {DockerUtil} from '../interfaces/docker-util';
 import {
   DockerMachineDriverOptions_openstack, DockerMachineDriverOptions_vmwarevsphere, DockerServiceDescription,
-  DockerStackConfigTemplate
+  DockerStackConfigTemplate, DockerVolumeDescription
 } from '../';
 import {ProcessCommandJson} from 'firmament-bash/js/interfaces/process-command-json';
 
@@ -46,6 +46,16 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
                                     cb: (err: Error, dockerStackConfigTemplate?: DockerStackConfigTemplate) => void) {
     const dsct = dockerStackConfigTemplate;
     const dockerImageRegex = /.+?:\d+?\/.+?:.+$/g;
+    //Patch 'dockerComposeYaml.volumes' block
+    for (const volume in dsct.dockerComposeYaml.volumes) {
+      const v = <DockerVolumeDescription>dsct.dockerComposeYaml.volumes[volume];
+      if (v.driver_opts.type === 'nfs' && v.driver === 'local') {
+        //Could be we need to 'fill in the blanks' for NFS volume
+        //If device is missing, use the volume name
+        v.driver_opts.device = v.driver_opts.device || volume;
+      }
+    }
+    //Patch 'dockerComposeYaml.services' block
     for (const service in dsct.dockerComposeYaml.services) {
       const s = <DockerServiceDescription>dsct.dockerComposeYaml.services[service];
       dockerImageRegex.lastIndex = 0;
@@ -99,7 +109,8 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
         }
       }
     }
-    //me.dockerUtil.writeJsonTemplateFile(dsct, '/tmp/tmp.json');
+    this.dockerUtil.writeJsonTemplateFile(dsct, '/tmp/tmp.json');
+    process.exit();
     cb(null, dsct);
   }
 
