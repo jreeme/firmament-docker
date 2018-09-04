@@ -13,10 +13,13 @@
       <w>childutils</w>
       <w>chown</w>
       <w>cmds</w>
+      <w>datanode</w>
+      <w>datavolume</w>
       <w>deps</w>
       <w>dhcp</w>
       <w>dockerfile</w>
       <w>dockermachine</w>
+      <w>dsct</w>
       <w>ecluster</w>
       <w>ediscovery</w>
       <w>elasticsearch</w>
@@ -30,6 +33,7 @@
       <w>exitcodes</w>
       <w>filenames</w>
       <w>floatingip</w>
+      <w>hdfs</w>
       <w>iface</w>
       <w>inet</w>
       <w>jreeme</w>
@@ -39,27 +43,35 @@
       <w>keypath</w>
       <w>keyw</w>
       <w>killasgroup</w>
+      <w>loadbalancer</w>
       <w>loglevel</w>
+      <w>logvolume</w>
       <w>maxbytes</w>
       <w>minfds</w>
       <w>minprocs</w>
       <w>mkdirp</w>
       <w>mongo</w>
       <w>mysupervisor</w>
+      <w>namenode</w>
       <w>nameserver</w>
       <w>netdevices</w>
+      <w>nginx</w>
       <w>nocleanup</w>
       <w>nodaemon</w>
       <w>nogroup</w>
+      <w>nolock</w>
       <w>noports</w>
       <w>notif</w>
       <w>numprocs</w>
       <w>openstack</w>
+      <w>pgadmin</w>
       <w>pidfile</w>
       <w>portainer</w>
+      <w>postgresql</w>
       <w>proc</w>
       <w>prog</w>
       <w>progname</w>
+      <w>reeme</w>
       <w>req</w>
       <w>resolv</w>
       <w>rpcinterface</w>
@@ -67,6 +79,8 @@
       <w>sbin</w>
       <w>serverurl</w>
       <w>setuid</w>
+      <w>sparkworker</w>
+      <w>stagingserver</w>
       <w>startretries</w>
       <w>startsecs</w>
       <w>stopasgroup</w>
@@ -81,6 +95,7 @@
       <w>theeventlistenername</w>
       <w>thegroupname</w>
       <w>theprogramname</w>
+      <w>toml</w>
       <w>tput</w>
       <w>traefik</w>
       <w>udhcpc</w>

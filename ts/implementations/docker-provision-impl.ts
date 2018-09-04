@@ -46,6 +46,27 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
                                     cb: (err: Error, dockerStackConfigTemplate?: DockerStackConfigTemplate) => void) {
     const dsct = dockerStackConfigTemplate;
     const dockerImageRegex = /.+?:\d+?\/.+?:.+$/g;
+    const dockerVolumesRegex = /:\//g;
+    //Patch Docker Machines ==> If no 'engineLabels.affinity' set to nodeName
+    //Manager machine
+    const manager = dsct.dockerMachines.manager;
+    manager.engineLabels = manager.engineLabels ||
+      {
+        role: 'manager',
+        affinity: manager.nodeName
+      };
+    manager.engineLabels.role = manager.engineLabels.role || 'manager';
+    manager.engineLabels.affinity = manager.engineLabels.affinity || manager.nodeName;
+    //Worker machines
+    dsct.dockerMachines.workers.forEach((worker) => {
+      worker.engineLabels = worker.engineLabels ||
+        {
+          role: 'worker',
+          affinity: worker.nodeName
+        };
+      worker.engineLabels.role = worker.engineLabels.role || 'worker';
+      worker.engineLabels.affinity = worker.engineLabels.affinity || worker.nodeName;
+    });
     //Patch 'dockerComposeYaml.volumes' block
     for (const volume in dsct.dockerComposeYaml.volumes) {
       const v = <DockerVolumeDescription>dsct.dockerComposeYaml.volumes[volume];
@@ -53,6 +74,11 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
         //Could be we need to 'fill in the blanks' for NFS volume
         //If device is missing, use the volume name
         v.driver_opts.device = v.driver_opts.device || volume;
+        dockerVolumesRegex.lastIndex = 0;
+        //If device doesn't start with ':/' then prepend 'nfsConfig.exportBaseDir'
+        if (!dockerVolumesRegex.test(v.driver_opts.device)) {
+          v.driver_opts.device = `:${dsct.nfsConfig.exportBaseDir}/${v.driver_opts.device}`;
+        }
       }
     }
     //Patch 'dockerComposeYaml.services' block

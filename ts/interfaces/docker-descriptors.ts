@@ -1,6 +1,10 @@
 export interface DockerMachineDriverOptionsBase {
   nodeCount: number;
   nodeName: string;
+  engineLabels: {
+    role: string;
+    affinity: string;
+  }
 }
 
 export interface DockerMachineDriverOptions extends DockerMachineDriverOptionsBase {
