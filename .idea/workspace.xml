@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="home">
+    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="Need to add 'nfs' into driver_opts, putting on hold for release day!">
       <change beforePath="$PROJECT_DIR$/.idea/dictionaries/jreeme.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/jreeme.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" afterDir="false" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -62,47 +62,47 @@
     <session id="-1234968304">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="5" />
-          <entry key="project.open.time.0" value="4" />
+          <entry key="project.closed" value="7" />
+          <entry key="project.open.time.0" value="6" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.5" value="1" />
-          <entry key="project.opened" value="7" />
+          <entry key="project.opened" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
         <counts>
-          <entry key="TypeScriptServerServiceImpl" value="4" />
+          <entry key="TypeScriptServerServiceImpl" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="js" value="1" />
-          <entry key="json" value="6" />
+          <entry key="json" value="9" />
           <entry key="sh" value="1" />
-          <entry key="ts" value="13" />
+          <entry key="ts" value="15" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Bash" value="1" />
-          <entry key="JSON" value="6" />
+          <entry key="JSON" value="9" />
           <entry key="JavaScript" value="1" />
-          <entry key="TypeScript" value="13" />
+          <entry key="TypeScript" value="15" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="json" value="31" />
-          <entry key="ts" value="7504" />
-          <entry key="txt" value="279" />
+          <entry key="json" value="38" />
+          <entry key="ts" value="10072" />
+          <entry key="txt" value="348" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JSON" value="31" />
-          <entry key="PLAIN_TEXT" value="279" />
-          <entry key="TypeScript" value="7504" />
+          <entry key="JSON" value="38" />
+          <entry key="PLAIN_TEXT" value="348" />
+          <entry key="TypeScript" value="10072" />
         </counts>
       </usages-collector>
     </session>
@@ -111,16 +111,17 @@
     <favorites_list name="firmament-docker" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5220207">
+    <splitter split-orientation="horizontal" split-proportion="0.55602986">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-51">
-                  <caret line="58" column="4" selection-start-line="58" selection-start-column="4" selection-end-line="58" selection-end-column="4" />
+                <state relative-caret-position="553">
+                  <caret line="187" column="6" selection-start-line="187" selection-start-column="6" selection-end-line="187" selection-end-column="6" />
                   <folding>
                     <element signature="e#0#45#0" expanded="true" />
+                    <element signature="e#6101#8367#0" />
                     <element signature="n#!!block;n#extractYamlFromJson#0;n#DockerProvisionImpl#0" />
                   </folding>
                 </state>
@@ -130,23 +131,13 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="75">
-                  <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
-                </state>
-              </provider>
-            </entry>
-          </file>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
             <entry file="file:///tmp/tmp.json">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-223">
+                <state relative-caret-position="405">
+                  <caret line="113" column="19" selection-start-line="113" selection-start-column="19" selection-end-line="113" selection-end-column="19" />
                   <folding>
-                    <element signature="n#!!block;n#manager#0;n#!!block;n#dockerMachines#0;n#!!top" />
-                    <element signature="e#817#1719#0" />
                     <element signature="n#!!block;n#configs#0;n#!!block;n#dockerComposeYaml#0;n#!!top" />
                   </folding>
                 </state>
@@ -255,9 +246,9 @@
         <option value="$PROJECT_DIR$/ts/interfaces/docker-provision.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/commands/provision-command-impl.ts" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" />
         <option value="$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts" />
         <option value="/tmp/tmp.json" />
+        <option value="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" />
       </list>
     </option>
@@ -297,6 +288,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -326,7 +318,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -581,14 +572,9 @@
       <workItem from="1533844337311" duration="759000" />
       <workItem from="1533906866830" duration="358000" />
       <workItem from="1533907448500" duration="20786000" />
-      <workItem from="1535730820932" duration="9375000" />
-    </task>
-    <task id="LOCAL-00019" summary="-&gt; v.0.2.15">
-      <created>1478545687969</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1478545687969</updated>
+      <workItem from="1535730820932" duration="10619000" />
+      <workItem from="1536155507210" duration="10264000" />
+      <workItem from="1536166872548" duration="4074000" />
     </task>
     <task id="LOCAL-00020" summary="-&gt; v.0.2.16">
       <created>1478546283487</created>
@@ -926,7 +912,14 @@
       <option name="project" value="LOCAL" />
       <updated>1535746509159</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="Need to add 'nfs' into driver_opts, putting on hold for release day!">
+      <created>1536068440451</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1536068440451</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -962,19 +955,19 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="377053000" />
+    <option name="totallyTimeSpent" value="392635000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1919" y="0" width="1922" height="1053" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47777778" visible="true" weight="0.17609392" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.47777778" visible="true" weight="0.17182498" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.5222222" side_tool="true" weight="0.16094987" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3676313" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32831" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49551925" weight="0.30430108" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32795697" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49551925" visible="true" weight="0.2956989" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -993,6 +986,19 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/../parrot-stack/firmament/version.js.map" />
+        <option value="$PROJECT_DIR$/../parrot-stack/firmament/addTagsToBuildScripts.d.ts" />
+        <option value="$PROJECT_DIR$/../parrot-stack/firmament/inversify.config.d.ts" />
+        <option value="$PROJECT_DIR$/../parrot-stack/firmament/inversify.config.js.map" />
+        <option value="$PROJECT_DIR$/../parrot-stack/firmament/addTagsToBuildScripts.js" />
+        <option value="$PROJECT_DIR$/../parrot-stack/firmament/inversify.config.js" />
+        <option value="$PROJECT_DIR$/../parrot-stack/firmament/version.d.ts" />
+        <option value="$PROJECT_DIR$/../parrot-stack/firmament/version.js" />
+        <option value="$PROJECT_DIR$/../parrot-stack/firmament/addTagsToBuildScripts.js.map" />
+      </list>
+    </option>
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.npmignore" />
@@ -1022,7 +1028,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Works on vmware vsphere!" />
     <MESSAGE value="Add portainer build" />
     <MESSAGE value="Convert portainer container to use supervisor" />
     <MESSAGE value="Commence with building amino3" />
@@ -1047,7 +1052,8 @@
     <MESSAGE value="NPM -&gt; v.1.4.31 &amp;&amp; don't put a traefik.backend in if multiple front-ends are specified." />
     <MESSAGE value="NPM -&gt; v.1.4.33 &amp;&amp; New constraint deploy" />
     <MESSAGE value="home" />
-    <option name="LAST_COMMIT_MESSAGE" value="home" />
+    <MESSAGE value="Need to add 'nfs' into driver_opts, putting on hold for release day!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Need to add 'nfs' into driver_opts, putting on hold for release day!" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1347,13 +1353,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="424">
-          <caret line="45" column="3" selection-start-line="45" selection-start-column="3" selection-end-line="45" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -1361,24 +1360,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
+    <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-51">
-          <caret line="58" column="4" selection-start-line="58" selection-start-column="4" selection-end-line="58" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-            <element signature="n#!!block;n#extractYamlFromJson#0;n#DockerProvisionImpl#0" />
-          </folding>
+        <state relative-caret-position="529">
+          <caret line="52" column="22" selection-start-line="52" selection-start-column="22" selection-end-line="52" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file:///tmp/tmp.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-223">
+        <state relative-caret-position="405">
+          <caret line="113" column="19" selection-start-line="113" selection-start-column="19" selection-end-line="113" selection-end-column="19" />
           <folding>
-            <element signature="n#!!block;n#manager#0;n#!!block;n#dockerMachines#0;n#!!top" />
-            <element signature="e#817#1719#0" />
             <element signature="n#!!block;n#configs#0;n#!!block;n#dockerComposeYaml#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="553">
+          <caret line="187" column="6" selection-start-line="187" selection-start-column="6" selection-end-line="187" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+            <element signature="e#6101#8367#0" />
+            <element signature="n#!!block;n#extractYamlFromJson#0;n#DockerProvisionImpl#0" />
           </folding>
         </state>
       </provider>

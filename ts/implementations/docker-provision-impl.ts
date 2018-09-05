@@ -44,11 +44,16 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
 
   validateDockerStackConfigTemplate(dockerStackConfigTemplate: DockerStackConfigTemplate,
                                     cb: (err: Error, dockerStackConfigTemplate?: DockerStackConfigTemplate) => void) {
+    const me = this;
     const dsct = dockerStackConfigTemplate;
     const dockerImageRegex = /.+?:\d+?\/.+?:.+$/g;
     const dockerVolumesRegex = /:\//g;
+
+    //Add dockerMachines.common options to dockerMachineDriverOptions
+    Object.assign(dsct.dockerMachineDriverOptions, dsct.dockerMachines.common);
+
     //Patch Docker Machines ==> If no 'engineLabels.affinity' set to nodeName
-    //Manager machine
+    //--Manager machine
     const manager = dsct.dockerMachines.manager;
     manager.engineLabels = manager.engineLabels ||
       {
@@ -57,7 +62,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
       };
     manager.engineLabels.role = manager.engineLabels.role || 'manager';
     manager.engineLabels.affinity = manager.engineLabels.affinity || manager.nodeName;
-    //Worker machines
+    //--Worker machines
     dsct.dockerMachines.workers.forEach((worker) => {
       worker.engineLabels = worker.engineLabels ||
         {
@@ -77,8 +82,35 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
         dockerVolumesRegex.lastIndex = 0;
         //If device doesn't start with ':/' then prepend 'nfsConfig.exportBaseDir'
         if (!dockerVolumesRegex.test(v.driver_opts.device)) {
+          if (!dsct.nfsConfig) {
+            return cb(new Error(`'${volume}.driver_opts.device' does not begin with ':/' but no 'nfsConfig' is specified`));
+          }
+          if (!dsct.nfsConfig.exportBaseDir) {
+            return cb(new Error(`'${volume}.driver_opts.device' does not begin with ':/' but no 'nfsConfig.exportBaseDir' is specified`));
+          }
           v.driver_opts.device = `:${dsct.nfsConfig.exportBaseDir}/${v.driver_opts.device}`;
         }
+        //If there are no options then copy them from 'nfsConfig' (if they exist, otherwise error)
+        if (!v.driver_opts.o) {
+          if (!dsct.nfsConfig) {
+            return cb(new Error(`'${volume}.driver_opts.o' does not exist but no 'nfsConfig' is specified`));
+          }
+          if (!dsct.nfsConfig.serverAddr) {
+            return cb(new Error(`'${volume}.driver_opts.o' does not exist but no 'nfsConfig.serverAddr' is specified`));
+          }
+          if (!dsct.nfsConfig.options) {
+            return cb(new Error(`'${volume}.driver_opts.o' does not exist but no 'nfsConfig.options' is specified`));
+          }
+          v.driver_opts.o = dsct.nfsConfig.options;
+        }
+        //Build the options (driver_opts.o)
+        const optionsHash = me.optionsStringToHash(v.driver_opts.o);
+        if (!optionsHash['addr'] && !dsct.nfsConfig.serverAddr) {
+          return cb(new Error(`'${volume}.driver_opts.o[addr=]' does not exist but no 'nfsConfig.serverAddr' is specified`));
+        }
+        //Only muck with 'addr' option since we know it's required. TODO: We could get clever and 'merge' nfsConfig.options & v.driver_opts.o
+        optionsHash['addr'] = optionsHash['addr'] || dsct.nfsConfig.serverAddr;
+        v.driver_opts.o = me.optionsHashToString(optionsHash);
       }
     }
     //Patch 'dockerComposeYaml.services' block
@@ -140,6 +172,23 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     cb(null, dsct);
   }
 
+  private optionsHashToString(hash: any): string {
+    let retVal = '';
+    for (const key in hash) {
+      retVal += key + ((hash[key]) ? `=${hash[key]},` : ',');
+    }
+    return retVal.slice(0, -1);
+  }
+
+  private optionsStringToHash(optionsString: string): any {
+    const hash = {};
+    optionsString.split(',').forEach((option) => {
+      const optionWithValue = option.split('=');
+      hash[optionWithValue[0]] = optionWithValue[1];
+    });
+    return hash;
+  }
+
   extractYamlFromJson(argv: any, cb: () => void = null) {
     const me = this;
     const {fullInputPath, stackConfigTemplate} = me.getContainerConfigsFromJsonFile(argv.inputJsonFile);
@@ -166,37 +215,35 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     });
   }
 
-  buildTemplate(argv: any, cb: () => void = null) {
+  buildTemplate(argv: any, cb: (err?: Error) => void = null) {
     const me = this;
     const {fullInputPath, stackConfigTemplate} = me.getContainerConfigsFromJsonFile(argv.input);
     me.validateDockerStackConfigTemplate(stackConfigTemplate, (err, stackConfigTemplate) => {
       if (err) {
         if (cb) {
-          return cb();
+          return cb(err);
         }
         me.commandUtil.processExitWithError(err, 'OK');
       }
       me.stackConfigTemplate = stackConfigTemplate;
       switch (stackConfigTemplate.dockerMachineDriverOptions.driver) {
         case 'openstack': {
-          const dockerMachineDriverOptions =
-            (<DockerMachineDriverOptions_openstack>stackConfigTemplate.dockerMachineDriverOptions);
+          const dmdo = (<DockerMachineDriverOptions_openstack>stackConfigTemplate.dockerMachineDriverOptions);
           if (argv.username) {
-            dockerMachineDriverOptions.openstackUsername = argv.username;
+            dmdo.openstackUsername = argv.username;
           }
           if (argv.password) {
-            dockerMachineDriverOptions.openstackPassword = argv.password;
+            dmdo.openstackPassword = argv.password;
           }
           break;
         }
         case 'vmwarevsphere': {
-          const dockerMachineDriverOptions =
-            (<DockerMachineDriverOptions_vmwarevsphere>stackConfigTemplate.dockerMachineDriverOptions);
+          const dmdo = (<DockerMachineDriverOptions_vmwarevsphere>stackConfigTemplate.dockerMachineDriverOptions);
           if (argv.username) {
-            dockerMachineDriverOptions.vmwarevsphereUsername = argv.username;
+            dmdo.vmwarevsphereUsername = argv.username;
           }
           if (argv.password) {
-            dockerMachineDriverOptions.vmwarevspherePassword = argv.password;
+            dmdo.vmwarevspherePassword = argv.password;
           }
           break;
         }
@@ -255,7 +302,6 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     const me = this;
     cb = me.checkCallback(cb);
     const createOptions = me.convertOptionsFromCamelToSnakeCase(stackConfigTemplate.dockerMachineDriverOptions);
-    createOptions.push.apply(createOptions, me.convertOptionsFromCamelToSnakeCase(stackConfigTemplate.dockerMachines.common));
     async.waterfall([
       (cb: (err: Error, managerMachineName: string) => void) => {
         const managerMachineName = `${stackConfigTemplate.stackName}-${stackConfigTemplate.dockerMachines.manager.nodeName}`;

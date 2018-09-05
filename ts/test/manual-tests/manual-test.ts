@@ -42,12 +42,16 @@ dockerProvision.buildTemplate({
   //password: 'run2walk!',
   //input: ProvisionCommandImpl.defaultConfigFilename
   //noports: false,
+  //input: '/home/jreeme/src/merlin-stack/firmament/deploy/openstack/openstack.merlin.keyw/full-stack.json',
   input: '/home/jreeme/src/merlin-stack/firmament/deploy/virtualbox/virtualbox.parrot.keyw/full-stack-thin.json',
   //input: '/home/jreeme/src/parrot-stack/firmament/deploy/virtualbox/virtualbox.parrot.keyw/test-placement-constraint.json',
   //input: '/home/jreeme/src/merlin-stack/firmament/deploy/virtualbox/virtualbox.parrot.keyw/test.json'
   //input: '/home/jreeme/src/merlin-stack/firmament/deploy/aws/aws.parrot.keyw/full-stack.json'
   //input: '/home/jreeme/src/merlin-stack/firmament/deploy/vmware/vmware.parrot-les.keyw/full-stack.json'
-}, () => {
+}, (err?:Error) => {
+  if(err){
+    console.error(err);
+  }
   process.exit(0);
 });
 //process.exit(0);
