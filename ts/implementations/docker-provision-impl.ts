@@ -168,7 +168,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
       }
     }
     this.dockerUtil.writeJsonTemplateFile(dsct, '/tmp/tmp.json');
-    process.exit();
+    //process.exit();
     cb(null, dsct);
   }
 
