@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="Tune up boot2docker profile with more ES stuff">
+    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="NPM -&gt; v.1.4.35">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" afterDir="false" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -60,17 +61,17 @@
     <session id="-1234968304">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="13" />
-          <entry key="project.open.time.0" value="10" />
+          <entry key="project.closed" value="14" />
+          <entry key="project.open.time.0" value="11" />
           <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.3" value="2" />
           <entry key="project.open.time.5" value="1" />
-          <entry key="project.opened" value="15" />
+          <entry key="project.opened" value="16" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
         <counts>
-          <entry key="TypeScriptServerServiceImpl" value="12" />
+          <entry key="TypeScriptServerServiceImpl" value="13" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -92,17 +93,17 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="json" value="75" />
-          <entry key="ts" value="10620" />
-          <entry key="txt" value="438" />
+          <entry key="json" value="77" />
+          <entry key="ts" value="10629" />
+          <entry key="txt" value="456" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JSON" value="43" />
-          <entry key="PLAIN_TEXT" value="438" />
+          <entry key="JSON" value="45" />
+          <entry key="PLAIN_TEXT" value="456" />
           <entry key="Scratch" value="32" />
-          <entry key="TypeScript" value="10620" />
+          <entry key="TypeScript" value="10629" />
         </counts>
       </usages-collector>
     </session>
@@ -115,8 +116,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="640" column="1" selection-start-line="640" selection-start-column="1" selection-end-line="640" selection-end-column="1" />
+            <state relative-caret-position="420">
+              <caret line="639" column="17" selection-start-line="639" selection-start-column="17" selection-end-line="639" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -281,7 +282,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -307,6 +307,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -570,14 +571,8 @@
       <workItem from="1536256064502" duration="894000" />
       <workItem from="1536578223453" duration="7465000" />
       <workItem from="1536591184985" duration="10722000" />
-      <workItem from="1536683964877" duration="18000" />
-    </task>
-    <task id="LOCAL-00023" summary="-&gt; v.0.2.19">
-      <created>1478636793061</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1478636793061</updated>
+      <workItem from="1536683964877" duration="654000" />
+      <workItem from="1536782742338" duration="66000" />
     </task>
     <task id="LOCAL-00024" summary="-&gt; v.0.2.20">
       <created>1478638472523</created>
@@ -915,7 +910,14 @@
       <option name="project" value="LOCAL" />
       <updated>1536609783080</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="NPM -&gt; v.1.4.35">
+      <created>1536684002548</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1536684002549</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -951,13 +953,13 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="412456000" />
+    <option name="totallyTimeSpent" value="413158000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1919" y="0" width="1922" height="1053" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.47777778" visible="true" weight="0.18356457" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.47777778" visible="true" weight="0.18569905" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.5222222" side_tool="true" weight="0.16094987" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -969,7 +971,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="TypeScript" order="7" sideWeight="0.4939378" weight="0.18709677" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.21505377" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.21505377" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5044808" side_tool="true" weight="0.39139786" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.4949921" weight="0.32150537" />
       <window_info anchor="bottom" id="Messages" order="11" />
@@ -1025,7 +1027,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Tag with 10.1.70.193" />
     <MESSAGE value="1.4.9 -&gt; NPM" />
     <MESSAGE value="Tell supervisord to run elasticsearch as 'user=elasticsearch'" />
     <MESSAGE value="Remove su-exec. Use supervisord's user to lower priv for elasticsearch (which won't run as root)" />
@@ -1050,7 +1051,8 @@
     <MESSAGE value="Finished fill it out work!" />
     <MESSAGE value="NPM -&gt; 1.4.34" />
     <MESSAGE value="Tune up boot2docker profile with more ES stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tune up boot2docker profile with more ES stuff" />
+    <MESSAGE value="NPM -&gt; v.1.4.35" />
+    <option name="LAST_COMMIT_MESSAGE" value="NPM -&gt; v.1.4.35" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1357,17 +1359,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="640" column="1" selection-start-line="640" selection-start-column="1" selection-end-line="640" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="675">
           <caret line="45" column="114" selection-start-line="45" selection-start-column="114" selection-end-line="45" selection-end-column="114" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="639" column="17" selection-start-line="639" selection-start-column="17" selection-end-line="639" selection-end-column="17" />
         </state>
       </provider>
     </entry>

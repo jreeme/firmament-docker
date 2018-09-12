@@ -637,7 +637,7 @@ echo 'nameserver ${me.stackConfigTemplate.hostMachineDnsServer}' > /etc/resolv.c
 sysctl -w vm.max_map_count=262144
 sysctl -w net.ipv4.tcp_keepalive_time=600
 swapoff -a
-sed -i '\\''/ swap / s/^/#/'\\'' /etc/fstab
+sed -i '\\''/ sda2 / s/^/#/'\\'' /etc/fstab
 `;
     const dockerMachineJoinSwarmCmd = [
       `echo '${profileLines}' | sudo tee -a /var/lib/boot2docker/profile && sudo /etc/init.d/docker restart`
