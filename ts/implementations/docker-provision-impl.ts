@@ -596,8 +596,8 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
 #Need to set vm.max_map_count to 262144 to support ElasticSearch (ES fails in production without it)    
 sysctl -w vm.max_map_count=262144
 sysctl -w net.ipv4.tcp_keepalive_time=600
-swapoff -a
-sed -i '\\''/ swap / s/^/#/'\\'' /etc/fstab
+swapoff /dev/sda2
+sed -i '\\''/sda2/ s/^/#/'\\'' /etc/fstab
 
 NETDEVICES="$(awk -F: '\\''/eth.:|tr.:/{print $1}'\\'' /proc/net/dev 2>/dev/null)"
 for DEVICE in $NETDEVICES; do
@@ -637,7 +637,7 @@ echo 'nameserver ${me.stackConfigTemplate.hostMachineDnsServer}' > /etc/resolv.c
 sysctl -w vm.max_map_count=262144
 sysctl -w net.ipv4.tcp_keepalive_time=600
 swapoff /dev/sda2
-sed -i '\\''/ sda2 / s/^/#/'\\'' /etc/fstab
+sed -i '\\''/sda2/ s/^/#/'\\'' /etc/fstab
 `;
     const dockerMachineJoinSwarmCmd = [
       `echo '${profileLines}' | sudo tee -a /var/lib/boot2docker/profile && sudo /etc/init.d/docker restart`
