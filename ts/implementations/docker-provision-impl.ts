@@ -636,7 +636,7 @@ echo 'nameserver ${me.stackConfigTemplate.hostMachineDnsServer}' > /etc/resolv.c
 #Need to set vm.max_map_count to 262144 to support ElasticSearch (ES fails in production without it)    
 sysctl -w vm.max_map_count=262144
 sysctl -w net.ipv4.tcp_keepalive_time=600
-swapoff -a
+swapoff /dev/sda2
 sed -i '\\''/ sda2 / s/^/#/'\\'' /etc/fstab
 `;
     const dockerMachineJoinSwarmCmd = [
