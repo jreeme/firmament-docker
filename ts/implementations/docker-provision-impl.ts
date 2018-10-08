@@ -46,7 +46,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
                                     cb: (err: Error, dockerStackConfigTemplate?: DockerStackConfigTemplate) => void) {
     const me = this;
     const dsct = dockerStackConfigTemplate;
-    const dockerImageRegex = /.+?:\d+?\/.+?:.+$/g;
+    const dockerImageRegex = /.+?(:\d+?)?\/.+?:.+$/g;
     const dockerVolumesRegex = /:\//g;
 
     //Add dockerMachines.common options to dockerMachineDriverOptions
@@ -126,7 +126,11 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
           return cb(new Error(`Service '${service}' missing 'image' property and 'defaultDockerImageTag' is undefined`));
         }
         if (s.image) {
-          s.image = `${dsct.defaultDockerRegistry}/${s.image}:${dsct.defaultDockerImageTag}`;
+          if (/.+?:\d+?/.test(s.image)) {
+            s.image = `${dsct.defaultDockerRegistry}/${s.image}`;
+          } else {
+            s.image = `${dsct.defaultDockerRegistry}/${s.image}:${dsct.defaultDockerImageTag}`;
+          }
         } else {
           s.image = `${dsct.defaultDockerRegistry}/${service}:${dsct.defaultDockerImageTag}`;
         }
@@ -169,7 +173,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
       }
     }
     this.dockerUtil.writeJsonTemplateFile(dsct, '/tmp/tmp.json');
-    //process.exit();
+    process.exit();
     cb(null, dsct);
   }
 

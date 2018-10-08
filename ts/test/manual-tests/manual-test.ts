@@ -10,10 +10,10 @@ import kernel from '../../inversify.config';
 //const dockerMake = kernel.get<DockerMake>('DockerMake');
 //const remoteCatalogGetter = kernel.get<RemoteCatalogGetter>('RemoteCatalogGetter');
 //import {Url, parse as urlParse} from 'url';
-//import {DockerCommandImpl} from "../../implementations/commands/docker-command-impl";
-import {DockerProvision} from "../../interfaces/docker-provision";
-//import {ProvisionCommandImpl} from "../../implementations/commands/provision-command-impl";
-//import {DockerContainerManagement} from "../../interfaces/docker-container-management";
+//import {DockerCommandImpl} from '../../implementations/commands/docker-command-impl';
+import {DockerProvision} from '../../interfaces/docker-provision';
+//import {ProvisionCommandImpl} from '../../implementations/commands/provision-command-impl';
+//import {DockerContainerManagement} from '../../interfaces/docker-container-management';
 
 //const dockerMake = kernel.get<DockerMake>('DockerMake');
 const dockerProvision = kernel.get<DockerProvision>('DockerProvision');
@@ -43,7 +43,8 @@ dockerProvision.buildTemplate({
   //input: ProvisionCommandImpl.defaultConfigFilename
   //noports: false,
   //input: '/home/jreeme/src/merlin-stack/firmament/deploy/openstack/openstack.merlin.keyw/full-stack.json',
-  input: '/home/jreeme/src/parrot-stack/firmament/deploy/virtualbox/virtualbox.parrot.keyw/elasticsearch-thin.json'
+  input: '/home/jreeme/src/merlin-stack/firmament/deploy/vmware/vmware.parrot.reeme/elasticsearch-thin.json',
+  //input: '/home/jreeme/src/parrot-stack/firmament/deploy/virtualbox/virtualbox.parrot.keyw/elasticsearch-thin.json'
   //input: '/home/jreeme/src/merlin-stack/firmament/deploy/virtualbox/virtualbox.parrot.keyw/docker-registry+dns-thin.json',
   //input: '/home/jreeme/src/merlin-stack/firmament/deploy/virtualbox/virtualbox.parrot.keyw/full-stack-thin.json',
   //input: '/home/jreeme/src/parrot-stack/firmament/deploy/virtualbox/virtualbox.parrot.keyw/test-placement-constraint.json',

@@ -14,6 +14,7 @@
       <w>chown</w>
       <w>cmds</w>
       <w>datanode</w>
+      <w>datastore</w>
       <w>datavolume</w>
       <w>deps</w>
       <w>dhcp</w>
@@ -28,6 +29,7 @@
       <w>enode</w>
       <w>enoent</w>
       <w>epath</w>
+      <w>esrally</w>
       <w>etcd</w>
       <w>etcdctl</w>
       <w>eventlistener</w>
@@ -78,6 +80,7 @@
       <w>rpcinterface</w>
       <w>sameorigin</w>
       <w>sbin</w>
+      <w>scif</w>
       <w>serverurl</w>
       <w>setuid</w>
       <w>sparkworker</w>
@@ -105,6 +108,7 @@
       <w>userdata</w>
       <w>vcenter</w>
       <w>virtualbox</w>
+      <w>vmware</w>
       <w>vmwarevsphere</w>
       <w>yaml</w>
     </words>
