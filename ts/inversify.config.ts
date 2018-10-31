@@ -17,9 +17,13 @@ import {DockerMake} from './interfaces/docker-make';
 import {ProvisionCommandImpl} from './implementations/commands/provision-command-impl';
 import {DockerProvision} from './interfaces/docker-provision';
 import {DockerProvisionImpl} from './implementations/docker-provision-impl';
+import {VmwareCommandImpl} from "./implementations/commands/vmware-command-impl";
+import {VmwareMake} from "./interfaces/vmware-make";
+import {VmwareMakeImpl} from "./implementations/vmware-make-impl";
 
 kernel.bind<DockerManagement>('DockerManagement').to(DockerManagementImpl);
 kernel.bind<DockerMake>('DockerMake').to(DockerMakeImpl);
+kernel.bind<VmwareMake>('VmwareMake').to(VmwareMakeImpl);
 kernel.bind<DockerProvision>('DockerProvision').to(DockerProvisionImpl);
 kernel.bind<DockerImageManagement>('DockerImageManagement').to(DockerImageManagementImpl);
 kernel.bind<DockerContainerManagement>('DockerContainerManagement').to(DockerContainerManagementImpl);
@@ -27,6 +31,7 @@ kernel.bind<DockerOde>('DockerOde').to(DockerOdeImpl);
 kernel.bind<DockerUtil>('DockerUtil').to(DockerUtilImpl);
 kernel.bind<Command>('Command').to(DockerCommandImpl);
 kernel.bind<Command>('Command').to(MakeCommandImpl);
+kernel.bind<Command>('Command').to(VmwareCommandImpl);
 kernel.bind<Command>('Command').to(ProvisionCommandImpl);
 
 export default kernel;
