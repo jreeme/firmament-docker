@@ -30,8 +30,10 @@
       <w>enoent</w>
       <w>epath</w>
       <w>esrally</w>
+      <w>esxi</w>
       <w>etcd</w>
       <w>etcdctl</w>
+      <w>eulas</w>
       <w>eventlistener</w>
       <w>exitcodes</w>
       <w>filenames</w>
@@ -67,6 +69,7 @@
       <w>notif</w>
       <w>numprocs</w>
       <w>openstack</w>
+      <w>ovftool</w>
       <w>pgadmin</w>
       <w>pidfile</w>
       <w>portainer</w>
@@ -110,6 +113,7 @@
       <w>virtualbox</w>
       <w>vmware</w>
       <w>vmwarevsphere</w>
+      <w>wget</w>
       <w>yaml</w>
     </words>
   </dictionary>

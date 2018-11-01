@@ -23,35 +23,52 @@ export class VmwareCommandImpl implements Command {
     this.command = '<subCommand>';
     this.commandDesc = 'Support for importing and exporting OVA machines to ESXi server';
     this.pushExportCommand();
-    this.pushTemplateCommand();
+    this.pushImportCommand();
   };
 
-  private pushTemplateCommand() {
-    /*    let templateCommand = kernel.get<Command>('CommandImpl');
-        templateCommand.aliases = ['template', 't'];
-        templateCommand.commandDesc = 'Create a template JSON spec for a container cluster';
-        //noinspection ReservedWordAsName
-        templateCommand.options = {
-          get: {
-            alias: 'g',
-            type: 'string',
-            desc: '.. get [templateName]. If no templateName is specified then lists available templates'
-          },
-          output: {
-            alias: 'o',
-            default: VmwareCommandImpl.defaultConfigFilename,
-            type: 'string',
-            desc: 'Name the output JSON file'
-          },
-          full: {
-            alias: 'f',
-            type: 'boolean',
-            default: false,
-            desc: 'Create a full JSON template with all Docker options set to reasonable defaults'
-          }
-        };
-        templateCommand.handler = this.dockerMake.makeTemplate.bind(this.dockerMake);
-        this.subCommands.push(templateCommand);*/
+  private pushImportCommand() {
+    const me = this;
+    let importCommand = kernel.get<Command>('CommandImpl');
+    importCommand.aliases = ['import', 'i'];
+    importCommand.commandDesc = 'Import virtual machine from an OVA file to an ESXi server';
+    //noinspection ReservedWordAsName
+    importCommand.options = {
+      name: {
+        alias: 'n',
+        default: 'OVA filename',
+        type: 'string',
+        desc: 'Name VM will have in ESXi inventory'
+      },
+      powerOn: {
+        default: false,
+        type: 'boolean',
+        desc: `If 'true' then machine will be powered on after being imported`
+      },
+      datastore: {
+        alias: 'ds',
+        default: 'datastore1',
+        type: 'string',
+        desc: 'ESXi datastore to put the VM into'
+      },
+      ovaUrl: {
+        type: 'string',
+        desc: 'Url of OVA file'
+      },
+      esxiHost: {
+        type: 'string',
+        desc: 'ESXi Server Hostname/IP address'
+      },
+      esxiUser: {
+        type: 'string',
+        desc: 'User to perform action as on ESXi server'
+      },
+      esxiPassword: {
+        type: 'string',
+        desc: 'Password for ESXi User'
+      }
+    };
+    importCommand.handler = me.vmwareMake.import.bind(me.vmwareMake);
+    this.subCommands.push(importCommand);
   };
 
   private pushExportCommand() {
@@ -63,7 +80,7 @@ export class VmwareCommandImpl implements Command {
     exportCommand.options = {
       name: {
         alias: 'n',
-        default: `machine-${Math.random()}`,
+        default: 'OVA filename',
         type: 'string',
         desc: 'Name of the VM in ESXi inventory'
       }

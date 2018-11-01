@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="NPM -&gt; v.1.4.41">
-      <change afterPath="$PROJECT_DIR$/ts/implementations/commands/vmware-command-impl.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ts/implementations/vmware-make-impl.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ts/interfaces/vmware-make.ts" afterDir="false" />
+    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="A ways toward supporting VMware OVA import/export">
+      <change afterPath="$PROJECT_DIR$/firmament-bash/install-ovftool.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ts/test/manual-tests/ovf-tool-test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/jreeme.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/jreeme.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/inversify.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/inversify.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/ts/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ts/implementations/commands/vmware-command-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/commands/vmware-command-impl.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ts/implementations/vmware-make-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/vmware-make-impl.ts" afterDir="false" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -80,36 +82,38 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="js" value="2" />
-          <entry key="json" value="17" />
+          <entry key="js" value="3" />
+          <entry key="json" value="21" />
           <entry key="sh" value="2" />
-          <entry key="ts" value="29" />
+          <entry key="ts" value="36" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Bash" value="2" />
-          <entry key="JSON" value="15" />
-          <entry key="JavaScript" value="2" />
+          <entry key="JSON" value="17" />
+          <entry key="JavaScript" value="3" />
           <entry key="Scratch" value="1" />
-          <entry key="TypeScript" value="29" />
-          <entry key="tsconfig" value="1" />
+          <entry key="TypeScript" value="36" />
+          <entry key="tsconfig" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="json" value="117" />
-          <entry key="ts" value="11895" />
-          <entry key="txt" value="462" />
+          <entry key="js" value="2" />
+          <entry key="json" value="559" />
+          <entry key="ts" value="14080" />
+          <entry key="txt" value="517" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JSON" value="68" />
-          <entry key="PLAIN_TEXT" value="462" />
+          <entry key="JSON" value="506" />
+          <entry key="JavaScript" value="2" />
+          <entry key="PLAIN_TEXT" value="517" />
           <entry key="Scratch" value="32" />
-          <entry key="TypeScript" value="11895" />
-          <entry key="tsconfig" value="17" />
+          <entry key="TypeScript" value="14080" />
+          <entry key="tsconfig" value="21" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -119,14 +123,23 @@
     <favorites_list name="firmament-docker" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
+    <splitter split-orientation="horizontal" split-proportion="0.6281888">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="105">
+                  <caret line="7" selection-start-line="7" selection-end-line="7" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ts/implementations/vmware-make-impl.ts">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="180">
-                  <caret line="12" column="52" selection-start-line="12" selection-start-column="52" selection-end-line="12" selection-end-column="52" />
+                <state relative-caret-position="248">
+                  <caret line="96" column="16" selection-start-line="96" selection-start-column="16" selection-end-line="96" selection-end-column="16" />
                   <folding>
                     <element signature="e#0#45#0" expanded="true" />
                   </folding>
@@ -135,22 +148,19 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ts/interfaces/vmware-make.ts">
+            <entry file="file://$PROJECT_DIR$/firmament-bash/install-ovftool.json">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="30">
-                  <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
+                <state relative-caret-position="135">
+                  <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ts/implementations/commands/vmware-command-impl.ts">
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/ts/tsconfig.json">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="715">
-                  <caret line="70" column="47" selection-start-line="70" selection-start-column="47" selection-end-line="70" selection-end-column="47" />
-                  <folding>
-                    <element signature="e#0#45#0" expanded="true" />
-                  </folding>
+                <state relative-caret-position="165">
+                  <caret line="11" column="76" selection-start-line="11" selection-start-column="76" selection-end-line="11" selection-end-column="76" />
                 </state>
               </provider>
             </entry>
@@ -158,17 +168,40 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="435">
-                  <caret line="568" column="28" selection-start-line="568" selection-start-column="28" selection-end-line="568" selection-end-column="28" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
+        <splitter split-orientation="vertical" split-proportion="0.54068965">
+          <split-first>
+            <leaf>
+              <file pinned="false" current-in-tab="true">
+                <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/ovf-tool-test.ts">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="135">
+                      <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
+                      <folding>
+                        <element signature="e#0#44#0" expanded="true" />
+                      </folding>
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+            </leaf>
+          </split-first>
+          <split-second>
+            <leaf>
+              <file pinned="false" current-in-tab="true">
+                <entry file="file://$PROJECT_DIR$/ts/implementations/commands/vmware-command-impl.ts">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="74">
+                      <caret line="66" column="37" selection-start-line="66" selection-start-column="37" selection-end-line="66" selection-end-column="37" />
+                      <folding>
+                        <element signature="e#0#45#0" expanded="true" />
+                      </folding>
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+            </leaf>
+          </split-second>
+        </splitter>
       </split-second>
     </splitter>
   </component>
@@ -181,8 +214,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>async</find>
-      <find>apply</find>
       <find>callbackIfError</find>
       <find>docker-compose</find>
       <find>merlin.yml</find>
@@ -211,6 +242,8 @@
       <find>traefik</find>
       <find>usermod</find>
       <find>machine</find>
+      <find>areYouSure</find>
+      <find>Looks lik</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -223,8 +256,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/docker/elasticsearch/5.6.6/elasticsearch.yml" />
-        <option value="$PROJECT_DIR$/docker/alpine-jre/8/_build.sh" />
         <option value="$PROJECT_DIR$/docker/alpine-jre/8/_run.sh" />
         <option value="$PROJECT_DIR$/docker/alpine-jre/3.7-8/Dockerfile" />
         <option value="$PROJECT_DIR$/docker/elasticsearch-head/5.x/Dockerfile" />
@@ -269,11 +300,13 @@
         <option value="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/ts/tsconfig.json" />
         <option value="$PROJECT_DIR$/ts/inversify.config.ts" />
-        <option value="$PROJECT_DIR$/ts/implementations/commands/vmware-command-impl.ts" />
         <option value="$PROJECT_DIR$/ts/interfaces/vmware-make.ts" />
+        <option value="$PROJECT_DIR$/ts/implementations/commands/vmware-command-impl.ts" />
+        <option value="$PROJECT_DIR$/ts/test/manual-tests/ovf-tool-test.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/vmware-make-impl.ts" />
+        <option value="$PROJECT_DIR$/firmament-bash/install-ovftool.json" />
+        <option value="$PROJECT_DIR$/ts/tsconfig.json" />
       </list>
     </option>
   </component>
@@ -322,6 +355,29 @@
             <path>
               <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
               <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="firmament-bash" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="manual-tests" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
               <item name="test-data" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -347,6 +403,19 @@
               <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
               <item name="ts" type="462c0819:PsiDirectoryNode" />
               <item name="interfaces" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="ts" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="ts" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="manual-tests" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -376,11 +445,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/firmament-bash" />
       <recent name="$PROJECT_DIR$/ts/implementations" />
       <recent name="$PROJECT_DIR$/ts/interfaces" />
       <recent name="$PROJECT_DIR$/ts/implementations/commands" />
       <recent name="$PROJECT_DIR$/docker/postgres/9.5.10" />
-      <recent name="$PROJECT_DIR$/docker" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/docker/amino3/1.1" />
@@ -402,11 +471,14 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.manual-test.js">
+  <component name="RunManager" selected="Node.js.ovf-tool-test.js">
     <configuration name="firmament" type="NodeJSConfigurationType" factoryName="Node.js" application-parameters="p t" path-to-js-file="$PROJECT_DIR$/../firmament/js/firmament.js" working-dir="/tmp">
       <method v="2" />
     </configuration>
     <configuration name="manual-test.js" type="NodeJSConfigurationType" factoryName="Node.js" path-to-js-file="$PROJECT_DIR$/js/test/manual-tests/manual-test.js" working-dir="/tmp">
+      <method v="2" />
+    </configuration>
+    <configuration name="ovf-tool-test.js" type="NodeJSConfigurationType" factoryName="Node.js" nameIsGenerated="true" path-to-js-file="ovf-tool-test.js" working-dir="$PROJECT_DIR$/js/test/manual-tests">
       <method v="2" />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
@@ -508,6 +580,7 @@
       <item itemvalue="Node.js.manual-test.js" />
       <item itemvalue="npm.build" />
       <item itemvalue="Mocha.DockerContainerManagement" />
+      <item itemvalue="Node.js.ovf-tool-test.js" />
     </list>
     <recent_temporary>
       <list>
@@ -622,14 +695,7 @@
       <workItem from="1536853422135" duration="911000" />
       <workItem from="1539278046934" duration="691000" />
       <workItem from="1541004121132" duration="64000" />
-      <workItem from="1541006118529" duration="6946000" />
-    </task>
-    <task id="LOCAL-00028" summary="-&gt; v.0.2.21 (refactoring a bit, improving low level tests)">
-      <created>1479129105336</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1479129105336</updated>
+      <workItem from="1541006118529" duration="17626000" />
     </task>
     <task id="LOCAL-00029" summary="-&gt; v.0.2.22">
       <created>1479140049004</created>
@@ -967,7 +1033,14 @@
       <option name="project" value="LOCAL" />
       <updated>1539278126348</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="A ways toward supporting VMware OVA import/export">
+      <created>1541015622412</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1541015622413</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1003,24 +1076,23 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="424554000" />
+    <option name="totallyTimeSpent" value="435234000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1919" y="0" width="1922" height="1053" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.47777778" visible="true" weight="0.16328709" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47777778" visible="true" weight="0.16328709" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.5222222" side_tool="true" weight="0.16094987" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3676313" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32795697" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49551925" weight="0.2204301" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49551925" weight="0.3892473" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="TypeScript" order="7" sideWeight="0.4939378" weight="0.26881722" />
+      <window_info active="true" anchor="bottom" id="TypeScript" order="7" sideWeight="0.4939378" visible="true" weight="0.26881722" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.36021507" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5044808" side_tool="true" weight="0.39139786" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.4949921" weight="0.32150537" />
@@ -1064,7 +1136,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="patch tag on amino3 -&gt; 1.1" />
     <MESSAGE value="Tweak elastic search for running on VMWare" />
     <MESSAGE value="Get volumes to cifs working on OpenStack" />
     <MESSAGE value="v.1.4.11 -&gt; NPM" />
@@ -1089,7 +1160,8 @@
     <MESSAGE value="NPM -&gt; v.1.4.37" />
     <MESSAGE value="NPM -&gt; v.1.4.38" />
     <MESSAGE value="NPM -&gt; v.1.4.41" />
-    <option name="LAST_COMMIT_MESSAGE" value="NPM -&gt; v.1.4.41" />
+    <MESSAGE value="A ways toward supporting VMware OVA import/export" />
+    <option name="LAST_COMMIT_MESSAGE" value="A ways toward supporting VMware OVA import/export" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1098,6 +1170,12 @@
           <url>file://$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts</url>
           <line>113</line>
           <option name="timeStamp" value="713" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/ts/implementations/vmware-make-impl.ts</url>
+          <line>102</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="721" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -1111,21 +1189,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../docker-provision.json" />
-    <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/_run.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docker/portainer/1.16.2/_run.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="57" selection-start-line="1" selection-start-column="57" selection-end-line="1" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docker/elasticsearch/5.6.6/elasticsearch-start.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -1311,20 +1374,6 @@
     </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1.json" />
     <entry file="file:///tmp/tmp.json" />
-    <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="930">
-          <caret line="62" selection-start-line="62" selection-end-line="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test-data/docker-entrypoint.sh">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1350,26 +1399,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ts/tsconfig.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="74" selection-start-line="11" selection-start-column="74" selection-end-line="11" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ts/inversify.config.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="568" column="28" selection-start-line="568" selection-start-column="28" selection-end-line="568" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -1380,16 +1415,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ts/implementations/commands/vmware-command-impl.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="715">
-          <caret line="70" column="47" selection-start-line="70" selection-start-column="47" selection-end-line="70" selection-end-column="47" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ts/interfaces/vmware-make.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -1397,13 +1422,71 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ts/implementations/vmware-make-impl.ts">
+    <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="52" selection-start-line="12" selection-start-column="52" selection-end-line="12" selection-end-column="52" />
+        <state relative-caret-position="45">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/commands/vmware-command-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="74">
+          <caret line="66" column="37" selection-start-line="66" selection-start-column="37" selection-end-line="66" selection-end-column="37" />
           <folding>
             <element signature="e#0#45#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="44" column="5" selection-start-line="44" selection-start-column="5" selection-end-line="44" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/ovf-tool-test.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/implementations/vmware-make-impl.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/vmware-make-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="96" column="16" selection-start-line="96" selection-start-column="16" selection-end-line="96" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/firmament-bash/install-ovftool.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/tsconfig.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="76" selection-start-line="11" selection-start-column="76" selection-end-line="11" selection-end-column="76" />
         </state>
       </provider>
     </entry>

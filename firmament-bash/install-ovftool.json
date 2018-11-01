@@ -1,0 +1,51 @@
+{
+  "description": "Install 'ovftool'",
+  "options": {
+    "displayExecutionGraphDescription": true
+  },
+  "asynchronousCommands": [
+    {
+      "description": "Download 'ovftool' to /tmp",
+      "suppressOutput": false,
+      "showDiagnostics": false,
+      "showPreAndPostSpawnMessages": true,
+      "outputColor": "",
+      "useSudo": false,
+      "workingDirectory": "/tmp",
+      "command": "wget",
+      "args": [
+        "https://s3.amazonaws.com/merlin-jreeme/VMware-ovftool-4.3.0-10104578-lin.x86_64.bundle",
+        "-O",
+        "/tmp/ovftool.bundle"
+      ]
+    }
+  ],
+  "serialSynchronizedCommands": [
+    {
+      "description": "chmod 755 /tmp/ovftool.bundle",
+      "suppressOutput": false,
+      "showDiagnostics": false,
+      "showPreAndPostSpawnMessages": true,
+      "useSudo": false,
+      "command": "chmod",
+      "args": [
+        "755",
+        "/tmp/ovftool.bundle"
+      ]
+    },
+    {
+      "description": "[sudo] Run /tmp/ovftool.bundle",
+      "suppressOutput": false,
+      "showDiagnostics": false,
+      "showPreAndPostSpawnMessages": true,
+      "useSudo": true,
+      "_sudoPassword": "password",
+      "command": "/usr/bin/env",
+      "args": [
+        "bash",
+        "-c",
+        "/tmp/ovftool.bundle --eulas-agreed --required --console"
+      ]
+    }
+  ]
+}
