@@ -42,6 +42,14 @@ export class VmwareMakeImpl extends ForceErrorImpl implements VmwareMake {
       });
   }
 
+  uninstallOvfTool(argv:any) {
+    const me = this;
+    const uninstallOvfToolJson = path.resolve(__dirname, '../../firmament-bash/uninstall-ovftool.json');
+    me.processCommandJson.processAbsoluteUrl(uninstallOvfToolJson, (err) => {
+      me.commandUtil.processExitWithError(err, `'ovftool' uninstalled.`);
+    });
+  }
+
   import(argv:any) {
     const me = this;
     const {name, powerOn, datastore, ovaUrl, esxiHost, esxiUser, esxiPassword} = argv;
@@ -49,9 +57,10 @@ export class VmwareMakeImpl extends ForceErrorImpl implements VmwareMake {
       'ovftool',
       '--acceptAllEulas',
       '--diskMode=thin',
-      '--vmFolder="/"',
+      '--noSSLVerify',
+      '--vmFolder=/',
     ];
-    if(name) {
+    if(name && name != 'OVA filename') {
       ovfToolCmd.push(`--name=${name}`);
     }
     if(powerOn) {
@@ -91,8 +100,8 @@ export class VmwareMakeImpl extends ForceErrorImpl implements VmwareMake {
             'Operation canceled.',
             true,
             FailureRetVal.TRUE)) {
-            const installDockerMachineJson = path.resolve(__dirname, '../../firmament-bash/install-ovftool.json');
-            return me.processCommandJson.processAbsoluteUrl(installDockerMachineJson, (err) => {
+            const installOvfToolJson = path.resolve(__dirname, '../../firmament-bash/install-ovftool.json');
+            return me.processCommandJson.processAbsoluteUrl(installOvfToolJson, (err) => {
               if(!err) {
                 me.commandUtil.log(`'ovftool' installed. Try operation again.`);
               }

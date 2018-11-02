@@ -24,6 +24,17 @@ export class VmwareCommandImpl implements Command {
     this.commandDesc = 'Support for importing and exporting OVA machines to ESXi server';
     this.pushExportCommand();
     this.pushImportCommand();
+    this.pushUninstallOvfToolCommand()
+  };
+
+  private pushUninstallOvfToolCommand() {
+    const me = this;
+    let uninstallOvfToolCommand = kernel.get<Command>('CommandImpl');
+    uninstallOvfToolCommand.aliases = ['uninstall-ovf-tool', 'u'];
+    uninstallOvfToolCommand.commandDesc = `Uninstall VMware 'ovftool'`;
+    //noinspection ReservedWordAsName
+    uninstallOvfToolCommand.handler = me.vmwareMake.uninstallOvfTool.bind(me.vmwareMake);
+    this.subCommands.push(uninstallOvfToolCommand);
   };
 
   private pushImportCommand() {

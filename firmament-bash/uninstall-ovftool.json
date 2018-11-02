@@ -1,0 +1,22 @@
+{
+  "description": "Uninstall 'ovftool'",
+  "options": {
+    "displayExecutionGraphDescription": true
+  },
+  "asynchronousCommands": [
+    {
+      "description": "[sudo] Run vmware-installer to uninstall ovftool",
+      "suppressOutput": false,
+      "showDiagnostics": false,
+      "showPreAndPostSpawnMessages": true,
+      "useSudo": true,
+      "_sudoPassword": "password",
+      "command": "/usr/bin/env",
+      "args": [
+        "bash",
+        "-c",
+        "vmware-installer -u vmware-ovftool --console --required"
+      ]
+    }
+  ]
+}

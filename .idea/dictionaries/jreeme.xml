@@ -56,6 +56,7 @@
       <w>minprocs</w>
       <w>mkdirp</w>
       <w>mongo</w>
+      <w>mware</w>
       <w>mysupervisor</w>
       <w>namenode</w>
       <w>nameserver</w>
