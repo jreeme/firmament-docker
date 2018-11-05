@@ -2,6 +2,8 @@
 import 'reflect-metadata';
 //import * as path from 'path';
 import kernel from '../../inversify.config';
+import {DockerUtil} from "../../interfaces/docker-util";
+import {ImageOrContainer} from "../..";
 //import {DockerMake} from '../../interfaces/docker-make';
 //import {RemoteCatalogGetter, Command} from 'firmament-yargs';
 //const templateCatalogUrl = '/home/jreeme/src/firmament-docker/docker/templateCatalog.json';
@@ -11,15 +13,22 @@ import kernel from '../../inversify.config';
 //const remoteCatalogGetter = kernel.get<RemoteCatalogGetter>('RemoteCatalogGetter');
 //import {Url, parse as urlParse} from 'url';
 //import {DockerCommandImpl} from '../../implementations/commands/docker-command-impl';
-import {DockerProvision} from '../../interfaces/docker-provision';
+//import {DockerProvision} from '../../interfaces/docker-provision';
 //import {ProvisionCommandImpl} from '../../implementations/commands/provision-command-impl';
 //import {DockerContainerManagement} from '../../interfaces/docker-container-management';
 
 //const dockerMake = kernel.get<DockerMake>('DockerMake');
-const dockerProvision = kernel.get<DockerProvision>('DockerProvision');
+//const dockerProvision = kernel.get<DockerProvision>('DockerProvision');
 //dockerMake.makeTemplate({});
 
 //const dockerContainerManagement = kernel.get<DockerContainerManagement>('DockerContainerManagement');
+const dockerUtil = kernel.get<DockerUtil>('DockerUtil');
+dockerUtil.removeImagesOrContainers(['all'], {
+  IorC: ImageOrContainer.Image,
+  listAll: false
+}, (err:Error, results:any) => {
+  process.exit(0);
+});
 
 /*dockerProvision.extractYamlFromJson({
     inputJsonFile: '/home/jreeme/src/parrot-stack/firmament/docker/deploy/vmwarevsphere-parrot.json',
@@ -37,26 +46,18 @@ const dockerProvision = kernel.get<DockerProvision>('DockerProvision');
   dm: 'virtualbox'
   //yaml: ProvisionCommandImpl.defaultComposeYamlFilename
 }, () => {*/
-dockerProvision.buildTemplate({
+/*dockerProvision.buildTemplate({
   //username: 'root',
   //password: 'run2walk!',
   //input: ProvisionCommandImpl.defaultConfigFilename
   //noports: false,
-  //input: '/home/jreeme/src/merlin-stack/firmament/deploy/openstack/openstack.merlin.keyw/full-stack.json',
   input: '/home/jreeme/src/merlin-stack/firmament/deploy/vmware/vmware.parrot.reeme/elasticsearch-thin.json',
-  //input: '/home/jreeme/src/parrot-stack/firmament/deploy/virtualbox/virtualbox.parrot.keyw/elasticsearch-thin.json'
-  //input: '/home/jreeme/src/merlin-stack/firmament/deploy/virtualbox/virtualbox.parrot.keyw/docker-registry+dns-thin.json',
-  //input: '/home/jreeme/src/merlin-stack/firmament/deploy/virtualbox/virtualbox.parrot.keyw/full-stack-thin.json',
-  //input: '/home/jreeme/src/parrot-stack/firmament/deploy/virtualbox/virtualbox.parrot.keyw/test-placement-constraint.json',
-  //input: '/home/jreeme/src/merlin-stack/firmament/deploy/virtualbox/virtualbox.parrot.keyw/test.json'
-  //input: '/home/jreeme/src/merlin-stack/firmament/deploy/aws/aws.parrot.keyw/full-stack.json'
-  //input: '/home/jreeme/src/merlin-stack/firmament/deploy/vmware/vmware.parrot-les.keyw/full-stack.json'
 }, (err?: Error) => {
   if (err) {
     console.error(err);
   }
   process.exit(0);
-});
+});*/
 //process.exit(0);
 //});
 
