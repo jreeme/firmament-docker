@@ -93,6 +93,8 @@ export interface DockerComposeYaml {
 }
 
 export interface NfsConfig {
+  nfsUser: string,
+  nfsPassword: string,
   exportBaseDir: string,
   serverAddr: string,
   options: string

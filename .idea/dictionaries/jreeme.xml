@@ -61,6 +61,7 @@
       <w>namenode</w>
       <w>nameserver</w>
       <w>netdevices</w>
+      <w>nfsc</w>
       <w>nginx</w>
       <w>nocleanup</w>
       <w>nodaemon</w>

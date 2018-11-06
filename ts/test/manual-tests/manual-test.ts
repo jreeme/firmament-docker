@@ -13,22 +13,22 @@ import {ImageOrContainer} from "../..";
 //const remoteCatalogGetter = kernel.get<RemoteCatalogGetter>('RemoteCatalogGetter');
 //import {Url, parse as urlParse} from 'url';
 //import {DockerCommandImpl} from '../../implementations/commands/docker-command-impl';
-//import {DockerProvision} from '../../interfaces/docker-provision';
+import {DockerProvision} from '../../interfaces/docker-provision';
 //import {ProvisionCommandImpl} from '../../implementations/commands/provision-command-impl';
 //import {DockerContainerManagement} from '../../interfaces/docker-container-management';
 
 //const dockerMake = kernel.get<DockerMake>('DockerMake');
-//const dockerProvision = kernel.get<DockerProvision>('DockerProvision');
+const dockerProvision = kernel.get<DockerProvision>('DockerProvision');
 //dockerMake.makeTemplate({});
 
 //const dockerContainerManagement = kernel.get<DockerContainerManagement>('DockerContainerManagement');
-const dockerUtil = kernel.get<DockerUtil>('DockerUtil');
+/*const dockerUtil = kernel.get<DockerUtil>('DockerUtil');
 dockerUtil.removeImagesOrContainers(['all'], {
   IorC: ImageOrContainer.Image,
   listAll: false
 }, (err:Error, results:any) => {
   process.exit(0);
-});
+});*/
 
 /*dockerProvision.extractYamlFromJson({
     inputJsonFile: '/home/jreeme/src/parrot-stack/firmament/docker/deploy/vmwarevsphere-parrot.json',
@@ -46,18 +46,18 @@ dockerUtil.removeImagesOrContainers(['all'], {
   dm: 'virtualbox'
   //yaml: ProvisionCommandImpl.defaultComposeYamlFilename
 }, () => {*/
-/*dockerProvision.buildTemplate({
+dockerProvision.buildTemplate({
   //username: 'root',
   //password: 'run2walk!',
   //input: ProvisionCommandImpl.defaultConfigFilename
   //noports: false,
-  input: '/home/jreeme/src/merlin-stack/firmament/deploy/vmware/vmware.parrot.reeme/elasticsearch-thin.json',
-}, (err?: Error) => {
-  if (err) {
+  input: '/home/jreeme/src/parrot-stack/firmament/deploy/vmware/vmware.parrot-les.keyw/postgres-thin.json',
+}, (err?:Error) => {
+  if(err) {
     console.error(err);
   }
   process.exit(0);
-});*/
+});
 //process.exit(0);
 //});
 
