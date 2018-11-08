@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="v.1.4.43 -&gt; NPM &amp; Support creating not present NFS mounts on remote machines">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" afterDir="false" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -63,12 +62,12 @@
       <usages-collector id="statistics.lifecycle.project">
         <counts>
           <entry key="project.closed" value="19" />
-          <entry key="project.open.time.0" value="17" />
+          <entry key="project.open.time.0" value="18" />
           <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.2" value="2" />
           <entry key="project.open.time.3" value="3" />
           <entry key="project.open.time.5" value="1" />
-          <entry key="project.opened" value="25" />
+          <entry key="project.opened" value="26" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
@@ -97,14 +96,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="js" value="2" />
-          <entry key="json" value="827" />
+          <entry key="json" value="844" />
           <entry key="ts" value="18559" />
           <entry key="txt" value="649" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JSON" value="756" />
+          <entry key="JSON" value="773" />
           <entry key="JavaScript" value="2" />
           <entry key="PLAIN_TEXT" value="649" />
           <entry key="Scratch" value="32" />
@@ -132,7 +131,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
+            <state relative-caret-position="525">
               <caret line="37" column="19" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="19" />
               <folding>
                 <element signature="e#79#123#0" expanded="true" />
@@ -144,7 +143,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
+            <state relative-caret-position="2535">
               <caret line="196" column="18" selection-start-line="196" selection-start-column="18" selection-end-line="196" selection-end-column="18" />
             </state>
           </provider>
@@ -268,9 +267,6 @@
   <component name="NamedScopeManager">
     <scope name="ts-folder" pattern="file[firmament-docker]:ts//*" />
   </component>
-  <component name="NodeModulesDirectoryManager">
-    <handled-path value="$PROJECT_DIR$/node_modules" />
-  </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths>
       <path value="$PROJECT_DIR$/package.json" />
@@ -292,6 +288,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -303,7 +300,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -581,6 +577,7 @@
       <workItem from="1541173650854" duration="9367000" />
       <workItem from="1541515113954" duration="11690000" />
       <workItem from="1541532059983" duration="7030000" />
+      <workItem from="1541707999293" duration="382000" />
     </task>
     <task id="LOCAL-00032" summary="-&gt; v.0.2.25">
       <created>1479243485307</created>
@@ -961,13 +958,13 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="467567000" />
+    <option name="totallyTimeSpent" value="467949000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1919" y="0" width="1922" height="1053" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.47777778" visible="true" weight="0.17502668" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.47777778" visible="true" weight="0.17716116" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.5222222" side_tool="true" weight="0.16094987" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -1068,13 +1065,11 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts</url>
           <line>400</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts</url>
           <line>199</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="40" />
         </line-breakpoint>
       </breakpoints>
@@ -1210,13 +1205,7 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/ts/inversify.config.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/js/implementations/docker-provision-impl.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -1323,13 +1312,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/firmament-yargs/ts/test/manual-tests/manual-spawn-async-test.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/firmament-yargs/package.json">
       <provider selected="true" editor-type-id="text-editor" />
@@ -1352,9 +1335,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="690">
           <caret line="88" column="36" selection-start-line="88" selection-start-column="36" selection-end-line="88" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1365,9 +1345,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
+        <state relative-caret-position="525">
           <caret line="37" column="19" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="19" />
           <folding>
             <element signature="e#79#123#0" expanded="true" />
@@ -1377,15 +1364,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
+        <state relative-caret-position="2535">
           <caret line="196" column="18" selection-start-line="196" selection-start-column="18" selection-end-line="196" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
         </state>
       </provider>
     </entry>
