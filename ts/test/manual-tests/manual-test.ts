@@ -51,6 +51,7 @@ dockerProvision.buildTemplate({
   //password: 'run2walk!',
   //input: ProvisionCommandImpl.defaultConfigFilename
   //noports: false,
+
   input: '/home/jreeme/src/parrot-stack/firmament/deploy/vmware/vmware.parrot-les.keyw/postgres-thin.json',
 }, (err?:Error) => {
   if(err) {

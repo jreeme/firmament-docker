@@ -194,80 +194,81 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
 
   private checkNfsMounts(dsct: DockerStackConfigTemplate,
                          cb: (err: Error, dockerStackConfigTemplate: DockerStackConfigTemplate) => void) {
-    const me = this;
-    const volumes = Object.keys(dsct.dockerComposeYaml.volumes).map((key) => dsct.dockerComposeYaml.volumes[key]);
-    async.each(
-      volumes,
-      (volume: DockerVolumeDescription, cb: (err?: Error) => void) => {
-        if(volume.driver !== 'local' || volume.driver_opts.type !== 'nfs') {
-          return cb();
-        }
-        const options = DockerProvisionImpl.optionsStringToHash(volume.driver_opts.o);
-        const nfsc = require('node-nfsc');
-        const volumeConfig = {
-          host: options.addr,
-          exportPath: volume.driver_opts.device.slice(1)//remove the leading colon
-        };
-        const nfsVolume = new nfsc.V3(volumeConfig);
-        nfsVolume.mount((err) => {
-          if(err) {
-            if(err.code === 13) {
-              //Looks like we can get to the NFS server but not the mount, we can try to fix this
-              const cmds = [
-                [
-                  'mkdir',
-                  '-p',
-                  volumeConfig.exportPath
-                ],
-                [
-                  'chmod',
-                  '777',
-                  volumeConfig.exportPath
-                ],
-                [
-                  `echo '${volumeConfig.exportPath} *(insecure,rw,sync,no_root_squash)' >> /etc/exports`
-                ],
-                [
-                  '/etc/init.d/nfs-kernel-server',
-                  'restart'
-                ]
-              ];
-
-              async.eachSeries(cmds, (cmd, cb) => {
-                const spawnOptions: SpawnOptions2 = {
-                  suppressStdOut: false,
-                  suppressStdErr: false,
-                  cacheStdOut: true,
-                  cacheStdErr: true,
-                  suppressResult: false,
-                  remoteHost: dsct.nfsConfig.serverAddr,
-                  remoteUser: dsct.nfsConfig.nfsUser,
-                  remotePassword: dsct.nfsConfig.nfsPassword
-                };
-
-                me.spawn.spawnShellCommandAsync(
-                  cmd,
-                  spawnOptions,
-                  (err: Error, result: string) => {
-                    me.commandUtil.log(result);
-                  },
-                  (err: Error, result: string) => {
-                    me.commandUtil.log(result);
-                    cb(err);
-                  }
-                );
-              }, (err: Error) => {
-                cb(err);
-              });
-            } else {
-              cb(new Error(`NFS server not found for ${volumeConfig.host}:${volumeConfig.exportPath}`));
+    cb(null, dsct);
+    /*    const me = this;
+        const volumes = Object.keys(dsct.dockerComposeYaml.volumes).map((key) => dsct.dockerComposeYaml.volumes[key]);
+        async.each(
+          volumes,
+          (volume: DockerVolumeDescription, cb: (err?: Error) => void) => {
+            if(volume.driver !== 'local' || volume.driver_opts.type !== 'nfs') {
+              return cb();
             }
+            const options = DockerProvisionImpl.optionsStringToHash(volume.driver_opts.o);
+            const nfsc = require('node-nfsc');
+            const volumeConfig = {
+              host: options.addr,
+              exportPath: volume.driver_opts.device.slice(1)//remove the leading colon
+            };
+            const nfsVolume = new nfsc.V3(volumeConfig);
+            nfsVolume.mount((err) => {
+              if(err) {
+                if(err.code === 13) {
+                  //Looks like we can get to the NFS server but not the mount, we can try to fix this
+                  const cmds = [
+                    [
+                      'mkdir',
+                      '-p',
+                      volumeConfig.exportPath
+                    ],
+                    [
+                      'chmod',
+                      '777',
+                      volumeConfig.exportPath
+                    ],
+                    [
+                      `echo '${volumeConfig.exportPath} *(insecure,rw,sync,no_root_squash)' >> /etc/exports`
+                    ],
+                    [
+                      '/etc/init.d/nfs-kernel-server',
+                      'restart'
+                    ]
+                  ];
+
+                  async.eachSeries(cmds, (cmd, cb) => {
+                    const spawnOptions: SpawnOptions2 = {
+                      suppressStdOut: false,
+                      suppressStdErr: false,
+                      cacheStdOut: true,
+                      cacheStdErr: true,
+                      suppressResult: false,
+                      remoteHost: dsct.nfsConfig.serverAddr,
+                      remoteUser: dsct.nfsConfig.nfsUser,
+                      remotePassword: dsct.nfsConfig.nfsPassword
+                    };
+
+                    me.spawn.spawnShellCommandAsync(
+                      cmd,
+                      spawnOptions,
+                      (err: Error, result: string) => {
+                        me.commandUtil.log(result);
+                      },
+                      (err: Error, result: string) => {
+                        me.commandUtil.log(result);
+                        cb(err);
+                      }
+                    );
+                  }, (err: Error) => {
+                    cb(err);
+                  });
+                } else {
+                  cb(new Error(`NFS server not found for ${volumeConfig.host}:${volumeConfig.exportPath}`));
+                }
+              }
+            });
+          }, (err: Error) => {
+            cb(err, dsct);
           }
-        });
-      }, (err: Error) => {
-        cb(err, dsct);
-      }
-    );
+        );*/
   }
 
   private static optionsHashToString(hash: any): string {
