@@ -187,7 +187,6 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     }
     //this.dockerUtil.writeJsonTemplateFile(dsct, '/tmp/tmp.json');
     me.checkNfsMounts(dsct, (err, dsct) => {
-      me.commandUtil.processExit(0);
       cb(err, dsct);
     });
   }

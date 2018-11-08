@@ -52,7 +52,8 @@ dockerProvision.buildTemplate({
   //input: ProvisionCommandImpl.defaultConfigFilename
   //noports: false,
 
-  input: '/home/jreeme/src/parrot-stack/firmament/deploy/vmware/vmware.parrot-les.keyw/postgres-thin.json',
+  input: '/home/jreeme/src/merlin-stack/firmament/deploy/virtualbox/virtualbox.parrot.keyw/virtualbox-slim.json'
+  //input: '/home/jreeme/src/parrot-stack/firmament/deploy/vmware/vmware.parrot-les.keyw/postgres-thin.json',
 }, (err?:Error) => {
   if(err) {
     console.error(err);
