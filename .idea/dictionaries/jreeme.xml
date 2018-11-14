@@ -36,6 +36,7 @@
       <w>eulas</w>
       <w>eventlistener</w>
       <w>exitcodes</w>
+      <w>exportfs</w>
       <w>filenames</w>
       <w>floatingip</w>
       <w>hdfs</w>
@@ -88,6 +89,7 @@
       <w>scif</w>
       <w>serverurl</w>
       <w>setuid</w>
+      <w>showmount</w>
       <w>sparkworker</w>
       <w>stagingserver</w>
       <w>startretries</w>

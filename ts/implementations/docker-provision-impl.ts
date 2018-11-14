@@ -18,6 +18,7 @@ import * as path from 'path';
 import * as tmp from 'tmp';
 import * as mkdirp from 'mkdirp';
 import * as touch from 'touch';
+import * as _ from 'lodash';
 import {RemoteCatalogGetter} from 'firmament-yargs';
 import {DockerProvision} from '../interfaces/docker-provision';
 import {DockerUtil} from '../interfaces/docker-util';
@@ -185,7 +186,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
         }
       }
     }
-    //this.dockerUtil.writeJsonTemplateFile(dsct, '/tmp/tmp.json');
+    this.dockerUtil.writeJsonTemplateFile(dsct, '/tmp/tmp.json');
     me.checkNfsMounts(dsct, (err, dsct) => {
       cb(err, dsct);
     });
@@ -193,81 +194,151 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
 
   private checkNfsMounts(dsct: DockerStackConfigTemplate,
                          cb: (err: Error, dockerStackConfigTemplate: DockerStackConfigTemplate) => void) {
-    cb(null, dsct);
-    /*    const me = this;
-        const volumes = Object.keys(dsct.dockerComposeYaml.volumes).map((key) => dsct.dockerComposeYaml.volumes[key]);
-        async.each(
-          volumes,
-          (volume: DockerVolumeDescription, cb: (err?: Error) => void) => {
-            if(volume.driver !== 'local' || volume.driver_opts.type !== 'nfs') {
-              return cb();
-            }
-            const options = DockerProvisionImpl.optionsStringToHash(volume.driver_opts.o);
-            const nfsc = require('node-nfsc');
-            const volumeConfig = {
-              host: options.addr,
-              exportPath: volume.driver_opts.device.slice(1)//remove the leading colon
-            };
-            const nfsVolume = new nfsc.V3(volumeConfig);
-            nfsVolume.mount((err) => {
-              if(err) {
-                if(err.code === 13) {
-                  //Looks like we can get to the NFS server but not the mount, we can try to fix this
-                  const cmds = [
-                    [
+    const me = this;
+    const volumes = Object.keys(dsct.dockerComposeYaml.volumes).map((key) => dsct.dockerComposeYaml.volumes[key]);
+    return async.each([
+      'nfs.parrot-les.keyw'
+      , 'nfs.parrot-les.keyw'
+      , 'nfs.parrot-les.keyw'
+      , 'nfs.parrot-les.keyw'
+      , 'nfs.parrot-les.keyw'
+      , 'nfs.parrot-les.keyw'
+      , 'nfs.parrot-les.keyw'
+    ], (volume, cb) => {
+      const spawnOptions: SpawnOptions2 = {
+        suppressStdOut: false,
+        suppressStdErr: false,
+        cacheStdOut: true,
+        cacheStdErr: true,
+        suppressResult: false
+        /*          ,remoteHost: dsct.nfsConfig.serverAddr,
+                  remoteUser: dsct.nfsConfig.nfsUser,
+                  remotePassword: dsct.nfsConfig.nfsPassword*/
+      };
+      me.spawn.spawnShellCommandAsync(
+        [
+          'showmount',
+          '-e',
+          `${volume}`
+        ],
+        spawnOptions,
+        (err, result) => {
+        },
+        (err: Error, result: string) => {
+          me.commandUtil.log(result);
+          cb(err);
+        }
+      );
+    }, (err) => {
+      me.commandUtil.log('Finished');
+    });
+
+    async.each(
+      volumes,
+      (volume: DockerVolumeDescription, cb: (err?: Error) => void) => {
+        if(volume.driver !== 'local' || volume.driver_opts.type !== 'nfs') {
+          return cb();
+        }
+        const options = DockerProvisionImpl.optionsStringToHash(volume.driver_opts.o);
+        const volumeConfig = {
+          host: options.addr,
+          exportPath: volume.driver_opts.device.slice(1)//remove the leading colon
+        };
+        //BEGIN -> Waterfall to check existence of export, check if we can add it, if so then add it
+        const spawnOptions: SpawnOptions2 = {
+          suppressStdOut: false,
+          suppressStdErr: false,
+          cacheStdOut: true,
+          cacheStdErr: true,
+          suppressResult: false
+          /*          ,remoteHost: dsct.nfsConfig.serverAddr,
+                    remoteUser: dsct.nfsConfig.nfsUser,
+                    remotePassword: dsct.nfsConfig.nfsPassword*/
+        };
+        return async.waterfall([
+          (cb) => {
+            //Issue a 'showmount' to remote server to see if volume is exported
+            me.spawn.spawnShellCommandAsync(
+              [
+                'showmount',
+                '-e',
+                `${volumeConfig.host}`
+              ],
+              spawnOptions,
+              (err, result) => {
+                const e = err;
+              },
+              (err: Error, result: string) => {
+                if(me.commandUtil.callbackIfError(cb, err, result)) {
+                  return;
+                }
+                me.safeJson.safeParse(result, (err: Error, obj: {code: number, stdoutText: string}) => {
+                  if(obj.code) {
+                    return cb(new Error(`local 'showmount' FAILED`));
+                  }
+                  const exportList = obj.stdoutText.split('\n').slice(1, -1).map((exportLine) => exportLine.split(/\s/)[0]);
+                  if(exportList.indexOf(volumeConfig.exportPath) !== -1) {
+                    //Looks like this volume is already exported so we can stop here
+                    return cb(new Error('ALREADY_EXPORTED'));
+                  }
+                  cb(err, volumeConfig.exportPath);
+                });
+              }
+            );
+          },
+          (exportPath, cb) => {
+            cb(null, exportPath);
+          }
+        ], (err, result) => {
+          if(err && err.message === 'ALREADY_EXPORTED') {
+            return cb(null);
+          }
+          cb(err);
+        });
+        //END -> Waterfall to check existence of export, check if we can add it, if so then add it
+        //Looks like we can get to the NFS server but not the mount, we can try to fix this
+        const etcExportsEntry = `${volumeConfig.exportPath} *(insecure,rw,sync,no_root_squash,no_subtree_check)`;
+        const cmds = [
+          /*          [
                       'mkdir',
                       '-p',
                       volumeConfig.exportPath
-                    ],
-                    [
+                    ]
+                    , [
                       'chmod',
                       '777',
                       volumeConfig.exportPath
-                    ],
-                    [
-                      `echo '${volumeConfig.exportPath} *(insecure,rw,sync,no_root_squash)' >> /etc/exports`
-                    ],
-                    [
-                      '/etc/init.d/nfs-kernel-server',
-                      'restart'
-                    ]
-                  ];
+                    ],*/
+          [
+            // Check for this entry in /etc/exports and add if not there
+            `grep -q -F '${etcExportsEntry}' /etc/exports || echo '${etcExportsEntry}' >> /etc/exports`
+          ]
+          /*          , [
+                      '/usr/sbin/exportfs',
+                      '-ra'
+                    ]*/
+        ];
 
-                  async.eachSeries(cmds, (cmd, cb) => {
-                    const spawnOptions: SpawnOptions2 = {
-                      suppressStdOut: false,
-                      suppressStdErr: false,
-                      cacheStdOut: true,
-                      cacheStdErr: true,
-                      suppressResult: false,
-                      remoteHost: dsct.nfsConfig.serverAddr,
-                      remoteUser: dsct.nfsConfig.nfsUser,
-                      remotePassword: dsct.nfsConfig.nfsPassword
-                    };
+        async.eachSeries(cmds, (cmd, cb) => {
 
-                    me.spawn.spawnShellCommandAsync(
-                      cmd,
-                      spawnOptions,
-                      (err: Error, result: string) => {
-                        me.commandUtil.log(result);
-                      },
-                      (err: Error, result: string) => {
-                        me.commandUtil.log(result);
-                        cb(err);
-                      }
-                    );
-                  }, (err: Error) => {
-                    cb(err);
-                  });
-                } else {
-                  cb(new Error(`NFS server not found for ${volumeConfig.host}:${volumeConfig.exportPath}`));
-                }
-              }
-            });
-          }, (err: Error) => {
-            cb(err, dsct);
-          }
-        );*/
+          me.spawn.spawnShellCommandAsync(
+            cmd,
+            spawnOptions,
+            (err: Error, result: string) => {
+              me.commandUtil.log(result);
+            },
+            (err: Error, result: string) => {
+              me.commandUtil.log(result);
+              cb(err);
+            }
+          );
+        }, (err: Error) => {
+          cb(err);
+        });
+      }, (err: Error) => {
+        cb(err, dsct);
+      }
+    );
   }
 
   private static optionsHashToString(hash: any): string {
