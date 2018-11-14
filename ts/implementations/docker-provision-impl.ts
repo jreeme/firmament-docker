@@ -196,43 +196,6 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
                          cb: (err: Error, dockerStackConfigTemplate: DockerStackConfigTemplate) => void) {
     const me = this;
     const volumes = Object.keys(dsct.dockerComposeYaml.volumes).map((key) => dsct.dockerComposeYaml.volumes[key]);
-    return async.each([
-      'nfs.parrot-les.keyw'
-      , 'nfs.parrot-les.keyw'
-      , 'nfs.parrot-les.keyw'
-      , 'nfs.parrot-les.keyw'
-      , 'nfs.parrot-les.keyw'
-      , 'nfs.parrot-les.keyw'
-      , 'nfs.parrot-les.keyw'
-    ], (volume, cb) => {
-      const spawnOptions: SpawnOptions2 = {
-        suppressStdOut: false,
-        suppressStdErr: false,
-        cacheStdOut: true,
-        cacheStdErr: true,
-        suppressResult: false
-        /*          ,remoteHost: dsct.nfsConfig.serverAddr,
-                  remoteUser: dsct.nfsConfig.nfsUser,
-                  remotePassword: dsct.nfsConfig.nfsPassword*/
-      };
-      me.spawn.spawnShellCommandAsync(
-        [
-          'showmount',
-          '-e',
-          `${volume}`
-        ],
-        spawnOptions,
-        (err, result) => {
-        },
-        (err: Error, result: string) => {
-          me.commandUtil.log(result);
-          cb(err);
-        }
-      );
-    }, (err) => {
-      me.commandUtil.log('Finished');
-    });
-
     async.each(
       volumes,
       (volume: DockerVolumeDescription, cb: (err?: Error) => void) => {
