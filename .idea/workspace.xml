@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="Home">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="v.1.4.49 -&gt; NPM &amp; Create NFS mounts if they aren't there on docker-provision">
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" afterDir="false" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -80,7 +78,7 @@
           <entry key="js" value="11" />
           <entry key="json" value="33" />
           <entry key="sh" value="2" />
-          <entry key="ts" value="60" />
+          <entry key="ts" value="61" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -89,23 +87,23 @@
           <entry key="JSON" value="28" />
           <entry key="JavaScript" value="11" />
           <entry key="Scratch" value="1" />
-          <entry key="TypeScript" value="60" />
+          <entry key="TypeScript" value="61" />
           <entry key="tsconfig" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="js" value="2" />
-          <entry key="json" value="875" />
+          <entry key="json" value="881" />
           <entry key="ts" value="22000" />
-          <entry key="txt" value="820" />
+          <entry key="txt" value="902" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JSON" value="804" />
+          <entry key="JSON" value="810" />
           <entry key="JavaScript" value="2" />
-          <entry key="PLAIN_TEXT" value="820" />
+          <entry key="PLAIN_TEXT" value="902" />
           <entry key="Scratch" value="32" />
           <entry key="TypeScript" value="22000" />
           <entry key="tsconfig" value="39" />
@@ -122,8 +120,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+            <state relative-caret-position="255">
+              <caret line="47" column="29" selection-start-line="47" selection-start-column="29" selection-end-line="47" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="350">
+              <caret line="244" column="30" selection-start-line="244" selection-start-column="30" selection-end-line="244" selection-end-column="30" />
+              <folding>
+                <element signature="e#0#45#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -278,6 +288,17 @@
             <path>
               <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
               <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="ts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="ts" type="462c0819:PsiDirectoryNode" />
+              <item name="implementations" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -562,14 +583,7 @@
       <workItem from="1541532059983" duration="7030000" />
       <workItem from="1541707999293" duration="2308000" />
       <workItem from="1541790002813" duration="783000" />
-      <workItem from="1542134900736" duration="24039000" />
-    </task>
-    <task id="LOCAL-00036" summary="-&gt; v.0.2.28 publish to NPM">
-      <created>1479911139109</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1479911139109</updated>
+      <workItem from="1542134900736" duration="26145000" />
     </task>
     <task id="LOCAL-00037" summary="-&gt; v.0.2.30 publish to NPM">
       <created>1480354249813</created>
@@ -907,7 +921,14 @@
       <option name="project" value="LOCAL" />
       <updated>1542229962893</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="v.1.4.49 -&gt; NPM &amp; Create NFS mounts if they aren't there on docker-provision">
+      <created>1542301864381</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1542301864381</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -943,7 +964,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="494697000" />
+    <option name="totallyTimeSpent" value="496803000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1919" y="0" width="1922" height="1053" extended-state="6" />
@@ -1017,7 +1038,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="NPM -&gt; v.1.4.24 &amp;&amp; add 'noports' switch to docker/provision/build" />
     <MESSAGE value="NPM -&gt; v.1.4.25 &amp;&amp; add traefik label filling out w/traefikZoneName" />
     <MESSAGE value="NPM -&gt; v.1.4.28 &amp;&amp; add some support for amazonec2 docker-machine driver" />
     <MESSAGE value="NPM -&gt; v.1.4.29 &amp;&amp; fix traefik label logic to support traefik[.servicename].port + .frontend.rule" />
@@ -1042,10 +1062,25 @@
     <MESSAGE value="Stash to update firmament-yargs to address spawn + stdout flush bug" />
     <MESSAGE value="v.1.4.48 -&gt; NPM &amp; new firmament-bash (1.1.18) and therefore new firmament-yargs (1.1.14)" />
     <MESSAGE value="Home" />
-    <option name="LAST_COMMIT_MESSAGE" value="Home" />
+    <MESSAGE value="v.1.4.49 -&gt; NPM &amp; Create NFS mounts if they aren't there on docker-provision" />
+    <option name="LAST_COMMIT_MESSAGE" value="v.1.4.49 -&gt; NPM &amp; Create NFS mounts if they aren't there on docker-provision" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts</url>
+          <line>226</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="75" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts</url>
+          <line>243</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="76" />
+        </line-breakpoint>
+      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
@@ -1330,8 +1365,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="266" column="16" selection-start-line="266" selection-start-column="16" selection-end-line="266" selection-end-column="16" />
+        <state relative-caret-position="350">
+          <caret line="244" column="30" selection-start-line="244" selection-start-column="30" selection-end-line="244" selection-end-column="30" />
           <folding>
             <element signature="e#0#45#0" expanded="true" />
           </folding>
@@ -1340,8 +1375,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+        <state relative-caret-position="255">
+          <caret line="47" column="29" selection-start-line="47" selection-start-column="29" selection-end-line="47" selection-end-column="29" />
         </state>
       </provider>
     </entry>
