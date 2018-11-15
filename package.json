@@ -1,6 +1,6 @@
 {
   "name": "firmament-docker",
-  "version": "1.4.48",
+  "version": "1.4.49",
   "description": "Typescript classes for performing Docker operations",
   "main": "js/index.js",
   "typings": "js/index",
@@ -45,7 +45,7 @@
     "encodeurl": "^1.0.2",
     "file-exists": "^4.0.0",
     "filesize": "^3.5.10",
-    "firmament-bash": "^1.1.18",
+    "firmament-bash": "^1.1.19",
     "inversify": "^4.13.0",
     "jsnlog": "^2.24.1",
     "jsonfile": "^3.0.1",

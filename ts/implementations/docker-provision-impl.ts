@@ -188,6 +188,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     }
     this.dockerUtil.writeJsonTemplateFile(dsct, '/tmp/tmp.json');
     me.checkNfsMounts(dsct, (err, dsct) => {
+      //me.commandUtil.processExit(0, 'DEBUG --> Exit(0)');
       cb(err, dsct);
     });
   }
@@ -208,17 +209,19 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
           exportPath: volume.driver_opts.device.slice(1)//remove the leading colon
         };
         //BEGIN -> Waterfall to check existence of export, check if we can add it, if so then add it
-        const spawnOptions: SpawnOptions2 = {
+        const localSpawnOptions: SpawnOptions2 = {
           suppressStdOut: false,
           suppressStdErr: false,
           cacheStdOut: true,
           cacheStdErr: true,
           suppressResult: false
-          /*          ,remoteHost: dsct.nfsConfig.serverAddr,
-                    remoteUser: dsct.nfsConfig.nfsUser,
-                    remotePassword: dsct.nfsConfig.nfsPassword*/
         };
-        return async.waterfall([
+        const remoteSpawnOptions = Object.assign({}, localSpawnOptions, {
+          remoteHost: dsct.nfsConfig.serverAddr,
+          remoteUser: dsct.nfsConfig.nfsUser,
+          remotePassword: dsct.nfsConfig.nfsPassword
+        });
+        async.waterfall([
           (cb) => {
             //Issue a 'showmount' to remote server to see if volume is exported
             me.spawn.spawnShellCommandAsync(
@@ -227,9 +230,8 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
                 '-e',
                 `${volumeConfig.host}`
               ],
-              spawnOptions,
+              localSpawnOptions,
               (err, result) => {
-                const e = err;
               },
               (err: Error, result: string) => {
                 if(me.commandUtil.callbackIfError(cb, err, result)) {
@@ -240,64 +242,64 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
                     return cb(new Error(`local 'showmount' FAILED`));
                   }
                   const exportList = obj.stdoutText.split('\n').slice(1, -1).map((exportLine) => exportLine.split(/\s/)[0]);
+                  const msg = `Checking NFS mount ${volumeConfig.host}:${volumeConfig.exportPath} ...`;
                   if(exportList.indexOf(volumeConfig.exportPath) !== -1) {
                     //Looks like this volume is already exported so we can stop here
+                    me.commandUtil.log(`${msg} OK`);
                     return cb(new Error('ALREADY_EXPORTED'));
                   }
+                  me.commandUtil.log(`${msg} NOT EXPORTED`);
                   cb(err, volumeConfig.exportPath);
                 });
               }
             );
           },
           (exportPath, cb) => {
-            cb(null, exportPath);
+            me.commandUtil.log(`Attempting to export NFS volume ${volumeConfig.host}:${exportPath} ...`);
+            if(!remoteSpawnOptions.remoteHost || !remoteSpawnOptions.remoteUser || !remoteSpawnOptions.remotePassword) {
+              return cb(new Error(`nfsConfig [nfsHost & nfsUser] must all be specified to export NFS volume. Cannot continue.`));
+            }
+            const etcExportsEntry = `${volumeConfig.exportPath} *(insecure,rw,sync,no_root_squash,no_subtree_check)`;
+            const cmds = [
+              [
+                'mkdir',
+                '-p',
+                volumeConfig.exportPath
+              ],
+              [
+                'chmod',
+                '777',
+                volumeConfig.exportPath
+              ],
+              [
+                // Check for this entry in /etc/exports and add if not there
+                `grep -q -F '${etcExportsEntry}' /etc/exports || echo '${etcExportsEntry}' >> /etc/exports`
+              ],
+              [
+                '/usr/sbin/exportfs',
+                '-ra'
+              ]
+            ];
+            async.eachSeries(cmds, (cmd, cb) => {
+              me.spawn.spawnShellCommandAsync(
+                cmd,
+                remoteSpawnOptions,
+                (err: Error, result: string) => {
+                  me.commandUtil.log(result);
+                },
+                (err: Error, result: string) => {
+                  me.commandUtil.log(result);
+                  cb(err);
+                }
+              );
+            }, (err: Error) => {
+              cb(err);
+            });
           }
-        ], (err, result) => {
-          if(err && err.message === 'ALREADY_EXPORTED') {
-            return cb(null);
-          }
-          cb(err);
+        ], (err) => {
+          cb((err && err.message === 'ALREADY_EXPORTED') ? null : err);
         });
         //END -> Waterfall to check existence of export, check if we can add it, if so then add it
-        //Looks like we can get to the NFS server but not the mount, we can try to fix this
-        const etcExportsEntry = `${volumeConfig.exportPath} *(insecure,rw,sync,no_root_squash,no_subtree_check)`;
-        const cmds = [
-          /*          [
-                      'mkdir',
-                      '-p',
-                      volumeConfig.exportPath
-                    ]
-                    , [
-                      'chmod',
-                      '777',
-                      volumeConfig.exportPath
-                    ],*/
-          [
-            // Check for this entry in /etc/exports and add if not there
-            `grep -q -F '${etcExportsEntry}' /etc/exports || echo '${etcExportsEntry}' >> /etc/exports`
-          ]
-          /*          , [
-                      '/usr/sbin/exportfs',
-                      '-ra'
-                    ]*/
-        ];
-
-        async.eachSeries(cmds, (cmd, cb) => {
-
-          me.spawn.spawnShellCommandAsync(
-            cmd,
-            spawnOptions,
-            (err: Error, result: string) => {
-              me.commandUtil.log(result);
-            },
-            (err: Error, result: string) => {
-              me.commandUtil.log(result);
-              cb(err);
-            }
-          );
-        }, (err: Error) => {
-          cb(err);
-        });
       }, (err: Error) => {
         cb(err, dsct);
       }

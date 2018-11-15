@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="Stash to update firmament-yargs to address spawn + stdout flush bug">
+    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="Home">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" afterDir="false" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -77,36 +78,36 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="js" value="11" />
-          <entry key="json" value="32" />
+          <entry key="json" value="33" />
           <entry key="sh" value="2" />
-          <entry key="ts" value="58" />
+          <entry key="ts" value="60" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Bash" value="2" />
-          <entry key="JSON" value="27" />
+          <entry key="JSON" value="28" />
           <entry key="JavaScript" value="11" />
           <entry key="Scratch" value="1" />
-          <entry key="TypeScript" value="58" />
+          <entry key="TypeScript" value="60" />
           <entry key="tsconfig" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="js" value="2" />
-          <entry key="json" value="859" />
-          <entry key="ts" value="21018" />
-          <entry key="txt" value="722" />
+          <entry key="json" value="875" />
+          <entry key="ts" value="22000" />
+          <entry key="txt" value="820" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JSON" value="788" />
+          <entry key="JSON" value="804" />
           <entry key="JavaScript" value="2" />
-          <entry key="PLAIN_TEXT" value="722" />
+          <entry key="PLAIN_TEXT" value="820" />
           <entry key="Scratch" value="32" />
-          <entry key="TypeScript" value="21018" />
+          <entry key="TypeScript" value="22000" />
           <entry key="tsconfig" value="39" />
         </counts>
       </usages-collector>
@@ -121,32 +122,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="32" column="38" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="55" column="2" selection-start-line="55" selection-start-column="2" selection-end-line="55" selection-end-column="2" />
-              <folding>
-                <element signature="e#79#123#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="209" column="29" selection-start-line="209" selection-start-column="29" selection-end-line="209" selection-end-column="29" />
-              <folding>
-                <element signature="e#0#45#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="30">
+              <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -270,6 +247,9 @@
   <component name="NamedScopeManager">
     <scope name="ts-folder" pattern="file[firmament-docker]:ts//*" />
   </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths>
       <path value="$PROJECT_DIR$/package.json" />
@@ -279,9 +259,9 @@
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1" />
+    <option name="x" value="1919" />
     <option name="width" value="1922" />
-    <option name="height" value="1080" />
+    <option name="height" value="1053" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -582,21 +562,7 @@
       <workItem from="1541532059983" duration="7030000" />
       <workItem from="1541707999293" duration="2308000" />
       <workItem from="1541790002813" duration="783000" />
-      <workItem from="1542134900736" duration="15878000" />
-    </task>
-    <task id="LOCAL-00034" summary="-&gt; v.0.2.27">
-      <created>1479319647275</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1479319647275</updated>
-    </task>
-    <task id="LOCAL-00035" summary="-&gt; v.0.2.28 (Start using ForceError/Impl from firmament-yargs, get 'js' out of git repo)">
-      <created>1479911014274</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1479911014274</updated>
+      <workItem from="1542134900736" duration="24039000" />
     </task>
     <task id="LOCAL-00036" summary="-&gt; v.0.2.28 publish to NPM">
       <created>1479911139109</created>
@@ -927,7 +893,21 @@
       <option name="project" value="LOCAL" />
       <updated>1542228540233</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="v.1.4.48 -&gt; NPM &amp; new firmament-bash (1.1.18) and therefore new firmament-yargs (1.1.14)">
+      <created>1542229503341</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1542229503341</updated>
+    </task>
+    <task id="LOCAL-00084" summary="Home">
+      <created>1542229962893</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1542229962893</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -963,25 +943,25 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="486536000" />
+    <option name="totallyTimeSpent" value="494697000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="0" width="1922" height="1080" extended-state="6" />
+    <frame x="1919" y="0" width="1922" height="1053" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.47777778" visible="true" weight="0.1814301" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47777778" visible="true" weight="0.1814301" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.5222222" side_tool="true" weight="0.16094987" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3676313" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32795697" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49519745" weight="0.41379312" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49519745" visible="true" weight="0.3967742" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="TypeScript" order="7" sideWeight="0.4939378" visible="true" weight="0.26854753" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.3584117" />
+      <window_info anchor="bottom" id="TypeScript" order="7" sideWeight="0.4939378" weight="0.2763441" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.3580645" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5048026" side_tool="true" weight="0.40860215" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.4949921" weight="0.32150537" />
       <window_info anchor="bottom" id="Messages" order="11" />
@@ -1037,8 +1017,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Add dns server to /etc/resolv.conf on boot2docker container host" />
-    <MESSAGE value="NPM -&gt; v.1.4.21" />
     <MESSAGE value="NPM -&gt; v.1.4.24 &amp;&amp; add 'noports' switch to docker/provision/build" />
     <MESSAGE value="NPM -&gt; v.1.4.25 &amp;&amp; add traefik label filling out w/traefikZoneName" />
     <MESSAGE value="NPM -&gt; v.1.4.28 &amp;&amp; add some support for amazonec2 docker-machine driver" />
@@ -1062,7 +1040,9 @@
     <MESSAGE value="v.1.4.43 -&gt; NPM &amp; Support creating not present NFS mounts on remote machines" />
     <MESSAGE value="v.1.4.47 -&gt; NPM &amp; Get rid of package-lock.json" />
     <MESSAGE value="Stash to update firmament-yargs to address spawn + stdout flush bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Stash to update firmament-yargs to address spawn + stdout flush bug" />
+    <MESSAGE value="v.1.4.48 -&gt; NPM &amp; new firmament-bash (1.1.18) and therefore new firmament-yargs (1.1.14)" />
+    <MESSAGE value="Home" />
+    <option name="LAST_COMMIT_MESSAGE" value="Home" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1293,9 +1273,6 @@
     <entry file="file://$PROJECT_DIR$/node_modules/firmament-yargs/ts/test/manual-tests/manual-spawn-async-test.ts">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/firmament-yargs/package.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="438">
@@ -1341,17 +1318,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/firmament-yargs/package.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/firmament-yargs/ts/implementations/spawn-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="257" column="28" selection-start-line="257" selection-start-column="28" selection-end-line="257" selection-end-column="28" />
+        <state relative-caret-position="166">
+          <caret line="53" column="25" selection-start-line="53" selection-start-column="25" selection-end-line="53" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="209" column="29" selection-start-line="209" selection-start-column="29" selection-end-line="209" selection-end-column="29" />
+        <state relative-caret-position="177">
+          <caret line="266" column="16" selection-start-line="266" selection-start-column="16" selection-end-line="266" selection-end-column="16" />
           <folding>
             <element signature="e#0#45#0" expanded="true" />
           </folding>
@@ -1360,8 +1340,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" column="38" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
+        <state relative-caret-position="30">
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
         </state>
       </provider>
     </entry>
