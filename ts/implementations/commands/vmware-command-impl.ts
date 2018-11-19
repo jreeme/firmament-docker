@@ -5,16 +5,16 @@ import {VmwareMake} from "../../interfaces/vmware-make";
 
 @injectable()
 export class VmwareCommandImpl implements Command {
-  aliases:string[] = [];
-  command:string = '';
-  commandDesc:string = '';
-  handler:(argv:any) => void = (argv:any) => {
+  aliases: string[] = [];
+  command: string = '';
+  commandDesc: string = '';
+  handler: (argv: any) => void = (argv: any) => {
   };
-  options:any = {};
-  subCommands:Command[] = [];
+  options: any = {};
+  subCommands: Command[] = [];
   static defaultConfigFilename = 'vmware-control.json';
 
-  constructor(@inject('VmwareMake') private vmwareMake:VmwareMake) {
+  constructor(@inject('VmwareMake') private vmwareMake: VmwareMake) {
     this.buildCommandTree();
   }
 
@@ -51,30 +51,35 @@ export class VmwareCommandImpl implements Command {
         desc: 'Name VM will have in ESXi inventory'
       },
       powerOn: {
+        alias: 'p',
         default: false,
         type: 'boolean',
         desc: `If 'true' then machine will be powered on after being imported`
       },
       datastore: {
-        alias: 'ds',
+        alias: 'd',
         default: 'datastore1',
         type: 'string',
         desc: 'ESXi datastore to put the VM into'
       },
       ovaUrl: {
         type: 'string',
+        default: 'https://s3.amazonaws.com/merlin-jreeme/base-ubu16.04-8-32.ova',
         desc: 'Url of OVA file'
       },
       esxiHost: {
         type: 'string',
+        required: true,
         desc: 'ESXi Server Hostname/IP address'
       },
       esxiUser: {
         type: 'string',
+        required: true,
         desc: 'User to perform action as on ESXi server'
       },
       esxiPassword: {
         type: 'string',
+        required: true,
         desc: 'Password for ESXi User'
       }
     };

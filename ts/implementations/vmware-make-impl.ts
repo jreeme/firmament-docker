@@ -7,15 +7,15 @@ import {ProcessCommandJson} from "firmament-bash/js/interfaces/process-command-j
 
 @injectable()
 export class VmwareMakeImpl extends ForceErrorImpl implements VmwareMake {
-  constructor(@inject('CommandUtil') private commandUtil:CommandUtil,
-              @inject('SafeJson') private safeJson:SafeJson,
-              @inject('ProcessCommandJson') private processCommandJson:ProcessCommandJson,
-              @inject('Positive') private positive:Positive,
-              @inject('Spawn') private spawn:Spawn) {
+  constructor(@inject('CommandUtil') private commandUtil: CommandUtil,
+              @inject('SafeJson') private safeJson: SafeJson,
+              @inject('ProcessCommandJson') private processCommandJson: ProcessCommandJson,
+              @inject('Positive') private positive: Positive,
+              @inject('Spawn') private spawn: Spawn) {
     super();
   }
 
-  export(argv:any) {
+  export(argv: any) {
     const me = this;
 
     const ovfToolCmd = [
@@ -34,15 +34,15 @@ export class VmwareMakeImpl extends ForceErrorImpl implements VmwareMake {
         me.commandUtil.log(result.toString());
       },
       (err) => {
-        if(err) {
-          return me.handleOvfToolExecutionFailure(err, (err:Error) => {
+        if (err) {
+          return me.handleOvfToolExecutionFailure(err, (/*err:Error*/) => {
             me.commandUtil.processExit();
           });
         }
       });
   }
 
-  uninstallOvfTool(argv:any) {
+  uninstallOvfTool(argv: any) {
     const me = this;
     const uninstallOvfToolJson = path.resolve(__dirname, '../../firmament-bash/uninstall-ovftool.json');
     me.processCommandJson.processAbsoluteUrl(uninstallOvfToolJson, (err) => {
@@ -50,7 +50,7 @@ export class VmwareMakeImpl extends ForceErrorImpl implements VmwareMake {
     });
   }
 
-  import(argv:any) {
+  import(argv: any) {
     const me = this;
     const {name, powerOn, datastore, ovaUrl, esxiHost, esxiUser, esxiPassword} = argv;
     const ovfToolCmd = [
@@ -60,10 +60,10 @@ export class VmwareMakeImpl extends ForceErrorImpl implements VmwareMake {
       '--noSSLVerify',
       '--vmFolder=/',
     ];
-    if(name && name != 'OVA filename') {
+    if (name && name != 'OVA filename') {
       ovfToolCmd.push(`--name=${name}`);
     }
-    if(powerOn) {
+    if (powerOn) {
       ovfToolCmd.push('--powerOn');
     }
     const ds = datastore ? datastore : 'datastore1';
@@ -81,8 +81,8 @@ export class VmwareMakeImpl extends ForceErrorImpl implements VmwareMake {
         me.commandUtil.log(result.toString());
       },
       (err) => {
-        if(err) {
-          return me.handleOvfToolExecutionFailure(err, (err:Error) => {
+        if (err) {
+          return me.handleOvfToolExecutionFailure(err, (err: Error) => {
             me.commandUtil.processExitWithError(err);
           });
         }
@@ -90,19 +90,19 @@ export class VmwareMakeImpl extends ForceErrorImpl implements VmwareMake {
       });
   }
 
-  private handleOvfToolExecutionFailure(err:Error, cb:(err:Error) => void) {
+  private handleOvfToolExecutionFailure(err: Error, cb: (err: Error) => void) {
     const me = this;
-    me.safeJson.safeParse(err.message, (err:Error, obj:any) => {
+    me.safeJson.safeParse(err.message, (err: Error, obj: any) => {
       try {
-        if(obj.code.code === 'ENOENT') {
-          if(me.positive.areYouSure(
+        if (obj.code.code === 'ENOENT') {
+          if (me.positive.areYouSure(
             `Looks like 'ovftool' is not installed. Want me to try to install it?`,
             'Operation canceled.',
             true,
             FailureRetVal.TRUE)) {
             const installOvfToolJson = path.resolve(__dirname, '../../firmament-bash/install-ovftool.json');
             return me.processCommandJson.processAbsoluteUrl(installOvfToolJson, (err) => {
-              if(!err) {
+              if (!err) {
                 me.commandUtil.log(`'ovftool' installed. Try operation again.`);
               }
               cb(err);
@@ -110,7 +110,7 @@ export class VmwareMakeImpl extends ForceErrorImpl implements VmwareMake {
           }
         }
         cb(err);
-      } catch(err) {
+      } catch (err) {
         cb(err);
       }
     });
