@@ -766,6 +766,9 @@ echo "$RESOLV_CONF last modified at $DATE_OF_RESOLV_CONF"
 echo $(( \${DATE_OF_DHCP_PID_FILE}-\${DATE_OF_RESOLV_CONF} ))
 
 echo 'nameserver ${me.stackConfigTemplate.hostMachineDnsServer}' > /etc/resolv.conf
+
+#Try to protect against resolver restart or DHCP lease renewal rewriting our resolv.conf file
+chmod 444 /etc/resolv.conf
 ` : `
 #Need to set vm.max_map_count to 262144 to support ElasticSearch (ES fails in production without it)    
 sysctl -w vm.max_map_count=262144
