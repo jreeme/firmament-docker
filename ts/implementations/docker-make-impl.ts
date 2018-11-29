@@ -10,12 +10,10 @@ import {DockerImageManagement} from '../interfaces/docker-image-management';
 import * as _ from 'lodash';
 import * as fs from 'fs';
 import url = require('url');
-import {RemoteCatalogGetter, RemoteCatalogEntry} from 'firmament-yargs';
+import {RemoteCatalogGetter, RemoteCatalogEntry, SafeJson} from 'firmament-yargs';
 import {DockerUtil} from "../interfaces/docker-util";
 
 const path = require('path');
-const jsonFile = require('jsonfile');
-const request = require('request');
 const fileExists = require('file-exists');
 const async = require('async');
 //const templateCatalogUrl = '/home/jreeme/src/firmament-docker/docker/templateCatalog.json';
@@ -25,6 +23,7 @@ const templateCatalogUrl = 'https://raw.githubusercontent.com/jreeme/firmament-d
 export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
   constructor(@inject('CommandUtil') private commandUtil: CommandUtil,
               @inject('Spawn') private spawn: Spawn,
+              @inject('SafeJson') private safeJson: SafeJson,
               @inject('RemoteCatalogGetter') private remoteCatalogGetter: RemoteCatalogGetter,
               @inject('DockerImageManagement') private dockerImageManagement: DockerImageManagement,
               @inject('DockerUtil') public dockerUtil: DockerUtil,
@@ -47,9 +46,9 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
   makeTemplate(argv: any) {
     let me = this;
     const fullOutputPath = this.commandUtil.getConfigFilePath(argv.output, '.json');
-    if (argv.get === undefined) {
+    if(argv.get === undefined) {
       //Just write out the descriptors we have "baked in" to this application
-      if (fs.existsSync(fullOutputPath)
+      if(fs.existsSync(fullOutputPath)
         && !me.positive.areYouSure(
           `Config file '${fullOutputPath}' already exists. Overwrite? [Y/n] `,
           'Operation canceled.',
@@ -65,7 +64,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
     } else {
       //Need to interact with the network to get templates
       me.remoteCatalogGetter.getCatalogFromUrl(templateCatalogUrl, (err, remoteCatalog) => {
-        if (!argv.get.length) {
+        if(!argv.get.length) {
           //User specified --get with no template name so write available template names to console
           me.commandUtil.log('\nAvailable templates:\n');
           remoteCatalog.entries.forEach(entry => {
@@ -77,14 +76,14 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
           let template: RemoteCatalogEntry = _.find(remoteCatalog.entries, entry => {
             return entry.name === argv.get;
           });
-          if (!template) {
+          if(!template) {
             me.commandUtil.processExitWithError(new Error(`\nTemplate catalog '${argv.get}' does not exist.\n`));
           }
           template.resources.forEach(resource => {
             try {
               let outputPath = path.resolve(process.cwd(), path.basename(resource.name));
               fs.writeFileSync(outputPath, resource.text);
-            } catch (err) {
+            } catch(err) {
               me.commandUtil.processExitWithError(err);
             }
           });
@@ -97,10 +96,10 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
   getSortedContainerConfigsFromJsonFile(inputPath: string) {
     let me = this;
     const fullInputPath = me.commandUtil.getConfigFilePath(inputPath, '.json');
-    if (!fileExists.sync(fullInputPath)) {
+    if(!fileExists.sync(fullInputPath)) {
       me.commandUtil.processExitWithError(new Error(`\n'${fullInputPath}' does not exist`));
     }
-    const containerConfigs = jsonFile.readFileSync(fullInputPath);
+    const containerConfigs = me.safeJson.readFileSync(fullInputPath, undefined);
     const sortedContainerConfigs = me.containerDependencySort(containerConfigs);
     return {fullInputPath, sortedContainerConfigs};
   }
@@ -119,7 +118,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
       },
       (containerRemoveResults: ImageOrContainerRemoveResults[], cb: (err: Error, missingImageNames: string[]) => void) => {
         this.dockerImageManagement.listImages(false, (err, images) => {
-          if (me.commandUtil.callbackIfError(cb, err)) {
+          if(me.commandUtil.callbackIfError(cb, err)) {
             return;
           }
           let repoTags = {};
@@ -131,7 +130,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
             let imageName = (containerConfig.Image.indexOf(':') == -1)
               ? containerConfig.Image + ':latest'
               : containerConfig.Image;
-            if (!repoTags[imageName]) {
+            if(!repoTags[imageName]) {
               missingImageNames.push(imageName);
             }
           });
@@ -152,7 +151,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
               });
           },
           (err: Error, missingImageNames: string[]) => {
-            if (me.commandUtil.callbackIfError(cb, err)) {
+            if(me.commandUtil.callbackIfError(cb, err)) {
               return;
             }
             cb(null, missingImageNames.filter(missingImageName => {
@@ -179,7 +178,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
               });
           },
           (err: Error, errors: Error[]) => {
-            if (me.commandUtil.callbackIfError(cb, err)) {
+            if(me.commandUtil.callbackIfError(cb, err)) {
               return;
             }
             errors = errors.filter(error => {
@@ -199,7 +198,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
               });
             },
             (err: Error, containers: DockerContainer[]) => {
-              if (me.commandUtil.callbackIfError(cb, err)) {
+              if(me.commandUtil.callbackIfError(cb, err)) {
                 return;
               }
               let sortedContainerNames = containerConfigs.map(containerConfig => containerConfig.name);
@@ -208,7 +207,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
               });
             }
           );
-        } catch (err) {
+        } catch(err) {
           me.commandUtil.callbackIfError(cb, err);
         }
       },
@@ -225,16 +224,16 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
                   (cb: (err: Error, result?: any) => void) => {//Figure out git clone folder name and check 'DeployExisting'
                     let cwd = process.cwd();
                     let serviceName = expressApp.ServiceName;
-                    if (expressApp.DeployExisting) {
+                    if(expressApp.DeployExisting) {
                       let serviceSourceFolders = fs.readdirSync(cwd).filter((fileName) => {
                         return fileName.substring(0, serviceName.length) === serviceName;
                       });
-                      if (serviceSourceFolders.length > 1) {
+                      if(serviceSourceFolders.length > 1) {
                         let msg = 'DeployExisting was specified but there is more than one service named: ';
                         msg += serviceName + ': ' + serviceSourceFolders + '. Delete all but one and retry.';
                         cb(new Error(msg));
                         return;
-                      } else if (serviceSourceFolders.length > 0) {
+                      } else if(serviceSourceFolders.length > 0) {
                         expressApp.GitCloneFolder = cwd + '/' + serviceSourceFolders[0];
                         cb(null);
                         return;
@@ -244,7 +243,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
                     //to make sure it's different
                     let refTimeStamp = (new Date()).getTime();
                     let timeStamp = refTimeStamp;
-                    while (timeStamp === refTimeStamp) {
+                    while(timeStamp === refTimeStamp) {
                       timeStamp = (new Date()).getTime();
                     }
 
@@ -255,7 +254,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
                     //Check for existence of GitCloneFolder ...
                     //noinspection JSUnusedLocalSymbols
                     fs.stat(expressApp.GitCloneFolder, (err, stats) => {
-                      if (err) {
+                      if(err) {
                         //Directory does not exist, clone it
                         me.gitClone(expressApp.GitUrl,
                           expressApp.GitSrcBranchName,
@@ -275,12 +274,12 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
                           --retries;
                           const errorMsg = 'Strongloop not available';
                           const readyResult = /Driver Status:\s+running/;
-                          if (err) {
+                          if(err) {
                             //This happens if SLC not ready yet ...
                             setTimeout(checkForStrongloop, 3000);
-                          } else if (readyResult.test(result)) {
+                          } else if(readyResult.test(result)) {
                             cb(null, 'Strongloop ready.');
-                          } else if (retries < 0) {
+                          } else if(retries < 0) {
                             cb(new Error(errorMsg), errorMsg);
                           } else {
                             setTimeout(checkForStrongloop, 3000);
@@ -294,7 +293,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
                     me.remoteSlcCtlCommand(msg, expressApp, ['create', serviceName], cb);
                   },
                   (cb: (err: Error, result?: any) => void) => {//Set ClusterSize
-                    if (!expressApp.ClusterSize) {
+                    if(!expressApp.ClusterSize) {
                       cb(null);
                       return;
                     }
@@ -303,12 +302,12 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
                       expressApp, ['set-size', expressApp.ServiceName, clusterSize], cb);
                   },
                   (cb: (err: Error, result?: any) => void) => {//Set ExpressApp environment
-                    if (!_.keys(expressApp.EnvironmentVariables).length) {
+                    if(!_.keys(expressApp.EnvironmentVariables).length) {
                       cb(null);
                       return;
                     }
                     let cmd = ['env-set', expressApp.ServiceName];
-                    for (let environmentVariable in expressApp.EnvironmentVariables) {
+                    for(let environmentVariable in expressApp.EnvironmentVariables) {
                       //noinspection JSUnfilteredForInLoop
                       cmd.push(environmentVariable
                         + '='
@@ -317,7 +316,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
                     me.remoteSlcCtlCommand('Setting environment variables', expressApp, cmd, cb);
                   },
                   (cb: (err: Error, result?: any) => void) => {//Perform Bower install if required
-                    if (!expressApp.DoBowerInstall) {
+                    if(!expressApp.DoBowerInstall) {
                       cb(null);
                       return;
                     }
@@ -385,14 +384,14 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
     //Sort on linked container dependencies
     const objectToSort = {};
     const containerConfigByNameMap = {};
-    containerConfigs.forEach(function (containerConfig) {
-      if (containerConfigByNameMap[containerConfig.name]) {
+    containerConfigs.forEach(function(containerConfig) {
+      if(containerConfigByNameMap[containerConfig.name]) {
         console.error('Same name is used by more than one container.');
       }
       containerConfigByNameMap[containerConfig.name] = containerConfig;
       const dependencies = [];
-      if (containerConfig.HostConfig && containerConfig.HostConfig.Links) {
-        containerConfig.HostConfig.Links.forEach(function (link) {
+      if(containerConfig.HostConfig && containerConfig.HostConfig.Links) {
+        containerConfig.HostConfig.Links.forEach(function(link) {
           const linkName = link.split(':')[0];
           dependencies.push(linkName);
         });
@@ -400,7 +399,7 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
       objectToSort[containerConfig.name] = dependencies;
     });
     const sortedContainerNames = this.topologicalDependencySort(objectToSort);
-    sortedContainerNames.forEach(function (sortedContainerName) {
+    sortedContainerNames.forEach(function(sortedContainerName) {
       sortedContainerConfigs.push(containerConfigByNameMap[sortedContainerName]);
     });
     return sortedContainerConfigs;
@@ -413,24 +412,24 @@ export class DockerMakeImpl extends ForceErrorImpl implements DockerMake {
     try {
       Object.keys(graph).forEach(function visit(name: string, ancestors: any) {
         // if already exists, do nothing
-        if (visited[name]) {
+        if(visited[name]) {
           return
         }
-        if (!Array.isArray(ancestors)) {
+        if(!Array.isArray(ancestors)) {
           ancestors = []
         }
         ancestors.push(name);
         visited[name] = true;
         const deps = graph[name];
-        deps.forEach(function (dep) {
-          if (ancestors.indexOf(dep) >= 0) {
+        deps.forEach(function(dep) {
+          if(ancestors.indexOf(dep) >= 0) {
             console.error('Circular dependency "' + dep + '" is required by "' + name + '": ' + ancestors.join(' -> '));
           }
           visit(dep, ancestors.slice(0)); // recursive call
         });
         sorted.push(name);
       });
-    } catch (ex) {
+    } catch(ex) {
       throw new Error('Linked container dependency sort failed. You are probably trying to link to an unknown container.');
     }
     return sorted;

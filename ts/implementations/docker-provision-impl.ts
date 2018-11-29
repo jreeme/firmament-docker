@@ -29,7 +29,6 @@ import {
 import {ProcessCommandJson} from 'firmament-bash/js/interfaces/process-command-json';
 
 const fileExists = require('file-exists');
-const jsonFile = require('jsonfile');
 
 //const path = require('path');
 //const templateCatalogUrl = '/home/jreeme/src/firmament-docker/docker/provisionTemplateCatalog.json';
@@ -805,7 +804,7 @@ ulimit -l unlimited
     if(!fileExists.sync(fullInputPath)) {
       me.commandUtil.processExitWithError(new Error(`\n'${fullInputPath}' does not exist`));
     }
-    const stackConfigTemplate = <DockerStackConfigTemplate>jsonFile.readFileSync(fullInputPath);
+    const stackConfigTemplate = <DockerStackConfigTemplate>me.safeJson.readFileSync(fullInputPath, undefined);
     return {fullInputPath, stackConfigTemplate};
   }
 
@@ -828,7 +827,7 @@ ulimit -l unlimited
         }
         const dockerMachineWrapperPath =
           path.resolve(__dirname, `../../docker/docker-machine-wrappers/${dockerMachineHostType}.json`);
-        const dockerMachineWrapper = jsonFile.readFileSync(dockerMachineWrapperPath);
+        const dockerMachineWrapper = me.safeJson.readFileSync(dockerMachineWrapperPath, undefined);
         const dockerComposeYaml = YAML.load(dockerComposeYamlPath);
         const jsonTemplate = Object.assign({}, dockerMachineWrapper, {dockerComposeYaml});
         //let jsonTemplate = Object.assign({}, DockerDescriptors.dockerStackConfigTemplate, {dockerComposeYaml});
