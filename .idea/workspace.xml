@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="Patch boot2docker profile to make /etc/resolv.conf readonly for all">
+    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="Use yargs SafeJson.jsonFile operations, remove jsonfile dep, update dev-deps">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/implementations/docker-make-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/docker-make-impl.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/test/docker-container-management.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/test/docker-container-management.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/test/docker-ode-mock-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/test/docker-ode-mock-impl.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/ts/tsconfig.json" afterDir="false" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,80 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ts/tsconfig.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="15" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="534">
-              <caret line="63" selection-start-line="63" selection-end-line="63" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="585">
-              <caret line="39" selection-start-line="39" selection-end-line="39" />
-              <folding>
-                <element signature="e#0#45#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ts/test/docker-ode-mock-impl.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="14" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ts/implementations/docker-make-impl.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="101" column="77" selection-start-line="101" selection-start-column="77" selection-end-line="101" selection-end-column="77" />
-              <folding>
-                <element signature="e#0#45#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ts/test/docker-container-management.test.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="29" column="38" lean-forward="true" selection-start-line="29" selection-start-column="38" selection-end-line="29" selection-end-column="38" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="27" column="57" selection-start-line="27" selection-start-column="57" selection-end-line="27" selection-end-column="57" />
-              <folding>
-                <element signature="e#0#45#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="30">
+              <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -208,12 +133,12 @@
         <option value="$PROJECT_DIR$/ts/implementations/vmware-make-impl.ts" />
         <option value="$PROJECT_DIR$/ts/tsconfig.json" />
         <option value="$PROJECT_DIR$/ts/implementations/commands/vmware-command-impl.ts" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/ts/test/docker-container-management.test.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" />
         <option value="$PROJECT_DIR$/ts/test/docker-ode-mock-impl.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/docker-make-impl.ts" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -534,14 +459,8 @@
       <workItem from="1543505205553" duration="148000" />
       <workItem from="1543516873889" duration="563000" />
       <workItem from="1543519654129" duration="1762000" />
-      <workItem from="1543521988121" duration="545000" />
-    </task>
-    <task id="LOCAL-00038" summary="Move templates from docker/typescript">
-      <created>1481048884463</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1481048884463</updated>
+      <workItem from="1543521988121" duration="1300000" />
+      <workItem from="1543839616520" duration="108000" />
     </task>
     <task id="LOCAL-00039" summary="Tune up vita container a little">
       <created>1482679828325</created>
@@ -879,7 +798,14 @@
       <option name="project" value="LOCAL" />
       <updated>1542996183892</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="Use yargs SafeJson.jsonFile operations, remove jsonfile dep, update dev-deps">
+      <created>1543522634952</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1543522634953</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -915,13 +841,13 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="501995000" />
+    <option name="totallyTimeSpent" value="502858000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1919" y="0" width="1922" height="1053" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47777778" visible="true" weight="0.19423692" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.47777778" visible="true" weight="0.19637139" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.5222222" side_tool="true" weight="0.16094987" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -933,7 +859,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="TypeScript" order="7" sideWeight="0.4939378" weight="0.27604726" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.35729614" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.3566058" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5048026" side_tool="true" weight="0.40860215" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.4949921" weight="0.32150537" />
       <window_info anchor="bottom" id="Messages" order="11" />
@@ -973,7 +899,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="NPM -&gt; v.1.4.28 &amp;&amp; add some support for amazonec2 docker-machine driver" />
     <MESSAGE value="NPM -&gt; v.1.4.29 &amp;&amp; fix traefik label logic to support traefik[.servicename].port + .frontend.rule" />
     <MESSAGE value="NPM -&gt; v.1.4.30 &amp;&amp; don't forget regexes have state" />
     <MESSAGE value="NPM -&gt; v.1.4.31 &amp;&amp; don't put a traefik.backend in if multiple front-ends are specified." />
@@ -998,7 +923,8 @@
     <MESSAGE value="Home" />
     <MESSAGE value="v.1.4.49 -&gt; NPM &amp; Create NFS mounts if they aren't there on docker-provision" />
     <MESSAGE value="Patch boot2docker profile to make /etc/resolv.conf readonly for all" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch boot2docker profile to make /etc/resolv.conf readonly for all" />
+    <MESSAGE value="Use yargs SafeJson.jsonFile operations, remove jsonfile dep, update dev-deps" />
+    <option name="LAST_COMMIT_MESSAGE" value="Use yargs SafeJson.jsonFile operations, remove jsonfile dep, update dev-deps" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1198,24 +1124,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ts/tsconfig.json">
+    <entry file="file://$PROJECT_DIR$/ts/test/docker-util.test.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
-          <caret line="11" column="15" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
+          <caret line="39" selection-start-line="39" selection-end-line="39" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
+    <entry file="file://$PROJECT_DIR$/ts/test/docker-ode-mock-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="534">
-          <caret line="63" selection-start-line="63" selection-end-line="63" />
+        <state relative-caret-position="60">
+          <caret line="11" column="14" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ts/test/docker-container-management.test.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="38" lean-forward="true" selection-start-line="29" selection-start-column="38" selection-end-line="29" selection-end-column="38" />
+        <state relative-caret-position="315">
+          <caret line="29" column="38" selection-start-line="29" selection-start-column="38" selection-end-line="29" selection-end-column="38" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
@@ -1224,33 +1159,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
+        <state relative-caret-position="270">
           <caret line="27" column="57" selection-start-line="27" selection-start-column="57" selection-end-line="27" selection-end-column="57" />
           <folding>
             <element signature="e#0#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="39" selection-start-line="39" selection-end-line="39" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ts/test/docker-util.test.ts">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ts/test/docker-ode-mock-impl.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="14" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1262,6 +1174,20 @@
           <folding>
             <element signature="e#0#45#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/tsconfig.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="15" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
         </state>
       </provider>
     </entry>
