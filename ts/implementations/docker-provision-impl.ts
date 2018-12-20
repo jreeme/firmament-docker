@@ -86,46 +86,46 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     });
 
     //Patch 'dockerComposeYaml.volumes' block
-    /*    for(const volume in dsct.dockerComposeYaml.volumes) {
-          const v = <DockerVolumeDescription>dsct.dockerComposeYaml.volumes[volume];
-          if(v.driver_opts.type === 'nfs' && v.driver === 'local') {
-            //Could be we need to 'fill in the blanks' for NFS volume
-            //If device is missing, use the volume name
-            v.driver_opts.device = v.driver_opts.device || volume;
-            dockerVolumesRegex.lastIndex = 0;
-            //If device doesn't start with ':/' then prepend 'nfsConfig.exportBaseDir'
-            if(!dockerVolumesRegex.test(v.driver_opts.device)) {
-              if(!dsct.nfsConfig) {
-                return cb(new Error(`'${volume}.driver_opts.device' does not begin with ':/' but no 'nfsConfig' is specified`));
-              }
-              if(!dsct.nfsConfig.exportBaseDir) {
-                return cb(new Error(`'${volume}.driver_opts.device' does not begin with ':/' but no 'nfsConfig.exportBaseDir' is specified`));
-              }
-              v.driver_opts.device = `:${dsct.nfsConfig.exportBaseDir}/${v.driver_opts.device}`;
-            }
-            //If there are no options then copy them from 'nfsConfig' (if they exist, otherwise error)
-            if(!v.driver_opts.o) {
-              if(!dsct.nfsConfig) {
-                return cb(new Error(`'${volume}.driver_opts.o' does not exist but no 'nfsConfig' is specified`));
-              }
-              if(!dsct.nfsConfig.serverAddr) {
-                return cb(new Error(`'${volume}.driver_opts.o' does not exist but no 'nfsConfig.serverAddr' is specified`));
-              }
-              if(!dsct.nfsConfig.options) {
-                return cb(new Error(`'${volume}.driver_opts.o' does not exist but no 'nfsConfig.options' is specified`));
-              }
-              v.driver_opts.o = dsct.nfsConfig.options;
-            }
-            //Build the options (driver_opts.o)
-            const optionsHash = DockerProvisionImpl.optionsStringToHash(v.driver_opts.o);
-            if(!optionsHash['addr'] && !dsct.nfsConfig.serverAddr) {
-              return cb(new Error(`'${volume}.driver_opts.o[addr=]' does not exist but no 'nfsConfig.serverAddr' is specified`));
-            }
-            //Only muck with 'addr' option since we know it's required. TODO: We could get clever and 'merge' nfsConfig.options & v.driver_opts.o
-            optionsHash['addr'] = optionsHash['addr'] || dsct.nfsConfig.serverAddr;
-            v.driver_opts.o = DockerProvisionImpl.optionsHashToString(optionsHash);
+    for (const volume in dsct.dockerComposeYaml.volumes) {
+      const v = <DockerVolumeDescription>dsct.dockerComposeYaml.volumes[volume];
+      if (v.driver_opts.type === 'nfs' && v.driver === 'local') {
+        //Could be we need to 'fill in the blanks' for NFS volume
+        //If device is missing, use the volume name
+        v.driver_opts.device = v.driver_opts.device || volume;
+        dockerVolumesRegex.lastIndex = 0;
+        //If device doesn't start with ':/' then prepend 'nfsConfig.exportBaseDir'
+        if (!dockerVolumesRegex.test(v.driver_opts.device)) {
+          if (!dsct.nfsConfig) {
+            return cb(new Error(`'${volume}.driver_opts.device' does not begin with ':/' but no 'nfsConfig' is specified`));
           }
-        }*/
+          if (!dsct.nfsConfig.exportBaseDir) {
+            return cb(new Error(`'${volume}.driver_opts.device' does not begin with ':/' but no 'nfsConfig.exportBaseDir' is specified`));
+          }
+          v.driver_opts.device = `:${dsct.nfsConfig.exportBaseDir}/${v.driver_opts.device}`;
+        }
+        //If there are no options then copy them from 'nfsConfig' (if they exist, otherwise error)
+        if (!v.driver_opts.o) {
+          if (!dsct.nfsConfig) {
+            return cb(new Error(`'${volume}.driver_opts.o' does not exist but no 'nfsConfig' is specified`));
+          }
+          if (!dsct.nfsConfig.serverAddr) {
+            return cb(new Error(`'${volume}.driver_opts.o' does not exist but no 'nfsConfig.serverAddr' is specified`));
+          }
+          if (!dsct.nfsConfig.options) {
+            return cb(new Error(`'${volume}.driver_opts.o' does not exist but no 'nfsConfig.options' is specified`));
+          }
+          v.driver_opts.o = dsct.nfsConfig.options;
+        }
+        //Build the options (driver_opts.o)
+        const optionsHash = DockerProvisionImpl.optionsStringToHash(v.driver_opts.o);
+        if (!optionsHash['addr'] && !dsct.nfsConfig.serverAddr) {
+          return cb(new Error(`'${volume}.driver_opts.o[addr=]' does not exist but no 'nfsConfig.serverAddr' is specified`));
+        }
+        //Only muck with 'addr' option since we know it's required. TODO: We could get clever and 'merge' nfsConfig.options & v.driver_opts.o
+        optionsHash['addr'] = optionsHash['addr'] || dsct.nfsConfig.serverAddr;
+        v.driver_opts.o = DockerProvisionImpl.optionsHashToString(optionsHash);
+      }
+    }
 
     //Patch 'dockerComposeYaml.services' block
     for (const service in dsct.dockerComposeYaml.services) {
