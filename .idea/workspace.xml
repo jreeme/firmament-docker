@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="Use yargs SafeJson.jsonFile operations, remove jsonfile dep, update dev-deps">
+    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="HACK - Remove nfs mount create logic for 19-DEC-2018 OpenStack deploy">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" afterDir="false" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -19,6 +20,35 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-2114462935">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.2" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.js.language.service.starts">
+        <counts>
+          <entry key="TypeScriptServerServiceImpl" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="json" value="4" />
+          <entry key="ts" value="75" />
+          <entry key="txt" value="82" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JSON" value="4" />
+          <entry key="PLAIN_TEXT" value="82" />
+          <entry key="TypeScript" value="75" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
   <component name="FavoritesManager">
     <favorites_list name="firmament-docker" />
   </component>
@@ -29,6 +59,18 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
               <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="441">
+              <caret line="205" column="79" selection-start-line="205" selection-start-column="79" selection-end-line="205" selection-end-column="79" />
+              <folding>
+                <element signature="e#0#45#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -95,7 +137,7 @@
         <option value="$PROJECT_DIR$/docker/portainer/1.16.2/portainer/build.sh" />
         <option value="$PROJECT_DIR$/docker/portainer/1.16.2/portainer/build/linux/Dockerfile" />
         <option value="$PROJECT_DIR$/docker/portainer/1.16.2/Dockerfile" />
-        <option value="$PROJECT_DIR$/../firmament-bash/command-json/build-and-push-docker-images-to-aws.json" />
+        <option value="$USER_HOME$/firmament-bash/command-json/build-and-push-docker-images-to-aws.json" />
         <option value="$PROJECT_DIR$/docker/amino3/_build.sh" />
         <option value="$PROJECT_DIR$/docker/amino3/1.1/amino3-start.sh" />
         <option value="$PROJECT_DIR$/docker/amino3/1.1/amino3-supervisord.conf" />
@@ -135,15 +177,31 @@
         <option value="$PROJECT_DIR$/ts/implementations/commands/vmware-command-impl.ts" />
         <option value="$PROJECT_DIR$/ts/test/docker-container-management.test.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts" />
-        <option value="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" />
         <option value="$PROJECT_DIR$/ts/test/docker-ode-mock-impl.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/docker-make-impl.ts" />
+        <option value="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" />
         <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
+    <package-json value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
   <component name="NamedScopeManager">
     <scope name="ts-folder" pattern="file[firmament-docker]:ts//*" />
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths>
+      <path value="$PROJECT_DIR$/package.json" />
+    </packageJsonPaths>
   </component>
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
@@ -161,7 +219,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -169,10 +226,22 @@
               <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
               <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="ts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="ts" type="462c0819:PsiDirectoryNode" />
+              <item name="implementations" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -183,7 +252,7 @@
     <property name="editor.config.accepted" value="true" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="js.eslint.eslintPackage" value="" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../firmament-bash/package.json" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
     <property name="node.js.selected.package.prettier" value="" />
@@ -192,7 +261,7 @@
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.TypeScript" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
-    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/../firmament-bash/package.json" />
+    <property name="two.files.diff.last.used.file" value="$USER_HOME$/firmament-bash/package.json" />
     <property name="typescript-compiler-editor-notification" value="false" />
   </component>
   <component name="RecentsManager">
@@ -224,16 +293,16 @@
     </option>
   </component>
   <component name="RunManager" selected="Node.js.manual-test.js">
-    <configuration name="firmament" type="NodeJSConfigurationType" application-parameters="p t" path-to-js-file="$PROJECT_DIR$/../firmament/js/firmament.js" working-dir="/tmp">
+    <configuration name="firmament" type="NodeJSConfigurationType" factoryName="Node.js" application-parameters="p t" path-to-js-file="$PROJECT_DIR$/../firmament/js/firmament.js" working-dir="/tmp">
       <method v="2" />
     </configuration>
-    <configuration name="manual-test.js" type="NodeJSConfigurationType" path-to-js-file="$PROJECT_DIR$/js/test/manual-tests/manual-test.js" working-dir="/tmp">
+    <configuration name="manual-test.js" type="NodeJSConfigurationType" factoryName="Node.js" path-to-js-file="$PROJECT_DIR$/js/test/manual-tests/manual-test.js" working-dir="/tmp">
       <method v="2" />
     </configuration>
-    <configuration name="ovf-tool-test.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="ovf-tool-test.js" working-dir="$PROJECT_DIR$/js/test/manual-tests">
+    <configuration name="ovf-tool-test.js" type="NodeJSConfigurationType" factoryName="Node.js" nameIsGenerated="true" path-to-js-file="ovf-tool-test.js" working-dir="$PROJECT_DIR$/js/test/manual-tests">
       <method v="2" />
     </configuration>
-    <configuration default="true" type="js.build_tools.gulp">
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
       <node-interpreter>project</node-interpreter>
       <node-options />
       <gulpfile />
@@ -242,7 +311,7 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+    <configuration name="build" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
@@ -252,7 +321,7 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="DockerContainerManagement" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+    <configuration name="DockerContainerManagement" type="mocha-javascript-test-runner" factoryName="Mocha" temporary="true" nameIsGenerated="true">
       <node-interpreter>project</node-interpreter>
       <node-options />
       <working-directory>$PROJECT_DIR$</working-directory>
@@ -266,7 +335,7 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="Unit Tests" type="mocha-javascript-test-runner">
+    <configuration name="Unit Tests" type="mocha-javascript-test-runner" factoryName="Mocha">
       <node-interpreter>project</node-interpreter>
       <node-options />
       <working-directory>$PROJECT_DIR$</working-directory>
@@ -278,7 +347,7 @@
       <recursive>false</recursive>
       <method v="2" />
     </configuration>
-    <configuration name="js/test/docker-container-management.test.js" type="mocha-javascript-test-runner">
+    <configuration name="js/test/docker-container-management.test.js" type="mocha-javascript-test-runner" factoryName="Mocha">
       <node-interpreter>project</node-interpreter>
       <node-options />
       <working-directory>$PROJECT_DIR$</working-directory>
@@ -289,7 +358,7 @@
       <test-file>$PROJECT_DIR$/js/test/docker-container-management.test.js</test-file>
       <method v="2" />
     </configuration>
-    <configuration name="js/test/docker-image-management.test.js" type="mocha-javascript-test-runner" nameIsGenerated="true">
+    <configuration name="js/test/docker-image-management.test.js" type="mocha-javascript-test-runner" factoryName="Mocha" nameIsGenerated="true">
       <node-interpreter>project</node-interpreter>
       <node-options />
       <working-directory>$PROJECT_DIR$</working-directory>
@@ -300,7 +369,7 @@
       <test-file>$PROJECT_DIR$/js/test/docker-image-management.test.js</test-file>
       <method v="2" />
     </configuration>
-    <configuration name="js/test/docker-make.test.js" type="mocha-javascript-test-runner" nameIsGenerated="true">
+    <configuration name="js/test/docker-make.test.js" type="mocha-javascript-test-runner" factoryName="Mocha" nameIsGenerated="true">
       <node-interpreter>project</node-interpreter>
       <node-options />
       <working-directory>$PROJECT_DIR$</working-directory>
@@ -311,7 +380,7 @@
       <test-file>$PROJECT_DIR$/js/test/docker-make.test.js</test-file>
       <method v="2" />
     </configuration>
-    <configuration name="js/test/docker-util.test.js" type="mocha-javascript-test-runner" nameIsGenerated="true">
+    <configuration name="js/test/docker-util.test.js" type="mocha-javascript-test-runner" factoryName="Mocha" nameIsGenerated="true">
       <node-interpreter>project</node-interpreter>
       <node-options />
       <working-directory>$PROJECT_DIR$</working-directory>
@@ -328,10 +397,10 @@
       <item itemvalue="Mocha.js/test/docker-image-management.test.js" />
       <item itemvalue="Mocha.js/test/docker-util.test.js" />
       <item itemvalue="Mocha.js/test/docker-make.test.js" />
-      <item itemvalue="Mocha.DockerContainerManagement" />
       <item itemvalue="Node.js.firmament" />
       <item itemvalue="Node.js.manual-test.js" />
       <item itemvalue="Node.js.ovf-tool-test.js" />
+      <item itemvalue="Mocha.DockerContainerManagement" />
       <item itemvalue="npm.build" />
     </list>
     <recent_temporary>
@@ -847,7 +916,7 @@
     <frame x="1919" y="0" width="1922" height="1053" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.47777778" visible="true" weight="0.19637139" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47777778" visible="true" weight="0.1960991" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.5222222" side_tool="true" weight="0.16094987" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -858,8 +927,8 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="TypeScript" order="7" sideWeight="0.4939378" weight="0.27604726" />
-      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.3566058" />
+      <window_info anchor="bottom" id="TypeScript" order="7" sideWeight="0.4939378" weight="0.27526882" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.35591397" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5048026" side_tool="true" weight="0.40860215" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.4949921" weight="0.32150537" />
       <window_info anchor="bottom" id="Messages" order="11" />
@@ -896,10 +965,12 @@
       <collection />
     </option>
   </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="NPM -&gt; v.1.4.29 &amp;&amp; fix traefik label logic to support traefik[.servicename].port + .frontend.rule" />
     <MESSAGE value="NPM -&gt; v.1.4.30 &amp;&amp; don't forget regexes have state" />
     <MESSAGE value="NPM -&gt; v.1.4.31 &amp;&amp; don't put a traefik.backend in if multiple front-ends are specified." />
     <MESSAGE value="NPM -&gt; v.1.4.33 &amp;&amp; New constraint deploy" />
@@ -924,19 +995,20 @@
     <MESSAGE value="v.1.4.49 -&gt; NPM &amp; Create NFS mounts if they aren't there on docker-provision" />
     <MESSAGE value="Patch boot2docker profile to make /etc/resolv.conf readonly for all" />
     <MESSAGE value="Use yargs SafeJson.jsonFile operations, remove jsonfile dep, update dev-deps" />
-    <option name="LAST_COMMIT_MESSAGE" value="Use yargs SafeJson.jsonFile operations, remove jsonfile dep, update dev-deps" />
+    <MESSAGE value="HACK - Remove nfs mount create logic for 19-DEC-2018 OpenStack deploy" />
+    <option name="LAST_COMMIT_MESSAGE" value="HACK - Remove nfs mount create logic for 19-DEC-2018 OpenStack deploy" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts</url>
-          <line>225</line>
+          <line>226</line>
           <option name="timeStamp" value="75" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts</url>
-          <line>242</line>
+          <line>243</line>
           <option name="timeStamp" value="76" />
         </line-breakpoint>
       </breakpoints>
@@ -1104,9 +1176,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="555">
           <caret line="37" column="68" selection-start-line="37" selection-start-column="68" selection-end-line="37" selection-end-column="68" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1127,23 +1196,10 @@
     <entry file="file://$PROJECT_DIR$/ts/test/docker-util.test.ts">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="39" selection-start-line="39" selection-end-line="39" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ts/test/docker-ode-mock-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="11" column="14" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1151,9 +1207,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="29" column="38" selection-start-line="29" selection-start-column="38" selection-end-line="29" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1161,9 +1214,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="27" column="57" selection-start-line="27" selection-start-column="57" selection-end-line="27" selection-end-column="57" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1171,9 +1221,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
           <caret line="101" column="77" selection-start-line="101" selection-start-column="77" selection-end-line="101" selection-end-column="77" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1181,6 +1228,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="15" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="205" column="79" selection-start-line="205" selection-start-column="79" selection-end-line="205" selection-end-column="79" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
