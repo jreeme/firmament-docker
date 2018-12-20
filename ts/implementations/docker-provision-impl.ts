@@ -86,7 +86,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     });
 
     //Patch 'dockerComposeYaml.volumes' block
-    for(const volume in dsct.dockerComposeYaml.volumes) {
+/*    for(const volume in dsct.dockerComposeYaml.volumes) {
       const v = <DockerVolumeDescription>dsct.dockerComposeYaml.volumes[volume];
       if(v.driver_opts.type === 'nfs' && v.driver === 'local') {
         //Could be we need to 'fill in the blanks' for NFS volume
@@ -125,7 +125,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
         optionsHash['addr'] = optionsHash['addr'] || dsct.nfsConfig.serverAddr;
         v.driver_opts.o = DockerProvisionImpl.optionsHashToString(optionsHash);
       }
-    }
+    }*/
 
     //Patch 'dockerComposeYaml.services' block
     for(const service in dsct.dockerComposeYaml.services) {
