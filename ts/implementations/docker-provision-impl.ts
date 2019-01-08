@@ -37,6 +37,7 @@ const fileExists = require('file-exists');
 @injectable()
 export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvision {
   private stackConfigTemplate: DockerStackConfigTemplate;
+  private writeScripts = false;
 
   constructor(@inject('CommandUtil') private commandUtil: CommandUtil,
               @inject('Spawn') private spawn: Spawn,
@@ -86,39 +87,39 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     });
 
     //Patch 'dockerComposeYaml.volumes' block
-    for (const volume in dsct.dockerComposeYaml.volumes) {
+    for(const volume in dsct.dockerComposeYaml.volumes) {
       const v = <DockerVolumeDescription>dsct.dockerComposeYaml.volumes[volume];
-      if (v.driver_opts.type === 'nfs' && v.driver === 'local') {
+      if(v.driver_opts.type === 'nfs' && v.driver === 'local') {
         //Could be we need to 'fill in the blanks' for NFS volume
         //If device is missing, use the volume name
         v.driver_opts.device = v.driver_opts.device || volume;
         dockerVolumesRegex.lastIndex = 0;
         //If device doesn't start with ':/' then prepend 'nfsConfig.exportBaseDir'
-        if (!dockerVolumesRegex.test(v.driver_opts.device)) {
-          if (!dsct.nfsConfig) {
+        if(!dockerVolumesRegex.test(v.driver_opts.device)) {
+          if(!dsct.nfsConfig) {
             return cb(new Error(`'${volume}.driver_opts.device' does not begin with ':/' but no 'nfsConfig' is specified`));
           }
-          if (!dsct.nfsConfig.exportBaseDir) {
+          if(!dsct.nfsConfig.exportBaseDir) {
             return cb(new Error(`'${volume}.driver_opts.device' does not begin with ':/' but no 'nfsConfig.exportBaseDir' is specified`));
           }
           v.driver_opts.device = `:${dsct.nfsConfig.exportBaseDir}/${v.driver_opts.device}`;
         }
         //If there are no options then copy them from 'nfsConfig' (if they exist, otherwise error)
-        if (!v.driver_opts.o) {
-          if (!dsct.nfsConfig) {
+        if(!v.driver_opts.o) {
+          if(!dsct.nfsConfig) {
             return cb(new Error(`'${volume}.driver_opts.o' does not exist but no 'nfsConfig' is specified`));
           }
-          if (!dsct.nfsConfig.serverAddr) {
+          if(!dsct.nfsConfig.serverAddr) {
             return cb(new Error(`'${volume}.driver_opts.o' does not exist but no 'nfsConfig.serverAddr' is specified`));
           }
-          if (!dsct.nfsConfig.options) {
+          if(!dsct.nfsConfig.options) {
             return cb(new Error(`'${volume}.driver_opts.o' does not exist but no 'nfsConfig.options' is specified`));
           }
           v.driver_opts.o = dsct.nfsConfig.options;
         }
         //Build the options (driver_opts.o)
         const optionsHash = DockerProvisionImpl.optionsStringToHash(v.driver_opts.o);
-        if (!optionsHash['addr'] && !dsct.nfsConfig.serverAddr) {
+        if(!optionsHash['addr'] && !dsct.nfsConfig.serverAddr) {
           return cb(new Error(`'${volume}.driver_opts.o[addr=]' does not exist but no 'nfsConfig.serverAddr' is specified`));
         }
         //Only muck with 'addr' option since we know it's required. TODO: We could get clever and 'merge' nfsConfig.options & v.driver_opts.o
@@ -128,18 +129,18 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     }
 
     //Patch 'dockerComposeYaml.services' block
-    for (const service in dsct.dockerComposeYaml.services) {
+    for(const service in dsct.dockerComposeYaml.services) {
       const s = <DockerServiceDescription>dsct.dockerComposeYaml.services[service];
       dockerImageRegex.lastIndex = 0;
-      if (!dockerImageRegex.test(s.image)) {
-        if (!dsct.defaultDockerRegistry) {
+      if(!dockerImageRegex.test(s.image)) {
+        if(!dsct.defaultDockerRegistry) {
           return cb(new Error(`Service '${service}' missing 'image' property and 'defaultDockerRegistry' is undefined`));
         }
-        if (!dsct.defaultDockerImageTag) {
+        if(!dsct.defaultDockerImageTag) {
           return cb(new Error(`Service '${service}' missing 'image' property and 'defaultDockerImageTag' is undefined`));
         }
-        if (s.image) {
-          if (/.+?:\d+?/.test(s.image)) {
+        if(s.image) {
+          if(/.+?:\d+?/.test(s.image)) {
             s.image = `${dsct.defaultDockerRegistry}/${s.image}`;
           } else {
             s.image = `${dsct.defaultDockerRegistry}/${s.image}:${dsct.defaultDockerImageTag}`;
@@ -149,7 +150,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
         }
       }
       const labels = {};
-      if (s.deploy.labels) {
+      if(s.deploy.labels) {
         let traefikPortLabelPresent = 0;
         let frontendRuleLabelPresent = 0;
         const portRegex = /traefik\.(.*?\.|)port/g;
@@ -157,30 +158,30 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
         s.deploy.labels.forEach((label) => {
           const tuple = label.split('=');
           portRegex.lastIndex = frontendRuleRegex.lastIndex = 0;
-          if (portRegex.test(tuple[0])) {
+          if(portRegex.test(tuple[0])) {
             ++traefikPortLabelPresent;
           }
-          if (frontendRuleRegex.test(tuple[0])) {
+          if(frontendRuleRegex.test(tuple[0])) {
             ++frontendRuleLabelPresent;
           }
           labels[tuple[0]] = tuple[1];
         });
-        if (labels['traefik.enable'] !== 'false') {
-          if (!traefikPortLabelPresent) {
+        if(labels['traefik.enable'] !== 'false') {
+          if(!traefikPortLabelPresent) {
             return cb(new Error(`'traefik.??.port' label not present for service '${service}'`));
           }
-          if (!labels['traefik.backend'] && frontendRuleLabelPresent === 1) {
+          if(!labels['traefik.backend'] && frontendRuleLabelPresent === 1) {
             labels['traefik.backend'] = service;
           }
-          if (!frontendRuleLabelPresent) {
-            if (!dsct.traefikZoneName) {
+          if(!frontendRuleLabelPresent) {
+            if(!dsct.traefikZoneName) {
               return cb(new Error(`'traefik.??.frontend.rule' label and 'traefikZoneName' both undefined for service '${service}'`));
             }
             labels['traefik.frontend.rule'] = `Host: ${service}.${dsct.traefikZoneName}`;
           }
         }
         s.deploy.labels.length = 0;
-        for (const label in labels) {
+        for(const label in labels) {
           s.deploy.labels.push(`${label}=${labels[label]}`);
         }
       }
@@ -200,7 +201,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     async.each(
       volumes,
       (volume: DockerVolumeDescription, cb: (err?: Error) => void) => {
-        if (volume.driver !== 'local' || volume.driver_opts.type !== 'nfs') {
+        if(volume.driver !== 'local' || volume.driver_opts.type !== 'nfs') {
           return cb();
         }
         const options = DockerProvisionImpl.optionsStringToHash(volume.driver_opts.o);
@@ -234,16 +235,16 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
               (err, result) => {
               },
               (err: Error, result: string) => {
-                if (me.commandUtil.callbackIfError(cb, err, result)) {
+                if(me.commandUtil.callbackIfError(cb, err, result)) {
                   return;
                 }
-                me.safeJson.safeParse(result, (err: Error, obj: { code: number, stdoutText: string }) => {
-                  if (obj.code) {
+                me.safeJson.safeParse(result, (err: Error, obj: {code: number, stdoutText: string}) => {
+                  if(obj.code) {
                     return cb(new Error(`local 'showmount' FAILED`));
                   }
                   const exportList = obj.stdoutText.split('\n').slice(1, -1).map((exportLine) => exportLine.split(/\s/)[0]);
                   const msg = `Checking NFS mount ${volumeConfig.host}:${volumeConfig.exportPath} ...`;
-                  if (exportList.indexOf(volumeConfig.exportPath) !== -1) {
+                  if(exportList.indexOf(volumeConfig.exportPath) !== -1) {
                     //Looks like this volume is already exported so we can stop here
                     me.commandUtil.log(`${msg} OK`);
                     return cb(new Error('ALREADY_EXPORTED'));
@@ -256,7 +257,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
           },
           (exportPath, cb) => {
             me.commandUtil.log(`Attempting to export NFS volume ${volumeConfig.host}:${exportPath} ...`);
-            if (!remoteSpawnOptions.remoteHost || !remoteSpawnOptions.remoteUser || !remoteSpawnOptions.remotePassword) {
+            if(!remoteSpawnOptions.remoteHost || !remoteSpawnOptions.remoteUser || !remoteSpawnOptions.remotePassword) {
               return cb(new Error(`nfsConfig [nfsHost & nfsUser] must all be specified to export NFS volume. Cannot continue.`));
             }
             const etcExportsEntry = `${volumeConfig.exportPath} *(insecure,rw,sync,no_root_squash,no_subtree_check)`;
@@ -308,7 +309,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
 
   private static optionsHashToString(hash: any): string {
     let retVal = '';
-    for (const key in hash) {
+    for(const key in hash) {
       retVal += key + ((hash[key]) ? `=${hash[key]},` : ',');
     }
     return retVal.slice(0, -1);
@@ -328,7 +329,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     const {fullInputPath, stackConfigTemplate} = me.getContainerConfigsFromJsonFile(argv.inputJsonFile);
     me.createOutputPath(fullInputPath, argv.outputYamlFile, '.yaml', (err, outputYamlPath, outputFileExists) => {
       me.callbackAndExitIfError(err, cb);
-      if (outputFileExists && !me.positive.areYouSure(
+      if(outputFileExists && !me.positive.areYouSure(
         `Output file '${outputYamlPath}' already exists. Overwrite? [Y/n] `,
         'Operation canceled.',
         true,
@@ -353,30 +354,30 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     const me = this;
     const {fullInputPath, stackConfigTemplate} = me.getContainerConfigsFromJsonFile(argv.input);
     me.validateDockerStackConfigTemplate(stackConfigTemplate, (err, stackConfigTemplate) => {
-      if (err) {
-        if (cb) {
+      if(err) {
+        if(cb) {
           return cb(err);
         }
         me.commandUtil.processExitWithError(err, 'OK');
       }
       me.stackConfigTemplate = stackConfigTemplate;
-      switch (stackConfigTemplate.dockerMachineDriverOptions.driver) {
+      switch(stackConfigTemplate.dockerMachineDriverOptions.driver) {
         case 'openstack': {
           const dmdo = (<DockerMachineDriverOptions_openstack>stackConfigTemplate.dockerMachineDriverOptions);
-          if (argv.username) {
+          if(argv.username) {
             dmdo.openstackUsername = argv.username;
           }
-          if (argv.password) {
+          if(argv.password) {
             dmdo.openstackPassword = argv.password;
           }
           break;
         }
         case 'vmwarevsphere': {
           const dmdo = (<DockerMachineDriverOptions_vmwarevsphere>stackConfigTemplate.dockerMachineDriverOptions);
-          if (argv.username) {
+          if(argv.username) {
             dmdo.vmwarevsphereUsername = argv.username;
           }
-          if (argv.password) {
+          if(argv.password) {
             dmdo.vmwarevspherePassword = argv.password;
           }
           break;
@@ -388,7 +389,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
       }
       me.commandUtil.log("Constructing Docker Stack described in: '" + fullInputPath + "'");
       me.createDockerMachines(fullInputPath, stackConfigTemplate, argv, (err, result) => {
-        if (cb) {
+        if(cb) {
           return cb();
         }
         me.commandUtil.processExitWithError(err, 'OK');
@@ -400,12 +401,12 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     const me = this;
     const retVal = [];
     const excludeProperties = ['nodeCount', 'nodeName'];
-    for (const option in options) {
-      if (excludeProperties.indexOf(option) !== -1) {
+    for(const option in options) {
+      if(excludeProperties.indexOf(option) !== -1) {
         continue;
       }
-      if (option === 'engineLabels') {
-        for (const engineLabel in options[option]) {
+      if(option === 'engineLabels') {
+        for(const engineLabel in options[option]) {
           retVal.push('--engine-label');
           retVal.push(`${engineLabel}=${options[option][engineLabel]}`);
         }
@@ -424,7 +425,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
 
   private logErrAndResult(err: Error, result: string) {
     const me = this;
-    if (err) {
+    if(err) {
       return me.commandUtil.log(err.message);
     }
     me.commandUtil.log((result || '').toString());
@@ -437,30 +438,12 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     cb = me.checkCallback(cb);
     const createOptions = me.convertOptionsFromCamelToSnakeCase(stackConfigTemplate.dockerMachineDriverOptions);
     async.waterfall([
-      (cb: (err: Error, managerMachineName: string) => void) => {
+      (cb: (err: Error, managerMachineName: string, ip: string) => void) => {
         const managerMachineName = `${stackConfigTemplate.stackName}-${stackConfigTemplate.dockerMachines.manager.nodeName}`;
         const managerDockerMachineCmd = createOptions.slice();
         managerDockerMachineCmd.push.apply(managerDockerMachineCmd, me.convertOptionsFromCamelToSnakeCase(stackConfigTemplate.dockerMachines.manager));
         managerDockerMachineCmd.push(managerMachineName);
-        me.createDockerMachine(managerDockerMachineCmd, (err: Error) => {
-          cb(err, managerMachineName);
-        });
-      },
-      (managerMachineName: string, cb: (err: Error, managerMachineName: string, ip: string) => void) => {
-        const dockerMachineInitSwarmCmd = [
-          'docker-machine',
-          'ip',
-          managerMachineName
-        ];
-        me.spawn.spawnShellCommandAsync(dockerMachineInitSwarmCmd,
-          {
-            cacheStdOut: true
-          },
-          me.logErrAndResult.bind(me),
-          (err, result) => {
-            const ip = me.safeJson.safeParseSync(result).obj.stdoutText.trim();
-            cb(err, managerMachineName, ip);
-          });
+        me.createDockerMachine(managerDockerMachineCmd, cb);
       },
       (managerMachineName: string, ip: string, cb: (err: Error, managerMachineName: string, ip: string) => void) => {
         const dockerMachineInitSwarmCmd = [
@@ -473,15 +456,19 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
           '--advertise-addr',
           ip
         ];
+        if(me.writeScripts) {
+          fs.writeFileSync(`/home/jreeme/tmp/_init_swarm.sh`, dockerMachineInitSwarmCmd.join(' '));
+          return cb(null, managerMachineName, ip);
+        }
         me.spawn.spawnShellCommandAsync(dockerMachineInitSwarmCmd,
           {
             cacheStdOut: true
           },
           me.logErrAndResult.bind(me),
           (_err: Error) => {
-            if (_err) {
+            if(_err) {
               const {err, obj} = me.safeJson.safeParseSync(_err.message);
-              if (!err && obj.code === 1) {
+              if(!err && obj.code === 1) {
                 return cb(null, managerMachineName, ip);
               }
             }
@@ -499,6 +486,10 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
           'worker',
           '-q'
         ];
+        if(me.writeScripts) {
+          fs.writeFileSync(`/home/jreeme/tmp/_join_swarm.sh`, dockerMachineInitSwarmCmd.join(' '));
+          return cb(null, managerMachineName, ip, 'joinToken');
+        }
         me.spawn.spawnShellCommandAsync(dockerMachineInitSwarmCmd,
           {
             cacheStdOut: true
@@ -509,24 +500,23 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
             cb(null, managerMachineName, ip, joinToken);
           });
       },
-      (managerMachineName: string, ip: string, joinToken: string, cb: (err: Error, managerMachineName: string, ip: string) => void) => {
+      (managerMachineName: string, managerIp: string, joinToken: string, cb: (err: Error, managerMachineName: string, ip: string) => void) => {
         let fnArray = [];
         stackConfigTemplate.dockerMachines.workers.forEach((workerDockerMachine) => {
-          for (let i = 0; i < workerDockerMachine.nodeCount; ++i) {
+          for(let i = 0; i < workerDockerMachine.nodeCount; ++i) {
             const workerMachineName = `${stackConfigTemplate.stackName}-${workerDockerMachine.nodeName}-${i}`;
             const workerDockerMachineCmd = createOptions.slice();
             workerDockerMachineCmd.push.apply(workerDockerMachineCmd, me.convertOptionsFromCamelToSnakeCase(workerDockerMachine));
             workerDockerMachineCmd.push(workerMachineName);
             fnArray.push(async.apply(me.createWorkerDockerMachine.bind(me),
               workerDockerMachineCmd,
-              workerMachineName,
-              ip,
+              managerIp,
               joinToken
             ));
           }
         });
         async.parallel(fnArray, (err: Error) => {
-          cb(err, managerMachineName, ip);
+          cb(err, managerMachineName, managerIp);
         });
       },
       (managerMachineName: string, ip: string, cb: (err: Error, env: any, ip: string) => void) => {
@@ -549,32 +539,32 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
             let env: any = {};
             do {
               match = regex.exec(envString);
-              if (match) {
+              if(match) {
                 const keyValue = match[1].split('=');
                 env[keyValue[0]] = keyValue[1].replace(/"/g, '');
               }
-            } while (match);
+            } while(match);
             cb(null, env, ip);
           });
       },
       (env: any, ip: string, cb: (err?: Error) => void) => {
         tmp.file({dir: path.dirname(fullInputPath)}, (err, tmpPath, fd, cleanupCb) => {
           try {
-            if (argv.noports) {
-              for (const serviceName in stackConfigTemplate.dockerComposeYaml.services) {
+            if(argv.noports) {
+              for(const serviceName in stackConfigTemplate.dockerComposeYaml.services) {
                 const service = stackConfigTemplate.dockerComposeYaml.services[serviceName];
                 service.ports && delete service.ports;
               }
             }
-          } catch (err) {
+          } catch(err) {
             me.commandUtil.error(`Failed to execute 'noports' option ${err}`);
           }
           const yaml = YAML.stringify(stackConfigTemplate.dockerComposeYaml, 8, 2).replace(/\$\{MASTER_IP\}/g, ip);
-          if (me.commandUtil.callbackIfError(err)) {
+          if(me.commandUtil.callbackIfError(err)) {
             return;
           }
           fs.writeFile(tmpPath, yaml, (err: Error) => {
-            if (err) {
+            if(err) {
               me.logErrAndResult(err, '');
               return cb(err);
             }
@@ -610,12 +600,11 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
   }
 
   private createWorkerDockerMachine(dockerMachineCmd: any[],
-                                    workerMachineName,
                                     managerIp,
                                     joinToken, cb: (err, result?) => void) {
     const me = this;
-    me.createDockerMachine(dockerMachineCmd, (err) => {
-      if (err) {
+    me.createDockerMachine(dockerMachineCmd, (err: Error, workerMachineName: string, workerIp: string) => {
+      if(err) {
         return cb(err);
       }
       const dockerMachineJoinSwarmCmd = [
@@ -625,10 +614,16 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
         'docker',
         'swarm',
         'join',
+        '--advertise-addr',
+        `${workerIp}:2377`,
         '--token',
         joinToken,
         `${managerIp}:2377`
       ];
+      if(me.writeScripts) {
+        fs.writeFileSync(`/home/jreeme/tmp/_join_worker_${workerMachineName}.sh`, dockerMachineJoinSwarmCmd.join(' '));
+        return cb(null, joinToken);
+      }
       me.spawn.spawnShellCommandAsync(dockerMachineJoinSwarmCmd,
         {
           cacheStdOut: true
@@ -636,10 +631,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
         (err, result) => {
           me.commandUtil.log(result.toString());
         },
-        (err, result) => {
-          const joinToken = me.safeJson.safeParseSync(result).obj.stdoutText.trim();
-          cb(null, joinToken);
-        });
+        cb);
     });
   }
 
@@ -647,8 +639,8 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     const me = this;
     me.safeJson.safeParse(err.message, (err: Error, obj: any) => {
       try {
-        if (obj.code.code === 'ENOENT') {
-          if (me.positive.areYouSure(
+        if(obj.code.code === 'ENOENT') {
+          if(me.positive.areYouSure(
             `Looks like 'docker-machine' is not installed. Want me to try to install it?`,
             'Operation canceled.',
             true,
@@ -662,65 +654,96 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
           return cb(null);
         }
         cb(null);
-      } catch (err) {
+      } catch(err) {
         cb(err);
       }
     });
   }
 
-  private createDockerMachine(dockerMachineCreateCmdOptions: string[], cb: (err: Error) => void) {
+  private createDockerMachine(dockerMachineCreateCmdOptions: string[],
+                              cb: (err: Error, machineName: string, ip: string) => void) {
     const me = this;
-    const dockerMachineCmd = [
-      'docker-machine',
-      'create'
-    ].concat(dockerMachineCreateCmdOptions);
-
-    me.spawn.spawnShellCommandAsync(
-      dockerMachineCmd,
-      {},
-      (err, result) => {
-        me.commandUtil.log(result.toString());
+    async.waterfall([
+      (cb) => {
+        const dockerMachineCmd = [
+          'docker-machine',
+          'create'
+        ].concat(dockerMachineCreateCmdOptions);
+        if(me.writeScripts) {
+          fs.writeFileSync(`/home/jreeme/tmp/_create_${dockerMachineCmd[dockerMachineCmd.length - 1]}.sh`, dockerMachineCmd.join(' '));
+          return cb(null);
+        }
+        me.spawn.spawnShellCommandAsync(
+          dockerMachineCmd,
+          {},
+          (err, result) => {
+            me.commandUtil.log(result.toString());
+          },
+          (err) => {
+            if(err) {
+              return me.handleDockerMachineExecutionFailure(err, cb);
+            }
+            //Below is where we do any tweaks to the underlying docker-machine host. This host is sometimes a boot2docker
+            //machine (VMWare, VirtualBox) and sometimes a cloud-init, usually Ubuntu, image (OpenStack, AWS).
+            const machineName = dockerMachineCmd[dockerMachineCmd.length - 1];
+            switch(me.stackConfigTemplate.dockerMachineDriverOptions.driver) {
+              case('vmwarevsphere'):
+                return me.finalConfig_VMWareVSphere(machineName, cb);
+              case('openstack'):
+                return me.finalConfig_OpenStack(machineName, cb);
+              case('amazonec2'):
+                return me.finalConfig_AmazonEC2(machineName, cb);
+              case('virtualbox'):
+              default:
+                return me.finalConfig_VirtualBox(machineName, cb);
+            }
+          });
       },
-      (err) => {
-        if (err) {
-          return me.handleDockerMachineExecutionFailure(err, cb);
+      (machineName, cb) => {
+        const dockerMachineGetIpCmd = [
+          'docker-machine',
+          'ip',
+          machineName
+        ];
+        if(me.writeScripts) {
+          fs.writeFileSync(`/home/jreeme/tmp/_get_managerIp.sh`, dockerMachineGetIpCmd.join(' '));
+          return cb(null, machineName, '0.0.0.0');
         }
-        //Below is where we do any tweaks to the underlying docker-machine host. This host is sometimes a boot2docker
-        //machine (VMWare, VirtualBox) and sometimes a cloud-init, usually Ubuntu, image (OpenStack, AWS).
-        const machineName = dockerMachineCmd[dockerMachineCmd.length - 1];
-        switch (me.stackConfigTemplate.dockerMachineDriverOptions.driver) {
-          case('vmwarevsphere'):
-            return me.finalConfig_VMWareVSphere(machineName, cb);
-          case('openstack'):
-            return me.finalConfig_OpenStack(machineName, cb);
-          case('amazonec2'):
-            return me.finalConfig_AmazonEC2(machineName, cb);
-          case('virtualbox'):
-          default:
-            return me.finalConfig_VirtualBox(machineName, cb);
-        }
-      });
+        me.spawn.spawnShellCommandAsync(dockerMachineGetIpCmd,
+          {
+            cacheStdOut: true
+          },
+          me.logErrAndResult.bind(me),
+          (err, result) => {
+            const ip = me.safeJson.safeParseSync(result).obj.stdoutText.trim();
+            cb(err, {machineName, ip});
+          });
+      }
+    ], (err, result: {machineName: string, ip: string}) => {
+      const {machineName, ip} = result;
+      cb(err, machineName, ip);
+    });
   };
 
-  private finalConfig_VirtualBox(machineName: string, cb: (err) => void) {
+  private finalConfig_VirtualBox(machineName: string, cb: (err, machineName) => void) {
     this.adjustBoot2DockerProfile(machineName, cb);
   }
 
-  private finalConfig_AmazonEC2(machineName: string, cb: (err) => void) {
-    cb(null);
+  private finalConfig_AmazonEC2(machineName: string, cb: (err, machineName) => void) {
+    cb(null, machineName);
   }
 
-  private finalConfig_OpenStack(machineName: string, cb: (err) => void) {
-    cb(null);
+  private finalConfig_OpenStack(machineName: string, cb: (err, machineName) => void) {
+    cb(null, machineName);
   }
 
-  private finalConfig_VMWareVSphere(machineName: string, cb: (err) => void) {
+  private finalConfig_VMWareVSphere(machineName: string, cb: (err, machineName) => void) {
     this.adjustBoot2DockerProfile(machineName, cb);
   }
 
   //NOTE: The boot2docker profile file (living at /var/lib/boot2docker/profile on the VM host) is appropriate for
   //changing the way the docker daemon behaves. Settings for non-docker daemons need to be handled another way.
-  private adjustBoot2DockerProfile(machineName: string, cb: (err) => void) {
+  private adjustBoot2DockerProfile(machineName: string, cb: (err, machineName) => void) {
     const me = this;
     //Need to up the vm.max_map_count to 262144 to support elasticsearch 5
     //NETDEVICES="$(awk -F: '\''/eth.:|tr.:/{print $1}'\'' /proc/net/dev 2>/dev/null)"
@@ -782,7 +805,7 @@ ulimit -l unlimited
     ];
     me.runCommandOnDockerMachineHost(machineName, dockerMachineJoinSwarmCmd, (err: Error, result: string) => {
       err && me.commandUtil.log(err.toString());
-      cb(err);
+      cb(err, machineName);
     });
   }
 
@@ -802,7 +825,7 @@ ulimit -l unlimited
   private getContainerConfigsFromJsonFile(inputPath: string) {
     const me = this;
     const fullInputPath = me.commandUtil.getConfigFilePath(inputPath, '.json');
-    if (!fileExists.sync(fullInputPath)) {
+    if(!fileExists.sync(fullInputPath)) {
       me.commandUtil.processExitWithError(new Error(`\n'${fullInputPath}' does not exist`));
     }
     const stackConfigTemplate = <DockerStackConfigTemplate>me.safeJson.readFileSync(fullInputPath, undefined);
@@ -816,9 +839,9 @@ ulimit -l unlimited
                                   cb: (err: Error, msg?: string) => void) {
     const me = this;
     me.createOutputPath(path.resolve(process.cwd(), 'tmp.txt'), outputTemplateFileName, '.json', (err, fullOutputPath, outputFileExists) => {
-      if (catalogEntryName === undefined) {
+      if(catalogEntryName === undefined) {
         //Just write out the descriptors we have "baked in" to this application
-        if (fileExists.sync(fullOutputPath)
+        if(fileExists.sync(fullOutputPath)
           && !me.positive.areYouSure(
             `Config file '${fullOutputPath}' already exists. Overwrite? [Y/n] `,
             'Operation canceled.',
@@ -869,24 +892,24 @@ ulimit -l unlimited
   }
 
   private callbackAndExitIfError(err: Error, cb: () => void) {
-    if (!err) {
+    if(!err) {
       return;
     }
-    if (cb) {
+    if(cb) {
       cb();
     }
     this.commandUtil.processExitWithError(err, 'OK');
   }
 
   private callbackAndExitWithError(err: Error, cb: () => void) {
-    if (cb) {
+    if(cb) {
       cb();
     }
     this.commandUtil.processExitWithError(err, 'OK');
   }
 
   private camelToSnake(name, separator) {
-    return name.replace(/([a-z]|(?:[A-Z]+))([A-Z]|$)/g, function (_, $1, $2) {
+    return name.replace(/([a-z]|(?:[A-Z]+))([A-Z]|$)/g, function(_, $1, $2) {
       return $1 + ($2 && (separator || '_') + $2);
     }).toLowerCase();
   }
@@ -895,21 +918,21 @@ ulimit -l unlimited
                            outPathFragment: string,
                            extension: string,
                            cb: (err: Error, createdOutputPath: string, exists?: boolean) => void) {
-    if (path.extname(outPathFragment) !== extension) {
+    if(path.extname(outPathFragment) !== extension) {
       outPathFragment += extension;
     }
-    if (!path.isAbsolute(outPathFragment)) {
+    if(!path.isAbsolute(outPathFragment)) {
       outPathFragment = path.resolve(path.dirname(inPathFragment), outPathFragment);
     }
     const pathDirname = path.dirname(outPathFragment);
     mkdirp(pathDirname, (err) => {
-      if (err) {
+      if(err) {
         return cb(err, outPathFragment);
       }
       //Check existence of file
       fileExists(outPathFragment, (err, exists) => {
         touch(outPathFragment, (err) => {
-          if (err || exists) {
+          if(err || exists) {
             return cb(err, outPathFragment, exists);
           }
           fs.unlink(outPathFragment, (err) => {
