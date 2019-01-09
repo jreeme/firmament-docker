@@ -52,8 +52,9 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     super();
   }
 
-  validateDockerStackConfigTemplate(dockerStackConfigTemplate: DockerStackConfigTemplate,
-                                    cb: (err: Error, dockerStackConfigTemplate?: DockerStackConfigTemplate) => void) {
+  private validateDockerStackConfigTemplate(argv: any,
+                                            dockerStackConfigTemplate: DockerStackConfigTemplate,
+                                            cb: (err: Error, dockerStackConfigTemplate?: DockerStackConfigTemplate) => void) {
     const me = this;
     const dsct = dockerStackConfigTemplate;
     const dockerImageRegex = /.+?(:\d+?)?\/.+?:.+$/g;
@@ -187,14 +188,17 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
       }
     }
     this.dockerUtil.writeJsonTemplateFile(dsct, '/tmp/tmp.json');
-    return cb(null, dsct);
-    me.checkNfsMounts(dsct, (err, dsct) => {
+    if(argv.noNfs) {
+      return cb(null, dsct);
+    }
+    me.checkNfsMounts(argv, dsct, (err, dsct) => {
       //me.commandUtil.processExit(0, 'DEBUG --> Exit(0)');
       cb(err, dsct);
     });
   }
 
-  private checkNfsMounts(dsct: DockerStackConfigTemplate,
+  private checkNfsMounts(argv: any,
+                         dsct: DockerStackConfigTemplate,
                          cb: (err: Error, dockerStackConfigTemplate: DockerStackConfigTemplate) => void) {
     const me = this;
     const volumes = Object.keys(dsct.dockerComposeYaml.volumes).map((key) => dsct.dockerComposeYaml.volumes[key]);
@@ -232,11 +236,12 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
                 `${volumeConfig.host}`
               ],
               localSpawnOptions,
-              (err, result) => {
+              () => {
               },
               (err: Error, result: string) => {
-                if(me.commandUtil.callbackIfError(cb, err, result)) {
-                  return;
+                if(err) {
+                  //showmount failed, could be new server ... attempt to install nfs-kernel-server?
+                  return cb(null, 'SHOWMOUNT_FAILED');
                 }
                 me.safeJson.safeParse(result, (err: Error, obj: {code: number, stdoutText: string}) => {
                   if(obj.code) {
@@ -254,6 +259,27 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
                 });
               }
             );
+          },
+          (showMountResultOrExportPath: string, cb) => {
+            if(showMountResultOrExportPath === 'SHOWMOUNT_FAILED') {
+              const cmds = [
+                [
+                  'apt-get',
+                  'update'
+                ],
+                [
+                  'apt-get',
+                  'install',
+                  '-y',
+                  'nfs-kernel-server'
+                ]
+              ];
+              me.remoteSpawnCmdArray(cmds, remoteSpawnOptions, (err) => {
+                me.callbackAndExitIfError(err, cb);
+                cb(new Error('SHOW_MOUNT_INSTALLED'));
+              });
+            }
+            cb(null, showMountResultOrExportPath);
           },
           (exportPath, cb) => {
             me.commandUtil.log(`Attempting to export NFS volume ${volumeConfig.host}:${exportPath} ...`);
@@ -281,21 +307,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
                 '-ra'
               ]
             ];
-            async.eachSeries(cmds, (cmd, cb) => {
-              me.spawn.spawnShellCommandAsync(
-                cmd,
-                remoteSpawnOptions,
-                (err: Error, result: string) => {
-                  me.commandUtil.log(result);
-                },
-                (err: Error, result: string) => {
-                  me.commandUtil.log(result);
-                  cb(err);
-                }
-              );
-            }, (err: Error) => {
-              cb(err);
-            });
+            me.remoteSpawnCmdArray(cmds, remoteSpawnOptions, cb);
           }
         ], (err) => {
           cb((err && err.message === 'ALREADY_EXPORTED') ? null : err);
@@ -305,6 +317,25 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
         cb(err, dsct);
       }
     );
+  }
+
+  private remoteSpawnCmdArray(cmds: any[], remoteSpawnOptions: SpawnOptions2, cb: (err: Error) => void) {
+    const me = this;
+    async.eachSeries(cmds, (cmd, cb) => {
+      me.spawn.spawnShellCommandAsync(
+        cmd,
+        remoteSpawnOptions,
+        (err: Error, result: string) => {
+          me.commandUtil.log(result);
+        },
+        (err: Error, result: string) => {
+          me.commandUtil.log(result);
+          cb(err);
+        }
+      );
+    }, (err: Error) => {
+      cb(err);
+    });
   }
 
   private static optionsHashToString(hash: any): string {
@@ -353,7 +384,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
   buildTemplate(argv: any, cb: (err?: Error) => void = null) {
     const me = this;
     const {fullInputPath, stackConfigTemplate} = me.getContainerConfigsFromJsonFile(argv.input);
-    me.validateDockerStackConfigTemplate(stackConfigTemplate, (err, stackConfigTemplate) => {
+    me.validateDockerStackConfigTemplate(argv, stackConfigTemplate, (err, stackConfigTemplate) => {
       if(err) {
         if(cb) {
           return cb(err);
@@ -550,14 +581,14 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
       (env: any, ip: string, cb: (err?: Error) => void) => {
         tmp.file({dir: path.dirname(fullInputPath)}, (err, tmpPath, fd, cleanupCb) => {
           try {
-            if(argv.noports) {
+            if(argv.noPorts) {
               for(const serviceName in stackConfigTemplate.dockerComposeYaml.services) {
                 const service = stackConfigTemplate.dockerComposeYaml.services[serviceName];
                 service.ports && delete service.ports;
               }
             }
           } catch(err) {
-            me.commandUtil.error(`Failed to execute 'noports' option ${err}`);
+            me.commandUtil.error(`Failed to execute 'noPorts' option ${err}`);
           }
           const yaml = YAML.stringify(stackConfigTemplate.dockerComposeYaml, 8, 2).replace(/\$\{MASTER_IP\}/g, ip);
           if(me.commandUtil.callbackIfError(err)) {
