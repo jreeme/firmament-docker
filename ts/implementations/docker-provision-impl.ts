@@ -90,7 +90,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     //Patch 'dockerComposeYaml.volumes' block
     for(const volume in dsct.dockerComposeYaml.volumes) {
       const v = <DockerVolumeDescription>dsct.dockerComposeYaml.volumes[volume];
-      if(v.driver_opts.type === 'nfs' && v.driver === 'local') {
+      if(v.driver_opts && v.driver_opts.type === 'nfs' && v.driver === 'local') {
         //Could be we need to 'fill in the blanks' for NFS volume
         //If device is missing, use the volume name
         v.driver_opts.device = v.driver_opts.device || volume;
@@ -192,8 +192,8 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
       return cb(null, dsct);
     }
     me.checkNfsMounts(argv, dsct, (err, dsct) => {
-      //me.commandUtil.processExit(0, 'DEBUG --> Exit(0)');
-      cb(err, dsct);
+      me.commandUtil.processExitIfError(err);
+      cb(null, dsct);
     });
   }
 
@@ -201,122 +201,161 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
                          dsct: DockerStackConfigTemplate,
                          cb: (err: Error, dockerStackConfigTemplate: DockerStackConfigTemplate) => void) {
     const me = this;
-    const volumes = Object.keys(dsct.dockerComposeYaml.volumes).map((key) => dsct.dockerComposeYaml.volumes[key]);
-    async.each(
-      volumes,
-      (volume: DockerVolumeDescription, cb: (err?: Error) => void) => {
-        if(volume.driver !== 'local' || volume.driver_opts.type !== 'nfs') {
-          return cb();
-        }
-        const options = DockerProvisionImpl.optionsStringToHash(volume.driver_opts.o);
-        const volumeConfig = {
-          host: options.addr,
-          exportPath: volume.driver_opts.device.slice(1)//remove the leading colon
-        };
-        //BEGIN -> Waterfall to check existence of export, check if we can add it, if so then add it
-        const localSpawnOptions: SpawnOptions2 = {
-          suppressStdOut: false,
-          suppressStdErr: false,
-          cacheStdOut: true,
-          cacheStdErr: true,
-          suppressResult: false
-        };
-        const remoteSpawnOptions = Object.assign({}, localSpawnOptions, {
-          remoteHost: dsct.nfsConfig.serverAddr,
-          remoteUser: dsct.nfsConfig.nfsUser,
-          remotePassword: dsct.nfsConfig.nfsPassword
-        });
-        async.waterfall([
-          (cb) => {
-            //Issue a 'showmount' to remote server to see if volume is exported
+    const localSpawnOptions: SpawnOptions2 = {
+      suppressStdOut: false,
+      suppressStdErr: false,
+      cacheStdOut: true,
+      cacheStdErr: true,
+      suppressResult: false
+    };
+    const remoteSpawnOptions = Object.assign({}, localSpawnOptions, {
+      remoteHost: '',
+      remoteUser: dsct.nfsConfig.nfsUser,
+      remotePassword: dsct.nfsConfig.nfsPassword
+    });
+    const volumes: DockerVolumeDescription[] = Object.keys(dsct.dockerComposeYaml.volumes).map((key) => dsct.dockerComposeYaml.volumes[key]);
+    async.waterfall([
+      (cb) => {
+        //Get a list of all the NFS servers this deployment wants
+        const nfsServerHash = {};
+        volumes.forEach((v) => {
+            if(v.driver_opts && v.driver_opts.type === 'nfs' && v.driver === 'local') {
+              const host = DockerProvisionImpl.optionsStringToHash(v.driver_opts.o).addr;
+              nfsServerHash[host] = nfsServerHash[host] || [];
+              nfsServerHash[host].push(v.driver_opts.device.slice(1));
+            }
+          }
+        );
+        const nfsServers = Object.keys(nfsServerHash).map((key) => key);
+        //Step (0) - Make sure NFS servers are available
+        async.each(
+          nfsServers,
+          (nfsServer: string, cb: (err?: Error) => void) => {
             me.spawn.spawnShellCommandAsync(
               [
                 'showmount',
                 '-e',
-                `${volumeConfig.host}`
+                nfsServer
               ],
               localSpawnOptions,
               () => {
               },
               (err: Error, result: string) => {
                 if(err) {
-                  //showmount failed, could be new server ... attempt to install nfs-kernel-server?
-                  return cb(null, 'SHOWMOUNT_FAILED');
+                  const resultObject = me.safeJson.safeParseSync(err.message);
+                  if(resultObject.obj.code !== 0) {
+                    //Try to install NFS server (makes a lot of assumptions)
+                    const cmds = [
+                      [
+                        'apt-get',
+                        'update'
+                      ],
+                      [
+                        'apt-get',
+                        'install',
+                        '-y',
+                        'nfs-kernel-server'
+                      ]
+                    ];
+                    return me.remoteSpawnCmdArray(
+                      cmds,
+                      Object.assign({}, remoteSpawnOptions, {remoteHost: nfsServer}),
+                      (err) => {
+                        //TODO: Lots can go wrong here. Someday maybe look to see if RPC can route to host, etc.
+                        me.callbackAndExitIfError(err, cb);
+                        cb();
+                      });
+                  }
                 }
+                cb();
+              }
+            );
+          },
+          (err: Error) => {
+            me.callbackAndExitIfError(err, cb);
+            cb(null, nfsServerHash);
+          }
+        );
+      },
+      (nfsServerHash, cb) => {
+        //Step (1) - Assume all NFS servers are online and ready to rock, make sure needed volumes are exported
+        //from each server
+        const nfsServers = Object.keys(nfsServerHash).map((key) => key);
+        async.each(
+          nfsServers,
+          (nfsServer: string, cb: (err?: Error) => void) => {
+            me.spawn.spawnShellCommandAsync(
+              [
+                'showmount',
+                '-e',
+                nfsServer
+              ],
+              localSpawnOptions,
+              () => {
+              },
+              (err: Error, result: string) => {
                 me.safeJson.safeParse(result, (err: Error, obj: {code: number, stdoutText: string}) => {
                   if(obj.code) {
                     return cb(new Error(`local 'showmount' FAILED`));
                   }
                   const exportList = obj.stdoutText.split('\n').slice(1, -1).map((exportLine) => exportLine.split(/\s/)[0]);
-                  const msg = `Checking NFS mount ${volumeConfig.host}:${volumeConfig.exportPath} ...`;
-                  if(exportList.indexOf(volumeConfig.exportPath) !== -1) {
-                    //Looks like this volume is already exported so we can stop here
-                    me.commandUtil.log(`${msg} OK`);
-                    return cb(new Error('ALREADY_EXPORTED'));
-                  }
-                  me.commandUtil.log(`${msg} NOT EXPORTED`);
-                  cb(err, volumeConfig.exportPath);
+                  const volumes = nfsServerHash[nfsServer];
+                  const addExportSpawnOptions = Object.assign({}, remoteSpawnOptions, {remoteHost: nfsServer});
+                  async.series([
+                    (cb) => {
+                      async.each(
+                        volumes,
+                        (volume: string, cb: (err?: Error) => void) => {
+                          const msg = `Checking NFS mount ${nfsServer}:${volume} ...`;
+                          if(exportList.indexOf(volume) !== -1) {
+                            me.commandUtil.log(`${msg} OK`);
+                            return cb();
+                          }
+                          me.commandUtil.log(`${msg} NOT EXPORTED`);
+                          me.commandUtil.log(`Attempting to export NFS volume ${nfsServer}:${volume} ...`);
+                          if(!addExportSpawnOptions.remoteHost || !addExportSpawnOptions.remoteUser || !addExportSpawnOptions.remotePassword) {
+                            return cb(new Error(`nfsConfig [nfsHost && (nfsUser + nfsPassword) || nfsSshKeyPath] must be specified to export NFS volume. Cannot continue.`));
+                          }
+                          const etcExportsEntry = `${volume} *(insecure,rw,sync,no_root_squash,no_subtree_check)`;
+                          const cmds = [
+                            [
+                              'mkdir',
+                              '-p',
+                              volume
+                            ],
+                            [
+                              'chmod',
+                              '777',
+                              volume
+                            ],
+                            [
+                              // Check for this entry in /etc/exports and add if not there
+                              `grep -q -F '${etcExportsEntry}' /etc/exports || echo '${etcExportsEntry}' >> /etc/exports`
+                            ]
+                          ];
+                          me.remoteSpawnCmdArray(cmds, addExportSpawnOptions, cb);
+                        }, cb);
+                    },
+                    (cb) => {
+                      const cmds = [
+                        [
+                          '/usr/sbin/exportfs',
+                          '-ra'
+                        ]
+                      ];
+                      me.remoteSpawnCmdArray(cmds, addExportSpawnOptions, (err: Error) => {
+                        me.commandUtil.log(`Restarted NFS services on ${nfsServer}`);
+                        cb(err);
+                      });
+                    }
+                  ], cb);
                 });
-              }
-            );
-          },
-          (showMountResultOrExportPath: string, cb) => {
-            if(showMountResultOrExportPath === 'SHOWMOUNT_FAILED') {
-              const cmds = [
-                [
-                  'apt-get',
-                  'update'
-                ],
-                [
-                  'apt-get',
-                  'install',
-                  '-y',
-                  'nfs-kernel-server'
-                ]
-              ];
-              me.remoteSpawnCmdArray(cmds, remoteSpawnOptions, (err) => {
-                me.callbackAndExitIfError(err, cb);
-                cb(new Error('SHOW_MOUNT_INSTALLED'));
               });
-            }
-            cb(null, showMountResultOrExportPath);
-          },
-          (exportPath, cb) => {
-            me.commandUtil.log(`Attempting to export NFS volume ${volumeConfig.host}:${exportPath} ...`);
-            if(!remoteSpawnOptions.remoteHost || !remoteSpawnOptions.remoteUser || !remoteSpawnOptions.remotePassword) {
-              return cb(new Error(`nfsConfig [nfsHost & nfsUser] must all be specified to export NFS volume. Cannot continue.`));
-            }
-            const etcExportsEntry = `${volumeConfig.exportPath} *(insecure,rw,sync,no_root_squash,no_subtree_check)`;
-            const cmds = [
-              [
-                'mkdir',
-                '-p',
-                volumeConfig.exportPath
-              ],
-              [
-                'chmod',
-                '777',
-                volumeConfig.exportPath
-              ],
-              [
-                // Check for this entry in /etc/exports and add if not there
-                `grep -q -F '${etcExportsEntry}' /etc/exports || echo '${etcExportsEntry}' >> /etc/exports`
-              ],
-              [
-                '/usr/sbin/exportfs',
-                '-ra'
-              ]
-            ];
-            me.remoteSpawnCmdArray(cmds, remoteSpawnOptions, cb);
-          }
-        ], (err) => {
-          cb((err && err.message === 'ALREADY_EXPORTED') ? null : err);
-        });
-        //END -> Waterfall to check existence of export, check if we can add it, if so then add it
-      }, (err: Error) => {
-        cb(err, dsct);
+          }, cb);
       }
-    );
+    ], (err: Error) => {
+      cb(err, dsct);
+    });
   }
 
   private remoteSpawnCmdArray(cmds: any[], remoteSpawnOptions: SpawnOptions2, cb: (err: Error) => void) {
