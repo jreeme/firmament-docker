@@ -692,16 +692,19 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
       ];
       if(me.writeScripts) {
         fs.writeFileSync(`/home/jreeme/tmp/_join_worker_${workerMachineName}.sh`, dockerMachineJoinSwarmCmd.join(' '));
-        return cb(null, joinToken);
+        return cb(null, '');
       }
       me.spawn.spawnShellCommandAsync(dockerMachineJoinSwarmCmd,
         {
-          cacheStdOut: true
+          cacheStdOut: true,
+          cacheStdErr: true
         },
         (err, result) => {
           me.commandUtil.log(result.toString());
         },
-        cb);
+        (err: Error, result: string) => {
+          cb(null, result);
+        });
     });
   }
 
@@ -717,11 +720,10 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
             FailureRetVal.TRUE)) {
             const installDockerMachineJson = path.resolve(__dirname, '../../firmament-bash/install-docker-machine.json');
             return me.processCommandJson.processAbsoluteUrl(installDockerMachineJson, (err) => {
-              me.commandUtil.log(`'docker-machine' installed. Try provisioning again.`);
-              cb(err);
+              cb(new Error(`'docker-machine' installed. Try provisioning again.`));
             });
           }
-          return cb(null);
+          return cb(new Error('docker-machine installation canceled'));
         }
         cb(null);
       } catch(err) {
@@ -734,14 +736,14 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
                               cb: (err: Error, machineName: string, ip: string) => void) {
     const me = this;
     async.waterfall([
-      (cb) => {
+      (cb: (err: Error, machineName: string) => void) => {
         const dockerMachineCmd = [
           'docker-machine',
           'create'
         ].concat(dockerMachineCreateCmdOptions);
         if(me.writeScripts) {
           fs.writeFileSync(`/home/jreeme/tmp/_create_${dockerMachineCmd[dockerMachineCmd.length - 1]}.sh`, dockerMachineCmd.join(' '));
-          return cb(null);
+          return cb(null, '');
         }
         me.spawn.spawnShellCommandAsync(
           dockerMachineCmd,
@@ -750,12 +752,15 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
             me.commandUtil.log(result.toString());
           },
           (err) => {
+            const machineName = dockerMachineCmd[dockerMachineCmd.length - 1];
             if(err) {
-              return me.handleDockerMachineExecutionFailure(err, cb);
+              return me.handleDockerMachineExecutionFailure(err, (err: Error) => {
+                me.commandUtil.processExitIfError(err);
+                cb(err, machineName);
+              });
             }
             //Below is where we do any tweaks to the underlying docker-machine host. This host is sometimes a boot2docker
             //machine (VMWare, VirtualBox) and sometimes a cloud-init, usually Ubuntu, image (OpenStack, AWS).
-            const machineName = dockerMachineCmd[dockerMachineCmd.length - 1];
             switch(me.stackConfigTemplate.dockerMachineDriverOptions.driver) {
               case('vmwarevsphere'):
                 return me.finalConfig_VMWareVSphere(machineName, cb);
