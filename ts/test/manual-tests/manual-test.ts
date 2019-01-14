@@ -52,9 +52,9 @@ dockerProvision.buildTemplate({
   //input: ProvisionCommandImpl.defaultConfigFilename
   //noports: false,
   //input: '/home/jreeme/src/merlin-stack/firmament/deploy/openstack/openstack.merlin.keyw/two-web-servers.json'
-  installNfs: true,
   noNfs: false,
-  input: '/home/jreeme/src/parrot-stack/firmament/deploy/virtualbox/virtualbox.parrot.keyw/elasticsearch-only.json'
+  input: '/home/jreeme/src/merlin-stack/firmament/deploy/vmware/vmware.parrot-scif.keyw/full-stack-thin-08.06.json'
+  //input: '/home/jreeme/src/parrot-stack/firmament/deploy/virtualbox/virtualbox.parrot.keyw/elasticsearch-only.json'
   //input: '/home/jreeme/src/parrot-stack/firmament/deploy/virtualbox/virtualbox.parrot.keyw/two-web-servers.json'
   //input: '/home/jreeme/src/parrot-stack/firmament/deploy/virtualbox/virtualbox.parrot.keyw/two-phusions-0.08.03.json'
   //input: '/home/jreeme/src/parrot-stack/firmament/deploy/vmware/vmware.parrot-les.keyw/postgres-thin.json',
