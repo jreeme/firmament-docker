@@ -99,6 +99,21 @@ export class VmwareCommandImpl implements Command {
         default: 'OVA filename',
         type: 'string',
         desc: 'Name of the VM in ESXi inventory'
+      },
+      esxiHost: {
+        type: 'string',
+        required: true,
+        desc: 'ESXi Server Hostname/IP address'
+      },
+      esxiUser: {
+        type: 'string',
+        required: true,
+        desc: 'User to perform action as on ESXi server'
+      },
+      esxiPassword: {
+        type: 'string',
+        required: true,
+        desc: 'Password for ESXi User'
       }
     };
     exportCommand.handler = me.vmwareMake.export.bind(me.vmwareMake);

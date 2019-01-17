@@ -22,8 +22,7 @@ export class VmwareMakeImpl extends ForceErrorImpl implements VmwareMake {
       'ovftool',
       '--compress=9',
       '--diskMode=thin',
-      '--targetType=OVA',
-      '--datastore=datastore1'
+      '--targetType=OVA'
     ];
 
     me.commandUtil.processExit();
