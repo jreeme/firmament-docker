@@ -87,7 +87,27 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
       worker.engineLabels.affinity = worker.engineLabels.affinity || worker.nodeName;
     });
 
+    //Patch 'nfsConfig' block
+    dsct.nfsConfig = dsct.nfsConfig || {
+      nfsUser: undefined,
+      nfsPassword: undefined,
+      nfsSshKeyPath: undefined,
+      nfsSshPort: 22,
+      exportBaseDir: undefined,
+      serverAddr: undefined,
+      options: undefined
+    };
+
+    dsct.nfsConfig.nfsUser = dsct.nfsConfig.nfsUser || undefined;
+    dsct.nfsConfig.nfsPassword = dsct.nfsConfig.nfsPassword || undefined;
+    dsct.nfsConfig.nfsSshKeyPath = dsct.nfsConfig.nfsSshKeyPath || undefined;
+    dsct.nfsConfig.nfsSshPort = dsct.nfsConfig.nfsSshPort || undefined;
+    dsct.nfsConfig.exportBaseDir = dsct.nfsConfig.exportBaseDir || undefined;
+    dsct.nfsConfig.serverAddr = dsct.nfsConfig.serverAddr || undefined;
+    dsct.nfsConfig.options = dsct.nfsConfig.options || undefined;
+
     //Patch 'dockerComposeYaml.volumes' block
+    dsct.dockerComposeYaml.volumes = dsct.dockerComposeYaml.volumes || {};
     for(const volume in dsct.dockerComposeYaml.volumes) {
       const v = <DockerVolumeDescription>dsct.dockerComposeYaml.volumes[volume];
       if(v.driver_opts && v.driver_opts.type === 'nfs' && v.driver === 'local') {
@@ -191,14 +211,13 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
     if(argv.noNfs) {
       return cb(null, dsct);
     }
-    me.checkNfsMounts(argv, dsct, (err, dsct) => {
+    me.checkNfsMounts(dsct, (err, dsct) => {
       me.commandUtil.processExitIfError(err);
       cb(null, dsct);
     });
   }
 
-  private checkNfsMounts(argv: any,
-                         dsct: DockerStackConfigTemplate,
+  private checkNfsMounts(dsct: DockerStackConfigTemplate,
                          cb: (err: Error, dockerStackConfigTemplate: DockerStackConfigTemplate) => void) {
     const me = this;
     const localSpawnOptions: SpawnOptions2 = {
@@ -208,7 +227,7 @@ export class DockerProvisionImpl extends ForceErrorImpl implements DockerProvisi
       cacheStdErr: true,
       suppressResult: false
     };
-    const remoteSpawnOptions = Object.assign({}, localSpawnOptions, {
+    const remoteSpawnOptions: SpawnOptions2 = Object.assign({}, localSpawnOptions, {
       remoteHost: '',
       remoteUser: dsct.nfsConfig.nfsUser,
       remotePassword: dsct.nfsConfig.nfsPassword

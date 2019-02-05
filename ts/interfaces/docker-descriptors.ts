@@ -94,7 +94,9 @@ export interface DockerComposeYaml {
 
 export interface NfsConfig {
   nfsUser: string,
-  nfsPassword: string,
+  nfsPassword?: string,
+  nfsSshKeyPath?: string,
+  nfsSshPort?: number,
   exportBaseDir: string,
   serverAddr: string,
   options: string
@@ -107,7 +109,7 @@ export interface DockerStackConfigTemplate {
   defaultDockerRegistry: string,
   defaultDockerImageTag: string,
   traefikZoneName: string,
-  nfsConfig: NfsConfig,
+  nfsConfig?: NfsConfig,
   dockerComposeYaml: DockerComposeYaml,
   dockerMachineDriverOptions: DockerMachineDriverOptions,
   dockerMachines: {
