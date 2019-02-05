@@ -1,15 +1,114 @@
 import {injectable, inject} from 'inversify';
 import {DockerImageManagement} from '../interfaces/docker-image-management';
-import {DockerImage, ImageOrContainerRemoveResults, ImageOrContainer} from '../interfaces/dockerode';
+import {DockerImage, ImageOrContainerRemoveResults, ImageOrContainer} from '..';
 import {DockerUtilOptionsImpl} from './util/docker-util-options-impl';
-import {ForceErrorImpl, CommandUtil} from 'firmament-yargs';
-import {DockerManagement} from "../interfaces/docker-management";
+import {ForceErrorImpl, CommandUtil, Spawn, SafeJson} from 'firmament-yargs';
+import {DockerManagement} from '../interfaces/docker-management';
+
+import * as fs from 'fs';
+import * as path from 'path';
+import * as async from 'async';
+import * as sanitize from 'sanitize-filename';
 
 @injectable()
 export class DockerImageManagementImpl extends ForceErrorImpl implements DockerImageManagement {
   constructor(@inject('DockerManagement') private DM: DockerManagement,
+              @inject('Spawn') private spawn: Spawn,
+              @inject('SafeJson') private safeJson: SafeJson,
               @inject('CommandUtil') private commandUtil: CommandUtil) {
     super();
+  }
+
+  loadImages(imageRegEx: string, inputFolder: string, cb: (err?: Error, loadedImagePaths?: string[]) => void) {
+    const me = this;
+    async.waterfall([
+      (cb) => {
+        fs.readdir(inputFolder, cb);
+      },
+      (files: string[], cb) => {
+        const regExp = new RegExp(imageRegEx);
+        cb(null, files
+          .filter((file) => regExp.test(file))
+          .map((file) => `${path.resolve(inputFolder, file)}`));
+      },
+      (pathsToLoad: string[], cb) => {
+        async.eachSeries(pathsToLoad, (pathToLoad, cb) => {
+          me.spawn.spawnShellCommandAsync([
+              'bash',
+              '-c',
+              `docker load -i ${pathToLoad}`
+            ],
+            {},
+            (err, result) => {
+              me.commandUtil.log(result);
+            },
+            (err, saveImageResult) => {
+              me.safeJson.safeParse(saveImageResult, (err: Error, obj: any) => {
+                cb(err);
+              });
+            });
+        }, (err: Error) => {
+          cb(err);
+        });
+      }
+    ], (err: Error, result: any) => {
+      cb(err, result);
+    });
+  }
+
+  saveImages(imageRegEx: string, outputFolder: string, cb: (err: Error, savedImagePaths: string[]) => void) {
+    const me = this;
+    async.waterfall([
+      (cb) => {
+        me.spawn.spawnShellCommandAsync([
+            'bash',
+            '-c',
+            `docker images -a | awk '{print \$1":"\$2}'`
+          ],
+          {
+            cacheStdOut: true
+          },
+          () => {
+          },
+          (err, listImagesResult) => {
+            me.safeJson.safeParse(listImagesResult, (err: Error, obj: any) => {
+              cb(err, obj.stdoutText.toString().split('\n'));
+            });
+          });
+      },
+      (allImages: string[], cb) => {
+        const regExp = new RegExp(imageRegEx);
+        cb(null, allImages.filter((image) => regExp.test(image)));
+      },
+      (matchingImages: string[], cb) => {
+        const imageOutputFiles: string[] = [];
+        async.each(matchingImages, (image, cb) => {
+          //async.eachLimit(matchingImages, 4, (image, cb) => {
+          const outputPath = `${path.resolve(outputFolder, sanitize(image, {replacement: '_'}))}.tar.gz`;
+          me.spawn.spawnShellCommandAsync([
+              'bash',
+              '-c',
+              `docker save ${image} -o ${outputPath}`
+            ],
+            {
+              cacheStdOut: true,
+              cacheStdErr: true
+            },
+            () => {
+            },
+            (err, saveImageResult) => {
+              imageOutputFiles.push(outputPath);
+              me.safeJson.safeParse(saveImageResult, (err: Error, obj: any) => {
+                cb(err);
+              });
+            });
+        }, (err: Error) => {
+          cb(err, imageOutputFiles);
+        });
+      }
+    ], (err: Error, imageOutputFiles: any) => {
+      cb(err, imageOutputFiles);
+    });
   }
 
   listImages(listAllImages: boolean, cb: (err: Error, images: DockerImage[]) => void) {
@@ -43,25 +142,25 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
     let me = this;
     me.DM.dockerode.pull(imageName,
       (err, outputStream) => {
-        if (me.DM.commandUtil.callbackIfError(cb, err)) {
+        if(me.DM.commandUtil.callbackIfError(cb, err)) {
           return;
         }
         outputStream.on('data', (chunk) => {
           try {
             let data = JSON.parse(chunk);
-            if (data.error) {
+            if(data.error) {
               //noinspection ExceptionCaughtLocallyJS
               throw new Error(data.error);
             }
-            if (data.status === 'Downloading' || data.status === 'Extracting') {
+            if(data.status === 'Downloading' || data.status === 'Extracting') {
               progressCb(data.id,
                 data.status,
                 data.progressDetail.current,
                 data.progressDetail.total);
             }
-          } catch (err) {
+          } catch(err) {
             progressCb('**error**', err.message, 0, 10);
-            if (cb) {
+            if(cb) {
               cb(err);
               cb = null;
             }
@@ -70,16 +169,16 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
         outputStream.on('end', () => {
           //Assume all was well with pull from here. Hopefully 'error' will have been
           //emitted if something went wrong
-          if (cb) {
+          if(cb) {
             cb(null);
             cb = null;
           }
         });
-        outputStream.on('error', function (err: Error) {
+        outputStream.on('error', function(err: Error) {
           let msg = `Encountered error '${err.message}' while pulling image: '${imageName}'`;
           let newError = new Error(msg);
           me.DM.commandUtil.logError(newError, true);
-          if (cb) {
+          if(cb) {
             cb(newError);
             cb = null;
           }
@@ -93,8 +192,8 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
     try {
       //Check existence of dockerFilePath
       require('fs').statSync(dockerFilePath);
-    } catch (err) {
-      if (me.DM.commandUtil.callbackIfError(cb, err)) {
+    } catch(err) {
+      if(me.DM.commandUtil.callbackIfError(cb, err)) {
         return;
       }
     }
@@ -106,34 +205,34 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
       });
       me.DM.dockerode.buildImage(tarStream, {
         t: dockerImageName
-      }, function (err, outputStream) {
-        if (me.DM.commandUtil.callbackIfError(cb, err)) {
+      }, function(err, outputStream) {
+        if(me.DM.commandUtil.callbackIfError(cb, err)) {
           return;
         }
         let error: Error = null;
-        outputStream.on('data', function (chunk) {
+        outputStream.on('data', function(chunk) {
           try {
             let data = JSON.parse(chunk);
-            if (data.stream) {
+            if(data.stream) {
               me.commandUtil.stdoutWrite(data.stream);
               //progressCb('start', data.stream, 0, 10);
             } else {
-              if (data.error) {
+              if(data.error) {
                 error = data.error;
                 return;
               }
-              if (data.status == 'Downloading' || data.status == 'Extracting') {
+              if(data.status == 'Downloading' || data.status == 'Extracting') {
                 progressCb(data.id,
                   data.status,
                   data.progressDetail.current,
                   data.progressDetail.total);
               }
             }
-          } catch (err) {
+          } catch(err) {
             error = err;
           }
         });
-        outputStream.on('end', function () {
+        outputStream.on('end', function() {
           //A sad little hack to not stop processing on the 'tag not found error'. We'll do
           //this better next time.
           cb(error
@@ -142,12 +241,12 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
             ? error
             : null);
         });
-        outputStream.on('error', function (err: Error) {
+        outputStream.on('error', function(err: Error) {
           let msg = `Encountered error '${err.message}' while building: '${dockerImageName}'`;
           me.DM.commandUtil.logError(new Error(msg), true);
         });
       });
-    } catch (err) {
+    } catch(err) {
       me.DM.commandUtil.callbackIfError(cb, err);
     }
   }

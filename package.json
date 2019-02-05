@@ -54,6 +54,7 @@
     "mkdirp": "^0.5.1",
     "reflect-metadata": "^0.1.10",
     "request": "^2.81.0",
+    "sanitize-filename": "^1.6.1",
     "tar-fs": "^1.15.3",
     "time-ago": "^0.1.0",
     "tmp": "^0.0.33",

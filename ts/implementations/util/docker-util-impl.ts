@@ -10,7 +10,7 @@ import {DockerUtilOptions} from '../../interfaces/docker-util-options';
 import {ForceErrorImpl} from 'firmament-yargs';
 
 const deepExtend = require('deep-extend');
-const async = require('async');
+import * as  async from 'async';
 
 @injectable()
 export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
@@ -228,8 +228,8 @@ export class DockerUtilImpl extends ForceErrorImpl implements DockerUtil {
                 cacheStdOut: true
               },
               me.logErrAndResult.bind(me),
-              (err, result) => {
-                cb(null, result);
+              () => {
+                cb(null);
               });
           }, cb);
         }

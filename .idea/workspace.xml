@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="Very little work toward exporting OVAs">
+    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="v.1.4.58 -&gt; NPM, patch NFS Config">
+      <change afterPath="$PROJECT_DIR$/ts/test/manual-tests/save-load-images.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ts/implementations/docker-image-management-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/docker-image-management-impl.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ts/interfaces/docker-image-management.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/interfaces/docker-image-management.ts" afterDir="false" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,10 +29,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts">
+        <entry file="file://$PROJECT_DIR$/ts/implementations/docker-image-management-impl.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="107" selection-start-line="107" selection-end-line="107" />
+            <state relative-caret-position="194">
+              <caret line="54" column="21" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
               </folding>
@@ -40,19 +41,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts">
+        <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-image-management.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="575">
-              <caret line="99" column="12" selection-start-line="99" selection-start-column="12" selection-end-line="99" selection-end-column="12" />
+            <state relative-caret-position="90">
+              <caret line="7" column="45" selection-start-line="7" selection-start-column="45" selection-end-line="7" selection-end-column="45" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts">
+        <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/save-load-images.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="42" column="61" selection-start-line="42" selection-start-column="61" selection-end-line="42" selection-end-column="61" />
+            <state relative-caret-position="120">
+              <caret line="8" column="51" selection-start-line="8" selection-start-column="51" selection-end-line="8" selection-end-column="51" />
               <folding>
                 <element signature="e#79#123#0" expanded="true" />
               </folding>
@@ -71,8 +72,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>MASTER_IP</find>
-      <find>hostMachineDnsServer</find>
       <find>DockerServiceDescription</find>
       <find>jsonFile</find>
       <find>boot2dock</find>
@@ -101,6 +100,8 @@
       <find>https://s3.amazonaws.com/merlin-jreeme/VMware-ovftool-4.3.0-10104578-lin.x86_64.bundle</find>
       <find>docker-machine</find>
       <find>exportfs</find>
+      <find>awk</find>
+      <find>stdoutText</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/docker</dir>
@@ -115,9 +116,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="/tmp/docker-provision.json" />
-        <option value="$PROJECT_DIR$/docker/alpine/3.7/Dockerfile" />
-        <option value="$PROJECT_DIR$/docker/portainer/1.16.2/_run.sh" />
         <option value="$PROJECT_DIR$/docker/portainer/1.16.2/portainer-start.sh" />
         <option value="$PROJECT_DIR$/docker/portainer/1.16.2/portainer/build.sh" />
         <option value="$PROJECT_DIR$/docker/portainer/1.16.2/portainer/build/linux/Dockerfile" />
@@ -154,7 +152,6 @@
         <option value="$PROJECT_DIR$/ts/interfaces/vmware-make.ts" />
         <option value="$PROJECT_DIR$/firmament-bash/uninstall-ovftool.json" />
         <option value="$PROJECT_DIR$/ts/test/docker-container-management.test.ts" />
-        <option value="$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts" />
         <option value="$PROJECT_DIR$/ts/test/docker-ode-mock-impl.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/docker-make-impl.ts" />
         <option value="$PROJECT_DIR$/ts/tsconfig.json" />
@@ -166,6 +163,10 @@
         <option value="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" />
         <option value="$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" />
+        <option value="$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts" />
+        <option value="$PROJECT_DIR$/ts/interfaces/docker-image-management.ts" />
+        <option value="$PROJECT_DIR$/ts/test/manual-tests/save-load-images.ts" />
+        <option value="$PROJECT_DIR$/ts/implementations/docker-image-management-impl.ts" />
       </list>
     </option>
   </component>
@@ -200,6 +201,25 @@
               <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
               <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
               <item name="ts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="ts" type="462c0819:PsiDirectoryNode" />
+              <item name="implementations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="ts" type="462c0819:PsiDirectoryNode" />
+              <item name="implementations" type="462c0819:PsiDirectoryNode" />
+              <item name="commands" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
+              <item name="ts" type="462c0819:PsiDirectoryNode" />
+              <item name="interfaces" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
@@ -242,19 +262,19 @@
     <property name="typescript-compiler-editor-notification" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/firmament-bash" />
-      <recent name="$PROJECT_DIR$/ts/implementations" />
-      <recent name="$PROJECT_DIR$/ts/interfaces" />
-      <recent name="$PROJECT_DIR$/ts/implementations/commands" />
-      <recent name="$PROJECT_DIR$/docker/postgres/9.5.10" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/docker/amino3/1.1" />
       <recent name="$PROJECT_DIR$/docker/elasticsearch/5.6.6" />
       <recent name="$PROJECT_DIR$/docker" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/ts/implementations/util" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ts/test/manual-tests" />
+      <recent name="$PROJECT_DIR$/firmament-bash" />
+      <recent name="$PROJECT_DIR$/ts/implementations" />
+      <recent name="$PROJECT_DIR$/ts/interfaces" />
+      <recent name="$PROJECT_DIR$/ts/implementations/commands" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -269,7 +289,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.manual-test.js">
+  <component name="RunManager" selected="Node.js.save-load-images.js">
     <configuration name="firmament" type="NodeJSConfigurationType" application-parameters="p t" path-to-js-file="$PROJECT_DIR$/../firmament/js/firmament.js" working-dir="/tmp">
       <method v="2" />
     </configuration>
@@ -277,6 +297,9 @@
       <method v="2" />
     </configuration>
     <configuration name="ovf-tool-test.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="ovf-tool-test.js" working-dir="$PROJECT_DIR$/js/test/manual-tests">
+      <method v="2" />
+    </configuration>
+    <configuration name="save-load-images.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="js/test/manual-tests/save-load-images.js" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp">
@@ -379,6 +402,7 @@
       <item itemvalue="Node.js.manual-test.js" />
       <item itemvalue="Node.js.ovf-tool-test.js" />
       <item itemvalue="npm.build" />
+      <item itemvalue="Node.js.save-load-images.js" />
     </list>
     <recent_temporary>
       <list>
@@ -518,14 +542,7 @@
       <workItem from="1548342038621" duration="1249000" />
       <workItem from="1549310467822" duration="91000" />
       <workItem from="1549311938436" duration="1531000" />
-      <workItem from="1549379249038" duration="3788000" />
-    </task>
-    <task id="LOCAL-00045" summary="Use relative paths in templateCatalog so it can be used off filesystem as well as network">
-      <created>1483548821008</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1483548821008</updated>
+      <workItem from="1549379249038" duration="15622000" />
     </task>
     <task id="LOCAL-00046" summary="Alpha on the RemoteCatalog">
       <created>1483553272955</created>
@@ -863,7 +880,14 @@
       <option name="project" value="LOCAL" />
       <updated>1547741896969</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="v.1.4.58 -&gt; NPM, patch NFS Config">
+      <created>1549386994754</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1549386994754</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -899,25 +923,24 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="565366000" />
+    <option name="totallyTimeSpent" value="577200000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1919" y="0" width="1922" height="1053" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47777778" visible="true" weight="0.16221985" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.47777778" visible="true" weight="0.16221985" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.5222222" side_tool="true" weight="0.16094987" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3676313" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32795697" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49466383" weight="0.3544576" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49466383" weight="0.47368422" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="TypeScript" order="7" sideWeight="0.4939378" weight="0.27604726" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.27497315" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.27497315" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50533617" side_tool="true" weight="0.2943072" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.4949921" weight="0.32150537" />
       <window_info anchor="bottom" id="Messages" order="11" />
@@ -962,7 +985,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Finished fill it out work!" />
     <MESSAGE value="NPM -&gt; 1.4.34" />
     <MESSAGE value="Tune up boot2docker profile with more ES stuff" />
     <MESSAGE value="NPM -&gt; v.1.4.35" />
@@ -987,7 +1009,8 @@
     <MESSAGE value="v.1.4.56 -&gt; NPM (new NFS check/creation stuff)" />
     <MESSAGE value="v.1.4.57 -&gt; NPM (new NFS check/creation stuff)" />
     <MESSAGE value="Very little work toward exporting OVAs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Very little work toward exporting OVAs" />
+    <MESSAGE value="v.1.4.58 -&gt; NPM, patch NFS Config" />
+    <option name="LAST_COMMIT_MESSAGE" value="v.1.4.58 -&gt; NPM, patch NFS Config" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1007,8 +1030,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/mkdirp/index.js" />
-    <entry file="file://$PROJECT_DIR$/node_modules/firmament-yargs/ts/implementations/child-process-spawn-impl.ts" />
     <entry file="file://$PROJECT_DIR$/README.md" />
     <entry file="file://$PROJECT_DIR$/ts/implementations/docker-management-impl.ts">
       <provider selected="true" editor-type-id="text-editor" />
@@ -1073,13 +1094,6 @@
     <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-util.ts">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-image-management-impl.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="33" column="77" selection-start-line="33" selection-start-column="77" selection-end-line="33" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ts/implementations/util/docker-util-options-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -1092,13 +1106,6 @@
     <entry file="file://$PROJECT_DIR$/node_modules/firmament-yargs/ts/test/manual-tests/manual-spawn-async-test.ts" />
     <entry file="file:///tmp/tmp.json" />
     <entry file="file://$PROJECT_DIR$/node_modules/firmament-yargs/ts/interfaces/spawn.ts" />
-    <entry file="file://$PROJECT_DIR$/ts/implementations/commands/docker-command-impl.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/firmament-yargs/ts/implementations/spawn-impl.ts" />
     <entry file="file://$PROJECT_DIR$/ts/test/docker-util.test.ts">
       <provider selected="true" editor-type-id="text-editor" />
@@ -1119,16 +1126,6 @@
           <caret line="29" column="38" selection-start-line="29" selection-start-column="38" selection-end-line="29" selection-end-column="38" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="27" column="57" selection-start-line="27" selection-start-column="57" selection-end-line="27" selection-end-column="57" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1224,13 +1221,6 @@
         <state relative-caret-position="-261" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -1259,6 +1249,60 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="107" selection-start-line="107" selection-end-line="107" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/commands/docker-command-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-326">
+          <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-image-management.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="7" column="45" selection-start-line="7" selection-start-column="45" selection-end-line="7" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-105">
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="765">
+          <caret line="230" column="15" selection-start-line="230" selection-start-column="15" selection-end-line="230" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+            <element signature="n#!!block;n#listImagesOrContainers#0;n#DockerUtilImpl#0" />
+            <element signature="n#!!block;n#getImagesOrContainers#0;n#DockerUtilImpl#0" />
+            <element signature="n#!!block;n#getImageOrContainer#0;n#DockerUtilImpl#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/save-load-images.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="51" selection-start-line="8" selection-start-column="51" selection-end-line="8" selection-end-column="51" />
+          <folding>
+            <element signature="e#79#123#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-image-management-impl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="54" column="21" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
           <folding>
             <element signature="e#0#45#0" expanded="true" />
           </folding>
