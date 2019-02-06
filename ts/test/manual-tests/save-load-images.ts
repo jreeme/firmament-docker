@@ -6,11 +6,11 @@ import {DockerImageManagement} from '../../interfaces/docker-image-management';
 
 const dockerImageManagement = kernel.get<DockerImageManagement>('DockerImageManagement');
 
-dockerImageManagement.loadImages('.*', '/home/jreeme/tmp', (err: Error) => {
-  process.exit(0);
-});
-
-/*dockerImageManagement.saveImages('.*hadoop.*', '/home/jreeme/tmp', (err: Error) => {
+/*dockerImageManagement.loadImages('.*', '/home/jreeme/tmp', (err: Error) => {
   process.exit(0);
 });*/
+
+dockerImageManagement.saveImages('.*', '/home/jreeme/tmp', (err: Error) => {
+  process.exit(0);
+});
 

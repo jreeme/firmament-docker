@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="Got load and save docker images working!">
+    <list default="true" id="53a38af0-f380-4646-bbe6-29aaab6186c1" name="Default" comment="restore output dir in tsconfig">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/implementations/commands/docker-command-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/commands/docker-command-impl.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ts/implementations/docker-image-management-impl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/implementations/docker-image-management-impl.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/interfaces/docker-image-management.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/interfaces/docker-image-management.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/inversify.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/inversify.config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ts/test/manual-tests/save-load-images.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ts/test/manual-tests/save-load-images.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ts/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/ts/tsconfig.json" afterDir="false" />
     </list>
     <ignored path="firmament-docker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,93 +25,41 @@
     <favorites_list name="firmament-docker" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.65031844">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/ts/implementations/docker-image-management-impl.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="238">
-                  <caret line="100" column="66" selection-start-line="100" selection-start-column="66" selection-end-line="100" selection-end-column="66" />
-                  <folding>
-                    <element signature="e#0#45#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../firmament/ts/firmament.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="158">
-                  <caret line="35" column="26" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="mock://module.js">
-              <provider selected="true" editor-type-id="vmFileEditor" />
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ts/implementations/commands/docker-command-impl.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="399">
-                  <caret line="65" column="41" selection-start-line="65" selection-start-column="41" selection-end-line="65" selection-end-column="41" />
-                  <folding>
-                    <element signature="e#0#45#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ts/inversify.config.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="30">
-                  <caret line="23" column="93" selection-start-line="23" selection-start-column="93" selection-end-line="23" selection-end-column="93" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ts/tsconfig.json">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="165">
-                  <caret line="11" column="72" selection-start-line="11" selection-start-column="72" selection-end-line="11" selection-end-column="72" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/save-load-images.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="180">
-                  <caret line="12" column="80" selection-start-line="12" selection-start-column="80" selection-end-line="12" selection-end-column="80" />
-                  <folding>
-                    <element signature="e#79#123#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-image-management.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="90">
-                  <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ts/implementations/docker-image-management-impl.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="192">
+              <caret line="80" column="7" selection-start-line="80" selection-start-column="7" selection-end-line="80" selection-end-column="7" />
+              <folding>
+                <element signature="e#0#45#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/save-load-images.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="12" column="36" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
+              <folding>
+                <element signature="e#79#123#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -209,17 +154,17 @@
         <option value="$PROJECT_DIR$/ts/implementations/commands/provision-command-impl.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/vmware-make-impl.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/commands/vmware-command-impl.ts" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/ts/test/manual-tests/manual-test.ts" />
         <option value="$PROJECT_DIR$/ts/interfaces/docker-descriptors.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/docker-provision-impl.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts" />
-        <option value="$PROJECT_DIR$/ts/tsconfig.json" />
         <option value="$PROJECT_DIR$/ts/inversify.config.ts" />
         <option value="$PROJECT_DIR$/ts/interfaces/docker-image-management.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/commands/docker-command-impl.ts" />
+        <option value="$PROJECT_DIR$/ts/tsconfig.json" />
         <option value="$PROJECT_DIR$/ts/test/manual-tests/save-load-images.ts" />
         <option value="$PROJECT_DIR$/ts/implementations/docker-image-management-impl.ts" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -260,19 +205,6 @@
               <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
               <item name="ts" type="462c0819:PsiDirectoryNode" />
               <item name="implementations" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
-              <item name="ts" type="462c0819:PsiDirectoryNode" />
-              <item name="implementations" type="462c0819:PsiDirectoryNode" />
-              <item name="commands" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
-              <item name="firmament-docker" type="462c0819:PsiDirectoryNode" />
-              <item name="ts" type="462c0819:PsiDirectoryNode" />
-              <item name="interfaces" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="firmament-docker" type="b2602c69:ProjectViewProjectNode" />
@@ -342,7 +274,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.firmament">
+  <component name="RunManager" selected="Node.js.save-load-images.js">
     <configuration name="firmament" type="NodeJSConfigurationType" application-parameters="docker load " path-to-js-file="$PROJECT_DIR$/../firmament/js/firmament.js" working-dir="/tmp">
       <method v="2" />
     </configuration>
@@ -601,21 +533,7 @@
       <workItem from="1548342038621" duration="1249000" />
       <workItem from="1549310467822" duration="91000" />
       <workItem from="1549311938436" duration="1531000" />
-      <workItem from="1549379249038" duration="24363000" />
-    </task>
-    <task id="LOCAL-00047" summary="Alpha on the RemoteCatalog">
-      <created>1483556465514</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1483556465514</updated>
-    </task>
-    <task id="LOCAL-00048" summary="v.1.0.0-&gt;NPM">
-      <created>1483652244231</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1483652244231</updated>
+      <workItem from="1549379249038" duration="26320000" />
     </task>
     <task id="LOCAL-00049" summary="v.1.2.0-&gt;NPM (new yargs)">
       <created>1484064352950</created>
@@ -946,7 +864,21 @@
       <option name="project" value="LOCAL" />
       <updated>1549400431722</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="v.1.4.58 -&gt; NPM, &amp; implement load and save docker images">
+      <created>1549479671093</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1549479671093</updated>
+    </task>
+    <task id="LOCAL-00097" summary="restore output dir in tsconfig">
+      <created>1549479742856</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1549479742856</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -982,7 +914,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="585941000" />
+    <option name="totallyTimeSpent" value="587898000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1919" y="0" width="1922" height="1053" extended-state="6" />
@@ -995,12 +927,12 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3676313" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32795697" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49466383" weight="0.47153598" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49466383" weight="0.301826" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="TypeScript" order="7" sideWeight="0.4939378" visible="true" weight="0.27604726" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.27497315" />
+      <window_info anchor="bottom" id="TypeScript" order="7" sideWeight="0.4939378" weight="0.27604726" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.23845327" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50533617" side_tool="true" weight="0.2943072" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.4949921" weight="0.32150537" />
       <window_info anchor="bottom" id="Messages" order="11" />
@@ -1067,8 +999,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Tune up boot2docker profile with more ES stuff" />
-    <MESSAGE value="NPM -&gt; v.1.4.35" />
     <MESSAGE value="NPM -&gt; v.1.4.36" />
     <MESSAGE value="NPM -&gt; v.1.4.37" />
     <MESSAGE value="NPM -&gt; v.1.4.38" />
@@ -1092,7 +1022,9 @@
     <MESSAGE value="Very little work toward exporting OVAs" />
     <MESSAGE value="v.1.4.58 -&gt; NPM, patch NFS Config" />
     <MESSAGE value="Got load and save docker images working!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Got load and save docker images working!" />
+    <MESSAGE value="v.1.4.58 -&gt; NPM, &amp; implement load and save docker images" />
+    <MESSAGE value="restore output dir in tsconfig" />
+    <option name="LAST_COMMIT_MESSAGE" value="restore output dir in tsconfig" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1103,6 +1035,12 @@
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="183" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/ts/implementations/docker-image-management-impl.ts</url>
+          <line>79</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="220" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint enabled="true" type="javascript-exception">
@@ -1112,9 +1050,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-management-impl.ts">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/implementations/docker-container-management-impl.js" />
     <entry file="file://$PROJECT_DIR$/ts/implementations/docker-container-management-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
@@ -1326,13 +1261,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-105">
-          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ts/implementations/util/docker-util-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="765">
@@ -1346,16 +1274,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ts/tsconfig.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="72" selection-start-line="11" selection-start-column="72" selection-end-line="11" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../firmament/ts/firmament.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
+        <state relative-caret-position="234">
           <caret line="35" column="26" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
         </state>
       </provider>
@@ -1364,13 +1285,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="23" column="93" selection-start-line="23" selection-start-column="93" selection-end-line="23" selection-end-column="93" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-image-management.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -1384,10 +1298,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ts/interfaces/docker-image-management.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/tsconfig.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="2" selection-start-line="23" selection-start-column="2" selection-end-line="23" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ts/implementations/docker-management-impl.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/ts/test/manual-tests/save-load-images.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
-          <caret line="12" column="80" selection-start-line="12" selection-start-column="80" selection-end-line="12" selection-end-column="80" />
+          <caret line="12" column="36" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
           <folding>
             <element signature="e#79#123#0" expanded="true" />
           </folding>
@@ -1396,11 +1327,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ts/implementations/docker-image-management-impl.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="100" column="66" selection-start-line="100" selection-start-column="66" selection-end-line="100" selection-end-column="66" />
+        <state relative-caret-position="192">
+          <caret line="80" column="7" selection-start-line="80" selection-start-column="7" selection-end-line="80" selection-end-column="7" />
           <folding>
             <element signature="e#0#45#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
         </state>
       </provider>
     </entry>

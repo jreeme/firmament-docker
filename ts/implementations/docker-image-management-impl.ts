@@ -74,6 +74,8 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
           });
       },
       (allImages: string[], cb) => {
+        allImages.shift(); //shift out REPOSITORY:TAG
+        allImages.pop(); //pop out empty string at end
         const regExp = new RegExp(imageRegEx);
         cb(null, allImages.filter((image) => regExp.test(image)));
       },
