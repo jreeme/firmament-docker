@@ -21,17 +21,17 @@ import {VmwareCommandImpl} from "./implementations/commands/vmware-command-impl"
 import {VmwareMake} from "./interfaces/vmware-make";
 import {VmwareMakeImpl} from "./implementations/vmware-make-impl";
 
-kernel.bind<DockerManagement>('DockerManagement').to(DockerManagementImpl);
-kernel.bind<DockerMake>('DockerMake').to(DockerMakeImpl);
-kernel.bind<VmwareMake>('VmwareMake').to(VmwareMakeImpl);
-kernel.bind<DockerProvision>('DockerProvision').to(DockerProvisionImpl);
-kernel.bind<DockerImageManagement>('DockerImageManagement').to(DockerImageManagementImpl);
-kernel.bind<DockerContainerManagement>('DockerContainerManagement').to(DockerContainerManagementImpl);
-kernel.bind<DockerOde>('DockerOde').to(DockerOdeImpl);
-kernel.bind<DockerUtil>('DockerUtil').to(DockerUtilImpl);
-kernel.bind<Command>('Command').to(DockerCommandImpl);
-kernel.bind<Command>('Command').to(MakeCommandImpl);
-kernel.bind<Command>('Command').to(VmwareCommandImpl);
-kernel.bind<Command>('Command').to(ProvisionCommandImpl);
+kernel.bind<DockerManagement>('DockerManagement').to(DockerManagementImpl).inSingletonScope();
+kernel.bind<DockerMake>('DockerMake').to(DockerMakeImpl).inSingletonScope();
+kernel.bind<VmwareMake>('VmwareMake').to(VmwareMakeImpl).inSingletonScope();
+kernel.bind<DockerProvision>('DockerProvision').to(DockerProvisionImpl).inSingletonScope();
+kernel.bind<DockerImageManagement>('DockerImageManagement').to(DockerImageManagementImpl).inSingletonScope();
+kernel.bind<DockerContainerManagement>('DockerContainerManagement').to(DockerContainerManagementImpl).inSingletonScope();
+kernel.bind<DockerOde>('DockerOde').to(DockerOdeImpl).inSingletonScope();
+kernel.bind<DockerUtil>('DockerUtil').to(DockerUtilImpl).inSingletonScope();
+kernel.bind<Command>('Command').to(DockerCommandImpl).inSingletonScope();
+kernel.bind<Command>('Command').to(MakeCommandImpl).inSingletonScope();
+kernel.bind<Command>('Command').to(VmwareCommandImpl).inSingletonScope();
+kernel.bind<Command>('Command').to(ProvisionCommandImpl).inSingletonScope();
 
 export default kernel;

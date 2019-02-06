@@ -3,9 +3,9 @@ import {ForceError} from 'firmament-yargs';
 
 export interface DockerImageManagement extends ForceError {
   loadImages(imageRegEx: string, inputFolder: string,
-             cb: (err: Error, loadedImagePaths: string[]) => void);
+             cb: (err: Error) => void);
   saveImages(imageRegEx: string, outputFolder: string,
-             cb: (err: Error, savedImagePaths: string[]) => void);
+             cb: (err: Error) => void);
   listImages(listAllImages: boolean,
              cb: (err: Error, images: DockerImage[]) => void);
   getImages(ids: string[],

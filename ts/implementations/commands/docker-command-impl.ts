@@ -1,12 +1,12 @@
-import {injectable, inject} from "inversify";
+import {injectable, inject} from 'inversify';
 import kernel from '../../inversify.config';
 import {Command, CommandLine, CommandUtil, Spawn} from 'firmament-yargs';
-import {DockerImage} from "../../interfaces/dockerode";
-import {DockerImageManagement} from "../../interfaces/docker-image-management";
-import {DockerContainerManagement} from "../../interfaces/docker-container-management";
+import {DockerImage} from '../..';
+import {DockerImageManagement} from '../../interfaces/docker-image-management';
+import {DockerContainerManagement} from '../../interfaces/docker-container-management';
 import * as _ from 'lodash';
-import {DockerMake} from "../../interfaces/docker-make";
-import {MakeCommandImpl} from "./make-command-impl";
+import {DockerMake} from '../../interfaces/docker-make';
+import {MakeCommandImpl} from './make-command-impl';
 
 @injectable()
 export class DockerCommandImpl implements Command {
@@ -31,6 +31,8 @@ export class DockerCommandImpl implements Command {
     this.aliases = ['docker', 'd'];
     this.command = '<subCommand>';
     this.commandDesc = 'Support for working with Docker containers';
+    this.pushLoadImagesCommand();
+    this.pushSaveImagesCommand();
     this.pushCleanVolumesCommand();
     this.pushImagesCommand();
     this.pushPsCommand();
@@ -41,14 +43,68 @@ export class DockerCommandImpl implements Command {
     this.pushShellCommand();
   }
 
+  private pushSaveImagesCommand() {
+    const me = this;
+    const saveImagesCommand = kernel.get<Command>('CommandImpl');
+    saveImagesCommand.aliases = ['save'];
+    saveImagesCommand.commandDesc = 'Save local docker images to tar file';
+    saveImagesCommand.options = {
+      regexp: {
+        alias: 'r',
+        type: 'string',
+        default: '.*',
+        desc: 'javascript regular expression text to match docker images'
+      },
+      outdir: {
+        alias: 'o',
+        type: 'string',
+        default: process.cwd(),
+        desc: 'directory to write image tar files to'
+      }
+    };
+    saveImagesCommand.handler = (argv) => {
+      me.dockerImageManagement.saveImages(argv.regexp, argv.outdir, (err: Error) => {
+        me.commandUtil.processExitWithError(err);
+      });
+    };
+    me.subCommands.push(saveImagesCommand);
+  }
+
+  private pushLoadImagesCommand() {
+    const me = this;
+    const loadImagesCommand = kernel.get<Command>('CommandImpl');
+    loadImagesCommand.aliases = ['load'];
+    loadImagesCommand.commandDesc = 'Load docker images locally from tar file';
+    loadImagesCommand.options = {
+      regexp: {
+        alias: 'r',
+        type: 'string',
+        default: '.*',
+        desc: 'javascript regular expression text to match tar files'
+      },
+      indir: {
+        alias: 'i',
+        type: 'string',
+        default: process.cwd(),
+        desc: 'directory containing the docker tar files'
+      }
+    };
+    loadImagesCommand.handler = (argv) => {
+      me.dockerImageManagement.loadImages(argv.regexp, argv.indir, (err: Error) => {
+        me.commandUtil.processExitWithError(err);
+      });
+    };
+    me.subCommands.push(loadImagesCommand);
+  }
+
   private pushCleanVolumesCommand() {
-    let me = this;
-    let cleanVolumesCommand = kernel.get<Command>('CommandImpl');
+    const me = this;
+    const cleanVolumesCommand = kernel.get<Command>('CommandImpl');
     cleanVolumesCommand.aliases = ['clean-volumes', 'cv'];
     cleanVolumesCommand.commandDesc = 'Clean orphaned Docker resources';
     //noinspection JSUnusedLocalSymbols
     cleanVolumesCommand.handler = (argv) => {
-      let script = require('path').resolve(__dirname, '../../../bash/_docker-cleanup-volumes.sh');
+      const script = require('path').resolve(__dirname, '../../../bash/_docker-cleanup-volumes.sh');
       me.spawn.sudoSpawnAsync(['/bin/bash', script], {}, (err) => {
       }, (err) => {
         me.commandUtil.processExitWithError(err);
@@ -58,8 +114,8 @@ export class DockerCommandImpl implements Command {
   }
 
   private pushRemoveImagesCommand() {
-    let me = this;
-    let removeCommand = kernel.get<Command>('CommandImpl');
+    const me = this;
+    const removeCommand = kernel.get<Command>('CommandImpl');
     removeCommand.aliases = ['rmi'];
     removeCommand.commandDesc = 'Remove Docker images';
     removeCommand.handler = (argv) => {
@@ -71,8 +127,8 @@ export class DockerCommandImpl implements Command {
   }
 
   private pushRemoveContainersCommand() {
-    let me = this;
-    let removeCommand = kernel.get<Command>('CommandImpl');
+    const me = this;
+    const removeCommand = kernel.get<Command>('CommandImpl');
     removeCommand.aliases = ['rm'];
     removeCommand.commandDesc = 'Remove Docker containers';
     removeCommand.handler = (argv) => {
@@ -85,8 +141,8 @@ export class DockerCommandImpl implements Command {
   }
 
   private pushShellCommand() {
-    let me = this;
-    let shellCommand = kernel.get<Command>('CommandImpl');
+    const me = this;
+    const shellCommand = kernel.get<Command>('CommandImpl');
     shellCommand.aliases = ['sh'];
     shellCommand.commandDesc = 'Run bash shell in Docker container';
     shellCommand.handler = (argv) => {
@@ -98,8 +154,8 @@ export class DockerCommandImpl implements Command {
   }
 
   private pushStartCommand() {
-    let me = this;
-    let startCommand = kernel.get<Command>('CommandImpl');
+    const me = this;
+    const startCommand = kernel.get<Command>('CommandImpl');
     startCommand.aliases = ['start'];
     startCommand.commandDesc = 'Start Docker containers';
     startCommand.options = {
@@ -118,26 +174,26 @@ export class DockerCommandImpl implements Command {
     let action = 'Stopping';
     let start = false;
 
-    if (argv._[1] === 'start') {
+    if(argv._[1] === 'start') {
       action = 'Starting';
       start = true;
     }
 
     let containerNames: string[];
-    if (argv.input === undefined) {
+    if(argv.input === undefined) {
       containerNames = argv._.slice(2);
     } else {
-      let {fullInputPath, sortedContainerConfigs} =
+      const {fullInputPath, sortedContainerConfigs} =
         me.dockerMake.getSortedContainerConfigsFromJsonFile(argv.input || MakeCommandImpl.defaultConfigFilename);
       me.commandUtil.log(`${action} Docker containers described in: '${fullInputPath}'`);
-      containerNames = <string[]> _.map(start ? sortedContainerConfigs : sortedContainerConfigs.reverse(), 'name');
+      containerNames = <string[]>_.map(start ? sortedContainerConfigs : sortedContainerConfigs.reverse(), 'name');
     }
     me.dockerContainerManagement.startOrStopContainers(containerNames, start, () => me.commandUtil.processExit());
   }
 
   private pushStopCommand() {
-    let me = this;
-    let stopCommand = kernel.get<Command>('CommandImpl');
+    const me = this;
+    const stopCommand = kernel.get<Command>('CommandImpl');
     stopCommand.aliases = ['stop'];
     stopCommand.commandDesc = 'Stop Docker containers';
     stopCommand.options = {
@@ -152,8 +208,8 @@ export class DockerCommandImpl implements Command {
   }
 
   private pushImagesCommand() {
-    let me = this;
-    let imagesCommand = kernel.get<Command>('CommandImpl');
+    const me = this;
+    const imagesCommand = kernel.get<Command>('CommandImpl');
     imagesCommand.aliases = ['images'];
     imagesCommand.commandDesc = 'List Docker images';
     //noinspection ReservedWordAsName
@@ -170,8 +226,8 @@ export class DockerCommandImpl implements Command {
   }
 
   private pushPsCommand() {
-    let me = this;
-    let psCommand = kernel.get<Command>('CommandImpl');
+    const me = this;
+    const psCommand = kernel.get<Command>('CommandImpl');
     psCommand.aliases = ['ps'];
     psCommand.commandDesc = 'List Docker containers';
     //noinspection ReservedWordAsName
@@ -200,7 +256,7 @@ export class DockerCommandImpl implements Command {
   }
 
   private bashInToContainer(ids: string[], cb: (err: Error) => void) {
-    if (ids.length !== 1) {
+    if(ids.length !== 1) {
       let msg = '\nSpecify container to shell into by FirmamentId, Docker ID or Name.\n';
       msg += '\nExample: $ ... d sh 2  <= Open bash shell in container with FirmamentId "2"\n';
       cb(new Error(msg));
@@ -210,26 +266,26 @@ export class DockerCommandImpl implements Command {
   }
 
   private prettyPrintDockerImagesList(err: Error, images: DockerImage[], cb: () => void) {
-    let me = this;
-    if (!images || !images.length) {
-      let msg = me.commandUtil.returnErrorStringOrMessage(err, '\nNo images\n');
+    const me = this;
+    if(!images || !images.length) {
+      const msg = me.commandUtil.returnErrorStringOrMessage(err, '\nNo images\n');
       console.log(msg);
     } else {
-      let timeAgo = require('time-ago')();
-      let fileSize = require('filesize');
+      const timeAgo = require('time-ago')();
+      const fileSize = require('filesize');
       me.commandLine.printTable(images.map(image => {
         try {
-          let ID = image.firmamentId;
-          let repoTags = image.RepoTags[0].split(':');
-          let Repository = repoTags[0];
-          let Tag = repoTags[1];
-          let ImageId = image.Id.substring(7, 19);
-          let nowTicks = +new Date();
-          let tickDiff = nowTicks - (1000 * image.Created);
-          let Created = timeAgo.ago(nowTicks - tickDiff);
-          let Size = fileSize(image.Size);
+          const ID = image.firmamentId;
+          const repoTags = image.RepoTags[0].split(':');
+          const Repository = repoTags[0];
+          const Tag = repoTags[1];
+          const ImageId = image.Id.substring(7, 19);
+          const nowTicks = +new Date();
+          const tickDiff = nowTicks - (1000 * image.Created);
+          const Created = timeAgo.ago(nowTicks - tickDiff);
+          const Size = fileSize(image.Size);
           return {ID, Repository, Tag, ImageId, Created, Size};
-        } catch (err) {
+        } catch(err) {
           console.log(err.message);
           return {};
         }
@@ -239,9 +295,9 @@ export class DockerCommandImpl implements Command {
   }
 
   private prettyPrintDockerContainerList(err: Error, containers: any[], all: boolean, cb: () => void) {
-    let me = this;
-    if (!containers || !containers.length) {
-      let msg = me.commandUtil.returnErrorStringOrMessage(err, '\nNo ' + (all ? '' : 'Running ') + 'Containers\n');
+    const me = this;
+    if(!containers || !containers.length) {
+      const msg = me.commandUtil.returnErrorStringOrMessage(err, '\nNo ' + (all ? '' : 'Running ') + 'Containers\n');
       console.log(msg);
     } else {
       me.commandLine.printTable(containers.map(container => {

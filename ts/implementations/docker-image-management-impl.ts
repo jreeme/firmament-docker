@@ -19,7 +19,7 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
     super();
   }
 
-  loadImages(imageRegEx: string, inputFolder: string, cb: (err?: Error, loadedImagePaths?: string[]) => void) {
+  loadImages(imageRegEx: string, inputFolder: string, cb: (err: Error) => void) {
     const me = this;
     async.waterfall([
       (cb) => {
@@ -32,7 +32,13 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
           .map((file) => `${path.resolve(inputFolder, file)}`));
       },
       (pathsToLoad: string[], cb) => {
+        me.commandUtil.stdoutWrite(`Queueing the following image files for load:\n\n`);
+        pathsToLoad.forEach((pathToLoad) => {
+          me.commandUtil.stdoutWrite(`${pathToLoad}\n`);
+        });
+        me.commandUtil.stdoutWrite(`\n`);
         async.eachSeries(pathsToLoad, (pathToLoad, cb) => {
+          me.commandUtil.stdoutWrite(`Loading image: '${pathToLoad}' -- `);
           me.spawn.spawnShellCommandAsync([
               'bash',
               '-c',
@@ -40,23 +46,14 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
             ],
             {},
             (err, result) => {
-              me.commandUtil.log(result);
-            },
-            (err, saveImageResult) => {
-              me.safeJson.safeParse(saveImageResult, (err: Error, obj: any) => {
-                cb(err);
-              });
-            });
-        }, (err: Error) => {
-          cb(err);
-        });
+              me.commandUtil.stdoutWrite(result);
+            }, cb);
+        }, cb);
       }
-    ], (err: Error, result: any) => {
-      cb(err, result);
-    });
+    ], cb);
   }
 
-  saveImages(imageRegEx: string, outputFolder: string, cb: (err: Error, savedImagePaths: string[]) => void) {
+  saveImages(imageRegEx: string, outputFolder: string, cb: (err: Error) => void) {
     const me = this;
     async.waterfall([
       (cb) => {
@@ -82,8 +79,12 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
       },
       (matchingImages: string[], cb) => {
         const imageOutputFiles: string[] = [];
+        me.commandUtil.stdoutWrite(`Queueing the following images for save:\n\n`);
+        matchingImages.forEach((matchingImage) => {
+          me.commandUtil.stdoutWrite(`${matchingImage}\n`);
+        });
+        me.commandUtil.stdoutWrite(`\n`);
         async.each(matchingImages, (image, cb) => {
-          //async.eachLimit(matchingImages, 4, (image, cb) => {
           const outputPath = `${path.resolve(outputFolder, sanitize(image, {replacement: '_'}))}.tar.gz`;
           me.spawn.spawnShellCommandAsync([
               'bash',
@@ -96,18 +97,17 @@ export class DockerImageManagementImpl extends ForceErrorImpl implements DockerI
             },
             () => {
             },
-            (err, saveImageResult) => {
+            (err) => {
+              me.commandUtil.stdoutWrite(`Saving: '${outputPath}'\n`);
               imageOutputFiles.push(outputPath);
-              me.safeJson.safeParse(saveImageResult, (err: Error, obj: any) => {
-                cb(err);
-              });
+              cb(err);
             });
         }, (err: Error) => {
           cb(err, imageOutputFiles);
         });
       }
-    ], (err: Error, imageOutputFiles: any) => {
-      cb(err, imageOutputFiles);
+    ], (err: Error) => {
+      cb(err);
     });
   }
 
